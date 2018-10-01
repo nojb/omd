@@ -1,0 +1,538 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="modules.html" rel="alternate" hreflang="en"/>
+<link href="modules.fr.html" rel="alternate" hreflang="fr"/>
+<link href="modules.ja.html" rel="alternate" hreflang="ja"/>
+<link href="modules.ko.html" rel="alternate" hreflang="ko"/>
+<link href="modules.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Modules &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../index.fr.html" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/index.fr.html">Apprendre</a></li>
+              <li><a href="../../docs/index.fr.html">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Contributions</a></li>
+              <li><a href="../../community/index.fr.html">Communauté</a></li>
+              <li><a href="../../community/planet/">Nouvelles</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/modules.fr.md" title="Éditer cette page" class="edit-this-page pull-right"><span>Éditer cette page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Rechercher" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/index.fr.html">Apprendre</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.fr.html">Tutoriel OCaml</a><span class="divider"></span></li>
+<li class="active">Modules</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="modules.html">en</a></li>
+<li class="active">fr</li>
+<li><a href="modules.ja.html">日本語</a></li>
+<li><a href="modules.ko.html">한국어</a></li>
+<li><a href="modules.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contenu</a></li>
+          <ul><li><a href="#Usage-standard">Usage standard</a>
+</li><li><a href="#Interfaces-modulaires-et-signatures">Interfaces modulaires et signatures.</a>
+</li><li><a href="#Types-abstraits-virtuels">Types abstraits (virtuels)</a>
+</li><li><a href="#Sous-modules">Sous modules</a>
+<ul><li><a href="#Cr-ation-d-39-un-sous-module">Création d&#39;un sous module</a>
+</li></ul>
+</li><li><a href="#Foncteurs">Foncteurs</a>
+<ul><li><a href="#Comment-utiliser-un-foncteur">Comment utiliser un foncteur ?</a>
+</li><li><a href="#Comment-d-finir-un-foncteur">Comment définir un foncteur ?</a>
+</li></ul>
+</li><li><a href="#Manipulation-pratique-des-modules">Manipulation pratique des modules</a>
+<ul><li><a href="#Afficher-l-39-interface-d-39-un-module">Afficher l&#39;interface d&#39;un module</a>
+</li><li><a href="#Insertion-dans-un-module">Insertion dans un module</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Modules">Modules</h1>
+
+<h2 id="Usage-standard">Usage standard</h2>
+
+<p>Avec OCaml, tout programme est contenu dans un module. Un module peut
+même être, plus rarement, un sous-module d&#39;un autre, à la manière d&#39;une
+arborescence de dossiers imbriqués les uns dans les autres.</p>
+<p>Lorsqu&#39;on écrit un programme, avec par exemple deux fichiers
+<code>amodule.ml</code> et <code>bmodule.ml</code>, ceux ci définissent deux
+modules, intitulés respectivement <code>Amodule</code> et <code>Bmodule</code>,
+possédant le même contenu que nos fichiers.</p>
+<p>Prenons par exemple le fichier amodule.ml suivant:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline 'Hello'</code></pre>
+
+<p>ainsi que le fichier bmodule.ml :</p>
+<pre><code class="ocaml"><span class="ocaml-module">Amodule</span>.hello ()</code></pre>
+
+<p>En général, les fichiers sont compilés un par un, comme ceci:</p>
+<pre class="shell"><code class="shell">ocamlopt -c amodule.ml
+ocamlopt -c bmodule.ml
+ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
+
+<p>Nous avons à présent un petit éxécutable pouvant afficher
+« Hello ».  Comme on l&#39;a constaté, on accède à n&#39;importe quoi dans un
+module donné en appellant le nom du module (qui commence toujours par
+une majuscule) suivit d&#39;un point et du nom de l&#39;objet utilisé. Cet
+object peut être une variable, un type ou tout autre chose définie au
+sein du module.</p>
+<p>Les librairies (bibliothèques), notament la bibliothèque standard,
+fournit un certain nombre de modules. Par exemple, <code>List.iter</code>
+désigne la fonction <code>iter</code> définie au sein du module <code>List</code>.
+Si jamais on souhaite utiliser de façon intensive un module, on peut
+désirer se passer de l&#39;appel de son nom; il suffit pour cela d&#39;utiliser
+l&#39;instruction <code>open</code>.  En poursuivant notre exemple,
+<code>bmodule.ml</code> pourrait contenir :</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span><span class="ocaml-prompt">;;</span><br/>hello ()</code></pre>
+
+<p>Notons que beaucoup de programmeurs « oublient » les <code>;;</code>, il est plus
+courant d&#39;écrire</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span>
+<span class="governing">let </span><span class="ocaml-variable">_</span> = hello ()</code></pre>
+
+<p>L&#39;usage de l&#39;instruction <code>open</code> n&#39;est qu&#39;une question de goût.
+Certains modules proposent des noms déjà utilisés dans d&#39;autres modules.
+Ainsi le module <code>List</code> contient des fonctions aux noms assez
+courants dans les autres modules, aussi on n&#39;écrit assez rarement
+<code>open List</code>. D&#39;autres comme <code>Printf</code> utilise des noms très
+spécifiques, suffisament rares pour ne pas créer de conflits avec
+d&#39;autres modules; pour éviter d&#39;écrire <code>Printf.printf</code> on préfera
+utiliser <code>open Printf</code> en début de fichier :</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
+<span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">'a'</span>; 'beautiful'; 'day' ]
+<span class="governing">let </span><span class="ocaml-variable">_</span> = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf '%s\n' s) my_data</code></pre>
+
+<h2 id="Interfaces-modulaires-et-signatures">Interfaces modulaires et signatures.</h2>
+
+<p>Un module peut fournir un grand nombre d&#39;éléments (fonctions, types,
+sous modules, variables...) au programme qui l&#39;utilise. Par défaut, tous
+les objets définis au sein du module seront accessibles depuis
+« l&#39;exterieur ». Ceci peut être utile dans de petits programmes, mais il
+est préférable qu&#39;un module ne propose que ce qu&#39;il est conçu pour
+proposer, sans le fouillis des fonctions auxilliaires ou variables
+temporaires. Pour cela, nous pouvons définir une interface modulaire,
+qui se comporte comme un filtre entourant le module. De la même façon
+qu&#39;un module vient d&#39;un fichier <code>.ml</code>, l&#39;interface corespondante
+(et sa signature) viennent d&#39;un fichier <code>.mli</code>. Il contient la
+liste des valeurs avec leur type (ou signature pour les fonctions).
+Réécrivons notre <code>amodule.ml</code> :</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+<span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</code></pre>
+
+<p>Tel quel, l&#39;interface de <code>Amodule</code> est la suivante:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">message</span> : string
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit</code></pre>
+
+<p>Supposons que nous souhaitions que personne de l&#39;exterieur ne puisse
+accéder à la variable <code>message</code>. Nous choisissons alors de la
+cacher en crééant une interface restreinte, le <code>amodule.mli</code> est
+alors:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
+<span class="comment">(** Displays a greeting message. *)</span></code></pre>
+
+<p>(Notons que commenter les fichiers <code>.mli</code> en utilisant le format
+d&#39;<code>ocamldoc</code> est une très bonne habitude à prendre).</p>
+<p>Les fichiers <code>.mli</code> doivent être compilés juste avant les
+<code>.ml</code> correspondants. On peut les compiler à l&#39;aide
+d&#39;<code>ocamlc</code>, même si les <code>.ml </code>sont écrit en code natif avec
+<code>ocamlopt</code></p>
+<pre class="shell"><code class="shell">ocamlc -c amodule.mli
+ocamlopt -c amodule.ml
+...</code></pre>
+
+<h2 id="Types-abstraits-virtuels">Types abstraits (virtuels)</h2>
+
+<p>Passons à présent aux définitions de types. Nous avons vu que les
+valeurs telles que les fonctions, peuvent être exportées en donnant leur
+noms et signatures dans un fichiers <code>.mli</code>, par exemple:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit</code></pre>
+
+<p>Cependant on définit souvent au sein d&#39;un module de nouveaux types.
+Prenons par exemple un enregistrement d&#39;une date:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">date</span> = { day : int;  month : int;  year : int }</code></pre>
+
+<p>Il n&#39;y a plus 2 mais 4 options possibles dans l&#39;écriture du fichier
+<code>.mli</code> :</p>
+<ol><li><p>Le type n&#39;est pas précisé dans le <code>.mli</code></p>
+</li><li><p>La définition du type est copiée-collée dans le <code>.mli</code></p>
+</li><li><p>Le type est rendu virtuel, seul son nom est précisé. (il est connu
+ du compilateur mais on ne peut y toucher)</p>
+</li><li><p>Les champs d&#39;un enregistrement sont rendus seulement lisibles
+ et non plus modifiables (lecture seule) <code>type date = private { ... }</code>.</p>
+</li></ol>
+
+<p>Dans le troisieme cas, on obtient le code suivant :</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">date</span></code></pre>
+
+<p>Les utilisateurs de ce module peuvent désormais manipuler des données de
+type <code>date</code> mais ne peuvent accéder aux champs de
+l&#39;enregistrement, seules les fonctions du modules sont autorisées à le
+faire. Supposons que notre module contienne trois fonctions, une pour
+créer une date, une pour calculer la différence entre deux dates et une
+pour convertir une date en années:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">date</span>
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">create</span> : ?days:int -&gt; ?months:int -&gt; ?years:int -&gt; unit -&gt; date
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">sub</span> : date -&gt; date -&gt; date
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">years</span> : date -&gt; float</code></pre>
+
+<p>On remarque alors que seule <code>create</code> et <code>sub</code> peuvent être
+utilisées pour céer des enregistrements de dates. Ainsi il n&#39;est pas
+possible pour l&#39;utilisateur de créer des enregistrements difformes.
+Ainsi, bien que notre implémentation utilise un enregistrement nous
+pouvons le modifier sans qu&#39;aucun fichier utilisant ce module n&#39;en soit
+perturbé. Ceci est particulièrement utile dans le cas des librairies,
+qui peuvent ainsi être modifiées tout en gardant une utilisation
+identique.</p>
+<h2 id="Sous-modules">Sous modules</h2>
+
+<h3 id="Cr-ation-d-39-un-sous-module">Création d&#39;un sous module</h3>
+
+<p>Nous avons vu qu&#39;un fichier unique <code>exemple.ml</code> se compilait un un
+module unique <code>Exemple</code>. Sa signature est automatiquement générée
+et est la plus exhaustive possible, sauf si elle est restreinte par
+l&#39;écriture d&#39;un fichier <code>.mli</code> . Ceci dit, un module donné peut
+etre définit explicitement au sein même d&#39;un fichier, il est ainsi un
+sous module du module principal. Prenons l&#39;exemple suivant:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>= 
+<span class="governing">struct</span>
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
+<span class="governing">end</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">Hello</span>.hello ();
+  goodbye ()</code></pre>
+
+<p>Depuis un autre fichier, nous avons désormais deux niveaux de modules.
+Nous pouvons écrire alors:</p>
+<pre><code class="ocaml"><span class="governing">let</span> () =
+  <span class="ocaml-module">Example</span>.<span class="ocaml-module">Hello</span>.hello ();
+  <span class="ocaml-module">Example</span>.goodbye ()</code></pre>
+
+<h4 id="Interface-submodulaire">Interface submodulaire</h4>
+
+<p>Nous pouvons de même restreindre l&#39;interface d&#39;un sous module. On
+appelle cela un type modulaire. Dans notre <code>exemple.ml</code> cela
+donne:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>: 
+<span class="governing">sig</span>
+ <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
+<span class="governing">end</span> = 
+<span class="governing">struct</span>
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
+<span class="governing">end</span>
+  
+<span class="comment">(* At this point, <span class="ocaml-module">Hello</span>.message is not accessible anymore. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">Hello</span>.hello ();
+  goodbye ()</code></pre>
+
+<p>La définition du module <code>Hello</code> est équivalente au couple de
+fichiers <code>hello.mli/hello.ml</code> . Cependant, écrire tout cela dans
+un même bloc de code n&#39;est pas très élégant, nous préférons donc définir
+la signature séparement.</p>
+<pre><code class="ocaml"><span class="governing">module <span class="governing">type</span></span> <span class="ocaml-module">Hello_type</span> <span class="ocaml-variable"></span>=
+<span class="governing">sig</span>
+  <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
+<span class="governing">end</span>
+  
+<span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>: <span class="ocaml-module">Hello_type</span> =
+<span class="governing">struct</span>
+  ...
+<span class="governing">end</span></code></pre>
+
+<p><code>Hello_type</code> est un type modulaire et peut donc être réutilisée
+pour définir d&#39;autres interfaces de modules.</p>
+<p>Bien que l&#39;utilisation des sous modules peut se révéler pratique dans
+certains cas spécifiques, leur utilité réelle se révèle avec les
+foncteurs, développés dans la section suivante.</p>
+<h2 id="Foncteurs">Foncteurs</h2>
+
+<p>Les foncteurs sont probablement une des fonctionnalités les plus
+complexes d&#39;OCaml, même s&#39;il n&#39;est pas nécessaire de les utiliser de
+façon intensive pour être un bon programmeur. En réalité, il est
+possible que nous n&#39;ayons jamais à définir nous même de foncteurs, mais
+nous serons surement appelés à les rencontrer dans la librairie
+standard. Ils sont la seule façon d&#39;utiliser les modules <code>Set</code> et
+<code>Map</code>, mais leur utilisation reste à notre portée.</p>
+<p>Un foncteur est un module qui est paramétré par un autre module, tout
+comme une fonction n&#39;est qu&#39;une valeur paramétrée par d&#39;autre valeurs
+(les arguments). En gros, cela permet de paramétrer un type par une
+valeur, ce qui est impossible à faire directment en OCaml. Par exemple,
+nous pourrions définir un foncteur prenant un entier <code>n</code> et
+retournant un ensemble d&#39;opérations sur des tableaux de longeurs
+<code>n</code> uniquement. Si par erreur, un programmeur donne un tableau
+normal à une de ces fonctions, le compilateur soulevera une erreur. Si
+nous n&#39;utilisions pas un foncteur mais le type standard des tableaux, le
+compilateur ne sera pas capable de détecter l&#39;erreur, et nous
+obtiendrions une erreur à l&#39;execution bien après la compilation ce qui
+est bien pire !</p>
+<h3 id="Comment-utiliser-un-foncteur">Comment utiliser un foncteur ?</h3>
+
+<p>La librairie standard définit le module <code>Set</code>, qui fournit un
+foncteur <code>Make</code>. Ce foncteur requiert un argument, qui est un
+module contenant (au moins) deux choses: le type des éléments donné par
+<code>t</code> et la fonction de comparaison donnée par <code>compare</code> .
+L&#39;important est de s&#39;assurer que la même fonction de comparaison sera
+toujours utilisée, même si le programmeur commet une erreur.</p>
+<p>Par exemple, si nous voulons un ensemble d&#39;entiers, il faut utiliser
+ceci:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Int_set</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Set</span>.Make (<span class="governing">struct</span>
+                             <span class="governing">type</span> <span class="type">t</span> = int
+                             <span class="governing">let </span><span class="ocaml-variable">compare</span> = compare
+                           <span class="governing">end</span>) </code></pre>
+
+<p>Pour les ensembles de chaînes, cela est même plus simple car la
+librairie standard fournit un module <code>String</code> avec un type
+<code>t</code> et une fonction <code>compare</code>. On peut donc créer, à peu de
+frais, un module pour la manipulation des ensembles de chaînes de
+caractères:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">String_set</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Set</span>.Make (String)</code></pre>
+
+<p>(les parenthèses sont obligatoires !)</p>
+<h3 id="Comment-d-finir-un-foncteur">Comment définir un foncteur ?</h3>
+
+<p>Un foncteur avec un argument peut être définit comme ceci:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">F</span> <span class="ocaml-variable">(X : X_type) </span>=
+<span class="governing">struct</span>
+  ...
+<span class="governing">end</span></code></pre>
+
+<p>où <code>X</code> est le module passé en argument, et <code>X\_type</code> est sa
+signature, qui est obligatoire.</p>
+<p>La signature du module obtenu peut elle même être restreinte à l&#39;aide la
+syntaxe habituelle:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">F</span> <span class="ocaml-variable">(X : X_type) </span>: <span class="ocaml-module">Y_type</span> =
+<span class="governing">struct</span>
+  ...
+<span class="governing">end</span></code></pre>
+
+<p>ou bien en le spécifiant dans le fichier <code>.mli</code>:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">F</span> <span class="ocaml-variable">(X : X_type) </span>: Y_type</code></pre>
+
+<p>La syntaxe des foncteurs reste cependant difficile à assimiler. Il est
+donc préférable de jeter un coup d&#39;oeil aux fichier sources
+<code>set.ml</code> ou <code>map.ml</code> dans la librairie standard. Une
+dernière remarque: les foncteurs ont été conçus pour aider les
+programmeurs et non pas pour améliorer les performances. L&#39;execution est
+même plus lente, à moins d&#39;utiliser un défoncteur comme
+<code>ocamldefun</code>, qui requiert un accès au code source du foncteur.</p>
+<h2 id="Manipulation-pratique-des-modules">Manipulation pratique des modules</h2>
+
+<h3 id="Afficher-l-39-interface-d-39-un-module">Afficher l&#39;interface d&#39;un module</h3>
+
+<p>En <code>toplevel</code>, il est possible de visualiser le contenu d&#39;un
+module en tapant:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">M</span> = <span class="ocaml-module">List</span></code></pre>
+
+<p>On obtient alors:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">module</span> <span class="ocaml-module">M</span> = <span class="ocaml-module">List</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module M = List
+</span></code></pre>
+
+<p>De toute façon, il existe une documentation pour la plupart des modules
+(on peut aussi utiliser <code>ocamlbrowser</code>, fourni avec <code>labltk</code>).</p>
+<h3 id="Insertion-dans-un-module">Insertion dans un module</h3>
+
+<p>Supposons que nous sentions qu&#39;une fonction manque au module standard
+<code>List</code> et que nous désirions qu&#39;elle en fasse partie intégrante.
+Il est possible d&#39;utiliser l&#39;instruction <code>include</code> au sein d&#39;un
+fichier <code>extensions.ml</code> afin d&#39;insérer notre fonction:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">List</span> <span class="ocaml-variable"></span>=
+<span class="governing">struct</span>
+  <span class="governing">include</span> List
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">optmap</span> <span class="ocaml-variable">f </span>= <span class="keyword">function</span>
+    | [] -&gt; []
+    | hd :: tl -&gt;
+       <span class="keyword">match</span> f hd <span class="keyword">with</span>
+       | None -&gt; optmap f tl
+       | Some x -&gt; x :: optmap f tl
+<span class="governing">end</span></code></pre>
+
+<p>Nous avons créé un nouveau module <code>Extensions.List</code> contenant , en
+plus des fonctions habituelles du module <code>List</code>, une nouvelle
+fonction <code>optmap</code>.  Depuis un autre fichier, il nous suffit
+d&#39;ouvrir notre module <code>Extensions</code> pour que celui-ci « écrase » le
+module <code>List</code> standard :</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Extensions</span>
+...
+<span class="ocaml-module">List</span>.optmap ...</code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/index.fr.html">Apprendre</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.fr.html">Exemples de code</a></li>
+      <li><a href="../../learn/tutorials/index.fr.html">Tutoriels</a></li>
+      <li><a href="../../learn/books.html">Livres</a></li>
+      <li><a href="../../learn/success.fr.html">Cas d'usage</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/index.fr.html">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.fr.html">Installer OCaml</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manuel</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Contributions</a></li>
+      <li><a href="../../releases/index.fr.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/index.fr.html">Communauté</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.fr.html">Lieux de discussion</a></li>
+      <li><a href="../../meetings/index.fr.html">Rencontres</a></li>
+      <li><a href="../../community/planet/">Nouvelles</a></li>
+      <li><a href="../../community/support.fr.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Signaler un bug d'OCaml</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Site Web</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/modules.fr.md" target="_blank">Éditer cette page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Problèmes du site Web</a></li>
+      <li><a href="../../about.html">À propos de ce site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Dépôt GitHub</a></li>
+      <li><a href="../../contributors.fr.html">Crédits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

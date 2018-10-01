@@ -1,0 +1,632 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="books.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Books &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/books.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../learn/">Learn</a><span class="divider"></span></li>
+<li class="active">Books</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Books-in-English">Books in English</a>
+<ul><li><a href="#The-OCaml-System-Documentation-and-User-39-s-Manual">The OCaml System: Documentation and User&#39;s Manual</a>
+</li><li><a href="#Real-World-OCaml">Real World OCaml</a>
+</li><li><a href="#OCaml-from-the-Very-Beginning">OCaml from the Very Beginning</a>
+</li><li><a href="#More-OCaml-Algorithms-Methods-amp-Diversions">More OCaml: Algorithms, Methods &amp; Diversions</a>
+</li><li><a href="#Unix-System-Programming-in-OCaml">Unix System Programming in OCaml</a>
+</li><li><a href="#OCaml-for-Scientists">OCaml for Scientists</a>
+</li><li><a href="#Using-Understanding-and-Unraveling-OCaml">Using, Understanding, and Unraveling OCaml</a>
+</li><li><a href="#Developing-Applications-With-OCaml">Developing Applications With OCaml</a>
+</li><li><a href="#Introduction-to-OCaml">Introduction to OCaml</a>
+</li><li><a href="#The-Functional-Approach-to-Programming">The Functional Approach to Programming</a>
+</li><li><a href="#OCaml-Book">OCaml Book</a>
+</li><li><a href="#Think-OCaml-How-to-Think-Like-a-Functional-Programmer">Think OCaml: How to Think Like a (Functional) Programmer</a>
+</li></ul>
+</li><li><a href="#Books-in-French">Books in French</a>
+<ul><li><a href="#Initiation-la-programmation-fonctionnelle-en-OCaml">Initiation à la programmation fonctionnelle en OCaml</a>
+</li><li><a href="#Apprendre-programmer-avec-OCaml">Apprendre à programmer avec OCaml</a>
+</li><li><a href="#D-veloppement-d-39-applications-avec-Objective-Caml">Développement d&#39;applications avec Objective Caml</a>
+</li><li><a href="#Manuel-de-r-f-rence-du-langage-Caml">Manuel de référence du langage Caml</a>
+</li><li><a href="#Le-langage-Caml">Le langage Caml</a>
+</li><li><a href="#Approche-fonctionnelle-de-la-programmation">Approche fonctionnelle de la programmation</a>
+</li><li><a href="#Seize-probl-mes-d-39-informatique">Seize problèmes d&#39;informatique</a>
+</li><li><a href="#Nouveaux-exercices-d-39-algorithmique">Nouveaux exercices d&#39;algorithmique</a>
+</li><li><a href="#Option-informatique-MPSI">Option informatique MPSI</a>
+</li><li><a href="#Option-informatique-MP-MP">Option informatique MP/MP*</a>
+</li><li><a href="#Cours-et-exercices-d-39-informatique">Cours et exercices d&#39;informatique</a>
+</li><li><a href="#Concepts-et-outils-de-programmation">Concepts et outils de programmation</a>
+</li><li><a href="#Programmation-en-Caml">Programmation en Caml</a>
+</li><li><a href="#Apprentissage-de-la-programmation-avec-OCaml">Apprentissage de la programmation avec OCaml</a>
+</li><li><a href="#Programmation-fonctionnelle-g-n-rique-et-objet-une-introduction-avec-le-langage-OCaml">Programmation fonctionnelle, générique et objet: une introduction avec le langage OCaml</a>
+</li><li><a href="#Programmation-de-droite-gauche-et-vice-versa">Programmation de droite à gauche et vice-versa</a>
+</li></ul>
+</li><li><a href="#Books-in-German">Books in German</a>
+<ul><li><a href="#Algorithmen-Datenstrukturen-Funktionale-Programmierung-Eine-praktische-Einf-hrung-mit-Caml-Light">Algorithmen, Datenstrukturen, Funktionale Programmierung: Eine praktische Einführung mit Caml Light</a>
+</li></ul>
+</li><li><a href="#Books-in-Italian">Books in Italian</a>
+<ul><li><a href="#Programmazione-funzionale-una-semplice-introduzione">Programmazione funzionale, una semplice introduzione</a>
+</li><li><a href="#Introduzione-alla-programmazione-funzionale">Introduzione alla programmazione funzionale</a>
+</li></ul>
+</li><li><a href="#Books-in-Portuguese">Books in Portuguese</a>
+<ul><li><a href="#OCaml-Programa-o-Funcional-na-Pr-tica">OCaml: Programação Funcional na Prática</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Books">Books</h1><h2 id="Books-in-English">Books in English</h2><h3 id="The-OCaml-System-Documentation-and-User-39-s-Manual">The OCaml System: Documentation and User&#39;s Manual</h3><p><img src="../img/colour-icon-170x148.png" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Damien Doligez, Alain Frisch, Jacques Garrigue, Didier Rémy, and Jérôme
+Vouillon*</p>
+<p>This the official User&#39;s Manual. It serves as a complete reference guide
+to OCaml. Updated for each version of OCaml, it contains the description
+of the language, of its extensions, and the documentation of the tools
+and libraries included in the official distribution.</p>
+<p><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Online</a> |
+<a href="http://caml.inria.fr/distrib/ocaml-4.07/ocaml-4.07-refman.pdf">PDF</a> |
+<a href="http://caml.inria.fr/distrib/ocaml-4.07/ocaml-4.07-refman-html.tar.gz">HTML
+Tarball</a>
+| <a href="http://caml.inria.fr/distrib/">Older Versions</a></p>
+<p></p><hr/>
+<h3 id="Real-World-OCaml">Real World OCaml</h3><p><img src="../img/real-world-ocaml.jpg" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Jason Hickey, Anil Madhavapeddy, and Yaron Minsky. Published 25th November 2013</em></p>
+<p>Learn how to solve day-to-day problems in data processing, numerical
+computation, system scripting, and database-driven web applications with
+the OCaml multi-paradigm programming language. This hands-on book shows
+you how to take advantage of OCaml’s functional, imperative, and
+object-oriented programming styles with recipes for many real-world
+tasks.</p>
+<p>You’ll start with OCaml basics, including how to set up a development
+environment, and move toward more advanced topics such as the module
+system, foreign-function interface, macro language, and the ocamlbuild
+system. Quickly learn how to put OCaml to work for writing succinct and
+readable code.</p>
+<p><a href="https://realworldocaml.org/">Book Website</a> | <a href="http://shop.oreilly.com/product/0636920024743.do">O&#39;Reilly</a> | <a href="http://www.amazon.com/Real-World-OCaml-Functional-programming/dp/144932391X/ref=tmm_pap_title_0?ie=UTF8&amp;qid=1385006524&amp;sr=8-1">Amazon</a></p>
+<p></p><hr/>
+<h3 id="OCaml-from-the-Very-Beginning">OCaml from the Very Beginning</h3><p><img src="../img/OCaml_from_beginning.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>John Whitington. Published June 7th, 2013</em></p>
+<p>In &#39;OCaml from the Very Beginning&#39; John Whitington takes a
+no-prerequisites approach to teaching a modern general-purpose
+programming language. Each small, self-contained chapter introduces a
+new topic, building until the reader can write quite substantial
+programs. There are plenty of questions and, crucially, worked answers
+and hints.</p>
+<p>&#39;OCaml from the Very Beginning&#39; will appeal both to new programmers, and experienced programmers eager to explore functional languages such as OCaml. It is suitable both for formal use within an undergraduate or graduate curriculum, and for the interested amateur.</p>
+<p><a href="http://ocaml-book.com/">Book Website</a> |
+<a href="http://www.amazon.com/gp/product/0957671105">Amazon</a></p>
+<p></p><hr/>
+<h3 id="More-OCaml-Algorithms-Methods-amp-Diversions">More OCaml: Algorithms, Methods &amp; Diversions</h3><p><img src="../img/more-ocaml-300-376.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>John Whitington. Published 26th August 2014</em></p>
+<p>In &#39;More OCaml&#39; John Whitington takes a meandering tour of functional
+programming with OCaml, introducing various language features and describing
+some classic algorithms. The book ends with a large worked example dealing with
+the production of PDF files. There are questions for each chapter together with
+worked answers and hints.</p>
+<p>&#39;More OCaml&#39; will appeal both to existing OCaml programmers who wish to brush up
+their skills, and to experienced programmers eager to explore functional
+languages such as OCaml. It is hoped that each reader will find something new,
+or see an old thing in a new light. For the more casual reader, or those who are
+used to a different functional language, a summary of basic OCaml is provided at
+the front of the book.</p>
+<p><a href="http://ocaml-book.com/more-ocaml-algorithms-methods-diversions/">Book Website</a> |
+<a href="http://www.amazon.com/gp/product/0957671113">Amazon</a></p>
+<p></p><hr/>
+<h3 id="Unix-System-Programming-in-OCaml">Unix System Programming in OCaml</h3><p><img src="../img/default.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Xavier Leroy and Didier Rémy. Published May 2010</em></p>
+<p>This is an excellent book on Unix system programming, with an emphasis
+on communications between processes. The main novelty of this work is
+the use of OCaml, instead of the C language that is customary in systems
+programming. This gives an unusual perspective on systems programming
+and on OCaml. It is assumed that the reader is familiar with OCaml and
+Unix shell commands.</p>
+<p><a href="http://ocaml.github.io/ocamlunix">Online</a></p>
+<p></p><hr/>
+<h3 id="OCaml-for-Scientists">OCaml for Scientists</h3><p><img src="../img/harrop-book.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Jon D. Harrop<br/>
+ Flying Frog Consultancy Ltd, 2005.*</p>
+<p>This book teaches OCaml programming with special emphasis on scientific
+applications. Many examples are given, covering everything from simple
+numerical analysis to sophisticated real-time 3D visualisation using
+OpenGL. This book contains over 800 color syntax-highlighted source code
+examples and dozens of diagrams that elucidate the power of functional
+programming to explain how lightning-fast and yet remarkably-simple
+programs can be constructed in the OCaml programming language.</p>
+<p><a href="http://www.ffconsultancy.com/products/ocaml_for_scientists/index.html">Book
+Website</a>
+| <a href="http://www.ffconsultancy.com/products/ocaml_for_scientists/index.html">Ordering
+Information</a></p>
+<p></p><hr/>
+<h3 id="Using-Understanding-and-Unraveling-OCaml">Using, Understanding, and Unraveling OCaml</h3><p><img src="../img/default.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Didier Rémy. Published 20th September 2002</em></p>
+<p>This book describes both the OCaml language and the theoretical grounds
+behind its powerful type system. A good complement to other books on
+OCaml it is addressed to a wide audience of people interested in modern programming languages in general, ML-like languages in particular, or simply in OCaml, whether they are programmers or language designers, beginners or knowledgeable readers — little prerequisite is actually assumed.</p>
+<p><a href="http://caml.inria.fr/pub/docs/u3-ocaml/">Online</a> |
+<a href="http://caml.inria.fr/pub/docs/u3-ocaml/ocaml.pdf">PDF</a></p>
+<p></p><hr/>
+<h3 id="Developing-Applications-With-OCaml">Developing Applications With OCaml</h3><p><img src="../img/logocaml-oreilly.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Emmanuel Chailloux, Pascal Manoury, Bruno Pagano. Published 2002</em></p>
+<p>A comprehensive (742 pages) book on OCaml, covering not only the core
+language, but also modules, objects and classes, threads and systems
+programming, interoperability with C, and runtime tools. This book is a
+translation of a French book published by OReilly.</p>
+<p><a href="http://caml.inria.fr/pub/docs/oreilly-book/index.html">Book Website</a> |
+<a href="http://caml.inria.fr/pub/docs/oreilly-book/html/index.html">Online</a> |
+<a href="http://caml.inria.fr/pub/docs/oreilly-book/ocaml-ora-book.pdf">PDF</a></p>
+<p></p><hr/>
+<h3 id="Introduction-to-OCaml">Introduction to OCaml</h3><p><img src="../img/default.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Jason Hickey. Published in 2008</em></p>
+<p>This book is notoriously much more than just an introduction to OCaml,
+it describes most of the language, and is accessible.</p>
+<p>Abstract: <em>This book is an introduction to ML programming, specifically for the OCaml programming language from INRIA. OCaml is a dialect of the ML family of languages, which derive from the Classic ML language designed by Robin Milner in 1975 for the LCF (Logic of Computable Functions) theorem prover.</em></p>
+<p><a href="http://courses.cms.caltech.edu/cs134/cs134b/book.pdf">PDF</a></p>
+<p></p><hr/>
+<h3 id="The-Functional-Approach-to-Programming">The Functional Approach to Programming</h3><p><img src="../img/cousineau-mauny-en.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Guy Cousineau, Michel Mauny<br/>
+ Cambridge University Press, Cambridge, 1998, <br/>
+ ISBN 0-521-57183-9 (hardcover) or 0-521-57681-4 (paperback)*</p>
+<p>This book uses OCaml as a tool to introduce several important
+programming concepts. It is divided in three parts. The first part is an
+introduction to OCaml, which presents the language itself, but also
+introduces evaluation by rewriting, evaluation strategies and proofs of
+programs by induction. The second part is dedicated to the description
+of application programs which belong to various fields and might
+interest various types of readers or students. Finally, the third part
+is dedicated to implementation. It describes interpretation and
+compilation, with brief descriptions of memory management and type
+synthesis.</p>
+<p><a href="http://pauillac.inria.fr/cousineau-mauny/main.html">Book Website</a> |
+<a href="http://www.amazon.com/exec/obidos/ASIN/0521571839/qid%3D911812711/sr%3D1-22/102-8668961-8838559">Order at
+Amazon.com</a></p>
+<p></p><hr/>
+<h3 id="OCaml-Book">OCaml Book</h3><p><img src="../img/default.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Hongbo Zhang. Published 2011</em></p>
+<p>This book is a work in progress. It currently includes sections on the
+core OCaml language, Camlp4, parsing, various libraries, the OCaml
+runtime, interoperating with C, and pearls.</p>
+<p><a href="https://github.com/bobzhang/ocaml-book">GitHub</a></p>
+<p></p><hr/>
+<h3 id="Think-OCaml-How-to-Think-Like-a-Functional-Programmer">Think OCaml: How to Think Like a (Functional) Programmer</h3><p><img src="http://greenteapress.com/thinkocaml/thinkocaml_cover_web.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Nicholas Monje and Allen Downey. Published 2008</em></p>
+<p>This book is a work in progress. It is an introductory programming
+textbook based on the OCaml language. It is a modified version of
+Think Python by Allen Downey. It is intended for newcomers to
+programming and also those who know some programming but want to learn
+programming in the function-oriented paradigm, or those who simply
+want to learn OCaml.</p>
+<p><a href="http://greenteapress.com/thinkocaml/index.html">Book Website</a> |
+<a href="http://greenteapress.com/thinkocaml/thinkocaml.pdf">PDF</a></p>
+<p></p><hr/>
+<h2 id="Books-in-French">Books in French</h2>
+
+<h3 id="Initiation-la-programmation-fonctionnelle-en-OCaml">Initiation à la programmation fonctionnelle en OCaml</h3><p><img src="../img/Initiation_a_la_programmation_fonctionnelle_en_OCaml.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Mohammed-Said Habet<br/>
+édition: Edilivre, 2015. ISBN: 9782332978400*</p>
+<p>La programmation fonctionnelle est un style de programmation qui
+consiste à considérer les programmes informatiques comme des fonctions
+au sens mathématique du terme. Ce style est proposé dans de nombreux
+langages de programmation anciens et récents comme OCaml.</p>
+<p>Le but de ce livre est d’initier le lecteur au style fonctionnel de
+programmation en utilisant le langage OCaml. Cet ouvrage s’adresse
+donc principalement aux débutants en informatique. Il peut également
+être l’occasion pour les initiés de découvrir le langage de
+programmation OCaml.</p>
+<p>Le lecteur trouvera une présentation progressive des concepts de
+programmation fonctionnelle dans le langage OCaml, illustrée par des
+exemples, de nombreux exercices corrigés et d’autres laissés à
+l’initiative du lecteur.</p>
+<p><a href="http://www.edilivre.com/initiation-a-la-programmation-fonctionnelle-en-ocaml-mohammed-said-habet.html">Website</a></p>
+<p></p><hr/>
+<h3 id="Apprendre-programmer-avec-OCaml">Apprendre à programmer avec OCaml</h3><p><img src="../img/apprendre_ocaml_cover.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Jean-Christophe Filliâtre and Sylvain Conchon<br/>
+ Éditions Eyrolles, Paris, 2014, ISBN 2-21213-678-1.*</p>
+<p>Computer programming is hard to learn. Being a skillful programmer
+requires imagination, anticipation, knowledge in algorithmics, the
+mastery of a programming language, and above all experience, as
+difficulties are often hidden in details.  This book synthesizes our
+experience as teachers and programmers.</p>
+<p>The programming style is essential. Given a programming language, the
+same algorithm can be written in multiple ways, and some of them can
+be both elegant and efficient. This is what the programmer must seek
+at all costs and the reason why we choose a programming language for
+this book rather than pseudo-code. Our choice is OCaml.</p>
+<p>This book is organized into three parts. The first one introduces
+OCaml and targets beginners, being they programming beginners or
+simply new to OCaml. Through small programs, the reader is introduced
+to fundamental concepts of programming and of OCaml. The second and
+third parts are dedicated to fundamental concepts of algorithmics and
+should allow the reader to write programs in a structured and
+efficient way. Algorithmic concepts are directly presented in the
+syntax of OCaml and any code snippet from the book is available
+online.</p>
+<p><a href="http://programmer-avec-ocaml.lri.fr/">Online</a> |
+<a href="http://www.amazon.fr/Apprendre-programmer-avec-Ocaml-Algorithmes/dp/2212136781/">Order at Amazon.fr</a></p>
+<p></p><hr/>
+<h3 id="D-veloppement-d-39-applications-avec-Objective-Caml">Développement d&#39;applications avec Objective Caml</h3><p><img src="../img/chailloux-manoury-pagano.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Emmanuel Chailloux, Pascal Manoury, and Bruno Pagano<br/>
+ Éditions O&#39;Reilly, Paris, 2000, ISBN 2-84177-121-0.*</p>
+<p>A comprehensive (742 pages) book on OCaml, covering not only the core
+language, but also modules, objects and classes, threads and systems
+programming, and interoperability with C. <br/>
+&#39;Objective CAML est un langage de programmation : un de plus dira-t-on ! Ils sont en effet déjà nombreux et pourtant il en apparaît constamment de nouveaux. Au delà de leurs disparités, la conception et la genèse de chacun d&#39;eux procèdent d&#39;une motivation partagée : la volonté d&#39;abstraire&#39;</p>
+<p><a href="http://www.pps.jussieu.fr/Livres/ora/DA-OCAML/index.html">Online</a> |
+<a href="http://www.amazon.fr/exec/obidos/ASIN/2841771210">Order at Amazon.fr</a></p>
+<p></p><hr/>
+<h3 id="Manuel-de-r-f-rence-du-langage-Caml">Manuel de référence du langage Caml</h3><p><img src="../img/leroy-weis.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Xavier Leroy and Pierre Weis<br/>
+ InterEditions, Paris, 1993, ISBN 2-7296-0492-8 (out of print).*</p>
+<p>Written by two of the implementors of the Caml Light compiler, this
+comprehensive book describes all constructs of the programming language
+and provides a complete documentation for the Caml Light system. <br/>
+Intro: &#39;Cet ouvrage contient le manuel de référence du langage Caml et la documentation complète du système Caml Light, un environnement de programmation en Caml distribué́ee gratuitement. Il s’adresse á des programmeurs Caml exp ́ériment ́és, et non pas aux d ́ébutants. Il vient en compl ́ément du livre <em>Le langage Caml</em>, des mêmes auteurs chez le même é́editeur, qui fournit une introduction progressive au langage Caml et á l’é́ecriture de programmes dans ce langage.&#39;</p>
+<p><a href="http://caml.inria.fr/pub/distrib/books/manuel-cl.pdf">PDF</a></p>
+<p></p><hr/>
+<h3 id="Le-langage-Caml">Le langage Caml</h3><p><img src="../img/weis-leroy.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Pierre Weis, Xavier Leroy<br/>
+ Second edition: Dunod, Paris, 1999, ISBN 2-10-004383-8.<br/>
+ First edition: InterEditions, Paris, 1993. Out of print.*</p>
+<p>This book is a comprehensive introduction to programming in OCaml.
+Usable as a programming course, it introduces progressively the language
+features and shows them at work on the fundamental programming problems.
+In addition to many introductory code samples, this book details the
+design and implementation of six complete, realistic programs in
+reputedly difficult application areas: compilation, type inference,
+automata, etc.</p>
+<p><a href="http://caml.inria.fr/pub/distrib/books/llc.pdf">PDF</a></p>
+<p></p><hr/>
+<h3 id="Approche-fonctionnelle-de-la-programmation">Approche fonctionnelle de la programmation</h3><p><img src="../img/cousineau-mauny-fr.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Guy Cousineau, Michel Mauny<br/>
+ Ediscience (Collection Informatique), Paris, 1995, ISBN 2-84074-114-8.*</p>
+<p>This book uses OCaml as a tool to introduce several important
+programming concepts. It is divided in three parts. The first part is an
+introduction to OCaml, which presents the language itself, but also
+introduces evaluation by rewriting, evaluation strategies and proofs of
+programs by induction. The second part is dedicated to the description
+of application programs which belong to various fields and might
+interest various types of readers or students. Finally, the third part
+is dedicated to implementation. It describes interpretation then
+compilation, with brief descriptions of memory management and type
+synthesis.</p>
+<p><a href="http://pauillac.inria.fr/cousineau-mauny/main-fr.html">Book Website</a></p>
+<p></p><hr/>
+<h3 id="Seize-probl-mes-d-39-informatique">Seize problèmes d&#39;informatique</h3><p><img src="../img/petazzoni.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Bruno Petazzoni<br/>
+ Éditions Springer, Paris, 2001 <br/>
+ ISBN 3-540-67387-3.*</p>
+<p>This book offers sixteen problems in computer science, with detailed
+answers to all questions and complete solutions to algorithmic problems
+given as OCaml programs. It deals mainly with automata, finite or
+infinite words, formal language theory, and some classical algorithms
+such as bin-packing. It is intended for students who attend the optional
+computer science curriculum of the “classes préparatoires MPSI/MP”. It
+should also be useful to all teachers and computer science students up
+to a masters degree.</p>
+<p><a href="http://www.springeronline.com/sgw/cda/frontpage/0,10735,5-102-22-2042496-0,00.html">Springer&#39;s Catalog
+Page</a></p>
+<p></p><hr/>
+<h3 id="Nouveaux-exercices-d-39-algorithmique">Nouveaux exercices d&#39;algorithmique</h3><p><img src="../img/quercia.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Michel Quercia<br/>
+ Éditions Vuibert, Paris, 2000 <br/>
+ ISBN 2-7117-8990 X.*</p>
+<p>This book presents 103 exercises and 5 problems about algorithms, for
+masters students. It attempts to address both practical and theoretical
+questions. Programs are written in OCaml and expressed in a purely
+functional style. Problem areas include programming methodology, lists,
+formula evaluation, Boolean logic, algorithmic complexity, trees,
+languages, and automata.</p>
+<p><a href="http://www.amazon.fr/exec/obidos/ASIN/3540673873">Order at Amazon.fr</a></p>
+<p></p><hr/>
+<h3 id="Option-informatique-MPSI">Option informatique MPSI</h3><p><img src="../img/monasse-1.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Denis Monasse<br/>
+ Éditions Vuibert (Enseignement supérieur &amp; Informatique), Paris, 1996 <br/>
+ISBN 2-7117-8831-8.*</p>
+<p>This is a computer science course for the first year of “classes
+préparatoires”. The course begins with an introductory lesson on
+algorithms and a description of the OCaml language. Then, several
+fundamental algorithms are described and illustrated using OCaml
+programs. The book adopts a mathematical approach: descriptions of
+mathematical objects are related to data structures in the programming
+language. This book is suitable for students with some mathematical
+background, and for everyone who wants to learn the bases of computer
+science.</p>
+<p></p><hr/>
+<h3 id="Option-informatique-MP-MP">Option informatique MP/MP*</h3><p><img src="../img/monasse-2.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Denis Monasse<br/>
+ Éditions Vuibert (Enseignement supérieur &amp; Informatique), Paris 1997 <br/>
+ISBN 2-7117-8839-3.*</p>
+<p>This books is a follow-up to the previous one and is intended for second
+year students in “classes préparatoires”. It deals with trees, algebraic
+expressions, automata and languages, and OCaml streams. The book
+contains more than 200 OCaml programs.</p>
+<p><a href="http://www.amazon.fr/exec/obidos/ASIN/2711788393">Order at Amazon.fr</a></p>
+<p></p><hr/>
+<h3 id="Cours-et-exercices-d-39-informatique">Cours et exercices d&#39;informatique</h3><p><img src="../img/albert.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Luc Albert<br/>
+ Thomson Publishing International, Paris, 1997 <br/>
+ ISBN 2-84180-106-3.*</p>
+<p>This book was written by teachers at university and in “classes
+préparatoires”. It is intended for “classes préparatoires” students who
+study computer science and for students engaged in a computer science
+cursus up to the masters level. It includes a tutorial of the OCaml
+language, a course on algorithms, data structures, automata theory, and
+formal logic, as well as 135 exercises with solutions.</p>
+<p></p><hr/>
+<h3 id="Concepts-et-outils-de-programmation">Concepts et outils de programmation</h3><p><img src="../img/hardin-donzeau-gouge.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Thérèse Accart Hardin, Véronique Donzeau-Gouge Viguié<br/>
+ InterEditions, ISBN 2 7296 0419 7.*</p>
+<p>This book presents a new approach to teaching programming concepts to
+beginners, based on language semantics. A simplified semantic model is
+used to describe in a precise manner the features found in most
+programming languages. This model is powerful enough to explain
+typechecking, polymorphism, evaluation, side-effects, modularity,
+exceptions. Yet, it is simple enough to be manipulated by hand, so that
+students can actually use it to compute. The book begins with a
+functional approach, based on OCaml, and continues with a presentation
+of an imperative language, namely Ada. It also provides numerous
+exercises with solutions.</p>
+<p><a href="http://www.amazon.fr/exec/obidos/ASIN/2729604197">Order at Amazon.fr</a></p>
+<p></p><hr/>
+<h3 id="Programmation-en-Caml">Programmation en Caml</h3><p><img src="../img/rouable.jpg" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Jacques Rouablé<br/>
+ Eyrolles, Paris 1997, ISBN 2-212-08944-9.*</p>
+<p>This book is intended for beginners, who will learn basic programming
+notions. The first part of the book is a programming course that
+initiates the reader to the OCaml language. Important notions are
+presented from a practical point of view, and the implementation of some
+of these is analyzed and sketched. The second part, the “OCaml
+workshop”, is a practical application of these notions to other domains
+connected to computer science, logic, automata and grammars.</p>
+<p><a href="http://www.amazon.fr/exec/obidos/ASIN/2212089449">Order at Amazon.fr</a></p>
+<p></p><hr/>
+<h3 id="Apprentissage-de-la-programmation-avec-OCaml">Apprentissage de la programmation avec OCaml</h3><p><img src="../img/dubois-menissier.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Catherine Dubois and Valérie Ménissier Morain<br/>
+ Hermès Sciences, Paris 2004, ISBN 2-7462-0819-9.*</p>
+<p>Programming is a discipline by which the strengths of computers can be
+harnessed: large amounts of reliable memory, the ability to execute
+repetitive tasks relentlessly, and a high computation speed. In order to
+write correct programs that fulfill their specified needs, it is
+necessary to understand the precise semantics of the programming
+language. This book is targeted towards beginner programmers and
+provides teaching material for all programmers wishing to learn the
+functional programming style. The programming features introduced in
+this book are available in all dialects of the ML language, notably
+Caml-Light, OCaml and Standard ML. The concepts presented therein and
+illustrated in OCaml easily transpose to other programming languages.</p>
+<p></p><hr/>
+<h3 id="Programmation-fonctionnelle-g-n-rique-et-objet-une-introduction-avec-le-langage-OCaml">Programmation fonctionnelle, générique et objet: une introduction avec le langage OCaml</h3><p><img src="../img/narbel.jpg" width="180"/></p>
+<p>*Philippe Narbel<br/>
+ Vuibert, Paris 2005, ISBN 2-7117-4843-X.*</p>
+<p></p><hr/>
+<h3 id="Programmation-de-droite-gauche-et-vice-versa">Programmation de droite à gauche et vice-versa</h3><p><img src="../img/manoury.png" width="180"/></p>
+<p>*Pascal Manoury<br/>
+ Éditions Paracamplus, Paris, 2011, ISBN 978-2-916466-05-7.*</p>
+<p><a href="http://paracamplus.com">Order Online from Paracamplus</a></p>
+<p></p><hr/>
+<h2 id="Books-in-German">Books in German</h2>
+
+<h3 id="Algorithmen-Datenstrukturen-Funktionale-Programmierung-Eine-praktische-Einf-hrung-mit-Caml-Light">Algorithmen, Datenstrukturen, Funktionale Programmierung: Eine praktische Einführung mit Caml Light</h3><p><img src="../img/wolff.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Juergen Wolff von Gudenberg<br/>
+ Addison-Wesley, Bonn, 1996.*</p>
+<p>This book gives an introduction to programming where algorithms as well
+as data structures are considered functionally. It is intended as an
+accompanying book for basic courses in computer science, but it is also
+suitable for self-studies. In the first part, algorithms are described
+in a concise and precise manner using Caml Light. The second part
+provides a tutorial introduction into the language Caml Light and in its
+last chapter a comprehensive description of the language kernel.</p>
+<p></p><hr/>
+<h2 id="Books-in-Italian">Books in Italian</h2>
+
+<h3 id="Programmazione-funzionale-una-semplice-introduzione">Programmazione funzionale, una semplice introduzione</h3><p><img src="../img/default.png" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p><em>Massimo Maria Ghisalberti</em></p>
+<p><a href="http://minimalprocedure.pragmas.org/writings/programmazione_funzionale/programmazione_funzionale.org">Emacs Org source</a> | <a href="http://minimalprocedure.pragmas.org/writings/programmazione_funzionale/programmazione_funzionale.html">HTML</a> | <a href="http://minimalprocedure.pragmas.org/writings/programmazione_funzionale/programmazione_funzionale.pdf">PDF</a></p>
+<p></p><hr/>
+<h3 id="Introduzione-alla-programmazione-funzionale">Introduzione alla programmazione funzionale</h3><p><img src="../img/limongelli-cialdea.gif" width="180" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Carla Limongelli and Marta Cialdea<br/>
+ Societa&#39; Editrice Esculapio, 2002, ISBN 88-7488-031-6.*</p>
+<div style="clear: both"></div>
+
+<p></p><hr/>
+<h2 id="Books-in-Portuguese">Books in Portuguese</h2>
+
+<h3 id="OCaml-Programa-o-Funcional-na-Pr-tica">OCaml: Programação Funcional na Prática</h3><p><img src="../img/opfp.png" style="float: left; margin-right: 15px; margin-bottom: 15px;"/></p>
+<p>*Andrei de Araújo Formiga<br/>
+ Casa do Código, 2015*</p>
+<p>This book is an introduction to functional programming through OCaml, with a pragmatic
+focus. The goal is to enable the reader to write real programs in OCaml and understand
+most of the open source code written in the language. It includes many code examples
+illustrating the topics and a few larger projects written in OCaml that showcase the
+integration of many language features. These larger
+programs include a set of interpreter, compiler and stack machine for a simple
+language, and a decision tree learning program for data analysis.</p>
+<p><a href="http://andreiformiga.com/livro/ocaml/">Book site</a>
+<a href="http://www.casadocodigo.com.br/products/livro-ocaml">Order online from Casa do Código</a></p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/books.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

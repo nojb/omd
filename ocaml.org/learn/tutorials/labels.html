@@ -1,0 +1,747 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="labels.html" rel="alternate" hreflang="en"/>
+<link href="labels.ja.html" rel="alternate" hreflang="ja"/>
+<link href="labels.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Labels &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/labels.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Labels</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+<li><a href="labels.ja.html">日本語</a></li>
+<li><a href="labels.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Exceptions-and-hash-tables">Exceptions and hash tables</a>
+</li><li><a href="#Mutually-recursive-functions">Mutually recursive functions</a>
+</li><li><a href="#Aliases-for-function-names-and-arguments">Aliases for function names and arguments</a>
+</li><li><a href="#Labelled-and-optional-arguments-to-functions">Labelled and optional arguments to functions</a>
+<ul><li><a href="#Labelled-arguments">Labelled arguments</a>
+</li><li><a href="#Optional-arguments">Optional arguments</a>
+</li><li><a href="#39-Warning-This-optional-argument-cannot-be-erased-39">&#39;Warning: This optional argument cannot be erased&#39;</a>
+</li><li><a href="#More-shorthand">More <code>~</code>shorthand</a>
+</li><li><a href="#Using-foo-in-a-function-call">Using <code>?foo</code> in a function call</a>
+</li><li><a href="#When-and-when-not-to-use-and">When and when not to use <code>~</code> and <code>?</code></a>
+</li><li><a href="#Addendum">Addendum</a>
+</li></ul>
+</li><li><a href="#More-variants-polymorphic-variants">More variants (“polymorphic variants”)</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Labels">Labels</h1>
+
+<h2 id="Exceptions-and-hash-tables">Exceptions and hash tables</h2><p><em>(unfinished)</em></p>
+<h2 id="Mutually-recursive-functions">Mutually recursive functions</h2><p>Suppose I want to define two functions which call each other. This is
+actually not a very common thing to do, but it can be useful sometimes.
+Here&#39;s a contrived example (thanks to Ryan Tarpine): The number 0 is
+even. Other numbers greater than 0 are even if their predecessor is odd.
+Hence:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; true
+    | x -&gt; <span class="ocaml-error-loc">odd</span> (x-1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value odd
+</span></code></pre>
+
+<p>The code above doesn&#39;t compile because we haven&#39;t defined the function
+<code>odd</code> yet! That&#39;s easy though. Zero is not odd, and other numbers
+greater than 0 are odd if their predecessor is even. So to make this
+complete we need that function too:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; true
+    | x -&gt; <span class="ocaml-error-loc">odd</span> (x-1)
+    
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">odd</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; false
+    | x -&gt; even (x-1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value odd
+</span></code></pre>
+
+<p>The only problem is... this program doesn&#39;t compile. In order to compile
+the <code>even</code> function, we already need the definition of <code>odd</code>, and to
+compile <code>odd</code> we need the definition of <code>even</code>. So swapping the two
+definitions around won&#39;t help either.</p>
+<p>There are no &#39;forward prototypes&#39; (as seen in languages descended
+from C) in OCaml but there is a special syntax
+for defining a set of two or more mutually recursive functions, like
+<code>odd</code> and <code>even</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; true
+    | x -&gt; odd (x-1)
+  <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">odd</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; false
+    | x -&gt; even (x-1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val even : int -&gt; bool = &lt;fun&gt;
+val odd : int -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<p>You can also
+use similar syntax for writing mutually recursive class definitions and
+modules.</p>
+<h2 id="Aliases-for-function-names-and-arguments">Aliases for function names and arguments</h2><p>Recall that we talked about <a href="functional_programming.html#Partialfunctionapplicationsandcurrying">partial function
+application</a>.
+It&#39;s
+possible to use this as a neat trick to save typing: aliasing function
+names, and function arguments.</p>
+<p>Although we haven&#39;t looked at object-oriented programming (that&#39;s the
+subject for the <a href="objects.html">&#39;Objects&#39; section</a>),
+here&#39;s an example from OCamlNet of an
+aliased function call. All you need to know is that
+<code>cgi # output # output_string &#39;string&#39;</code> is a method call, similar to
+<code>cgi.output().output_string (&#39;string&#39;)</code> in Java.</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">begin_page</span> <span class="ocaml-variable">cgi title </span>=
+  <span class="governing">let </span><span class="ocaml-variable">out</span> = cgi # output # output_string <span class="governing">in</span>
+  out '&lt;html&gt;\n';
+  out '&lt;head&gt;\n';
+  out ('&lt;title&gt;' ^ text title ^ '&lt;/title&gt;\n');
+  out ('&lt;style <span class="governing">type</span>=\'text/css\'&gt;\n');
+  out 'body { background: white; color: black; }\n';
+  out '&lt;/style&gt;\n';
+  out '&lt;/head&gt;\n';
+  out '&lt;body&gt;\n';
+  out ('&lt;h1&gt;' ^ text title ^ '&lt;/h1&gt;\n')</code></pre>
+
+<p>The <code>let out = ... </code> is a partial function application for that method
+call (partial, because the string parameter hasn&#39;t been applied). <code>out</code>
+is therefore a function, which takes a string parameter.</p>
+<pre><code class="ocaml">out '&lt;html&gt;\n';</code></pre>
+
+<p>is equivalent to:</p>
+<pre><code class="ocaml">cgi # output # output_string '&lt;html&gt;\n';</code></pre>
+
+<p>We saved ourselves a lot of typing there.</p>
+<p>We can also add arguments. This alternative definition of <code>print_string</code>
+can be thought of as a kind of alias for a function name plus arguments:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">print_string</span> = output_string stdout</code></pre>
+
+<p><code>output_string</code> takes two arguments (a channel and a string), but since
+we have only supplied one, it is partially applied. So <code>print_string</code> is
+a function, expecting one string argument.</p>
+<h2 id="Labelled-and-optional-arguments-to-functions">Labelled and optional arguments to functions</h2><h3 id="Labelled-arguments">Labelled arguments</h3>
+
+<p>Python has a nice syntax for writing arguments to functions. Here&#39;s
+an example (from the Python tutorial, since I&#39;m not a Python
+programmer):</p>
+<pre class="python"><code class="python">def ask_ok(prompt, retries=4, complaint=&#39;Yes or no, please!&#39;):
+  # function definition omitted</code></pre><p>Here are the ways we can call this Python function:</p>
+<pre class="python"><code class="python">ask_ok (&#39;Do you really want to quit?&#39;)
+ask_ok (&#39;Overwrite the file?&#39;, 2)
+ask_ok (prompt=&#39;Are you sure?&#39;)
+ask_ok (complaint=&#39;Please answer yes or no!&#39;, prompt=&#39;Are you sure?&#39;)</code></pre><p>Notice that in Python we are allowed to name arguments when we call
+them, or use the usual function call syntax, and we can have optional
+arguments with default values.</p>
+<p>You can do something similar in Perl:</p>
+<pre class="perl"><code class="perl">sub ask_ok
+{
+  my %params = @_;
+  
+  my $prompt = $params{prompt};
+  my $retries = exists $params{retries} ? $params{retries} : 4;
+  
+  # ... etc.
+}
+  
+ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre>
+
+<p>OCaml also has a way to label arguments and have optional arguments with
+default values.</p>
+<p>The basic syntax is:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">~first:a ~last:b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range ~first:(a+1) ~last:b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : first:int -&gt; last:int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>(Notice that both <code>to</code> and <code>end</code> are reserved words in OCaml, so they
+cannot be used as labels. So you cannot have <code>~from/~to</code> or
+<code>~start/~end</code>.)</p>
+<p>The type of our previous <code>range</code> function was:</p>
+<pre><code class="ocaml">range : int -&gt; int -&gt; int list</code></pre>
+
+<p>And the type of our new <code>range</code> function with labelled arguments is:</p>
+<pre><code class="ocaml">range : first:int -&gt; last:int -&gt; int list</code></pre>
+
+<p>Confusingly, the <code>~</code> (tilde) is <em>not</em> shown in the type definition, but
+you need to use it everywhere else.</p>
+<p>With labelled arguments, it doesn&#39;t matter which order you give the
+arguments anymore:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">range ~first:1 ~last:10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">range ~last:10 ~first:1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span></code></pre>
+
+<p>There is also a shorthand way to name the arguments, so that the label
+is the same as the variable in the function definition. Here is a
+function defined in <code>lablgtk/gaux.ml</code> (a library of useful oddities used
+in lablgtk):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">may</span> <span class="ocaml-variable">~f x </span>=
+    <span class="keyword">match</span> x <span class="keyword">with</span>
+    | None -&gt; ()
+    | Some x -&gt; ignore(f x)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val may : f:('a -&gt; 'b) -&gt; 'a option -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p>It&#39;s worth spending some time working out exactly what this function
+does, and also working out by hand its type signature. There&#39;s a lot
+going on. First of all, the parameter <code>~f</code> is just shorthand for <code>~f:f</code>
+(ie. the label is <code>~f</code> and the variable used in the function is <code>f</code>).
+Secondly notice that the function takes two parameters. The second
+parameter (<code>x</code>) is unlabelled - it is permitted for a function to take a
+mixture of labelled and unlabelled arguments if you want.</p>
+<p>What is the type of the labelled <code>f</code> parameter? Obviously it&#39;s a
+function of some sort.</p>
+<p>What is the type of the unlabelled <code>x</code> parameter? The <code>match</code> clause
+gives us a clue. It&#39;s an <code>&#39;a option</code>.</p>
+<p>This tells us that <code>f</code> takes an <code>&#39;a</code> parameter, and the return value of
+<code>f</code> is ignored, so it could be anything. The type of <code>f</code> is therefore
+<code>&#39;a -&gt; &#39;b</code>.</p>
+<p>The <code>may</code> function as a whole returns <code>unit</code>. Notice in each case of the
+<code>match</code> the result is <code>()</code>.</p>
+<p>Thus the type of the <code>may</code> function is (and you can verify this in the
+OCaml <a href="basics.html">interactive toplevel</a> if you want):</p>
+<pre><code class="ocaml">may : f:('a -&gt; 'b) -&gt; 'a option -&gt; unit</code></pre>
+
+<p>What does this function do? Running the function in the OCaml toplevel
+gives us some clues:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline (Some <span class="ocaml-error-loc">'</span>hello')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>If the unlabelled argument is a “null pointer” then <code>may</code> does nothing.
+Otherwise <code>may</code> calls the <code>f</code> function on the argument. Why is this
+useful? We&#39;re just about to find out ...</p>
+<h3 id="Optional-arguments">Optional arguments</h3><p>Optional arguments are like labelled arguments, but we use <code>?</code> instead
+of <code>~</code> in front of them. Here is an example:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">?(step=1) a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range ~step (a+step) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : ?step:int -&gt; int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Note the somewhat confusing syntax, switching between <code>?</code> and <code>~</code>. We&#39;ll
+talk about that in the next section. Here is how you call this function:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">range 1 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">range 1 10 ~step:2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 3; 5; 7; 9]
+</span></code></pre>
+
+<p>In this case, <code>?(step=1)</code> fairly obviously means that <code>~step</code> is an
+optional argument which defaults to 1. We can also omit the default
+value and just have an optional argument. This example is modified from
+lablgtk:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">window</span> = { <span class="keyword">mutable</span> title: string;
+                  <span class="keyword">mutable</span> width: int;
+                  <span class="keyword">mutable</span> height: int }
+    
+  <span class="governing">let</span> <span class="ocaml-function">create_window</span> <span class="ocaml-variable">() </span>=
+    { title = <span class="ocaml-error-loc">'</span>none'; width = 640; height = 480; }
+    
+  <span class="governing">let</span> <span class="ocaml-function">set_title</span> <span class="ocaml-variable">window title </span>=
+    window.title &lt;- title
+    
+  <span class="governing">let</span> <span class="ocaml-function">set_width</span> <span class="ocaml-variable">window width </span>=
+    window.width &lt;- width
+    
+  <span class="governing">let</span> <span class="ocaml-function">set_height</span> <span class="ocaml-variable">window height </span>=
+    window.height &lt;- height
+    
+  <span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height () </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = create_window () <span class="governing">in</span>
+    may ~f:(set_title window) title;
+    may ~f:(set_width window) width;
+    may ~f:(set_height window) height;
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>This example is significantly complex and quite subtle, but the pattern
+used is very common in the lablgtk source code. Let&#39;s concentrate on the
+simple <code>create_window</code> function first. This function takes a <code>unit</code> and
+returns a <code>window</code>, initialized with default settings for title, width
+and height:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">create_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+</span></code></pre>
+
+<p>The <code>set_title</code>, <code>set_width</code> and <code>set_height</code> functions are impure
+functions which modify the <code>window</code> structure, in the obvious way. For
+example:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = create_window () <span class="governing">in</span>
+  set_title w <span class="ocaml-error-loc">'</span>My Application';
+  w</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>So far this is just the imperative &#39;mutable records&#39; which we talked
+about in the previous chapter. Now the complex part is the <code>open_window</code>
+function. This function takes <em>4</em> arguments, three of them optional,
+followed by a required, unlabelled <code>unit</code>. Let&#39;s first see this function
+in action:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>Clock' ~width:128 ~height:128 ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>It does what you expect, but how?! The secret is in the <code>may</code> function
+(see above) and the fact that the optional parameters <em>don&#39;t</em> have
+defaults.</p>
+<p>When an optional parameter doesn&#39;t have a default, then it has type
+<code>&#39;a option</code>. The <code>&#39;a</code> would normally be inferred by type inference, so
+in the case of <code>?title</code> above, this has type <code>string option</code>.</p>
+<p>Remember the <code>may</code> function? It takes a function and an argument, and
+calls the function on the argument provided the argument isn&#39;t <code>None</code>.
+So:</p>
+<pre><code class="ocaml">may ~f:(set_title window) title;</code></pre>
+
+<p>If the optional title argument is not specified by the caller, then
+<code>title</code> = <code>None</code>, so <code>may</code> does nothing. But if we call the function
+with, for example,</p>
+<pre><code class="ocaml">open_window ~title:'My Application' ()</code></pre>
+
+<p>then <code>title</code> = <code>Some &#39;My Application&#39;</code>, and <code>may</code> therefore calls
+<code>set_title window &#39;My Application&#39;</code>.</p>
+<p>You should make sure you fully understand this example before proceeding
+to the next section.</p>
+<h3 id="39-Warning-This-optional-argument-cannot-be-erased-39">&#39;Warning: This optional argument cannot be erased&#39;</h3><p>We&#39;ve just touched upon labels and optional arguments, but even this
+brief explanation should have raised several questions. The first may be
+why the extra <code>unit</code> argument to <code>open_window</code>? Let&#39;s try defining this
+function without the extra <code>unit</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+    may ~f:(set_title window) title;
+    may ~f:(set_width window) width;
+    may ~f:(set_height window) height;
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+</span></code></pre>
+
+<p>Although OCaml has compiled the function, it has generated a somewhat
+infamous warning: &#39;This optional argument cannot be erased&#39;, referring
+to the final <code>?height</code> argument. To try to show what&#39;s going on here,
+let&#39;s call our modified <code>open_window</code> function:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>Did that work or not? No it didn&#39;t. In fact it didn&#39;t even run the
+<code>open_window</code> function at all. Instead it printed some strange type
+information. What&#39;s going on?</p>
+<p>Recall currying and uncurrying, and partial application of functions. If
+we have a function <code>plus</code> defined as:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">plus</span> <span class="ocaml-variable">x y </span>=
+    x + y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val plus : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>We can partially apply this, for example as <code>plus 2</code> which is &#39;the
+function that adds 2 to things&#39;:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">f</span> = plus 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 7
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 102
+</span></code></pre>
+
+<p>In the <code>plus</code> example, the OCaml compiler can easily work out that
+<code>plus 2</code> doesn&#39;t have enough arguments supplied yet. It needs another
+argument before the <code>plus</code> function itself can be executed. Therefore
+<code>plus 2</code> is a function which is waiting for its extra argument to come
+along.</p>
+<p>Things are not so clear when we add optional arguments into the mix. The
+call to <code>open_window;;</code> above is a case in point. Does the user mean
+&#39;execute <code>open_window</code> now&#39;? Or does the user mean to supply some or all
+of the optional arguments later? Is <code>open_window;;</code> waiting for extra
+arguments to come along like <code>plus 2</code>?</p>
+<p>OCaml plays it safe and doesn&#39;t execute <code>open_window</code>. Instead it treats
+it as a partial function application. The expression <code>open_window</code>
+literally evaluates to a function value.</p>
+<p>Let&#39;s go back to the original and working definition of <code>open_window</code>
+where we had the extra unlabelled <code>unit</code> argument at the end:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height () </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+    may ~f:(set_title window) title;
+    may ~f:(set_width window) width;
+    may ~f:(set_height window) height;
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+</span></code></pre>
+
+<p>If you want to pass optional arguments to <code>open_window</code> you must do so
+before the final <code>unit</code>, so if you type:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+</span></code></pre>
+
+<p>you must mean &#39;execute <code>open_window</code> now with all optional arguments
+unspecified&#39;. Whereas if you type:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+</span></code></pre>
+
+<p>you mean &#39;give me the functional value&#39; or (more usually in the
+toplevel) &#39;print out the type of <code>open_window</code>&#39;.</p>
+<h3 id="More-shorthand">More <code>~</code>shorthand</h3><p>Let&#39;s rewrite the <code>range</code> function yet again, this time using as much
+shorthand as possible for the labels:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">~first ~last </span>=
+    <span class="keyword">if</span> first &gt; last <span class="keyword">then</span> []
+    <span class="keyword">else</span> first :: range ~first:(first+1) ~last</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : first:int -&gt; last:int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Recall that <code>~foo</code> on its own is short for <code>~foo:foo</code>. This applies also
+when calling functions as well as declaring the arguments to functions,
+hence in the above the highlighted red <code>~last</code> is short for
+<code>~last:last</code>.</p>
+<h3 id="Using-foo-in-a-function-call">Using <code>?foo</code> in a function call</h3><p>There&#39;s another little wrinkle concerning optional arguments. Suppose we
+write a function around <code>open_window</code> to open up an application:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
+    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ~width ~height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>Recall that <code>~width</code> is shorthand for <code>~width:width</code>. The type of
+<code>width</code> is <code>&#39;a option</code>, but <code>open_window ~width:</code> expects an <code>int</code>.</p>
+<p>OCaml provides more syntactic sugar. Writing <code>?width</code> in the function
+call is shorthand for writing <code>~width:(unwrap width)</code> where <code>unwrap</code>
+would be a function which would remove the &#39;<code>option</code> wrapper&#39; around
+<code>width</code> (it&#39;s not actually possible to write an <code>unwrap</code> function like
+this, but conceptually that&#39;s the idea). So the correct way to write
+this function is:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
+    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h3 id="When-and-when-not-to-use-and">When and when not to use <code>~</code> and <code>?</code></h3><p>The syntax for labels and optional arguments is confusing, and you may
+often wonder when to use <code>~foo</code>, when to use <code>?foo</code> and when to use
+plain <code>foo</code>. It&#39;s something of a black art which takes practice to get
+right.</p>
+<p><code>?foo</code> is only used when declaring the arguments of a function, ie:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">?arg1 ... </span>=</code></pre>
+
+<p>or when using the specialised &#39;unwrap <code>option</code> wrapper&#39; form for
+function calls:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
+    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>The declaration <code>?foo</code> creates a variable called <code>foo</code>, so if you need
+the value of <code>?foo</code>, use just <code>foo</code>.</p>
+<p>The same applies to labels. Only use the <code>~foo</code> form when declaring
+arguments of a function, ie:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">~foo:foo ... </span>=</code></pre>
+
+<p>The declaration <code>~foo:foo</code> creates a variable called simply <code>foo</code>, so if
+you need the value just use plain <code>foo</code>.</p>
+<p>Things, however, get complicated for two reasons: first, the shorthand
+form <code>~foo</code> (equivalent to <code>~foo:foo</code>), and second, when you call a
+function which takes a labelled or optional argument and you use the
+shorthand form.</p>
+<p>Here is some apparently obscure code from lablgtk to demonstrate all of
+this:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">html</span> <span class="ocaml-variable">?border_width ?width ?height ?packing ?show () </span>=  <span class="comment">(* line 1 *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">w</span> = create () <span class="governing">in</span>
+  load_empty w;
+  <span class="ocaml-module">Container</span>.set w ?border_width ?width ?height;            <span class="comment">(* line 4 *)</span>
+  pack_return (<span class="keyword">new</span> html w) ~packing ~show                  <span class="comment">(* line 5 *)</span></code></pre>
+
+<p>On line 1 we have the function definition. Notice there are 5 optional
+arguments, and the mandatory <code>unit</code> 6<sup>th</sup> argument. Each of the
+optional arguments is going to define a variable, eg. <code>border_width</code>, of
+type <code>&#39;a option</code>.</p>
+<p>On line 4 we use the special <code>?foo</code> form for passing optional arguments
+to functions which take optional arguments. <code>Container.set</code> has the
+following type:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Container</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
+  <span class="governing">let</span> <span class="ocaml-function">set</span> <span class="ocaml-variable">?border_width ?(width = -2) ?(height = -2) w </span>=
+    <span class="comment">(* ... *)</span></code></pre>
+
+<p>Line 5 uses the <code>~</code>shorthand. Writing this in long form:</p>
+<pre><code class="ocaml">pack_return (<span class="keyword">new</span> html w) ~packing:packing ~show:show</code></pre>
+
+<p>The <code>pack_return</code> function actually takes mandatory labelled arguments
+called <code>~packing</code> and <code>~show</code>, each of type <code>&#39;a option</code>. In other words,
+<code>pack_return</code> explicitly unwraps the <code>option</code> wrapper.</p>
+<h3 id="Addendum">Addendum</h3><p>If you think labels and optional arguments are complicated, that&#39;s
+because they are! Luckily, however, this is a relatively new feature in
+OCaml, and it&#39;s not yet widely used. In fact if you&#39;re not hacking on
+lablgtk, it&#39;s unlikely you&#39;ll see labels and optional arguments used at
+all (at the moment).</p>
+<h2 id="More-variants-polymorphic-variants">More variants (“polymorphic variants”)</h2><p>Try compiling the following C code:</p>
+<pre class="C"><code class="C">#include &lt;stdio.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+enum lock { open, close };
+
+main ()
+{
+  int fd, n;
+  char buffer[256];
+
+  fd = open (&#39;/etc/motd&#39;, O_RDONLY);                     // line 12
+  while ((n = read (fd, buffer, sizeof buffer)) &gt; 0)
+    write (1, buffer, n);
+  close (fd);                                            // line 15
+}</code></pre><p>When I compile the code I get a whole bunch of errors including:</p>
+<pre class="text"><code class="text">test.c: In function `main&#39;:
+test.c:12: error: called object is not a function
+test.c:15: error: called object is not a function</code></pre><p>This illustrates one problem with enumerated types (enums) in C. In the
+example above, one enum statement reserves <em>three</em> symbols, namely
+<code>lock</code>, <code>open</code> and <code>close</code>. Here&#39;s another example:</p>
+<pre class="C"><code class="C">enum lock { open, close };
+enum door { open, close };</code></pre><p>Compiling gives:</p>
+<pre class="text"><code class="text">test.c:2: error: conflicting types for `open&#39;
+test.c:1: error: previous declaration of `open&#39;
+test.c:2: error: conflicting types for `close&#39;
+test.c:1: error: previous declaration of `close&#39;</code></pre><p>The first enum defines the symbol <code>open</code> as something of type
+<code>enum lock</code>. You cannot reuse that symbol in another enum.</p>
+<p>This will be familiar to most C/C++ programmers, and they won&#39;t write
+naive code like that above. However the same issue happens with OCaml
+variants, but OCaml provides a way to work around it.</p>
+<p>Here is some OCaml code, which actually <em>does</em> compile:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = Open | Close
+  <span class="governing">type</span> <span class="type">door</span> = Open | Close</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = Open | Close
+type door = Open | Close
+</span></code></pre>
+
+<p>After running those two statements, what is the type of <code>Open</code>? We can
+find out easily enough in the toplevel:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = Open | Close</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = Open | Close
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">door</span> = Open | Close</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type door = Open | Close
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : door = Open
+</span></code></pre>
+
+<p>OCaml uses the most recent definition for <code>Open</code>, giving it the type
+<code>door</code>. This is actually not such a serious problem because if you
+accidentally tried to use <code>Open</code> in the type context of a <code>lock</code>, then
+OCaml&#39;s wonderful type inference would immediately spot the error and
+you wouldn&#39;t be able to compile the code.</p>
+<p>So far, so much like C. Now I said that OCaml provides a way to work
+around the constraint that <code>Open</code> can only have one type. In other
+words, suppose I want to use <code>Open</code> to mean either &#39;the <code>Open</code> of type
+<code>lock</code>&#39; or &#39;the <code>Open</code> of type <code>door</code>&#39; and I want OCaml to work out
+which one I mean.</p>
+<p>The syntax is slightly different, but here is how we do it:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = [ `Open | `Close ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = [ `Close | `Open ]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">door</span> = [ `Open | `Close ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type door = [ `Close | `Open ]
+</span></code></pre>
+
+<p>Notice the syntactic differences:</p>
+<ol><li><p>Each variant name is prefixed with <code>`</code> (a back tick).</p>
+</li><li><p>You have to put square brackets (<code>[]</code>) around the alternatives.</p>
+</li></ol>
+
+<p>The question naturally arises: What is the type of <code>`Open</code>?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">`Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : [&gt; `Open ] = `Open
+</span></code></pre>
+
+<p><code>[&gt; `Open]</code> can be read as
+<code>[ `Open | and some other possibilities which we don&#39;t know about ]</code>.
+The “&gt;” (greater than) sign indicates that the set of possibilities is
+bigger than those listed (open-ended).</p>
+<p>There&#39;s nothing special about <code>`Open</code>. <em>Any</em> back-ticked word can be
+used as a type, even one which we haven&#39;t mentioned before:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">`Foo</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : [&gt; `Foo ] = `Foo
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">`Foo 42</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : [&gt; `Foo of int ] = `Foo 42
+</span></code></pre>
+
+<p>Let&#39;s write a function to print the state of a <code>lock</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_lock</span> <span class="ocaml-variable">st </span>=
+    <span class="keyword">match</span> st <span class="keyword">with</span>
+    | `Open -&gt; print_endline <span class="ocaml-error-loc">'</span>The lock is open'
+    | `Close -&gt; print_endline 'The lock is closed'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>Take a careful look at the type of that function. Type inference has
+worked out that the <code>st</code> argument has type <code>[&lt; `Close | `Open]</code>. The
+“&lt;” (less than) sign means that this is a <strong>closed class</strong>. In
+other words, this function will only work on <code>`Close</code> or <code>`Open</code>
+and not on anything else.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_lock</span> `Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_lock
+Hint: Did you mean print_float?
+</span></code></pre>
+
+<p>Notice that <code>print_lock</code> works just as well with a <code>door</code> as with a
+<code>lock</code>! We&#39;ve deliberately given up some type safety, and type inference
+is now being used to help guess what we mean, rather than enforce
+correct coding.</p>
+<p>This is only an introduction to polymorphic variants. Because of the
+reduction in type safety, it is recommended that you don&#39;t use these in
+your code. You will, however, see them in advanced OCaml code quite a
+lot precisely because advanced programmers will sometimes want to weaken
+the type system to write advanced idioms.</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/labels.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

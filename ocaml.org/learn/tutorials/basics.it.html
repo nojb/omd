@@ -1,0 +1,545 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="basics.de.html" rel="alternate" hreflang="de"/>
+<link href="basics.el.html" rel="alternate" hreflang="el"/>
+<link href="basics.html" rel="alternate" hreflang="en"/>
+<link href="basics.fr.html" rel="alternate" hreflang="fr"/>
+<link href="basics.it.html" rel="alternate" hreflang="it"/>
+<link href="basics.ja.html" rel="alternate" hreflang="ja"/>
+<link href="basics.ko.html" rel="alternate" hreflang="ko"/>
+<link href="basics.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Le basi &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.it.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.it.html">Tutorials su OCaml</a><span class="divider"></span></li>
+<li class="active">Le basi</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="basics.de.html">de</a></li>
+<li><a href="basics.el.html">el</a></li>
+<li><a href="basics.html">en</a></li>
+<li><a href="basics.fr.html">fr</a></li>
+<li class="active">it</li>
+<li><a href="basics.ja.html">日本語</a></li>
+<li><a href="basics.ko.html">한국어</a></li>
+<li><a href="basics.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Commenti">Commenti</a>
+</li><li><a href="#Chiamare-funzioni">Chiamare funzioni</a>
+</li><li><a href="#Definire-una-funzione">Definire una funzione</a>
+</li><li><a href="#Tipi-di-base">Tipi di base</a>
+</li><li><a href="#Cast-impliciti-e-cast-espliciti">Cast impliciti e cast espliciti</a>
+<ul><li><a href="#meglio-il-cast-implicito-o-quello-esplicito">È meglio il cast implicito o quello esplicito?</a>
+</li></ul>
+</li><li><a href="#Funzioni-ordinarie-e-funzioni-ricorsive">Funzioni ordinarie e funzioni ricorsive</a>
+</li><li><a href="#Tipi-delle-funzioni">Tipi delle funzioni</a>
+<ul><li><a href="#Funzioni-polimorfiche">Funzioni polimorfiche</a>
+</li></ul>
+</li><li><a href="#Inferenza-dei-tipi">Inferenza dei tipi</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Le-basi">Le basi</h1>
+
+<h2 id="Commenti">Commenti</h2><p>In OCaml i commenti sono delimitati da <code>(*</code> e <code>*)</code>, come segue:</p>
+<pre><code class="ocaml"><span class="comment">(* Questo &egrave; un commento su un'unica riga. *)</span>
+
+<span class="comment">(* Questo &egrave; un
+ * commento su
+ * pi&ugrave; righe.
+ *)</span></code></pre>
+
+<p>In altre parole, la convenzione per i commenti è molto simile a quella
+originale di C (<code>/* ... */</code>).
+Non esiste attualmente una sintassi per commenti su singole righe (come
+<code># ...</code> in Perl o <code>// ...</code> in C99/C++/Java).</p>
+<p>OCaml conta i blocchi <code>(* ... *)</code> annodati, e questo vi consente di
+commentare assai facilmente regioni di codice:</p>
+<pre><code class="ocaml"><span class="comment">(* Questo codice non &egrave; valido ...
+
+(* Test di primalit&agrave;. *)
+<span class="governing">let</span> <span class="ocaml-function">is_prime</span> <span class="ocaml-variable">n </span>=
+  (* nota a me stesso: chiedere di questo sulle mailing list *) XXX<span class="ocaml-prompt">;;</span><br/>
+*)</span></code></pre>
+
+<h2 id="Chiamare-funzioni">Chiamare funzioni</h2><p>Poniamo che abbiate scritto una funzione - la chiameremo <code>repeated</code> -
+che prende una stringa <code>s</code> ed un numero <code>n</code>, e restituisce una nuova
+stringa che contiene la stringa originale <code>s</code> ripetuta <code>n</code> volte.</p>
+<p>Nella maggior parte dei linguaggi derivati da C una chiamata a questa
+funzione apparirà come segue:</p>
+<pre class="C"><code class="C">repeated (&#39;hello&#39;, 3)  /* questo è codice C */</code></pre><p>Questo significa &#39;chiama la funzione <code>repeated</code> con due argomenti, di
+cui il primo è la stringa hello ed il secondo il numero 3&#39;.</p>
+<p>OCaml, in comune con altri linguaggi funzionali, scrive e mette tra
+parentesi le chiamate di funzioni in modo differente, e questo è causa
+di molti errori. Ecco la medesima chiamata di funzione in OCaml:</p>
+<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* questo &egrave; codice OCaml *)</span></code></pre>
+
+<p>Notate - <strong>non</strong> vi sono parentesi e <strong>non</strong> vi sono virgole fra gli
+argomenti.</p>
+<p>Ora, cosa che può confondere, <code>repeated (&#39;hello&#39;, 3)</code> <strong>ha</strong> significato
+in OCaml. Significa &#39;chiama la funzione <code>repeated</code> con UN argumento,
+essendo tale argomento una struttura &#39;coppia&#39; di due&#39;. Naturalmente
+questo sarebbe un errore, poiché la funzione <code>repeated</code> si aspetta due
+argomenti, non uno soltanto, ed in ogni caso il primo argomento è una
+stringa, non una coppia. Ma non preoccupiamoci delle coppie (&#39;tuple&#39;)
+per ora. Invece, ricordate soltanto che è un errore mettere parentesi e
+virgole intorno agli argomenti di una chiamata di funzione e fra di
+essi.</p>
+<p>Poniamo di avere un&#39;altra funzione - <code>get_string_from_user</code> - che prende
+una stringa da terminale e restituisce la stringa digitata dall&#39;utente.
+Vogliamo passare questa stringa in <code>repeated</code>. Seguono le versioni C e
+OCaml:</p>
+<pre class="C"><code class="C">/* codice C: */
+repeated (get_string_from_user (&#39;Si inserisca una stringa.&#39;), 3)</code></pre>
+<pre><code class="ocaml"><span class="comment">(* codice OCaml: *)</span>
+repeated (get_string_from_user 'Si inserisca una stringa.') 3</code></pre>
+
+<p>Guardate con attenzione la posizione delle parentesi e la mancanza di
+virgole. In generale la regola è: &#39;parentesi intorno all&#39;intera chiamata
+di funzione - non mettere parentesi intorno agli argomenti ad una
+chiamata di funzione&#39;. Seguono ulteriori esempi:</p>
+<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f ha tre argomenti, g ha un argomento *)</span>
+f (g 3 4)            <span class="comment">(* f ha un argomento, g ha due argomenti *)</span>
+
+# repeated ('hello', 3);;     <span class="comment">(* OCaml segnaler&agrave; l'errore *)</span>
+This expression has <span class="governing">type</span> string * int but is here used <span class="keyword">with</span> <span class="governing">type</span> <span class="type">string</span></code></pre>
+
+<h2 id="Definire-una-funzione">Definire una funzione</h2><p>Tutti voi sapete come definire una funzione (o un metodo statico, per
+chi pensa in Java) nei nostri linguaggi. Come lo facciamo in OCaml?</p>
+<p>La sintassi di OCaml è piacevolmente concisa. Ecco una funzione che
+prende due numeri floating point e ne calcola la media:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>Scrivete questo nel &#39;toplevel&#39; di OCaml (su Unix, scrivete il comando
+<code>ocaml</code> dalla shell) e vedrete così:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>Se osservate bene la definizione di funzione, ed anche che cosa OCaml vi
+restituisce in stampa, avrete diverse domande:</p>
+<ul><li><p>Che ci fanno là quei punti extra nel codice?</p>
+</li><li><p>Che cosa significa tutta quella roba su <code>float -&gt; float -&gt; float</code>?</p>
+</li></ul>
+
+<p>Risponderò a queste domande nelle prossime sezioni, ma per prima cosa
+voglio andare a definire la medesima sezione in C (la definizione in
+Java sarebbe piuttosto simile a quella in C), e plausibilmente questo
+dovrebbe sollevare ancora più questioni. Ecco la nostra versione in C di
+<code>average</code>:</p>
+<pre class="C"><code class="C">double
+average (double a, double b)
+{
+  return (a + b) / 2;
+}</code></pre><p>Osservate ora sopra la nostra ben più breve definizione in OCaml.
+Probabilmente chiederete:</p>
+<ul><li><p>Perché non dobbiamo definire i tipi di <code>a</code> e <code>b</code> nella versione in
+ OCaml? Come sa OCaml quali sono i tipi (anzi, OCaml <em>sa</em> quali sono
+ i tipi, oppure OCaml è tipato del tutto dinamicamente?).</p>
+</li><li><p>In C, il <code>2</code> è convertito implicitamente in un <code>double</code>, ma perché
+ OCaml non fa lo stesso?</p>
+</li><li><p>Qual è in OCaml il modo per scrivere <code>return</code>?</p>
+</li></ul>
+
+<p>OK, diamoci delle risposte.</p>
+<ul><li><p>OCaml è un linguaggio fortemente e dinamicamente tipato (in altre
+ parole, non avviene nulla di dinamico con i tipi, come accadrebbe in
+ Perl).</p>
+</li><li><p>OCaml utilizza l&#39;<em>inferenza dei tipi</em> per ricavare i tipi, cosicché
+ non dovete farlo voi. Se utilizzate il toplevel di OCaml come sopra,
+ OCaml vi dirà [quello che crede sia ...] il corretto tipo della
+ vostra funzione.</p>
+</li><li><p>OCaml non fa alcun cast implicito. Se volete un float, dovete
+ scrivere <code>2.0</code> poiché <code>2</code> è un intero.</p>
+</li><li><p>Poiché OCaml non fa cast impliciti, ha operatori differenti per
+ significare &#39;somma due interi&#39; (che è <code>+</code>) ovvero &#39;somma due float&#39;
+ (che è <code>+.</code> - si noti il punto in coda). E così per gli altri
+ operatori aritmetici.</p>
+</li><li><p>OCaml restituisce l&#39;ultima espressione in una funzione, quindi non
+ dovete scrivere <code>return</code> come in C.</p>
+</li></ul>
+
+<p>I dettagli effettivi seguono nelle sezioni e nei capitoli successivi.</p>
+<h2 id="Tipi-di-base">Tipi di base</h2><p>I tipi di base in OCaml sono:</p>
+<pre><code>tipo OCaml     Range
+
+int            Intero a 31 bit con segno, circa +/- 1 billion
+float          Floating point a doppia precisione IEEE, equivalente al double di C
+bool           Un boolean, scritto come vero o falso
+char           Un carattere a 8 bit
+string         Una stringa
+unit           Scritto come ()</code></pre>
+
+<p>OCaml utilizza uno dei bit in un <code>int</code> internamente per differenziare
+tra interi e puntatori. È per questo che l&#39;<code>int</code> di base è a 31 bit, non a
+32 bit (63 bit se state utilizzando una piattaforma a 64 bit). Nella
+pratica questo non è un problema eccetto che in pochi casi specifici.
+Per esempio, se state implementando un conteggio in un loop, OCaml vi
+limita a contare fino a 1 miliardo invece che 2 miliardi. Questo non
+verrà ad essere un problema, poiché in qualunque linguaggio, se state
+contando cose vicino a questo limite, dovreste utilizzare i bignum (i
+moduli <code>Nat</code> e <code>Big_int</code> in OCaml). Se tuttavia dovete fare cose come
+processare tipi a 32 bit (p.e. se state scrivendo codice criptografico o
+uno stack di rete), OCaml fornisce un tipo <code>nativeint</code> che concide con
+il tipo intero nativo per la vostra piattaforma.</p>
+<p>OCaml non ha di base un tipo intero senza segno, ma potete ottenere il
+medisimo effetto utilizzando <code>nativeint</code>. Per quel che ne so dire OCaml
+non ha alcun numero floating point a precisione singola.</p>
+<p>OCaml fornisce un tipo <code>char</code> che è utilizzato per i caratteri, scritti
+ad esempio <code>&#39;x&#39;</code>. Sfortunatamente il tipo <code>char</code> non supporta Unicode o
+UTF-8. Questo è un serio difetto di OCaml che dovrebbe essere corretto,
+ma per intanto esistono <a href="http://camomile.sourceforge.net/" title="http://camomile.sourceforge.net/">librerie Unicode
+comprensive</a>
+che lo aggirano.</p>
+<p>Le stringhe non sono soltanto liste di caratteri. Esse hanno la loro
+propria rappresentazione interna, più efficiente.</p>
+<p>Il tipo <code>unit</code> è un po&#39; come il <code>void</code> del C, ma ne parleremo più sotto.</p>
+<h2 id="Cast-impliciti-e-cast-espliciti">Cast impliciti e cast espliciti</h2><p>Nei linguaggi derivati da C gli interi sono promossi in alcune
+circostanze a float. Per esempio, se scrivete <code>1 + 2.5</code>, il primo
+argomento (che è un intero) è promosso a numero floating point, ed anche
+il risultato è un numero floating point. È come se aveste scritto
+<code>((double) 1) + 2.5</code>, ma tutto fatto implicitamente.</p>
+<p>OCaml non fa mai cast impliciti di questo tipo. In OCaml, <code>1 + 2.5</code> è un
+errore di tipo. L&#39;operatore <code>+</code> in OCaml richiede come argomenti due
+int, e qui gli stiamo dando un int e un float, dunque esso riposta
+questo errore:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + <span class="ocaml-error-loc">2.5</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type float but an expression was expected of type
+         int
+</span></code></pre>
+
+<p>(Nel linguaggio &#39;tradotto dal francese&#39; dei messaggi di errore di OCaml
+questo significa &#39;hai messo qui un float, ma aspettavo un int&#39;).</p>
+<p>Per sommare insieme due float dovete utilizzare un operatore differente,
+<code>+.</code> (si noti il punto in coda).</p>
+<p>OCaml non promuove gli int a float automaticamente, quindi è un errore
+anche il seguente:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">1</span> +. 2.5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>Qui OCaml si sta ora lamentando per il primo argomento.</p>
+<p>E se davvere volete sommare insieme un intero ed un numero floating
+point? (Mettiamo che siano conservati in variabili chiamate <code>i</code> e <code>f</code>).
+In OCaml dovete fare un cast esplicito:</p>
+<pre><code class="ocaml">float_of_int i +. f;;</code></pre>
+
+<p><code>float_of_int</code> è una funzione che prende un <code>int</code> e restituisce un
+<code>float</code>. V&#39;è una quantità di queste funzioni, chiamate con nomi come
+<code>int_of_float</code>, <code>char_of_int</code>, <code>int_of_char</code>, <code>string_of_int</code> e così
+via, e fanno per lo più ciò che ci si aspetta.</p>
+<p>Visto che convertire un <code>int</code> in un <code>float</code> è un&#39;operazione
+particolarmente comune, la funzione <code>float_of_int</code> ha un alias più
+breve: l&#39;esempio sopra avrebbe potuto essere semplicemente scritto</p>
+<pre><code class="ocaml">float i +. f;;</code></pre>
+
+<p>(Si noti che diversamente da quanto si ha in C, è perfettamente valido
+in OCaml che un tipo ed una funzione abbiano il medesimo nome.)</p>
+<h3 id="meglio-il-cast-implicito-o-quello-esplicito">È meglio il cast implicito o quello esplicito?</h3><p>Potreste pensare che questi cast espliciti siano brutti, che facciano
+anche perdere tempo, e non avete torto, ma vi sono almeno due argomenti
+in loro favore. Innanzitutto, OCaml ha bisogno di questo cast esplicito
+per poter fare inferenza di tipi (vd. sotto), e l&#39;inferenza dei tipi è
+una tale meravigliosa caratteristica salva-tempo che surclassa
+facilmente le digitazioni extra per i cast espliciti. In secondo luogo,
+se avete speso del tempo nel debug di programmi in C saprete che (a) i
+cast impliciti causano errori difficili da trovare, e (b) per buona
+parte del tempo state là a cercare di comprendere dove avvengono i cast
+impliciti. Rendere i cast espliciti vi aiuta nel debug. In terzo luogo,
+alcuni cast (in particolare int &lt;-&gt; float) sono in realtà operazioni
+computazionalmente parecchio costose. Non vi fate alcun favore
+nascondendoli.</p>
+<h2 id="Funzioni-ordinarie-e-funzioni-ricorsive">Funzioni ordinarie e funzioni ricorsive</h2><p>Diversamente che nei linguaggi derivati da C, una funzione non è
+ricorsiva se non lo dite esplicitamente utilizzando <code>let rec</code> invece che
+semplicemente <code>let</code>. Ecco un esempio di funzione ricorsiva:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Si noti che <code>range</code> chiama sé stessa.</p>
+<p>La sola differenza fra <code>let</code> e <code>let rec</code> è nello scope del nome della
+funzione. Se la funzione sopra fosse stata definita soltanto con <code>let</code>,
+la chiamata a <code>range</code> avrebbe tentato di cercare una funzione (definita
+in precedenza) chiamata <code>range</code>, non la funzione in corso di
+definizione. Non vi sono differenze di performance fra funzioni definite
+utilizzando <code>let</code> e funzioni definite utilizzando <code>let rec</code>, così che se
+preferite potreste usare sempre la forma <code>let rec</code> ed ottenere la
+medesima semantica dei linguaggi come C.</p>
+<h2 id="Tipi-delle-funzioni">Tipi delle funzioni</h2><p>Grazie all&#39;inferenza dei tipi, dovrete raramente, se mai dovrete,
+scrivere esplicitamante il tipo delle vostre funzioni. Comunque, OCaml
+spesso stampa quelli che pensa siano i tipi delle vostre funzioni,
+quindi dovete conoscere la relativa sintassi. Per una funzione <code>f</code> che
+prende gli argomenti <code>arg1</code>, <code>arg2</code>, ... <code>argn</code>, e restituisce il tipo
+<code>rettype</code>, il compilatore stamperà:</p>
+<pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
+
+<p>La sintassi con le frecce sembrerà ora strana, ma quando più tardi
+verremo al cosiddetto &#39;currying&#39; vedrete perché è stata scelta. Per ora
+vi darò soltanto degli esempi.</p>
+<p>La nostra funzione <code>repeated</code> che prende una stringa e un intero e
+restituisce una stringa ha tipo:</p>
+<pre><code class="ocaml">repeated : string -&gt; int -&gt; string</code></pre>
+
+<p>La nostra funzione <code>average</code> che prende due float e restituisce un float
+ha tipo:</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>La funzione standard OCaml di cast <code>int_of_char</code>:</p>
+<pre><code class="ocaml">int_of_char : char -&gt; int</code></pre>
+
+<p>Se una funzione non ritorna nulla (<code>void</code> per programmatori C e Java),
+scriviamo che restituisce il tipo <code>unit</code>. Ecco, per esempio,
+l&#39;equivalente in OCaml di <code>fputc</code>:</p>
+<pre><code class="ocaml">output_char : out_channel -&gt; char -&gt; unit</code></pre>
+
+<h3 id="Funzioni-polimorfiche">Funzioni polimorfiche</h3><p>Vediamo qualche cosa di un po&#39; più particolare. Che dire di una funzione
+che prende <em>qualsiasi cosa</em> come argomento? Ecco una strana funzione che
+prende un argomento, ma semplicemente lo ignora e restituisce sempre 3:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3;;</code></pre>
+
+<p>Qual è il tipo di questa funzione? In OCaml utilizziamo uno speciale
+segnaposto per significare &#39;qualsiasi tipo voi immaginiate&#39;. È un
+carattere di virgoletta singola (NdT: un apice) seguito da una lettera.
+Il tipo della funzione sopra sarebbe normalmente scritto:</p>
+<pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
+
+<p>Dove <code>&#39;a</code> significa in realtà qualsiasi tipo. Potete, ad esempio,
+chiamare questa funzione come <code>give_me_a_three &#39;foo&#39;</code> o
+<code>give_me_a_three 2.0</code> ed entrambe sarebbero espressioni valide in OCaml.</p>
+<p>Ancora non sarà chiaro perché le funzioni polimorfiche sono utili, ma
+esse sono molto utili e molto comuni, e quindi ne discuteremo più tardi.
+(Suggerimento: il polimorfismo è un po&#39; come i template in C++ o i
+generic in Java 1.5).</p>
+<h2 id="Inferenza-dei-tipi">Inferenza dei tipi</h2><p>Dunque l&#39;argomento di questo tutorial è che i linguaggi funzionali hanno
+molte Caratteristiche Veramente Fiche, e che OCaml è un linguaggio che
+ha tutte queste Cartteristiche Veramente Fiche infilate dentro insieme,
+il che lo rende dunque un linguaggio molto pratico da usare per veri
+programmatori. Ma la cosa strana è che la maggior parte di queste
+caratteristiche fiche non hanno proprio nulla a che fare con la
+&#39;programmazione funzionale&#39;. Difatti, sono giunto alla prima
+Caratteristica Veramente Fica, e non ho ancora parlato del perché la
+programmazione funzionale è chiamata &#39;funzionale&#39;. Ad ogni modo, ecco la
+prima Caratteristica Veramente Fica: l&#39;inferenza dei tipi.</p>
+<p>Metti e basta: non devi dichiarare i tipi delle tue funzioni e
+variabili, poiché OCaml semplicemente li ricaverà per te.</p>
+<p>In più OCaml va a controllare che tutti i vostri tipi corrispondano
+(anche tra diversi file).</p>
+<p>Ma OCaml è anche un linguaggio pratico, e per questo motivo esso
+contiene backdoor nel sistema dei tipi che vi consentono di aggirare
+questo controllo nelle rare occasioni in cui ha senso farlo. Soltanto i
+guru probabilmente necessiteranno di aggirare il controllo dei tipi.</p>
+<p>Ritorniamo alla funzione <code>average</code> che abbiamo digitato nel toplevel di
+OCaml:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>Mirabile dictu! OCaml ha ricavato tutto da solo che la funzione prende
+due argomenti <code>float</code> e restituisce un <code>float</code>.</p>
+<p>Come l&#39;ha fatto? Per prima cosa esso guarda dove sono utilizzati <code>a</code> e
+<code>b</code>, vale a dire nell&#39;espressione <code>(a +. b)</code>. Ora, <code>+.</code> è essa stessa
+una funzione che prende sempre due argomenti <code>float</code>, dunque per
+semplice deduzione <code>a</code> e <code>b</code> devono avere anch&#39;essi tipo <code>float</code>.</p>
+<p>In secondo luogo, la funzione <code>/.</code> restituisce un <code>float</code>, e questo è il
+medesimo del valore restituito dalla funzione <code>average</code>, dunque
+<code>average</code> deve restituire un <code>float</code>. La conclusione è che <code>average</code> ha
+la seguente traccia di tipi:</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>L&#39;inferenza dei tipi è ovviamente facile per un programma così corto, ma
+funziona anche per grossi programmi, ed è un&#39;importante caratteristica
+per risparmiare tempo poiché elimina un&#39;intera classe di errori che
+causano segmentation fault, <code>NullPointerException</code> e
+<code>ClassCastException</code> in altri linguaggi (o avvertimenti importanti ma
+spesso ignorati durante l&#39;esecuzione, come in Perl).</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.it.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.it.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

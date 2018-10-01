@@ -1,0 +1,517 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="data_types_and_matching.html" rel="alternate" hreflang="en"/>
+<link href="data_types_and_matching.fr.html" rel="alternate" hreflang="fr"/>
+<link href="data_types_and_matching.it.html" rel="alternate" hreflang="it"/>
+<link href="data_types_and_matching.ja.html" rel="alternate" hreflang="ja"/>
+<link href="data_types_and_matching.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>データ型とパターンマッチング &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/data_types_and_matching.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">データ型とパターンマッチング</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="data_types_and_matching.html">en</a></li>
+<li><a href="data_types_and_matching.fr.html">fr</a></li>
+<li><a href="data_types_and_matching.it.html">it</a></li>
+<li class="active">日本語</li>
+<li><a href="data_types_and_matching.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">連結リスト</a>
+<ul><li><a href="#">連結リストの型</a>
+</li></ul>
+</li><li><a href="#">構造体</a>
+</li><li><a href="#">ヴァリアント (修飾つき共用体と列挙型)</a>
+<ul><li><a href="#">再帰ヴァリアント(ツリーに使う)</a>
+</li><li><a href="#">パラメータつきヴァリアント</a>
+</li></ul>
+</li><li><a href="#">リスト、構造体、ヴァリアント　- まとめ</a>
+</li><li><a href="#">パターンマッチング(データ型に)</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">データ型とパターンマッチング</h1>
+
+<h2 id="">連結リスト</h2>
+
+<p>Perlと同じく、OCamlはリストを言語組込みで提供している。OCamlのリストは、全ての要素が、同じ型をもっていなければならない。リストを書くには、こうする:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">[1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3]
+</span></code></pre>
+
+<p>(注 セミコロンだ、コンマじゃない)</p>
+<p>[]は空のリストだ。</p>
+<p>リストには、<strong>head</strong>(最初の要素) と<strong>tail</strong>(その残りの要素)がある。head
+は要素で、tail はリストだ。上の例では、head は整数<code>1</code>で、tail
+は<em>リスト</em><code>[2; 3]</code>だ。</p>
+<p>別のやりかたでリストを書くには、<strong>cons</strong>演算子で<code>head :: tail</code>とやる。なので、以下のやりかたでリストを書いても、まったく一緒だ:</p>
+<pre><code class="ocaml">[1; 2; 3]
+1 :: [2; 3]
+1 :: 2 :: [3]
+1 :: 2 :: 3 :: []</code></pre>
+
+<p>どうしてcons演算子に触れたかって?そりゃ、<em>パターンマッチング</em>をリストにやろうってときに便利だからだ。後で説明する。</p>
+<h3 id="">連結リストの型</h3>
+
+<p>整数の連結リストの型は、<code>int list</code>で、一般に、<code>foo</code>の連結リストの型は、<code>foo list</code>である。</p>
+<p>ここからわかるように、連結リストの全ての要素は、同じ型でなければならない。しかし、型は多相でもよい(すなわち<code>&#39;a list</code>)
+これにうってつけなのは、&#39;何かのlist&#39;を扱うような総称関数を、書くときだ。(ただし注意:<code>&#39;a list</code>は、個々の要素が違う型を持つということではない。-
+リストは、うーん、整数と文字列をごちゃまぜにふくむみたいな、そんなものを作るのには使えない。要素の型は何でもよいが、全部が同じ型でないといけないということだ。)</p>
+<p><code>length</code>関数は、OCamlの<code>List</code>モジュールのところで定義されている。これがよい例だ。リストに入っているのが、整数でも、文字列でも、オブジェクトでも、ちっちゃいふわふわの動物でも、関係なく、<code>List.length</code>関数を呼べばよい。<code>List.length</code>の型は、従って、こうなっている:</p>
+<pre><code class="ocaml"><span class="ocaml-module">List</span>.length : 'a list -&gt; int</code></pre>
+
+<h2 id="">構造体</h2>
+
+<p>CとC++には、単純な<code>struct</code>という概念がある。structure(訳注:構造体)の略だ。Javaにはクラスがあり、これも似たようなことができるうえに、もっといろんな用途もある。</p>
+<p>単純なCの構造体を考えよう:</p>
+<pre class="C"><code class="C">struct pair_of_ints {
+  int a, b;
+};</code></pre>
+
+<p>OCamlで、これに等価なもので、もっとも簡単なのは、<strong>タプル</strong>(訳注:組)である。<code>(3, 4)</code>といったもので、型は<code>int * int</code>だ。リストと違って、タプルは違う型の要素を含めるので、例えば、<code>(3, &#39;hello&#39;, &#39;x&#39;)</code>とすれば、型は<code>int * string * char</code>だ。</p>
+<p>ちょっと難しいが、別のやりかたでCの構造体を書くには、<strong>レコード</strong>がある。レコードは、Cの構造体みたいに、名前を要素につけることができる。タプルでは、名前を要素につけられないので、かわりに、どこに来るかの順番を覚えておかなければならない。これが、先ほどのCの構造体と等価なレコードだ。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type pair_of_ints = { a : int; b : int; }
+</span></code></pre>
+
+<p>これは型を定義している。この型のオブジェクトを実際に<em>作る</em>にはこうする。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">{ a=3; b=5 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : pair_of_ints = {a = 3; b = 5}
+</span></code></pre>
+
+<p>注
+型定義をするときに&#39;:&#39;があったところに、この型のオブジェクトを作るときには、&#39;=&#39;が入っている。</p>
+<p>これは、この型のをトップレベルでやった例だ。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type pair_of_ints = { a : int; b : int; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">{a=3; b=5}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : pair_of_ints = {a = 3; b = 5}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">{a=3}</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some record fields are undefined: b
+</span></code></pre>
+
+<p>そう、OCamlは、構造体のフィールドを未定義のままにはさせてくれない。</p>
+<h2 id="">ヴァリアント (修飾つき共用体と列挙型)</h2>
+
+<p>&#39;修飾つき共用体&#39;(原文 &#39;qualified
+union&#39;)はCにはないと言ってよいが、GCCコンパイラは対応している。以下は、修飾つき共用体の、Cでの一般的な使われかたの、見本である:</p>
+<pre class="C"><code class="C">struct foo {
+  int type;
+#define TYPE_INT 1
+#define TYPE_PAIR_OF_INTS 2
+#define TYPE_STRING 3
+  union {
+    int i;        // If type == TYPE_INT.
+    int pair[2];  // If type == TYPE_PAIR_OF_INTS.
+    char *str;    // If type == TYPE_STRING.
+  } u;
+};</code></pre>
+
+<p>こうしてみると、ふつふつと、見ちゃいられないという思いがする。てはじめに、安全じゃない:
+プログラマーが、ついうっかり、<code>u.i</code>フィー
+ルドを間違えてしまい、実際には文字列が構造体に入っていた、なんてはめになりそうだ。そのうえ、コンパイラがチェックして、すべての型の可能性が
+switch文で調べられているかを確かめる、なんてことは、簡単にはできない(かわりに列挙型を使えば、この問題は解消できる)。プログラマーは<code>type</code>フィールドをセットし忘れるかもしれない、そうしたら無茶苦茶なことになる。いやがうえにも、厄介だ。</p>
+<p>OCamlでは、簡潔に美しく、こうなる。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">foo</span> =
+    | Nothing
+    | Int <span class="keyword">of</span> int
+    | Pair <span class="keyword">of</span> int * int
+    | String <span class="keyword">of</span> string</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type foo = Nothing | Int of int | Pair of int * int | String of string
+</span></code></pre>
+
+<p>これが型定義だ。<code>|</code>で区切られている。それぞれの区切りの頭のところは、コンストラクタという。呼びやすいものをつければよいが、大文字ではじめること。コンストラクタで、値を定義するときは、続けて<code>of type</code>の部分がくる。typeはいつも小文字ではじまる。上の例では、Nothingは定数として使われ、他のコンストラクタは、値とともに使われている。</p>
+<p>実際にこの型のものを<em>作る</em>には、こう書く。:</p>
+<pre><code class="ocaml">Nothing
+Int 3
+Pair (4, 5)
+String 'hello'
+...</code></pre>
+
+<p>これらの式の各々が、型<code>foo</code>をもつ。</p>
+<p>注
+型定義を書くときに、<code>of</code>を使うが、この型の要素を書くときには、使わない。</p>
+<p>拡張によって、単純なCの列挙型は、こう定義される:</p>
+<pre class="C"><code class="C">enum sign { positive, zero, negative };</code></pre>
+
+<p>OCamlではこう書ける:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">sign</span> = Positive | Zero | Negative</code></pre>
+
+<h3 id="">再帰ヴァリアント(ツリーに使う)</h3>
+
+<p>ヴァリアントは再帰でもよく、ツリー構造を定義するのに普通は使う。これこそが、関数型言語の表現力の、真髄である。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">binary_tree</span> =
+    | Leaf <span class="keyword">of</span> int
+    | Tree <span class="keyword">of</span> binary_tree * binary_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type binary_tree = Leaf of int | Tree of binary_tree * binary_tree
+</span></code></pre>
+
+<p>2分木をいくつか用意した。練習に、これらを紙に書き下してみよう。</p>
+<pre><code class="ocaml">Leaf 3
+Tree (Leaf 3, Leaf 4)
+Tree (Tree (Leaf 3, Leaf 4), Leaf 5)
+Tree (Tree (Leaf 3, Leaf 4), Tree (Tree (Leaf 3, Leaf 4), Leaf 5))</code></pre>
+
+<h3 id="">パラメータつきヴァリアント</h3>
+
+<p>前の節の２分木は、おのおのの葉に整数をもっていた、しかし、もし、２分木の<em>カタチ</em>を記述したい、葉ノードになにを納めるかは、後で決めたい、というときはどうしたらよいだろうか?
+こういうときは、パラメータつき(多相)ヴァリアントを使って、こうする。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a binary_tree</span> =
+    | Leaf <span class="keyword">of</span> 'a
+    | Tree <span class="keyword">of</span> 'a binary_tree * 'a binary_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type 'a binary_tree = Leaf of 'a | Tree of 'a binary_tree * 'a binary_tree
+</span></code></pre>
+
+<p>これが汎用な型である。整数をおのおのの葉におさめるとき、型の指定は、<code>int binary_tree</code>となる。同様に、文字列をおのおのの葉におさめるとき、型の指定は、<code>string binary_tree</code>となる。次の例では、トップレベルで、いくつかのインスタンスに型をつけて、型推論システムに型を示してもらっている。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float binary_tree = Leaf 3.
+</span></code></pre>
+
+<p>どのように型名がさかのぼるかに注意。これを、リスト(例えば<code>int list</code>など)の型名と、比べてみるとよい。</p>
+<p>実は、<code>&#39;a list</code>は同じように&#39;さかのぼる&#39;わけではない。リストはパラメータつきヴァリアント型ではあるが、次のようなちょっと変な定義になっている:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">'a list</span> = [] | :: <span class="keyword">of</span> 'a * 'a list   <span class="comment">(* not real OCaml code *)</span></code></pre>
+
+<p>実際には、上の定義でコンパイルされるわけではない。もっと正確な定義は、こうだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a equiv_list</span> =
+    | Nil
+    | Cons <span class="keyword">of</span> 'a * 'a equiv_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type 'a equiv_list = Nil | Cons of 'a * 'a equiv_list
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Nil</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : 'a equiv_list = Nil
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Cons(1, Nil)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int equiv_list = Cons (1, Nil)
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Cons(1, Cons(2, Nil))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int equiv_list = Cons (1, Cons (2, Nil))
+</span></code></pre>
+
+<p>前に、リストは2通りのやりかたで書けるといったことを、思い出してほしい。構文糖で<code>[1; 2; 3]</code>と書けたり、もっと正式には、<code>1 :: 2 :: 3 :: []</code>と書けた。上の<code>&#39;a list</code>の定義を見れば、正式な定義の理由が、きっとわかるだろう。</p>
+<h2 id="">リスト、構造体、ヴァリアント　- まとめ</h2>
+
+<pre class="text"><code class="text">OCamlでの名前   型定義の例                      使用例
+リスト          int list                       [1; 2; 3]
+タプル          int * string                   (3, &#39;hello&#39;)
+レコード        type pair =                    { a = 3; b = &#39;hello&#39; }
+                 { a: int; b: string }
+ヴァリアント    type foo =
+                 | Int of int                 Int 3
+                 | Pair of int * string
+ヴァリアント    type sign =
+                 | Positive                   Positive
+                 | Zero                       Zero
+                 | Negative
+パラメータつき  type &#39;a my_list =
+ヴァリアント      | Empty                      Cons (1, Cons (2, Empty))
+                 | Cons of &#39;a * &#39;a my_list</code></pre>
+
+<h2 id="">パターンマッチング(データ型に)</h2>
+
+<p>とってもクールな機能が、関数型言語にはある。それは、データ構造をバラして、データにパターンマッチング
+をする、そんな能力だ。これは、まあ、&#39;関数型&#39;の機能というわけではない。 -
+どうにかすれば、Cでも、こういったことはできるんじゃないか、とも思える。しかし、これがクールな機能だというのに、変わりはない。</p>
+<p>実際のプログラムの仕様をもとに、はじめよう:
+単純な数学の式を表現したい。<code>n * (x + y)</code>のような。または、それらの掛け算を記号的に行って、<code>n * x + n * y</code>を得たいのだ。</p>
+<p>型の定義を、これらの式についておこなう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">expr</span> =
+    | Plus <span class="keyword">of</span> expr * expr        <span class="comment">(* means a + b *)</span>
+    | Minus <span class="keyword">of</span> expr * expr       <span class="comment">(* means a - b *)</span>
+    | Times <span class="keyword">of</span> expr * expr       <span class="comment">(* means a * b *)</span>
+    | Divide <span class="keyword">of</span> expr * expr      <span class="comment">(* means a / b *)</span>
+    | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    Plus of expr * expr
+  | Minus of expr * expr
+  | Times of expr * expr
+  | Divide of expr * expr
+  | Value of string
+</span></code></pre>
+
+<p>式<code>n * (x + y)</code>はこう書かれる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
+         string
+</span></code></pre>
+
+<p>出力をする関数を書いて、<code>Times (Value &#39;n&#39;, Plus (Value &#39;x&#39;, Value &#39;y&#39;))</code>を、もっとこう、<code>n * (x + y)</code>み
+たいに、書き出すようにしよう。実際には、ふたつの関数を書く。ひとつは、式を変換して、うまく文字列にするもの。ひとつは、それを書き出すもの。
+(理由は、同様に文字列をファイルに書き出すものも、書きたいからだ。それだけのために関数まるごとを書きなおすのは避けたい。)</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+    | Minus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+    | Times (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+    | Divide (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_expr</span> <span class="ocaml-variable">e </span>=
+    print_endline (<span class="ocaml-error-loc">to_string</span> e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value to_string
+</span></code></pre>
+
+<p>(注:　<code>^</code>演算子は、文字列を連結する。)</p>
+<p>printの関数を実行するとこうなる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span> (Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
+Hint: Did you mean print_char?
+</span></code></pre>
+
+<p>パターンマッチングの一般的な形はこう:</p>
+<pre><code class="ocaml"><span class="keyword">match</span> value <span class="keyword">with</span>
+| pattern    -&gt;  result
+| pattern    -&gt;  result
+  ...</code></pre>
+
+<p>左手のpatternは、うえの<code>to_string</code>関数のように、単純かもしれないし、あるいは、複雑で、入れ子かもしれない。次の例で、この関数に、掛け算をいれる。式の形は、<code>n * (x + y)</code>か<code>(x + y) * n</code>である。このように、入れ子のパターンを使うことになる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">multiply_out</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Times (e1, Plus (e2, e3)) -&gt;
+       Plus (Times (multiply_out e1, multiply_out e2),
+             Times (multiply_out e1, multiply_out e3))
+    | Times (Plus (e1, e2), e3) -&gt;
+       Plus (Times (multiply_out e1, multiply_out e3),
+             Times (multiply_out e2, multiply_out e3))
+    | Plus (left, right) -&gt;
+       Plus (multiply_out left, multiply_out right)
+    | Minus (left, right) -&gt;
+       Minus (multiply_out left, multiply_out right)
+    | Times (left, right) -&gt;
+       Times (multiply_out left, multiply_out right)
+    | Divide (left, right) -&gt;
+       Divide (multiply_out left, multiply_out right)
+    | Value v -&gt; Value v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val multiply_out : expr -&gt; expr = &lt;fun&gt;
+</span></code></pre>
+
+<p>実行するとこうなる。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span>(multiply_out(Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
+Hint: Did you mean print_char?
+</span></code></pre>
+
+<p>どのように<code>multiply_out</code>関数は動いているんだろう?
+はじめの2つのパターンが鍵だ。1番めのパターンは、<code>Times (e1, Plus (e2, e3))</code>で、<code>e1 * (e2 + e3)</code>のかたちの式にマッチする。この1番めのパターンマッチの右手を見ると、<code>(e1 * e2) + (e1 * e3)</code>なので、等しいことがわかるだろう。</p>
+<p>2番めのパターンも、同じことをやっている。ただ、式の形は<code>(e1 + e2) * e3</code>だ。</p>
+<p>のこりのパターンは、式の形を変えないが、しかし、重大なことを<em>やっている</em>。<code>multiply_out</code>関数を再帰的に、部分式にたいして呼んでいる。これによって、式のなかの部分式にもすべて、掛け算が行われる。(もし、式の掛け算がただ一段階ですんでいれば、残りのパターンはすべて、単純な<code>e -&gt; e</code>ルールに置き換えられただろう。)</p>
+<p>逆をやれるだろうか？(すなわち、共通部分式のくくりだし)できるとも!(ただ、もうすこし複雑になる。)以下のバージョンは、一段階の式でしかうまく動かない。改良をすれば、何段階の式でも、より複雑な場合でも、うまくやれるようにできる。:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">factorize</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (Times (e1, e2), Times (e3, e4)) when e1 = e3 -&gt;
+       Times (e1, Plus (e2, e4))
+    | Plus (Times (e1, e2), Times (e3, e4)) when e2 = e4 -&gt;
+       Times (Plus (e1, e3), e4)
+    | e -&gt; e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val factorize : expr -&gt; expr = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Value <span class="string">'x'</span>),
+                   Times (Value <span class="string">'n'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
+         string
+</span></code></pre>
+
+<p>上のfactorize関数で、更にまたいくつか、機能が明らかになった。<strong>ガード</strong>というものを、各パターンマッチにつけたすことができる。
+ガードは、条件式で、<code>when</code>のあとにくる。意味は、パターンマッチが起こるのは、パターンがマッチして、<em>さらに</em>、<code>when</code>-節の条件が満たされるときだ。</p>
+<pre><code class="ocaml"><span class="keyword">match</span> value <span class="keyword">with</span>
+| pattern  [ when condition ] -&gt;  result
+| pattern  [ when condition ] -&gt;  result
+  ...</code></pre>
+
+<p>2番目の機能は、<code>=</code>演算子だ。これは、2つの式の間で、&#39;構造的等しさ&#39;をテストする。再帰的におのおのの式に入っていって、そのすべての段階で、ちゃんと同じであるかを調べる。</p>
+<p>OCamlは、コンパイル時にチェックをして、パターンのすべての可能性が網羅されているかを確かめてくれる。型定義を変更して、上の<code>type expr</code>に<code>Product</code>ヴァリアントを加えてみた:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">expr</span> = Plus <span class="keyword">of</span> expr * expr      <span class="comment">(* means a + b *)</span>
+            | Minus <span class="keyword">of</span> expr * expr     <span class="comment">(* means a - b *)</span>
+            | Times <span class="keyword">of</span> expr * expr     <span class="comment">(* means a * b *)</span>
+            | Divide <span class="keyword">of</span> expr * expr    <span class="comment">(* means a / b *)</span>
+            | Product <span class="keyword">of</span> expr list     <span class="comment">(* means a * b * c * ... *)</span>
+            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    Plus of expr * expr
+  | Minus of expr * expr
+  | Times of expr * expr
+  | Divide of expr * expr
+  | Product of expr list
+  | Value of string
+</span></code></pre>
+
+<p>それから再コンパイルを、<code>to_string</code>関数を変えずにやった。OCamlは以下の警告をしてきた。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+    | Minus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+    | Times (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+    | Divide (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/data_types_and_matching.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

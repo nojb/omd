@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="debug.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Debug &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/debug.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Debug</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Tracing-functions-calls-in-the-toplevel">Tracing functions calls in the toplevel</a>
+<ul><li><a href="#Polymorphic-function">Polymorphic function</a>
+</li><li><a href="#Limitations">Limitations</a>
+</li></ul>
+</li><li><a href="#The-OCaml-debugger">The OCaml debugger</a>
+<ul><li><a href="#Launching-the-debugger">Launching the debugger</a>
+</li><li><a href="#Finding-the-cause-of-a-spurious-exception">Finding the cause of a spurious exception</a>
+</li><li><a href="#Getting-help-and-info-in-the-debugger">Getting help and info in the debugger</a>
+</li><li><a href="#Setting-break-points">Setting break points</a>
+</li><li><a href="#Using-the-debugger-under-X-Emacs">Using the debugger under (X)Emacs</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Debugging">Debugging</h1><p>This note quickly presents two techniques to debug OCaml programs:</p>
+<ul><li><p><a href="#Tracingfunctionscallsinthetoplevel">Tracing functions calls</a>
+ that works in the <a href="basics.html">interactive toplevel</a>,</p>
+</li><li><p><a href="#TheOCamldebugger">OCaml debugger</a>, which allows analysing programs
+ compiled with <code>ocamlc</code>.</p>
+</li></ul>
+
+<h2 id="Tracing-functions-calls-in-the-toplevel">Tracing functions calls in the toplevel</h2><p>The simplest way to debug programs in the toplevel is to follow the
+function calls, by “tracing” the faulty function:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">fib</span> <span class="ocaml-variable">x </span>= <span class="keyword">if</span> x &lt;= 1 <span class="keyword">then</span> 1 <span class="keyword">else</span> fib (x - 1) + fib (x - 2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fib : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#trace fib</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">fib is now traced.
+</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">fib 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">fib &lt;-- 3
+fib &lt;-- 1
+fib --&gt; 1
+fib &lt;-- 2
+fib &lt;-- 0
+fib --&gt; 1
+fib &lt;-- 1
+fib --&gt; 1
+fib --&gt; 2
+fib --&gt; 3
+</span><span class="ocaml-stderr"></span>- : int = 3
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#untrace fib</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">fib is no longer traced.
+</span><span class="ocaml-stderr"></span></span></code></pre>
+
+<h3 id="Polymorphic-function">Polymorphic function</h3><p>A difficulty with polymorphic functions is that the output of the trace
+system is not very informative in case of polymorphic arguments and/or
+results. Consider a sorting algorithm (say bubble sort):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">exchange</span> <span class="ocaml-variable">i j v </span>=
+    <span class="governing">let </span><span class="ocaml-variable">aux</span> = v.(i) <span class="governing">in</span>
+    v.(i) &lt;- v.(j); v.(j) &lt;- aux
+  
+  <span class="governing">let</span> <span class="ocaml-function">one_pass_vect</span> <span class="ocaml-variable">fin v </span>=
+    <span class="keyword">for</span> j = 1 <span class="keyword">to</span> fin <span class="keyword">do</span>
+      <span class="keyword">if</span> v.(j - 1) &gt; v.(j) <span class="keyword">then</span> exchange (j - 1) j v
+    <span class="keyword">done</span>
+  
+  <span class="governing">let</span> <span class="ocaml-function">bubble_sort_vect</span> <span class="ocaml-variable">v </span>=
+    <span class="keyword">for</span> i = <span class="ocaml-module">Array</span>.length v - 1 <span class="keyword">downto</span> 0 <span class="keyword">do</span>
+      one_pass_vect i v
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val exchange : int -&gt; int -&gt; 'a array -&gt; unit = &lt;fun&gt;
+val one_pass_vect : int -&gt; 'a array -&gt; unit = &lt;fun&gt;
+val bubble_sort_vect : 'a array -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">q</span> = [| 18; 3; 1 |]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val q : int array = [|18; 3; 1|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#trace one_pass_vect</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">one_pass_vect is now traced.
+</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">bubble_sort_vect q</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">one_pass_vect &lt;-- 2
+one_pass_vect --&gt; &lt;fun&gt;
+one_pass_vect* &lt;-- [|&lt;poly&gt;; &lt;poly&gt;; &lt;poly&gt;|]
+one_pass_vect* --&gt; ()
+one_pass_vect &lt;-- 1
+one_pass_vect --&gt; &lt;fun&gt;
+one_pass_vect* &lt;-- [|&lt;poly&gt;; &lt;poly&gt;; &lt;poly&gt;|]
+one_pass_vect* --&gt; ()
+one_pass_vect &lt;-- 0
+one_pass_vect --&gt; &lt;fun&gt;
+one_pass_vect* &lt;-- [|&lt;poly&gt;; &lt;poly&gt;; &lt;poly&gt;|]
+one_pass_vect* --&gt; ()
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>The function <code>one_pass_vect</code> being polymorphic, its vector argument is
+printed as a vector containing polymorphic values,
+<code>[|&lt;poly&gt;; &lt;poly&gt;; &lt;poly&gt;|]</code>, and thus we cannot properly
+follow the computation.</p>
+<p>A simple way to overcome this problem is to define a monomorphic version
+of the faulty function. This is fairly easy using a <em>type constraint</em>.
+Generally speaking, this allows a proper understanding of the error in
+the definition of the polymorphic function. Once this has been
+corrected, you just have to suppress the type constraint to revert to a
+polymorphic version of the function. For our sorting routine, a single
+type constraint on the argument of the <code>exchange</code> function warranties a
+monomorphic typing, that allows a proper trace of function calls:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">exchange</span> <span class="ocaml-variable">i j (v : int array) </span>=    <span class="comment">(* notice the <span class="governing">type</span> constraint *)</span>
+    <span class="governing">let </span><span class="ocaml-variable">aux</span> = v.(i) <span class="governing">in</span>
+    v.(i) &lt;- v.(j); v.(j) &lt;- aux
+  
+  <span class="governing">let</span> <span class="ocaml-function">one_pass_vect</span> <span class="ocaml-variable">fin v </span>=
+    <span class="keyword">for</span> j = 1 <span class="keyword">to</span> fin <span class="keyword">do</span>
+      <span class="keyword">if</span> v.(j - 1) &gt; v.(j) <span class="keyword">then</span> exchange (j - 1) j v
+    <span class="keyword">done</span>
+  
+  <span class="governing">let</span> <span class="ocaml-function">bubble_sort_vect</span> <span class="ocaml-variable">v </span>=
+    <span class="keyword">for</span> i = <span class="ocaml-module">Array</span>.length v - 1 <span class="keyword">downto</span> 0 <span class="keyword">do</span>
+      one_pass_vect i v
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val exchange : int -&gt; int -&gt; int array -&gt; unit = &lt;fun&gt;
+val one_pass_vect : int -&gt; int array -&gt; unit = &lt;fun&gt;
+val bubble_sort_vect : int array -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">q</span> = [| 18; 3; 1 |]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val q : int array = [|18; 3; 1|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#trace one_pass_vect</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">one_pass_vect is now traced.
+</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">bubble_sort_vect q</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">one_pass_vect &lt;-- 2
+one_pass_vect --&gt; &lt;fun&gt;
+one_pass_vect* &lt;-- [|18; 3; 1|]
+one_pass_vect* --&gt; ()
+one_pass_vect &lt;-- 1
+one_pass_vect --&gt; &lt;fun&gt;
+one_pass_vect* &lt;-- [|3; 1; 18|]
+one_pass_vect* --&gt; ()
+one_pass_vect &lt;-- 0
+one_pass_vect --&gt; &lt;fun&gt;
+one_pass_vect* &lt;-- [|1; 3; 18|]
+one_pass_vect* --&gt; ()
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<h3 id="Limitations">Limitations</h3><p>To keep track of assignments to data structures and mutable variables in
+a program, the trace facility is not powerful enough. You need an extra
+mechanism to stop the program in any place and ask for internal values:
+that is a symbolic debugger with its stepping feature.</p>
+<p>Stepping a functional program has a meaning which is a bit weird to
+define and understand. Let me say that we use the notion of *runtime
+events* that happen for instance when a parameter is passed to a
+function or when entering a pattern matching, or selecting a clause in a
+pttern matching. Computation progress is taken into account by these
+events, independantly of the instructions executed on the hardware.</p>
+<p>Although this is difficult to implement, there exists such a debugger
+for OCaml under Unix: <code>ocamldebug</code> (there also exists one for Caml
+Light, as a user contribution). Its use is illustrated in the next
+section.</p>
+<p>In fact, for complex programs, it is likely the case that the programmer
+will use explicit printing to find the bugs, since this methodology
+allows the reduction of the trace material : only useful data are
+printed and special purpose formats are more suited to get the relevant
+information, than what can be output automatically by the generic
+pretty-printer used by the trace mechanism.</p>
+<h2 id="The-OCaml-debugger">The OCaml debugger</h2><p>We now give a quick tutorial for the OCaml debugger (<code>ocamldebug</code>).
+Before starting, please note that <code>ocamldebug</code> does not work under
+native Windows ports of OCaml (but it runs under the Cygwin port).</p>
+<h3 id="Launching-the-debugger">Launching the debugger</h3><p>Consider the following obviously wrong program written in the file
+<code>uncaught.ml</code>:</p>
+<pre><code class="ocaml"><span class="comment">(* file uncaught.ml *)</span>
+<span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">ref</span> []
+<span class="governing">let</span> <span class="ocaml-function">find_address</span> <span class="ocaml-variable">name </span>= <span class="ocaml-module">List</span>.assoc name !l
+<span class="governing">let</span> <span class="ocaml-function">add_address</span> <span class="ocaml-variable">name address </span>= l := (name, address) :: ! l
+
+<span class="governing">let</span> () =
+  add_address 'IRIA<span class="string">' '</span>Rocquencourt'<span class="ocaml-prompt">;;</span><br/>  print_string (find_address 'INRIA'); print_newline ();;</code></pre>
+
+<p>At runtime, the program raises an uncaught exception <code>Not_found</code>.
+Suppose we want to find where and why this exception has been raised, we
+can proceed as follows:</p>
+<ol><li><p>we compile the program in debug mode:</p>
+<pre><code>ocamlc -g uncaught.ml</code></pre></li><li><p>we launch the debugger:</p>
+<pre><code>ocamldebug a.out</code></pre>
+
+<p>Then the debugger answers with a banner and a prompt:</p>
+<pre><code>    OCaml Debugger version 4.00.1
+
+(ocd)</code></pre></li></ol>
+
+<h3 id="Finding-the-cause-of-a-spurious-exception">Finding the cause of a spurious exception</h3><p>Type <code>r</code> (for <em>run</em>); you get</p>
+<pre><code>(ocd) r
+Loading program... done.
+Time : 12
+Program end.
+Uncaught exception: Not_found
+(ocd)</code></pre><p>Self explanatory, is&#39;nt it? So, you want to step backward to set the
+program counter before the time the exception is raised; hence type in
+<code>b</code> as <em>backstep</em>, and you get</p>
+<pre><code>(ocd) b
+Time : 11 - pc : 15500 - module List
+143     [] -&gt; &lt;|b|&gt;raise Not_found</code></pre><p>The debugger tells you that you are in module <code>List</code>, inside a pattern
+matching on a list that already chose the <code>[]</code> case and is about to
+execute <code>raise Not_found</code>, since the program is stopped just before this
+expression (as witnessed by the <code>&lt;|b|&gt;</code> mark).</p>
+<p>But, as you know, you want the debugger to tell you which procedure
+calls the one from <code>List</code>, and also who calls the procedure that calls
+the one from <code>List</code>; hence, you want a backtrace of the execution stack:</p>
+<pre><code>(ocd) bt
+#0  Pc : 15500  List char 3562
+#1  Pc : 19128  Uncaught char 221</code></pre><p>So the last function called is from module <code>List</code> at character 3562,
+that is :</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">assoc</span> <span class="ocaml-variable">x </span>= <span class="keyword">function</span>
+  | [] -&gt; <span class="keyword">raise</span> Not_found
+          ^
+  | (a,b)::l -&gt; <span class="keyword">if</span> a = x <span class="keyword">then</span> b <span class="keyword">else</span> assoc x l</code></pre>
+
+<p>The function that calls it is in module <code>Uncaught</code>, file <code>uncaught.ml</code>
+char 221:</p>
+<pre><code class="ocaml">print_string (find_address 'INRIA'); print_newline ()<span class="ocaml-prompt">;;</span><br/>                                  ^</code></pre>
+
+<p>To sum up: if you&#39;re developping a program you can compile it with the
+<code>-g</code> option, to be ready to debug the program if necessary. Hence, to
+find a spurious exception you just need to type <code>ocamldebug a.out</code>, then
+<code>r</code>, <code>b</code>, and <code>bt</code> gives you the backtrace.</p>
+<h3 id="Getting-help-and-info-in-the-debugger">Getting help and info in the debugger</h3><p>To get more info about the current status of the debugger you can ask it
+directly at the toplevel prompt of the debugger; for instance:</p>
+<pre><code>(ocd) info breakpoints
+No breakpoint.
+
+(ocd) help break
+  1      15396  in List, character 3539
+break : Set breakpoint at specified line or function.
+Syntax: break function-name
+break @ [module] linenum
+break @ [module] # characternum</code></pre>
+
+<h3 id="Setting-break-points">Setting break points</h3><p>Let&#39;s set up a breakpoint and rerun the entire program from the
+beginning (<code>(g)oto 0</code> then <code>(r)un</code>):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(ocd) break @Uncaught 9
+  <span class="ocaml-error-loc">Breakpoint</span> 3 at 19112 : file Uncaught, line 9 column 34
+  
+  (ocd) g 0
+  Time : 0
+  Beginning <span class="keyword">of</span> program.
+  
+  (ocd) r
+  Time : 6 - pc : 19112 - module Uncaught
+  Breakpoint : 1
+  9 add 'IRIA<span class="string">' '</span>Rocquencourt'&lt;|a|&gt;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>Then, we can step and find what happens when <code>find_address</code> is about to
+be called</p>
+<pre><code>(ocd) s
+Time : 7 - pc : 19012 - module Uncaught
+5 let find_address name = &lt;|b|&gt;List.assoc name !l;;
+
+(ocd) p name
+name : string = &#39;INRIA&#39;
+
+(ocd) p !l
+$1 : (string * string) list = [&#39;IRIA&#39;, &#39;Rocquencourt&#39;]
+(ocd)</code></pre>
+
+<p>Now we can guess why <code>List.assoc</code> will fail to find &#39;INRIA&#39; in the
+list...</p>
+<h3 id="Using-the-debugger-under-X-Emacs">Using the debugger under (X)Emacs</h3>
+
+<p>Note also that under Emacs you call the debugger using <code>ESC-x</code>
+<code>camldebug a.out</code>. Then Emacs will set you directly to the file and
+character reported by the debugger, and you can step back and forth
+using <code>ESC-b</code> and <code>ESC-s</code>, you can set up break points using
+<code>CTRL-X space</code>, and so on...</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/debug.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

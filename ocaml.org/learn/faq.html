@@ -1,0 +1,831 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="faq.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>FAQ &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/faq.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../learn/">Learn</a><span class="divider"></span></li>
+<li class="active">FAQ</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#General-Questions">General Questions</a>
+</li><li><a href="#Core-Language">Core Language</a>
+<ul><li><a href="#Basic-types">Basic types</a>
+</li><li><a href="#Data-structures">Data structures</a>
+</li><li><a href="#Types-definitions">Types definitions</a>
+</li><li><a href="#Functions-and-procedures">Functions and procedures</a>
+</li><li><a href="#How-to-define-a-function-with-more-than-one-argument">How to define a function with more than one argument?</a>
+</li><li><a href="#Pattern-matching">Pattern matching</a>
+</li><li><a href="#Typing">Typing</a>
+</li><li><a href="#Input-output">Input/output</a>
+</li></ul>
+</li><li><a href="#Module-Language">Module Language</a>
+</li><li><a href="#Development-Tools">Development Tools</a>
+<ul><li><a href="#Interactive-toplevel-aka-REPL">Interactive toplevel (aka REPL)</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="FAQ">FAQ</h1><p>See also <a href="http://stackoverflow.com/tags/ocaml/info">Stack Overflow</a>,
+which is widely used by the OCaml community.</p>
+<h2 id="General-Questions">General Questions</h2><h4 id="What-is-OCaml">What is OCaml?</h4>
+
+<p>OCaml is a programming language. It is a functional language, since the
+basic units of programs are functions. It is a strongly-typed language;
+it means that the objects that you use belong to a set that has a name,
+called its type. In OCaml, types are managed by the computer, the user
+has nothing to do about types (types are synthesized). The language is
+available on almost every Unix platform (including Linux and MacOS X)
+and on PCs under Windows. A brief tour on main
+<a href="description.html">features</a> of OCaml.</p>
+<h4 id="Under-what-licensing-terms-is-the-OCaml-software-available">Under what licensing terms is the OCaml software available?</h4>
+
+<p>The OCaml system is open source software. Since version 4.03 the
+compiler and the standard library are distributed under LGPL 2.1 with
+static linking exception, read the <a href="../docs/license.html">license</a> for
+details. The software is also available under a BSD-style license for a
+fee through the <a href="../consortium/">OCaml Consortium</a>.</p>
+<h4 id="What-is-the-meaning-of-the-name-OCaml">What is the meaning of the name “OCaml”</h4>
+
+<p>CAML once was an acronym that stood for “Categorical Abstract Machine
+Language”, an abstract machine its early versions targeted. The evaluation model
+has changed since then, but the name stuck.</p>
+<p>The “O” stands for “objective” and was added when the language got object-oriented
+programming capabilities.</p>
+<h4 id="Do-you-write-Caml-CAML-Ocaml-OCaML-OCAML-or-OCaml">Do you write “Caml”, “CAML”, “Ocaml”, “OCaML”, “OCAML” or “OCaml” ?</h4>
+
+<p>The official name of the language, capitalization included, is “OCaml”.</p>
+<h4 id="Is-OCaml-a-compiled-or-interpreted-language">Is OCaml a compiled or interpreted language?</h4>
+
+<p>OCaml is compiled. However, the OCaml compiler offers a top-level
+interactive loop, that is similar to an interpreter. In fact, in the
+interactive system, the user may type in program chunks (we call these
+pieces OCaml “phrases”) that the system handles at once, compiling them,
+executing them, and writing their results.</p>
+<h4 id="What-are-the-differences-between-Caml-V3-1-Caml-Light-and-OCaml">What are the differences between Caml V3.1, Caml Light, and OCaml?</h4>
+
+<p>These are different Caml implementations that have been developed
+successively at Inria. These systems share many features since they all
+implement the core of the OCaml language; so the basic syntax is nearly
+the same. However, all these systems have their own extensions to the
+Caml core language.<br/>
+Caml V3.1 is no longer maintained nor distributed. <a href="../caml-light/">Caml
+Light</a> is no longer developed, but still maintained.
+Because of its stable status, it is actively used in education. Most
+other users have switched to OCaml, the latest variant of the language.
+This is the version we suggest using in new software developments. See
+our brief <a href="history.html">history</a> of the OCaml language.</p>
+<h4 id="How-to-report-a-bug-in-the-compilers">How to report a bug in the compilers?</h4>
+
+<p>Use the <a href="http://caml.inria.fr/mantis/">bug tracking system</a> to browse
+bug reports and features request, and submit new ones.</p>
+<h2 id="Core-Language">Core Language</h2><p></p><hr/>
+<h3 id="Basic-types">Basic types</h3><h4 id="Is-it-possible-to-do-computations-with-arbritrary-precision-arithmetics">Is it possible to do computations with arbritrary precision arithmetics?</h4>
+
+<p>OCaml provides a library called <code>Num</code> that handles exact arithmetic computation
+for rational numbers.</p>
+<p>Operations on big numbers gets the suffix <code>/</code>: addition is thus <code>+/</code>.
+You build big numbers using conversion from (small) integers or
+character strings. For printing in the interactive toplevel (aka
+<a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>),
+a custom printer can be
+used. An example under OCaml is given below.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>nums.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Num</span>
+  <span class="governing">open</span> <span class="ocaml-module">Format</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_num</span> <span class="ocaml-variable">ff n </span>= fprintf ff <span class="ocaml-error-loc">'</span>%s' (string_of_num n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#install_printer print_num</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Unbound value print_num.
+</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">num_of_string <span class="ocaml-error-loc">'</span>2/3'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = num_of_string <span class="ocaml-error-loc">'</span>1/3' +/ num_of_string '2/3'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">fact</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">if</span> n &lt;= 0 <span class="keyword">then</span> (num_of_int 1) <span class="keyword">else</span> num_of_int n */ (fact (n - 1))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">File &quot;&quot;, line 1:
+Error: Reference to undefined global `Num'
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">fact</span> 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value fact
+</span></code></pre>
+
+<h3 id="Data-structures">Data structures</h3><h4 id="My-array-is-modified-and-I-don-39-t-know-why">My array is modified, and I don&#39;t know why</h4>
+
+<p>This is due to the physical sharing of two arrays that you missed. In
+OCaml there is no implicit array copying. If you give two names to the
+same array, every modification on one array will be visible to the
+other:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">v</span> = <span class="ocaml-module">Array</span>.make 3 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val v : int array = [|0; 0; 0|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val w : int array = [|0; 0; 0|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">w.(0) &lt;- 4</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int array = [|4; 0; 0|]
+</span></code></pre>
+
+<p>The physical sharing effect also applies to elements stored in vectors:
+if these elements are also vectors, the sharing of these vectors implies
+that modifying one of these elements modifies the others (see also the
+entry below).</p>
+<h4 id="How-to-define-multidimensional-arrays">How to define multidimensional arrays?</h4>
+
+<p>The only way is to define an array whose elements are arrays themselves
+(OCaml arrays are unidimensional, they modelize mathematical vectors).
+The naive way to define multidimensional arrays is bogus: the result is
+not right because there is some unexpected physical sharing between the
+lines of the new array (see also previous entry):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">Array</span>.make 2 (<span class="ocaml-module">Array</span>.make 3 0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : int array array = [|[|0; 0; 0|]; [|0; 0; 0|]|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">m.(0).(0) &lt;- 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int array array = [|[|1; 0; 0|]; [|1; 0; 0|]|]
+</span></code></pre>
+
+<p>The allocation of a new array has two phases. First, the initial value
+is computed; then this value is written in each element of the new
+array. That&#39;s why the line which is allocated by <code>Array.make 3 0</code> is
+unique and physically shared by all the lines of the array <code>m</code>.<br/>
+ The solution is to use the <code>make_matrix</code> primitive that builds the
+matrix with all elements equal to the initial value provided.
+Alternatively, write the program that allocates a new line for each line
+of your matrix. For instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">matrix</span> <span class="ocaml-variable">n m init </span>=
+    <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">Array</span>.make n (<span class="ocaml-module">Array</span>.make m init) <span class="governing">in</span>
+    <span class="keyword">for</span> i = 1 <span class="keyword">to</span> n - 1 <span class="keyword">do</span>
+      result.(i) &lt;- <span class="ocaml-module">Array</span>.make m init
+    <span class="keyword">done</span>;
+    result</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val matrix : int -&gt; int -&gt; 'a -&gt; 'a array array = &lt;fun&gt;
+</span></code></pre>
+
+<p>In the same vein, the <code>copy_vect</code> primitive gives strange results, when
+applied to matrices: you need to write a function that explicitly copies
+each line of the matrix at hand:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">copy_matrix</span> <span class="ocaml-variable">m </span>=
+    <span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="ocaml-module">Array</span>.length m <span class="governing">in</span>
+    <span class="keyword">if</span> l = 0 <span class="keyword">then</span> m <span class="keyword">else</span>
+      <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">Array</span>.make l m.(0) <span class="governing">in</span>
+      <span class="keyword">for</span> i = 0 <span class="keyword">to</span> l - 1 <span class="keyword">do</span>
+        result.(i) &lt;- <span class="ocaml-module">Array</span>.copy m.(i)
+      <span class="keyword">done</span>;
+      result</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val copy_matrix : 'a array array -&gt; 'a array array = &lt;fun&gt;
+</span></code></pre>
+
+<h3 id="Types-definitions">Types definitions</h3><h4 id="How-to-define-an-enumerated-type">How to define an enumerated type?</h4>
+
+<p>An enumerated type is a sum type with only constants. For instance, a
+type with 3 constants:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">color</span> = Blue | White | Red</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type color = Blue | White | Red
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Blue</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : color = Blue
+</span></code></pre>
+
+<p>The names <code>Blue</code>, <code>White</code> and <code>Red</code> are the constructors of the <code>color</code>
+type. One can define functions on this type by pattern matching:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">string_of_color</span> = <span class="keyword">function</span>
+    | Blue -&gt;<span class="ocaml-error-loc"> </span>'blue'
+    | White -&gt; 'white'
+    | Red -&gt; 'red'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h4 id="Is-it-possible-to-make-a-record-value-without-declaring-its-type-first">Is it possible to make a record value without declaring its type first?</h4><p>No, Before making a record, you must give record&#39;s type a name, using the <code>type</code> keyword, 
+or the type name for the record should at least be in scope. Ocaml needs to know
+the record type&#39;s name and associated field names before making a record value.
+Otherwise it results in error &#39;Unbound record field&#39;.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">person</span> = { name: string; age: int }
+  <span class="governing">let </span><span class="ocaml-variable">p1</span> = { name=<span class="ocaml-error-loc">'</span>John'; age=30 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h4 id="How-to-share-a-field-between-two-different-record-types">How to share a field between two different record types?</h4>
+
+<p>When you define two types sharing a field name, the last defined type
+hides the field of the first type. For instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">point_3d</span> = {x : float; y : float; z : float}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type point_3d = { x : float; y : float; z : float; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">point_2d</span> = {x : float; y : float}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type point_2d = { x : float; y : float; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">{x = 10.; y = 20.; z = 30.}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : point_3d = {x = 10.; y = 20.; z = 30.}
+</span></code></pre>
+
+<p>Since OCaml 4.02, fields are automatically disambiguated when types are
+known. For example, in <code>let u:point_3d = ... in u.x</code>, <code>u.x</code> refers to
+the field of <code>point_3d</code> even though it is shadowed. However, field
+disambiguation does not work when type information is not available
+(e.g. in <code>let get_x u = u.x</code> where the type of <code>get_x</code> is not otherwise
+constrained), and may produce confusing results when types are omitted,
+so one may consider avoiding the problem entirely.</p>
+<p>The simplest way to overcome this problem is to simply use different
+names! For instance</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">point3d</span> = {x3d : float; y3d : float; z3d : float}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type point3d = { x3d : float; y3d : float; z3d : float; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">point2d</span> = {x2d : float; y2d : float}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type point2d = { x2d : float; y2d : float; }
+</span></code></pre>
+
+<p>One can propose two others solutions. First, it is possible
+to use modules to define the two types in different name spaces:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">module</span> <span class="ocaml-module">D3</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
+    <span class="governing">type</span> <span class="type">point</span> = {x : float; y : float; z : float}
+  <span class="governing">end</span>
+  
+  <span class="governing">module</span> <span class="ocaml-module">D2</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
+    <span class="governing">type</span> <span class="type">point</span> = {x : float; y : float}
+  <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module D3 : sig type point = { x : float; y : float; z : float; } end
+module D2 : sig type point = { x : float; y : float; } end
+</span></code></pre>
+
+<p>This way fields can be fully qualified as <code>D3.x</code> <code>D2.x</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">{<span class="ocaml-module">D3</span>.x = 10.; <span class="ocaml-module">D3</span>.y = 20.; <span class="ocaml-module">D3</span>.z = 30.}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : D3.point = {D3.x = 10.; y = 20.; z = 30.}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">{<span class="ocaml-module">D2</span>.x = 10.; <span class="ocaml-module">D2</span>.y = 20.}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : D2.point = {D2.x = 10.; y = 20.}
+</span></code></pre>
+
+<p>You can also use objects that provide overloading on method names:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">point_3d</span> <span class="ocaml-variable">~x ~y ~z </span>= <span class="governing">object</span>
+    <span class="governing">method</span> <span class="ocaml-function">x</span><span class="type"> : float</span> = x
+    <span class="governing">method</span> <span class="ocaml-function">y</span><span class="type"> : float</span> = y
+    <span class="governing">method</span> <span class="ocaml-function">z</span><span class="type"> : float</span> = z
+  <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class point_3d :
+  x:float -&gt;
+  y:float -&gt;
+  z:float -&gt; object method x : float method y : float method z : float end
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">point_2d</span> <span class="ocaml-variable">~x ~y </span>= <span class="governing">object</span>
+    <span class="governing">method</span> <span class="ocaml-function">x</span><span class="type"> : float</span> = x
+    <span class="governing">method</span> <span class="ocaml-function">y</span><span class="type"> : float</span> = y
+  <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class point_2d :
+  x:float -&gt; y:float -&gt; object method x : float method y : float end
+</span></code></pre>
+
+<p>Note that objects provide you more than overloading: you can define
+truly polymorphic functions, working on both <code>point_3d</code> and <code>point_2d</code>,
+and you can even coerce a <code>point_3d</code> to a <code>point_2d</code>.</p>
+<h4 id="How-to-define-two-sum-types-that-share-constructor-names">How to define two sum types that share constructor names?</h4>
+
+<p>Since OCaml 4.02, constructors are automatically disambiguated when types
+are known. For example, in <code>type a = A;; type b = A of int;; let x:a = A</code>,
+<code>A</code> is recognized as belonging to the type <code>a</code> even though its constructor
+is shadowed. However, constructor disambiguation does not work when type
+information is not available (e.g. in <code>let get_n x = match x with A -&gt; 1</code>
+where the type of <code>get_n</code> is not otherwise constrained), and may produce
+confusing results when types are omitted, so one may consider avoiding 
+the problem entirely.</p>
+<p>Generally speaking, sharing names between two constructors is not
+possible. As for all other names, you must use
+distinct name constructors. However, you can define the two types in two
+different name spaces, i.e. into two different modules. As for fields
+discussed above, you obtain constructors that can be qualified by their
+module names. With OCaml you can alternatively use polymorphic variants,
+i.e. constructors that are, in some sense, <em>predefined</em>, since they are
+not defined by a type definition. For instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">ids</span> = [ `Name | `Val ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type ids = [ `Name | `Val ]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">person</span> = [ `Name <span class="keyword">of</span> string ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type person = [ `Name of string ]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> : <span class="type">person -&gt; string </span>= <span class="keyword">function</span> `Name s -&gt; s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : person -&gt; string = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_name</span> : <span class="type">ids -&gt; bool </span>= <span class="keyword">function</span> `Name -&gt; true | _ -&gt; false</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val is_name : ids -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<h3 id="Functions-and-procedures">Functions and procedures</h3><h4 id="How-to-define-a-function">How to define a function?</h4>
+
+<p>In OCaml, the syntax to define functions is close to the mathematical
+usage: the definition is introduced by the keyword <code>let</code>, followed by
+the name of the function and its arguments; then the formula that
+computes the image of the argument is written after an <code>=</code> sign.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">successor</span> <span class="ocaml-variable">(n) </span>= n + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val successor : int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>In fact, parens surrounding the argument may be omitted, so we generally
+write:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">successor</span> <span class="ocaml-variable">n </span>= n + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val successor : int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<h4 id="How-to-define-a-recursive-function">How to define a recursive function?</h4>
+
+<p>You need to explicitly tell that you want to define a recursive
+function: use <code>let rec</code> instead of <code>let</code>.  For instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">fact</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">if</span> n = 0 <span class="keyword">then</span> 1 <span class="keyword">else</span> n * fact (n - 1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fact : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">fib</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">if</span> n &lt;= 1 <span class="keyword">then</span> n <span class="keyword">else</span> fib (n - 1) + fib (n - 2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fib : int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>Functions may be mutually recursive:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">odd</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">if</span> n = 0 <span class="keyword">then</span> false
+    <span class="keyword">else</span> <span class="keyword">if</span> n = 1 <span class="keyword">then</span> true <span class="keyword">else</span> even (n - 1)
+  <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">if</span> n = 0 <span class="keyword">then</span> true
+    <span class="keyword">else</span> <span class="keyword">if</span> n = 1 <span class="keyword">then</span> false <span class="keyword">else</span> odd (n - 1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val odd : int -&gt; bool = &lt;fun&gt;
+val even : int -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<h4 id="How-to-apply-a-function">How to apply a function?</h4>
+
+<p>Functions are applied as in mathematics: write the function&#39;s name,
+followed by its argument enclosed in parens: f (x). In practice, parens
+are omitted in case of constants or identifiers: we write <code>fib 2</code>
+instead of <code>fib (2)</code>, and <code>fact x</code> instead of <code>fact (x)</code>.<br/>
+ When the argument of a function is more complex than just an
+identifier, you must enclose this argument between parentheses. In
+particular you need parens when the argument is a negative constant
+number: to apply <code>f</code> to <code>-1</code> you must write <code>f (-1)</code> and <strong>not</strong> <code>f -1</code>
+that is syntactically similar to <code>f - 1</code> (hence it is a subtraction, not
+an application).</p>
+<h4 id="How-to-define-a-procedure">How to define a procedure?</h4>
+
+<p>Recall that <em>procedures</em> are commands that produce an <em>effect</em> (for
+instance printing something on the terminal or writing some memory
+location), but have no mathematically meaningful result.</p>
+<p>In OCaml, there is no special treatment of procedures: they are just
+considered as special cases of functions that return the special
+“meaningless” value <code>()</code>. For
+instance, the <code>print_string</code> primitive that prints a character string on
+the terminal, just returns <code>()</code> as a way of indicating that its job has
+been properly completed.</p>
+<p>Procedures that do not need any meaningful argument, get <code>()</code> as dummy
+argument. For instance, the <code>print_newline</code> procedure, that outputs a
+newline on the terminal, gets no meaningful argument: it has type
+<code>unit -&gt; unit</code>.</p>
+<p>Procedures with argument are defined exactly as ordinary functions. For
+instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">message</span> <span class="ocaml-variable">s </span>= print_string s; print_newline()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val message : string -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">message <span class="ocaml-error-loc">'</span>Hello world!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h4 id="How-to-define-a-procedure-function-that-takes-no-argument">How to define a procedure/function that takes no argument?</h4>
+
+<p>Note that it is impossible to define a procedure without any argument at
+all: its definition would imply to execute it, and there would be no way
+to call it afterwards. In the following fragment <code>double_newline</code> is
+bound to <code>()</code>, and its further evaluation never produces carriage
+returns as may be erroneously expected by the user.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">double_newline</span> = print_newline(); print_newline()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">
+
+</span><span class="ocaml-stderr"></span>val double_newline : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">double_newline</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>The correct definition and usage of this procedure is:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">double_newline</span> <span class="ocaml-variable">() </span>= print_newline(); print_newline()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val double_newline : unit -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">double_newline</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">double_newline ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">
+
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<h3 id="How-to-define-a-function-with-more-than-one-argument">How to define a function with more than one argument?</h3>
+
+<p>Just write the list of successive arguments when defining the function.
+For instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">sum</span> <span class="ocaml-variable">x y </span>= x + y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val sum : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>then gives the actual arguments in the same order when applying the
+function:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">sum 1 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3
+</span></code></pre>
+
+<p>These functions are named “curried” functions, as opposed to functions
+with tuples as argument:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">sum'</span> <span class="ocaml-variable">(x, y) </span>= x + y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val sum' : int * int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">sum' (1, 2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3
+</span></code></pre>
+
+<p>By convention, OCaml code generally uses curried functions rather
+than functions accepting a tuple as an argument. Of course, this
+does not apply to cases where the tuple is denoting a data structure
+on its own (e.g. <code>(float * float * float)</code> being used to represent
+a point).</p>
+<h4 id="How-to-define-a-function-that-has-several-results">How to define a function that has several results?</h4>
+
+<p>You can define a function that return a pair or a tuple:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">div_mod</span> <span class="ocaml-variable">x y </span>= (x / y, x mod y)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val div_mod : int -&gt; int -&gt; int * int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">div_mod 15 7</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int * int = (2, 1)
+</span></code></pre>
+
+<h4 id="What-is-an-anonymous-function">What is an “anonymous function”?</h4>
+
+<p>You may use functions that have no names: we call them functional values
+or anonymous functions. A functional value is introduced by the keyword
+<code>fun</code>, followed by its argument, then an arrow <code>-&gt;</code> and the function
+body. For instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">fun</span> x -&gt; x + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="keyword">fun</span> x -&gt; x + 1) 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3
+</span></code></pre>
+
+<h4 id="What-is-the-difference-between-fun-and-function">What is the difference between <code>fun</code> and <code>function</code>?</h4>
+
+<p>Functions are usually introduced by the keyword <code>fun</code>. Each parameter is
+introduced by its own <code>fun</code> construct. For instance, the construct:</p>
+<pre><code class="ocaml"><span class="keyword">fun</span> x -&gt; <span class="keyword">fun</span> y -&gt; ...</code></pre>
+
+<p>defines a function with two parameters <code>x</code> and <code>y</code>. An equivalent but
+shorter form is:</p>
+<pre><code class="ocaml"><span class="keyword">fun</span> x y -&gt; ...</code></pre>
+
+<p>Functions that use pattern-matching are introduced by the keyword
+<code>function</code>. For example:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">function None -&gt; false | Some _ -&gt; true</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : 'a option -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<h4 id="My-function-is-never-applied">My function is never applied</h4>
+
+<p>This is probably due to a missing argument: since OCaml is a functional
+programming language, there is no error when you evaluate a function
+with missing arguments: in this case, a functional value is returned,
+but the function is evidently not applied. Example: if you evaluate
+<code>print_newline</code> without argument, there is no error, but nothing
+happens. The compiler issues a warning in case of a blatant misuse.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_newline</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">print_newline ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<h3 id="Pattern-matching">Pattern matching</h3><h4 id="How-to-do-nested-pattern-matching">How to do nested pattern matching?</h4>
+
+<p>You imperatively need to enclose between parens a pattern matching which
+is written inside another pattern matching. In effect, the internal
+pattern matching “catches” all the pattern matching clauses that are
+written after it. For instance:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> = <span class="keyword">function</span>
+  | 0 -&gt; <span class="keyword">match</span> ... <span class="keyword">with</span> | a -&gt; ... | b -&gt; ...
+  | 1 -&gt; ...
+  | 2 -&gt; ...</code></pre>
+
+<p>is parsed as</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> = <span class="keyword">function</span>
+  | 0 -&gt;
+     <span class="keyword">match</span> ... <span class="keyword">with</span>
+     | a -&gt; ...
+     | b -&gt; ...
+     | 1 -&gt; ...
+     | 2 -&gt; ...</code></pre>
+
+<p>This error may occur for every syntactic construct that involves pattern
+matching: <code>function</code>, <code>match       .. with</code> and <code>try ... with</code>. The
+usual trick is to enclose inner pattern matchings with <code>begin</code> and
+<code>end</code>. One write:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> = <span class="keyword">function</span>
+  | 0 -&gt;
+     <span class="governing">begin</span> <span class="keyword">match</span> ... <span class="keyword">with</span>
+     | a -&gt; ...
+     | b -&gt; ...
+     <span class="governing">end</span>
+  | 1 -&gt; ...
+  | 2 -&gt; ...</code></pre>
+
+<h3 id="Typing">Typing</h3><h4 id="Error-message-a-type-is-not-compatible-with-itself">Error message: a type is not compatible with itself</h4>
+
+<p>You may obtain the message: This expression has type “some type” but is
+used with type “the same some type”. This may occur very often when
+using the interactive system.<br/>
+ The reason is that two types with the same name have been defined the
+compiler does not confuse the two types, but the types are evidently
+written the same. Consider for instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">t</span> = T <span class="keyword">of</span> int</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type t = T of int
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = T 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : t = T 1
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">t</span> = T <span class="keyword">of</span> int</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type t = T of int
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">incr</span> = <span class="keyword">function</span> T x -&gt; T (x+1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val incr : t -&gt; t = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">incr <span class="ocaml-error-loc">x</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type t/1407 but an expression was expected of type
+         t/1410
+</span></code></pre>
+
+<p>This phenomenon appears when you load many times the same file into the
+interactive system, since each reloading redefines the types. The
+solution is to quit your interactive system and reload your files in a
+new session.</p>
+<h4 id="A-function-obtained-through-partial-application-is-not-polymorphic-enough">A function obtained through partial application is not polymorphic enough</h4>
+
+<p>The more common case to get a “not polymorphic enough” definition is
+when defining a function via partial application of a general
+polymorphic function. In OCaml polymorphism is introduced only through
+the “let” construct, and results from application are weakly polymorph;
+hence the function resulting from the application is not polymorph. In
+this case, you recover a fully polymorphic definition by clearly
+exhibiting the functionality to the type-checker : define the function
+with an explicit functional abstraction, that is, add a <code>function</code>
+construct or an extra parameter (this rewriting is known as
+eta-expansion):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">map_id</span> = <span class="ocaml-module">List</span>.map (function x -&gt; x) <span class="comment">(* Result is weakly polymorphic *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val map_id : '_weak1 list -&gt; '_weak1 list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">map_id [1;2]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">map_id <span class="comment">(* No longer polymorphic *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">map_id'</span> <span class="ocaml-variable">l </span>= <span class="ocaml-module">List</span>.map (function x -&gt; x) l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val map_id' : 'a list -&gt; 'a list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">map_id' [1;2]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">map_id' <span class="comment">(* Still fully polymorphic *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : 'a list -&gt; 'a list = &lt;fun&gt;
+</span></code></pre>
+
+<p>The two definitions are semantically equivalent, and the new one can be
+assigned a polymorphic type scheme, since it is no more a function
+application.</p>
+<h4 id="The-type-of-this-expression-contains-type-variables-that-cannot-be-generalized">The type of this expression contains type variables that cannot be generalized</h4>
+
+<p>This message appears when the OCaml compiler tries to compile a function
+or a value which is monomorphic, but for which some types have not been
+completely inferred. Some types variables are left in the type, which
+are are called “weak” (and are displayed by an underscore: <code>&#39;_a</code>); they
+will disappear thanks to type inference as soon as enough informations
+will be given.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">r</span> = <span class="keyword">ref</span> []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val r : '_weak2 list ref = {contents = []}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">f</span> = <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> x -&gt; x)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : '_weak3 list -&gt; '_weak3 list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Since the expression mentionned in the error message cannot be compiled
+as is, two cases must be envisioned:</p>
+<ul><li><p>The expression can really not be turned into a polymorphic
+ expression, as in <code>r</code> above. You must use an explicit type
+ annotation, in order to turn it into something completely
+ monomorphic.</p>
+</li><li><p>The expression can be transformed into something polymorphic through
+ rewriting some part of the code (for example using
+ <a href="#eta-expansion">eta-expansion</a>) as in the case of <code>f</code>.</p>
+</li></ul>
+
+<h4 id="How-to-write-a-function-with-polymorphic-arguments">How to write a function with polymorphic arguments?</h4>
+
+<p>In ML, an argument of a function cannot be polymorphic inside the body
+of the function; hence the following typing:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">(g : 'a -&gt; 'a) x y </span>= g x, g y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : ('a -&gt; 'a) -&gt; 'a -&gt; 'a -&gt; 'a * 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>The function is not as polymorphic as we could have hoped.<br/>
+ Nevertheless, in OCaml it is possible to use first-order polymorphism.
+For this, you can use either records or objects; in the case of records,
+you need to declare the type before using it in the function.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">(o : &lt; g : 'a. 'a -&gt; 'a &gt;) x y </span>= o#g x, o#g y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : &lt; g : 'a. 'a -&gt; 'a &gt; -&gt; 'b -&gt; 'c -&gt; 'b * 'c = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">id</span> = { g : 'a. 'a -&gt; 'a }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type id = { g : 'a. 'a -&gt; 'a; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">r x y </span>= r.g x, r.g y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : id -&gt; 'a -&gt; 'b -&gt; 'a * 'b = &lt;fun&gt;
+</span></code></pre>
+
+<h3 id="Input-output">Input/output</h3>
+
+<h4 id="Why-some-printing-material-is-mixed-up-and-does-not-appear-in-the-right-order">Why some printing material is mixed up and does not appear in the right order?</h4>
+
+<p>If you use printing functions of the <code>format</code> module, you might not mix
+printing commands from <code>format</code> with printing commands from the basic
+I/O system. In effect, the material printed by functions from the
+<code>format</code> module is delayed (stored into the pretty-printing queue) in
+order to find out the proper line breaking to perform with the material
+at hand. By contrast low level output is performed with no more
+buffering than usual I/O buffering.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_endline <span class="ocaml-error-loc">'</span>before';
+  <span class="ocaml-module">Format</span>.print_string 'MIDDLE';
+  print_endline 'after'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>To avoid this kind of problems you should not mix printing orders from
+<code>format</code> and basic printing commands; that&#39;s the reason why when using
+functions from the <code>format</code> module, it is considered good programming
+habit to open <code>format</code> globally in order to completely mask low level
+printing functions by the high level printing functions provided by
+<code>format</code>.</p>
+<h2 id="Module-Language">Module Language</h2>
+
+<h4 id="Can-I-have-two-mutually-recursive-structures-signatures-functors-inside-a-single-compilation-unit">Can I have two mutually recursive structures, signatures, functors inside a single compilation unit?</h4>
+
+<p>Yes, but structures always have to have  an explcit signature. 
+Recursive structures may be defined as follows:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">module rec A : <span class="governing">sig</span>
+    <span class="governing">type</span> <span class="type">a</span> = { x: int }
+  <span class="governing">end</span> = <span class="governing">struct</span>
+    <span class="governing">type</span> <span class="type">a</span> = { x: int }
+    <span class="governing">let </span>b : <span class="ocaml-module">B</span>.b = { y = 1.0 }
+  <span class="governing">end</span> <span class="governing">and</span> B : <span class="governing">sig</span>
+    <span class="governing">type</span> <span class="type">b</span> = { y: float }
+  <span class="governing">end</span> = <span class="governing">struct</span>
+    <span class="governing">type</span> <span class="type">b</span> = { y: float }
+    <span class="governing">let </span>a : <span class="ocaml-module">A</span>.a = { x = 1 }
+  <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">File &quot;&quot;, line 1:
+Error: Reference to undefined global `CamlinternalMod'
+</span></code></pre>
+
+<p>In a similar way, mutually recursive signatures and functors can also
+be defined.</p>
+<h4 id="Can-I-have-two-mutually-recursive-compilation-units">Can I have two mutually recursive compilation units?</h4>
+
+<p>With any two compilation units (<code>.ml</code> or <code>.mli</code> files), there must always
+exist an order in which it is possible to compile them sequentially.
+This precludes most kinds of recursion between compilation units.</p>
+<p>However, two implementations can be recursive on types by exporting abstract
+versions of the types in the interfaces, with the manifest versions in 
+the implementations referring to the actual types.</p>
+<p>For example, consider these <code>x.ml</code>/<code>x.mli</code> files:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> a <span class="comment">(* only <span class="governing">in</span> x.ml: *)</span> = <span class="ocaml-module"><span class="ocaml-error-loc">Y</span></span><span class="ocaml-error-loc">.a</span>
+  <span class="governing">type</span> <span class="type">b</span> =
+  | BNone
+  | BOne <span class="keyword">of</span> a</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module Y
+</span></code></pre>
+
+<p>and <code>y.ml</code>/<code>y.mli</code> files:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> b <span class="comment">(* only <span class="governing">in</span> y.ml: *)</span> = <span class="ocaml-module"><span class="ocaml-error-loc">X</span></span><span class="ocaml-error-loc">.b</span>
+  <span class="governing">type</span> <span class="type">a</span> =
+  | ANone
+  | AOne <span class="keyword">of</span> b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module X
+</span></code></pre>
+
+<p>In this way, cooperation between the <code>X</code> and <code>Y</code> modules allows 
+the recursive value <code>X.BOne (Y.AOne (X.BOne ...))</code> to be produced.</p>
+<h4 id="How-do-I-express-sharing-constraints-between-modules">How do I express sharing constraints between modules?</h4>
+
+<p>Use manifest type specifications in the arguments of the functor. For
+instance, assume defined the following signatures:</p>
+<pre><code class="ocaml"><span class="governing">module <span class="governing">type</span></span> <span class="ocaml-module">S1</span> <span class="ocaml-variable"></span>= <span class="governing">sig</span> ... <span class="governing">type</span> t ... <span class="governing">end</span>
+<span class="governing">module <span class="governing">type</span></span> <span class="ocaml-module">S2</span> <span class="ocaml-variable"></span>= <span class="governing">sig</span> ... <span class="governing">type</span> u ... <span class="governing">end</span></code></pre>
+
+<p>To define a functor <code>F</code> that takes two arguments <code>X:S1</code> and <code>Y:S2</code> such
+that <code>X.t</code> and <code>Y.u</code> are the same, write:</p>
+<pre><code class="ocaml">module F (X: S1) (Y: S2 <span class="keyword">with</span> <span class="governing">type</span> <span class="type">u</span> = <span class="ocaml-module">X</span>.t) =
+  <span class="governing">struct</span> ... <span class="governing">end</span></code></pre>
+
+<p>Indeed, internally this expands to</p>
+<pre><code class="ocaml">module F (X: S1) (Y: <span class="governing">sig</span> ... <span class="governing">type</span> <span class="type">u</span> = <span class="ocaml-module">X</span>.t ... <span class="governing">end</span>) =
+  <span class="governing">struct</span> ... <span class="governing">end</span></code></pre>
+
+<h4 id="Compilation-units-are-forced-to-be-modules-What-if-I-want-to-make-a-unit-with-a-functor-or-a-signature-instead">Compilation units are forced to be modules. What if I want to make a unit with a functor or a signature instead?</h4>
+
+<p>In OCaml, functors and signatures (module types) can be components of
+modules. So, just make the functor or signature be a component of a
+compilation unit. A good example is the module <code>Set</code> from the standard
+library.</p>
+<h2 id="Development-Tools">Development Tools</h2><h3 id="Interactive-toplevel-aka-REPL">Interactive toplevel (aka REPL)</h3>
+
+<h4 id="How-to-stop-the-evaluation-execution-of-an-expression">How to stop the evaluation (execution) of an expression?</h4>
+
+<p>It is often possible to interrupt a program or the OCaml system by
+typing some combination of keys that is operating system dependent:
+under Unix send an interrupt signal (generally <code>Control-C</code>), under
+Macintosh OS type <code>Command-.</code>, under Windows use the “OCaml” menu.</p>
+<h4 id="How-to-quit-the-interactive-loop">How to quit the interactive loop?</h4>
+
+<p>Type <code>#quit;;</code>. You can also quit it by inputting an end-of-file character
+with Ctrl-D on Unix, and Ctrl-Z on Windows.</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/faq.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="basics.de.html" rel="alternate" hreflang="de"/>
+<link href="basics.el.html" rel="alternate" hreflang="el"/>
+<link href="basics.html" rel="alternate" hreflang="en"/>
+<link href="basics.fr.html" rel="alternate" hreflang="fr"/>
+<link href="basics.it.html" rel="alternate" hreflang="it"/>
+<link href="basics.ja.html" rel="alternate" hreflang="ja"/>
+<link href="basics.ko.html" rel="alternate" hreflang="ko"/>
+<link href="basics.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>The Basics &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">The Basics</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="basics.de.html">de</a></li>
+<li><a href="basics.el.html">el</a></li>
+<li class="active">en</li>
+<li><a href="basics.fr.html">fr</a></li>
+<li><a href="basics.it.html">it</a></li>
+<li><a href="basics.ja.html">日本語</a></li>
+<li><a href="basics.ko.html">한국어</a></li>
+<li><a href="basics.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Running-OCaml-code">Running OCaml code</a>
+</li><li><a href="#Comments">Comments</a>
+</li><li><a href="#Calling-functions">Calling functions</a>
+</li><li><a href="#Defining-a-function">Defining a function</a>
+</li><li><a href="#Basic-types">Basic types</a>
+</li><li><a href="#Implicit-vs-explicit-casts">Implicit vs. explicit casts</a>
+<ul><li><a href="#Is-implicit-or-explicit-casting-better">Is implicit or explicit casting better?</a>
+</li></ul>
+</li><li><a href="#Ordinary-functions-and-recursive-functions">Ordinary functions and recursive functions</a>
+</li><li><a href="#Types-of-functions">Types of functions</a>
+<ul><li><a href="#Polymorphic-functions">Polymorphic functions</a>
+</li></ul>
+</li><li><a href="#Type-inference">Type inference</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="The-Basics">The Basics</h1>
+
+<h2 id="Running-OCaml-code">Running OCaml code</h2>
+
+<p>The easiest way to get started is to run an interactive session in
+your browser thanks to <a href="http://try.ocamlpro.com">TryOCaml</a>.</p>
+<p>To install OCaml on your computer, see the <a href="../../docs/install.html">Install</a> documentation.</p>
+<p>To quickly try small OCaml expressions, you can use an interactive
+toplevel, or REPL (Read–Eval–Print Loop). The <code>ocaml</code> command provides
+a very basic toplevel (you should install <code>rlwrap</code> through your system
+package manager and run <code>rlwrap ocaml</code> to get history navigation). If
+you can install it through <a href="../../docs/install.html#OPAM">OPAM</a> or your
+system package manager, we recommend the use of
+the <a href="https://github.com/diml/utop">utop</a> toplevel instead, which has
+the same basic interface but is much more convenient to use (history
+navigation, auto-completion, etc.).</p>
+<p>Use <code>;;</code> to indicate that you&#39;ve finished entering each statement. Here is what is looks like running <code>ocaml</code>:</p>
+<pre class="console"><code class="console">$ ocaml
+        OCaml version 4.07.0
+
+# 1+1;;
+- : int = 2</code></pre>
+
+<p>This is how running the same code looks like when using <code>utop</code>:</p>
+<pre class="console"><code class="console">───────┬────────────────────────────────────────────────────────────┬─────
+       │ Welcome to utop version 1.18 (using OCaml version 4.02.3)! │     
+       └────────────────────────────────────────────────────────────┘     
+
+Type #utop_help for help about using utop.
+
+─( 10:12:16 )─&lt; command 0 &gt;───────────────────────────────────────────────
+utop # 1 + 1;;
+- : int = 2</code></pre>
+
+<p>To compile an OCaml program named <code>my_prog.ml</code> to a native executable, use <code>ocamlbuild my_prog.native</code>:</p>
+<pre class="shell"><code class="shell">$ mkdir my_project
+$ cd my_project
+$ echo &#39;let () = print_endline &#39;Hello, World!&#39;&#39; &gt; my_prog.ml
+$ ocamlbuild my_prog.native
+Finished, 4 targets (0 cached) in 00:00:00.
+$ ./my_prog.native
+Hello, World!</code></pre>
+
+<p>See <a href="compiling_ocaml_projects.html">Compiling OCaml projects</a> for more information.</p>
+<h2 id="Comments">Comments</h2><p>OCaml comments are delimited by <code>(*</code> and <code>*)</code>, like this:</p>
+<pre><code class="ocaml"><span class="comment">(* This is a single-line comment. *)</span>
+
+<span class="comment">(* This is a
+ * multi-line
+ * comment.
+ *)</span></code></pre>
+
+<p>In other words, the commenting convention is very similar to original C
+(<code>/* ... */</code>). There is currently no single-line comment syntax (like
+<code># ...</code> in Perl or <code>// ...</code> in C99/C++/Java).</p>
+<p>OCaml counts nested <code>(* ... *)</code> blocks, and this allows you to comment
+out regions of code very easily:</p>
+<pre><code class="ocaml"><span class="comment">(* This code is broken ...
+
+(* Primality test. *)
+<span class="governing">let</span> <span class="ocaml-function">is_prime</span> <span class="ocaml-variable">n </span>=
+  (* note <span class="keyword">to</span> self: ask about this on the mailing lists *) XXX<span class="ocaml-prompt">;;</span><br/>
+*)</span></code></pre>
+
+<h2 id="Calling-functions">Calling functions</h2><p>Let&#39;s say you&#39;ve written a function — we&#39;ll call it <code>repeated</code> — which
+takes a string <code>s</code> and a number <code>n</code>, and returns a new string which
+contains original <code>s</code> repeated <code>n</code> times.</p>
+<p>In most C-derived languages a call to this function will look like this:</p>
+<pre class="C"><code class="C">repeated (&#39;hello&#39;, 3)  /* this is C code */</code></pre><p>This means &#39;call the function <code>repeated</code> with two arguments, first
+argument the string hello and second argument the number 3&#39;.</p>
+<p>OCaml, in common with other functional languages, writes and brackets
+function calls differently, and this is the cause of many mistakes. Here
+is the same function call in OCaml:</p>
+<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
+
+<p>Note — <strong>no</strong> brackets, and <strong>no</strong> comma between the arguments.</p>
+<p>The syntax <code>repeated (&#39;hello&#39;, 3)</code> <strong>is</strong> meaningful in OCaml. It means
+&#39;call the function <code>repeated</code> with ONE argument, that argument being a
+&#39;pair&#39; structure of two elements&#39;. Of course that would be a mistake,
+because the <code>repeated</code> function is expecting two arguments, not one, and
+the first argument should be a string, not a pair. But let&#39;s not worry
+about pairs (&#39;tuples&#39;) just yet. Instead, just remember that it&#39;s a
+mistake to put the brackets and commas in around function call
+arguments.</p>
+<p>Let&#39;s have another function — <code>prompt_string</code> — which takes a string to
+prompt and returns the string entered by the user. We want to pass this
+string into <code>repeated</code>. Here are the C and OCaml versions:</p>
+<pre class="C"><code class="C">/* C code: */
+repeated (prompt_string (&#39;Name please: &#39;), 3)</code></pre>
+
+<pre><code class="ocaml"><span class="comment">(* OCaml code: *)</span>
+repeated (prompt_string 'Name please: ') 3</code></pre>
+
+<p>Take a careful look at the bracketing and the missing comma. In the
+OCaml version, the brackets enclose the first argument of repeated
+because that argument is the result of another function call. In general
+the rule is: &#39;bracket around the whole function call — don&#39;t put
+brackets around the arguments to a function call&#39;. Here are some more
+examples:</p>
+<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
+f (g 3 4)            <span class="comment">(* f has one argument, g has two arguments *)</span></code></pre>
+
+<div style="display: none">
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">repeated</span> <span class="ocaml-variable">(s: string) (i: int) </span>=
+    <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>implementation not given'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre></div>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated (<span class="ocaml-error-loc">'</span>hello', 3)     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<h2 id="Defining-a-function">Defining a function</h2><p>We all know how to define a function (or static method, for Java-heads)
+in our existing languages. How do we do it in OCaml?</p>
+<p>The OCaml syntax is pleasantly concise. Here&#39;s a function which takes
+two floating point numbers and calculates the average:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+  (a +. b) /. 2.0;;</code></pre>
+
+<p>Type this into the OCaml interactive toplevel (on Unix, type the command <code>ocaml</code>
+from the shell) and you&#39;ll see this:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>If you look at the function definition closely, and also at what OCaml
+prints back at you, you&#39;ll have a number of questions:</p>
+<ul><li><p>What&#39;re all those extra periods doing there in the code?</p>
+</li><li><p>What does all that stuff about <code>float -&gt; float -&gt; float</code> mean?</p>
+</li></ul>
+
+<p>I&#39;ll answer those questions in the next sections, but first I want to go
+and define the same function in C (the Java definition would be fairly
+similar to C), and hopefully that should raise even more questions.
+Here&#39;s our C version of <code>average</code>:</p>
+<pre class="C"><code class="C">double average (double a, double b)
+{
+  return (a + b) / 2;
+}</code></pre><p>Now look at our much shorter OCaml definition above. Hopefully you&#39;ll be
+asking:</p>
+<ul><li><p>Why don&#39;t we have to define the types of <code>a</code> and <code>b</code> in the OCaml
+ version? How does OCaml know what the types are (indeed, <em>does</em>
+ OCaml know what the types are, or is OCaml completely dynamically
+ typed?).</p>
+</li><li><p>In C, the <code>2</code> is implicitly converted into a <code>double</code>, can&#39;t OCaml
+ do the same thing?</p>
+</li><li><p>What is the OCaml way to write <code>return</code>?</p>
+</li></ul>
+
+<p>OK, let&#39;s get some answers.</p>
+<ul><li><p>OCaml is a strongly <em>statically typed</em> language (in other words,
+ there&#39;s nothing dynamic going on between int, float and string, as
+ in Perl).</p>
+</li><li><p>OCaml uses <em>type inference</em> to work out the types, so you don&#39;t have
+ to.  If you use the OCaml interactive toplevel as above, then OCaml
+ will tell you
+ its inferred type for your function.</p>
+</li><li><p>OCaml doesn&#39;t do any implicit casting. If you want a float, you have
+ to write <code>2.0</code> because <code>2</code> is an integer. OCaml does **no automatic
+ conversion** between int, float, string or any other type.</p>
+</li><li><p>As a side-effect of type inference in OCaml, functions (including
+ operators) can&#39;t have overloaded definitions. OCaml defines <code>+</code> as
+ the <em>integer</em> addition function. To add floats, use <code>+.</code> (note the
+ trailing period). Similarly, use <code>-.</code>, <code>*.</code>, <code>/.</code> for other float
+ operations.</p>
+</li><li><p>OCaml doesn&#39;t have a <code>return</code> keyword — the last expression in a
+ function becomes the result of the function automatically.</p>
+</li></ul>
+
+<p>We will present more details in the following sections and chapters.</p>
+<h2 id="Basic-types">Basic types</h2><p>The basic types in OCaml are:</p>
+<pre class="text"><code class="text">OCaml type  Range
+
+int         31-bit signed int (roughly +/- 1 billion) on 32-bit
+            processors, or 63-bit signed int on 64-bit processors
+float       IEEE double-precision floating point, equivalent to C&#39;s double
+bool        A boolean, written either true or false
+char        An 8-bit character
+string      A string
+unit        Written as ()</code></pre>
+
+<p>OCaml uses one of the bits in an <code>int</code> internally in order to be able to
+automatically manage the memory use (garbage collection). This is why
+the basic <code>int</code> is 31 bits, not 32 bits (63 bits if you&#39;re using a 64
+bit platform). In practice this isn&#39;t an issue except in a few
+specialised cases. For example if you&#39;re counting things in a loop, then
+OCaml limits you to counting up to 1 billion instead of 2 billion. This
+isn&#39;t going to be a problem because if you&#39;re counting things close to
+this limit in any language, then you ought to be using bignums (the
+<code>Nat</code> and <code>Big_int</code> modules in OCaml). However if you need to do things
+such as processing 32 bit types (eg. you&#39;re writing crypto code or a
+network stack), OCaml provides a <code>nativeint</code> type which matches the
+native integer type for your platform.</p>
+<p>OCaml doesn&#39;t have a basic unsigned integer type, but you can get the
+same effect using <code>nativeint</code>. OCaml doesn&#39;t have builtin single-precision 
+floating point numbers.</p>
+<p>OCaml provides a <code>char</code> type which is used for characters, written <code>&#39;x&#39;</code>
+for example. Unfortunately the <code>char</code> type does not support Unicode or
+UTF-8. This is a serious flaw in OCaml which should be fixed, but for
+the time being there are <a href="http://camomile.sourceforge.net/" title="http://camomile.sourceforge.net/">comprehensive Unicode
+libraries</a>
+which work around it.</p>
+<p>Strings are not just lists of characters. They have their own, more
+efficient internal representation.</p>
+<p>The <code>unit</code> type is sort of like <code>void</code> in C, but we&#39;ll talk about it
+more below.</p>
+<h2 id="Implicit-vs-explicit-casts">Implicit vs. explicit casts</h2><p>In C-derived languages ints get promoted to floats in certain
+circumstances. For example if you write <code>1 + 2.5</code> then the first
+argument (which is an integer) is promoted to a floating point number,
+and the result is also a floating point number. It&#39;s as if you had
+written <code>((double) 1) + 2.5</code>, but all done implicitly.</p>
+<p>OCaml never does implicit casts like this. In OCaml, <code>1 + 2.5</code> is a type
+error. The <code>+</code> operator in OCaml requires two ints as arguments, and
+here we&#39;re giving it an int and a float, so it reports this error:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + <span class="ocaml-error-loc">2.5</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type float but an expression was expected of type
+         int
+</span></code></pre>
+
+<p>(In the &#39;translated from the French&#39; language of OCaml error messages
+this means &#39;you put a float here, but I was expecting an int&#39;).</p>
+<p>To add two floats together you need to use a different operator, <code>+.</code>
+(note the trailing period).</p>
+<p>OCaml doesn&#39;t promote ints to floats automatically so this is also an
+error:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">1</span> +. 2.5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>Here OCaml is now complaining about the first argument.</p>
+<p>What if you actually want to add an integer and a floating point number
+together? (Say they are stored as <code>i</code> and <code>f</code>). In OCaml you need to
+explicitly cast:</p>
+<pre><code class="ocaml">(float_of_int i) +. f</code></pre>
+
+<p><code>float_of_int</code> is a function which takes an <code>int</code> and returns a <code>float</code>.
+There are a whole load of these functions, called such things as
+<code>int_of_float</code>, <code>char_of_int</code>, <code>int_of_char</code>, <code>string_of_int</code> and so on,
+and they mostly do what you expect.</p>
+<p>Since converting an <code>int</code> to a <code>float</code> is a particularly common
+operation, the <code>float_of_int</code> function has a shorter alias: the above
+example could simply have been written</p>
+<pre><code class="ocaml">float i +. f</code></pre>
+
+<p>(Note that unlike C, it is perfectly valid in OCaml for a type and a
+function to have the same name.)</p>
+<h3 id="Is-implicit-or-explicit-casting-better">Is implicit or explicit casting better?</h3><p>You might think that these explicit casts are ugly, time-consuming even,
+and you have a point, but there are at least two arguments in their
+favour. Firstly, OCaml needs this explicit casting to be able to do type
+inference (see below), and type inference is such a wonderful
+time-saving feature that it easily offsets the extra keyboarding of
+explicit casts. Secondly, if you&#39;ve spent time debugging C programs
+you&#39;ll know that (a) implicit casts cause errors which are hard to find,
+and (b) much of the time you&#39;re sitting there trying to work out where
+the implicit casts happen. Making the casts explicit helps you in
+debugging. Thirdly, some casts (particularly int &lt;-&gt; float) are
+actually very expensive operations. You do yourself no favours by hiding
+them.</p>
+<h2 id="Ordinary-functions-and-recursive-functions">Ordinary functions and recursive functions</h2><p>Unlike in C-derived languages, a function isn&#39;t recursive unless you
+explicitly say so by using <code>let rec</code> instead of just <code>let</code>. Here&#39;s an
+example of a recursive function:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Notice that <code>range</code> calls itself.</p>
+<p>The only difference between <code>let</code> and <code>let rec</code> is in the scoping of the
+function name. If the above function had been defined with just <code>let</code>,
+then the call to <code>range</code> would have tried to look for an existing
+(previously defined) function called <code>range</code>, not the
+currently-being-defined function. Using <code>let</code> (without <code>rec</code>) allows you
+to re-define a value in terms of the previous definition. For example:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">positive_sum</span> <span class="ocaml-variable">a b </span>= 
+    <span class="governing">let </span><span class="ocaml-variable">a</span> = max a 0
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">b</span> = max b 0 <span class="governing">in</span>
+    a + b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val positive_sum : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>This redefinition hides the previous &#39;bindings&#39; of <code>a</code> and <code>b</code> from the
+function definition. In some situations coders prefer this pattern to
+using a new variable name (<code>let a_pos = max a 0</code>) as it makes the old
+binding inaccessible, so that only the latest values of a and b are
+accessible.</p>
+<p>There is no performance difference between functions defined using <code>let</code>
+and functions defined using <code>let rec</code>, so if you prefer you could always
+use the <code>let rec</code> form and get the same semantics as C-like languages.</p>
+<h2 id="Types-of-functions">Types of functions</h2><p>Because of type inference you will rarely if ever need to explicitly
+write down the type of your functions. However, OCaml often prints out
+what it thinks are the types of your functions, so you need to know the
+syntax for this. For a function <code>f</code> which takes arguments <code>arg1</code>,
+<code>arg2</code>, ... <code>argn</code>, and returns type <code>rettype</code>, the compiler will print:</p>
+<pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
+
+<p>The arrow syntax looks strange now, but when we come to so-called
+&#39;currying&#39; later you&#39;ll see why it was chosen. For now I&#39;ll just give
+you some examples.</p>
+<p>Our function <code>repeated</code> which takes a string and an integer and returns
+a string has type:</p>
+<pre><code class="ocaml">repeated : string -&gt; int -&gt; string</code></pre>
+
+<p>Our function <code>average</code> which takes two floats and returns a float has
+type:</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>The OCaml standard <code>int_of_char</code> casting function:</p>
+<pre><code class="ocaml">int_of_char : char -&gt; int</code></pre>
+
+<p>If a function returns nothing (<code>void</code> for C and Java programmers), then
+we write that it returns the <code>unit</code> type. Here, for instance, is the
+OCaml equivalent of <code>fputc</code>:</p>
+<pre><code class="ocaml">output_char : out_channel -&gt; char -&gt; unit</code></pre>
+
+<h3 id="Polymorphic-functions">Polymorphic functions</h3><p>Now for something a bit stranger. What about a function which takes
+<em>anything</em> as an argument? Here&#39;s an odd function which takes an
+argument, but just ignores it and always returns 3:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3</code></pre>
+
+<p>What is the type of this function? In OCaml we use a special placeholder
+to mean &#39;any type you fancy&#39;. It&#39;s a single quote character followed by
+a letter. The type of the above function would normally be written:</p>
+<pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
+
+<p>where <code>&#39;a</code> really does mean any type. You can, for example, call this
+function as <code>give_me_a_three &#39;foo&#39;</code> or <code>give_me_a_three 2.0</code> and both
+are quite valid expressions in OCaml.</p>
+<p>It won&#39;t be clear yet why polymorphic functions are useful, but they are
+very useful and very common, and so we&#39;ll discuss them later on. (Hint:
+polymorphism is kind of like templates in C++ or generics in Java 1.5).</p>
+<h2 id="Type-inference">Type inference</h2><p>So the theme of this tutorial is that functional languages have many
+really cool features, and OCaml is a language which has all of these
+really cool features stuffed into it at once, thus making it a very
+practical language for real programmers to use. But the odd thing is
+that most of these cool features have nothing to do with &#39;functional
+programming&#39; at all. In fact, I&#39;ve come to the first really cool
+feature, and I still haven&#39;t talked about why functional programming is
+called &#39;functional&#39;. Anyway, here&#39;s the first really cool feature: type
+inference.</p>
+<p>Simply put: you don&#39;t need to declare the types of your functions and
+variables, because OCaml will just figure them out for you!</p>
+<p>In addition OCaml goes on to check all your types match up (even across
+different files).</p>
+<p>But OCaml is also a practical language, and for this reason it contains
+backdoors into the type system allowing you to bypass this checking on
+the rare occasions that it is sensible to do this. Only gurus will
+probably need to bypass the type checking.</p>
+<p>Let&#39;s go back to the <code>average</code> function which we typed into the OCaml
+interactive toplevel:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p><a href="http://en.wiktionary.org/wiki/mirabile_dictu">Mirabile dictu!</a> OCaml worked out all on its own that the function takes
+two <code>float</code> arguments and returns a <code>float</code>.</p>
+<p>How did it do this? Firstly it looks at where <code>a</code> and <code>b</code> are used,
+namely in the expression <code>(a +. b)</code>. Now, <code>+.</code> is itself a function
+which always takes two <code>float</code> arguments, so by simple deduction, <code>a</code>
+and <code>b</code> must both also have type <code>float</code>.</p>
+<p>Secondly, the <code>/.</code> function returns a <code>float</code>, and this is the same as
+the return value of the <code>average</code> function, so <code>average</code> must return a
+<code>float</code>. The conclusion is that <code>average</code> has this type signature:</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>Type inference is obviously easy for such a short program, but it works
+even for large programs, and it&#39;s a major time-saving feature because it
+removes a whole class of errors which cause segfaults,
+<code>NullPointerException</code>s and <code>ClassCastException</code>s in other languages (or
+important but often ignored runtime warnings, as in Perl).</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

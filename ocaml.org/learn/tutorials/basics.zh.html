@@ -1,0 +1,471 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="basics.de.html" rel="alternate" hreflang="de"/>
+<link href="basics.el.html" rel="alternate" hreflang="el"/>
+<link href="basics.html" rel="alternate" hreflang="en"/>
+<link href="basics.fr.html" rel="alternate" hreflang="fr"/>
+<link href="basics.it.html" rel="alternate" hreflang="it"/>
+<link href="basics.ja.html" rel="alternate" hreflang="ja"/>
+<link href="basics.ko.html" rel="alternate" hreflang="ko"/>
+<link href="basics.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>基础 &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.zh.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.zh.html">OCaml教程</a><span class="divider"></span></li>
+<li class="active">基础</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="basics.de.html">de</a></li>
+<li><a href="basics.el.html">el</a></li>
+<li><a href="basics.html">en</a></li>
+<li><a href="basics.fr.html">fr</a></li>
+<li><a href="basics.it.html">it</a></li>
+<li><a href="basics.ja.html">日本語</a></li>
+<li><a href="basics.ko.html">한국어</a></li>
+<li class="active">中文</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#OCaml">运行 OCaml 代码</a>
+</li><li><a href="#">注释</a>
+</li><li><a href="#">调用函数</a>
+</li><li><a href="#">函数定义</a>
+</li><li><a href="#">基本类型</a>
+</li><li><a href="#">隐式转换和显式转换的比较</a>
+<ul><li><a href="#">隐式转换和显式转换哪个更好？</a>
+</li></ul>
+</li><li><a href="#">普通函数和递归函数</a>
+</li><li><a href="#">函数的类型</a>
+<ul><li><a href="#">多态函数</a>
+</li></ul>
+</li><li><a href="#">类型推导</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">基础</h1>
+
+<h2 id="OCaml">运行 OCaml 代码</h2>
+
+<p>运行OCaml代码的最简单的方式是在你的浏览器中使用<a href="https://ocsigen.org/js_of_ocaml/2.7/files/toplevel/index.html">https://ocsigen.org/js_of_ocaml/2.7/files/toplevel/index.html</a>运行一个交互式会话。</p>
+<p>关于在你的电脑上安装OCaml，请参考<a href="../../docs/install.html">安装</a>文档。</p>
+<p>如果你想要尝试一些简单的OCaml表达式，你可以使用一个交互式顶层环境（interactive
+toplevel）或者REPL（Read–Eval–Print Loop）。<code>ocaml</code>命令提供了一个十分基础的顶层环境（你应该使用包管理器安装<code>rlwrap</code> ，通过运行<code>rlwrap ocaml</code>来获取历史导航 ）。我们推荐使用<a href="https://github.com/diml/utop">utop</a>顶层环境，如果你可以通过系统的包管理器或者<a href="../../docs/install.html#OPAM">OPAM</a>来安装它。utop具有与OCaml标准顶层环境相同的基础接口，同时更易于使用（具有历史导航、自动完成等特性）。</p>
+<p>使用<code>;;</code> 来表示你完成了一个表达式的输入，在顶层环境中如下所示：</p>
+<pre class="console"><code class="console">$ ocaml
+        OCaml version 4.07.0
+
+# 1+1;;
+- : int = 2</code></pre>
+
+<p>使用<code>utop</code>运行程序的效果如下：</p>
+<pre class="console"><code class="console">───────┬────────────────────────────────────────────────────────────┬─────
+       │ Welcome to utop version 1.18 (using OCaml version 4.02.3)! │     
+       └────────────────────────────────────────────────────────────┘     
+
+Type #utop_help for help about using utop.
+
+─( 10:12:16 )─&lt; command 0 &gt;───────────────────────────────────────────────
+utop # 1 + 1;;
+- : int = 2</code></pre>
+
+<p>编译名为<code>my_prog.ml</code>的OCaml源码文件为一个原生代码可执行程序，可以使用<code>ocamlbuild my_prog.native</code>命令：</p>
+<pre class="shell"><code class="shell">$ mkdir my_project
+$ cd my_project
+$ echo &#39;let () = print_endline &#39;Hello, World!&#39;&#39; &gt; my_prog.ml
+$ ocamlbuild my_prog.native
+Finished, 4 targets (0 cached) in 00:00:00.
+$ ./my_prog.native
+Hello, World!</code></pre>
+
+<p>详细内容请参考<a href="compiling_ocaml_projects.html">Compiling OCaml projects</a>。</p>
+<h2 id="">注释</h2><p>OCaml的注释是用<code>(*</code>和<code>*)</code>括起的，如：</p>
+<pre><code class="ocaml"><span class="comment">(* &#36825;&#26159;&#19968;&#20010;&#21333;&#34892;&#30340;&#27880;&#37322;. *)</span>
+
+<span class="comment">(* &#36825;&#26159;&#19968;&#20010;
+ * &#22810;&#34892;
+ * &#30340;&#27880;&#37322;.
+ *)</span></code></pre>
+
+<p>这和C的注释（<code>/* ... */</code>）很相似。
+目前还没有像Perl中<code># ...</code>或C99/C++/Java中<code>// ...</code>那样的单行注释方式。</p>
+<p>OCaml中可以使用嵌套<code>(* ... *)</code>块， 因此我们可以很容易地注释掉某一块程序：</p>
+<pre><code class="ocaml"><span class="comment">(* This code is broken ...
+
+(* Primality test. *)
+<span class="governing">let</span> <span class="ocaml-function">is_prime</span> <span class="ocaml-variable">n </span>=
+  (* note <span class="keyword">to</span> self: ask about this on the mailing lists *) XXX<span class="ocaml-prompt">;;</span><br/>
+*)</span></code></pre>
+
+<h2 id="">调用函数</h2><p>假设你已经写好了一个函数<code>repeated</code>，它的参数是一个字符串<code>s</code>和一个数<code>n</code>，返回值是把<code>s</code>重复<code>n</code>遍形成的新字符串。</p>
+<p>在大多数源于C的语言中，调用这一函数会象下面这样:</p>
+<pre class="c"><code class="c">repeated (&#39;hello&#39;, 3)  /* this is C code */</code></pre>
+
+<p>这意味着“调用函数<code>repeated</code>，
+输入两个参数，第一是字符串<code>hello</code>，第二是数字<code>3</code>”。</p>
+<p>OCaml和其他函数式语言一样以另外的方式来调用函数,
+初学者的很多错误是因为忽视了这一点。下面是OCaml中的函数调用：</p>
+<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
+
+<p>注意：这里<strong>没有</strong>括号, 参数中间<strong>没有</strong>逗号。</p>
+<p>容易使人困惑的是<code>repeated (&#39;hello&#39;, 3)</code>
+在OCaml中是<strong>合法的</strong>的。它意味着“调用函数<code>repeated</code>，输入一个参数，这一个参数是一个含两个元素的对（pair）”。这当然不符合原意，因为<code>repeated</code>函数需要的参数是两个而不是一个，而且第一个参数要求是字符串而不是对。
+这里我们暂时无需知道什么是对，我们只需记住用括号括起参数和用逗号分隔参数是错误的。</p>
+<p>我们来看另一个函数<code>prompt_string</code>，它输出字符串提示，并返回一个用户输入的字符串。我们想把这个返回的字符串输入<code>repeated</code>.下面是C和OCaml的两种版本:</p>
+<pre class="C"><code class="C">/* C code: */
+repeated (prompt_string (&#39;Name please: &#39;), 3)</code></pre>
+
+<pre><code class="ocaml"><span class="comment">(* OCaml code: *)</span>
+repeated (prompt_string 'Name please: ') 3</code></pre>
+
+<p>请注意括号的不同和逗号的有无。在OCaml的版本，<code>prompt_string</code>的返回值由括号括起，作为第一个参数传入。一般情况下，规则是：“括号只括起整个函数调用，不要括起函数调用的参数。”下面是更多的例子：</p>
+<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
+f (g 3 4)            <span class="comment">(* f has one argument, g has two arguments *)</span></code></pre>
+
+<div style="display: none">
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">repeated</span> <span class="ocaml-variable">(s: string) (i: int) </span>=
+    <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>implementation not given'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre></div>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated (<span class="ocaml-error-loc">'</span>hello', 3)     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<h2 id="">函数定义</h2><p>大家应该都知道在我们已经学会的语言中怎么定义一个函数（或java中的静态方法），那么OCaml中怎么做呢？</p>
+<p>OCaml的语法很简洁。下面是一个函数输入两个浮点数后计算它们的平均值：</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+  (a +. b) /. 2.0;;</code></pre>
+
+<p>把它输入OCaml的toplevel（在Unix中，在shell中输入命令<code>ocaml</code>）中后你会看到：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>如果你仔细看这个函数定义和OCaml的回应，你会发现一些问题：</p>
+<ul><li><p>代码中那些运算符后多出的点号是什么？</p>
+</li><li><p><code>float -&gt; float -&gt; float</code>是什么意思？</p>
+</li></ul>
+
+<p>我将在以后章节回答这些问题，但首先我想来用C（Java的定义和C很类似）来定义同样的函数，希望这会使大家产生更多的问题。下面是C版的<code>average</code>:</p>
+<pre class="C"><code class="C">double average (double a, double b)
+{
+  return (a + b) / 2;
+}</code></pre>
+
+<p>现在再看上面短得多的OCaml版。可能大家会问：</p>
+<ul><li><p>为什么在OCaml中无需定义<code>a</code>和<code>b</code>的类型？OCaml怎么知道它们的类型？或者OCaml<em>是否</em>知道它们的类型呢?难道OCaml是完全动态类型的语言吗？</p>
+</li><li><p>C中<code>2</code>隐式转换成<code>double</code>类型, 可OCaml为什么不这样做？</p>
+</li><li><p>OCaml中<code>return</code>的方式是怎样?</p>
+</li></ul>
+
+<p>我们来看答案：</p>
+<ul><li><p>OCaml是<em>强静态类型</em>的语言。（也就是说没有如perl中的动态类型）。</p>
+</li><li><p>OCaml用*类型推导（type
+ inference）*来找出类型，所以大家无需注明类型。如果你用上述OCaml的toplevel，那么OCaml会显示出它认为的函数类型。</p>
+</li><li><p>OCaml不做任何的隐式转换。如果你需要浮点数，你必须写<code>2.0</code>,因为<code>2</code>是一个整数。OCaml<em>从不</em>执行任何自动类型转换。</p>
+</li><li><p>由于type inference的副作用，OCaml不允许任何形式的重载（包括操作符重载）。它用不同的运算符来表示“两个整数相加”（用<code>+</code>）和“两个浮点数相加”（用<code>+.</code>）。注意后者有一个点号。其他算术运算符（ <code>-.</code>， <code>*.</code>，<code>/.</code> ）也是这样。</p>
+</li><li><p>OCaml返回函数的最后的表达式值，因此我们没有必要如C中一样写<code>return</code>。</p>
+</li></ul>
+
+<p>更多的细节将稍后详述。</p>
+<h2 id="">基本类型</h2><p>OCaml中的基本类型是:</p>
+<pre class="text"><code class="text">OCaml type  Range
+
+int         31-bit signed int (roughly +/- 1 billion) on 32-bit
+            processors, or 63-bit signed int on 64-bit processors
+float       IEEE double-precision floating point, equivalent to C&#39;s double
+bool        A boolean, written either true or false
+char        An 8-bit character
+string      A string
+unit        Written as ()</code></pre>
+
+<p>OCaml内部使用<code>int</code>中的一位来自动管理内存（垃圾收集）。因此基本
+<code>int</code>类型是31位而非32位（如果你用64位平台，那就是63位）。在实际应用中，大多数情况下这不是问题。例如在循环计数中，OCaml中只能数到10亿而不是20亿。这并不成为问题，因为如果你要很大的计数你应该使用大数模块(<code>Nat</code>和<code>Big_int</code>模块）。但如果你的应用一定需要处理32位类型（比如你要写一些加密程序或者网络协议栈），OCaml提供<code>nativeint</code>类型。</p>
+<p>OCaml基本类型中没有提供无符号整数类型。但是你可以使用<code>nativeint</code>来达到同样效果。另外就我所知，OCaml没有单精度浮点数。</p>
+<p>OCaml提供<code>char</code>类型来表示字符。但可惜的是<code>char</code>类型不支持Unicode或者UTF-8。这是一个需要改进的很严重的缺点。但是当前我们可以使用
+<a href="http://camomile.sourceforge.net/" title="http://camomile.sourceforge.net/">comprehensive Unicode
+libraries</a>来处理。</p>
+<p>字符串并非只是字符的链表，它们有自己更高效的内部表示方式。</p>
+<p><code>unit</code>类型有点象C中的<code>void</code>类型，我们会稍后详述。</p>
+<h2 id="">隐式转换和显式转换的比较</h2><p>在源于C的语言中，int类型在某些情况下会自动提升成浮点类型。例如你写<code>1 + 2.5</code>那么第一个参数（整数类型）会提升成浮点数，计算结果也是一个浮点数。这等价于你写了<code>((double) 1) + 2.5</code>，在这里自动执行了隐式转换。</p>
+<p>OCaml从不执行隐式转换。在OCaml中，<code>1 + 2.5</code>犯了类型错误。操作符<code>+</code>要求两个整数作为参数，而我们这里给出了一个整数一个浮点数，因此它会报错如下：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + <span class="ocaml-error-loc">2.5</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type float but an expression was expected of type
+         int
+</span></code></pre>
+
+<p>(这段错误信息是“法式英语”。意思是这里你给了浮点数但我需要整数。（“中式英语”也许可以写成“This
+is float type but need int type”：））</p>
+<p>要使两个浮点数相加，你需要用操作符<code>+.</code> （注意加号后面的点号。）</p>
+<p>OCaml不会自动把int提升到float，因此下面这个表达式也是错误的：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">1</span> +. 2.5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>这里OCaml会指出第一个参数类型是错误的。</p>
+<p>如果我们确实需要让一个整数与一个浮点数相加该怎么办呢？（假设它们存储于变量<code>i</code>和<code>f</code>)。在OCaml中我们需要显式转换：</p>
+<pre><code class="ocaml">float_of_int i +. f;;</code></pre>
+
+<p><code>float_of_int</code>函数输入整数为参数返回一个浮点数。与它相似，我们有一系列这样的函数：
+<code>int_of_float</code>, <code>char_of_int</code>, <code>int_of_char</code>, <code>string_of_int</code>
+等等，它们的作用大都象字面意思一样。</p>
+<p>因为从<code>int</code>转换到<code>float</code>是个特别常用的操作，<code>float_of_int</code>函数有个简短的别名。上面的例子可以简单地写作：</p>
+<pre><code class="ocaml">float i +. f;;</code></pre>
+
+<p>（注意和C不一样的是，类型和函数同名在OCaml中是完全合法的）</p>
+<h3 id="">隐式转换和显式转换哪个更好？</h3>
+
+<p>你也许会认为显式转换减少代码美观，增加录入时间。这有一定道理，但至少有三个理由支持显式转换。首先，显
+式转换帮助OCaml来实现类型推导（详后），类型推导节省的时间足以抵消多输入字符增加的时间。其次，如果你有C编程调试的经验，你应该有体会（1）隐
+式转换会造成难以发现的错误，（2）找出哪里发生了隐式转换经常占用了很大一部分调试时间。第三,有些转换（特别是整型和浮点型的互换）其实是很占资源的
+操作。把它们隐藏起来并没有好处。</p>
+<h2 id="">普通函数和递归函数</h2><p>和源于C的语言不同的是，OCaml中的函数一般不是递归的，除非你用<code>let rec</code>代替<code>let</code>来定义递归函数。下面是一个递归函数的例子：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>注意这里<code>range</code>调用它自身。</p>
+<p><code>let</code>和<code>let rec</code>的唯一区别是函数名的定义域。如果以上函数是用
+<code>let</code>定义的,那么调用<code>range</code>会试图寻找一个已经存在的（以前定义）的叫
+<code>range</code>的函数,而不是现在正在被定义的函数。
+<code>let</code>允许你使用变量本身进行重新定义。例如：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">positive_sum</span> <span class="ocaml-variable">a b </span>= 
+    <span class="governing">let </span><span class="ocaml-variable">a</span> = max a 0
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">b</span> = max b 0 <span class="governing">in</span>
+    a + b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val positive_sum : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>这里<code>let</code>中的<code>a</code>和<code>b</code>重新定义了所绑定的值，因此<code>a + b</code>所看到的值是<code>let</code>所绑定的新值而不是函数的传参。在某些情况，程序员往往更倾向于这种风格，而不是<code>let a_pos = max a 0</code>，因为这样做可以使得只有最新的绑定可见。</p>
+<p>译注：与其他函数式编程语言类似，OCaml的“变量”是不可变的，所以与其说是变量，更应该理解成是一种绑定关系。而ML衍生的语言是可以重新绑定的，而原来的值依然存在，只不过是被新绑定隐藏掉了，并不是一般面向过程语言中的变量赋值。另外，有些函数式语言使不能重新绑定（或者定义）的，如Erlang。</p>
+<p>用<code>let</code>或<code>let rec</code>定义的函数并没有性能上的差别，所以如果你愿意你可以一直用<code>let rec</code>来定义如C中那样的函数。</p>
+<h2 id="">函数的类型</h2><p>类型推导的存在使得我们几乎不需要显式的写出函数的类型。但OCaml经常显示出它认为的函数类型，因此了解有关语法还是需要的。对于一个函数<code>f</code>，其参数类型为<code>arg1</code>，<code>arg2</code>，...
+<code>argn</code>，其返回值类型为 <code>rettype</code>，编译器会显示</p>
+<pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
+
+<p>箭头符号用在这里会显得很奇怪，但是当我们以后介绍了所谓&#39;currying（科里化，维基有详述）&#39;后，你就会明白为什么用它。现在我只是给出几个示例。</p>
+<p>我们定义的<code>repeated</code>函数需要一个字符串和一个整数为参数，返回一个字符串。</p>
+<pre><code class="ocaml">repeated : string -&gt; int -&gt; string</code></pre>
+
+<p>我们定义的<code>average</code>函数输入两个浮点数并返回一个浮点数：</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>OCaml标准的类型转换函数<code>int_of_char</code>：</p>
+<pre><code class="ocaml">int_of_char : char -&gt; int</code></pre>
+
+<p>如果一个函数没有返回值（如C或java中的<code>void</code>），那我们写成它返回<code>unit</code>类型。比如：OCaml中的等价于<code>fputc</code>的函数：</p>
+<pre><code class="ocaml">output_char : out_channel -&gt; char -&gt; unit</code></pre>
+
+<h3 id="">多态函数</h3>
+
+<p>现在我们来看一个比较奇怪的问题。如果一个函数的参数可以是任何类型怎么办？下面就是一个奇怪的函数，它接受任何参数但总是返回3。</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3;;</code></pre>
+
+<p>那么这样的函数的类型是什么呢？OCaml使用一个特殊的占位符来表示“任意类型”，这就是一个单引号后加一个字母。
+上述函数的类型可以写作：</p>
+<pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
+
+<p>这里<code>&#39;a</code>表示任意类型。我们可以如<code>give_me_a_three &#39;foo&#39;</code>这样也可以象<code>give_me_a_three 2.0</code>这样来调用这个函数。它们都是OCaml合法的表达式。</p>
+<p>这里我们还看不出多态函数的用处，而其实它们很有用也很普遍，我们将稍后详述。（提示：多态性有些象C＋＋中的templates或者Java1.5中的generics）</p>
+<h2 id="">类型推导</h2><p>本教程的主题是函数语言有很多非常酷的特性，OCaml作为函数式语言具有其所有的特性，因此它是程序员的很实用的语言。但是奇怪的是，大多数特性却与函数式编程无关。事实上在还没有介绍函数式编程为什么叫函数式之前，我已经涉及了第一个酷特性，那就是类型推导。</p>
+<p>简单地说：你不需要声明函数和变量的类型，因为OCaml自己会知道。</p>
+<p>而且OCaml会一直检查所有的类型匹配（甚至在不同的文件之间）。</p>
+<p>但OCaml同时也是一个实用的语言。所以它的类型系统存在后门使你在一些特殊场合可以避开这些检查。只有资深专家才有可能需要避开类型检查。</p>
+<p>我们再次来看<code>average</code>函数，我们在OCaml的toplevel中输入它，</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>神奇吧？OCaml自己判断出了这个函数需要两个浮点数参数和返回一个浮点数。</p>
+<p>它是如何做到的呢？首先它看<code>a</code>和<code>b</code>在哪里使用，这里是在表达式
+<code>(a +. b)</code>中。这里<code>+.</code>本身是一个需要两个浮点数参数的函数，所以通过简单推导，<code>a</code>和<code>b</code>两个都是浮点数。</p>
+<p>其次，函数<code>/.</code>返回浮点类型，所以<code>average</code>函数同样返回浮点类型。因此，结论就是<code>average</code>的类型如下：</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>类型推导不仅适用于短程序，也适用于大规模的程序。它是一个主要的节省时间的特性，因为它消除了一系列在其他语言中常见的造成segfault，<code>NullPointerException</code>和<code>ClassCastException</code>的错误（或者是如Perl中，一些很重要但是经常被忽略的运行时警告）。</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.zh.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.zh.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

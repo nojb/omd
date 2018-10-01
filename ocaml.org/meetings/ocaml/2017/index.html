@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="." rel="alternate" hreflang="en"/>
+
+    
+    <title>2017 &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2017/index.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../meetings/">OCaml Meetings</a><span class="divider"></span></li>
+<li><a href="../../../meetings/ocaml/">User &amp; Developers Meetings</a><span class="divider"></span></li>
+<li class="active">2017</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="OCaml-2017">OCaml 2017</h1>
+
+<p><strong>The OCaml Users and Developers Workshop</strong>: Oxford, UK, September 8th, 2017.</p>
+<p>The OCaml Users and Developers Workshop brings together the OCaml
+community, including users of OCaml in industry, academia, hobbyists
+and the free software community.  Previous editions have been
+colocated with ICFP 2012 in <a href="http://oud.ocaml.org/2012/">Copenhagen</a>,
+ICFP 2013 in <a href="../2013">Boston</a>, ICFP 2014 in <a href="../2014">Gothenburg</a>,
+ICFP 2015 in <a href="../2015">Vancouver</a> and ICFP 2016 in <a href="../2016">Nara</a>,
+following the OCaml Meetings that ran until <a href="../2011">2011</a>.</p>
+<p>OCaml 2017 will be held on Friday September 8th, 2017 in Oxford, UK,
+colocated with <a href="http://conf.researchr.org/home/icfp-2017">ICFP 2017</a>
+and <a href="http://www.cs.ox.ac.uk/conferences/fscd2017/">FSCD 2017</a>. It
+happens the day after the <a href="http://www.mlworkshop.org/ml2017">ML
+workshop</a>.</p>
+<h1 id="Presentations">Presentations</h1>
+
+<p>OCaml 2017 will open with an invited talk by three frequent
+contributors that recently became maintainers of the OCaml
+implementation: David Allsopp
+(<a href="https://www.youtube.com/watch?v=10OQHsnyg64&amp;index=2&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA">video</a>),
+Florian Angeletti
+(<a href="https://www.youtube.com/watch?v=HOfdGDSypP4&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA&amp;index=5">video</a>),
+and Sébastien Hinderer
+(<a href="https://www.youtube.com/watch?v=SvnyQWZkHS8&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA&amp;index=1">video</a>).</p>
+<p>Due to the high number of high-quality submissions, we had to have
+more posters than in previous editions to fit a one-day
+schedule. Presentations were selected as talks or posters based on
+what presentation medium could work well, rather than on any
+preference on the content.</p>
+<p>The following works will be presented as talks</p>
+<ul><li><p><em>A B-tree library for OCaml</em> —
+ Tom Ridge<br/> <a href="http://www.tom-ridge.com/resources/doc/ocaml_2017.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__tom-ridge__a-b-tree-library-for-ocaml.pdf">local copy</a>),
+ <a href="http://www.tom-ridge.com/resources/ocaml_2017_slides.pdf">slides</a>
+ (<a href="slides__2017__tom-ridge__a-b-tree-library-for-ocaml.pdf">local copy</a>)</p>
+</li><li><p><em>A memory model for multicore OCaml</em> —
+ Stephen Dolan, KC Sivaramakrishnan<br/> (<a href="extended-abstract__2017__stephen-dolan_kc-sivaramakrishnan__a-memory-model-for-multicore-ocaml.pdf">local copy</a>)</p>
+</li><li><p><em>Component-based Program Synthesis in OCaml</em> —
+ Zhanpeng Liang, Kanae Tsushima<br/> <a href="http://www-scf.usc.edu/~zhanpenl/prog_syn.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__zhanpeng-liang_kanae-tsushima__component-based-program-synthesis-in-ocaml.pdf">local copy</a>)</p>
+</li><li><p><em>Extending OCaml&#39;s open</em> —
+ Runhang Li, Jeremy Yallop<br/> <a href="https://www.youtube.com/watch?v=rxCMop-dTuc&amp;index=4&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA">video</a>,
+ <a href="https://www.cl.cam.ac.uk/~jdy22/papers/extending-ocamls-open.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__runhang-li_jeremy-yallop__extending-ocaml-s-open.pdf">local copy</a>),
+ <a href="http://ocamllabs.io/iocamljs/open-struct.html">iOCamlJS playground!</a>,
+ <a href="https://github.com/objmagic/ocaml-workshop-17-open-ext-talk">additional material</a></p>
+</li><li><p><em>Genspio: Generating Shell Phrases In OCaml</em> —
+ Sebastien Mondet<br/> <a href="https://www.youtube.com/watch?v=prwLcBUoYiA&amp;index=3&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA">video</a>,
+ <a href="http://wr.mondet.org/paper/smondet-genspio-ocaml17.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__sebastien-mondet__genspio-generating-shell-phrases-in-ocaml.pdf">local copy</a>),
+ <a href="http://wr.mondet.org/slides/OCaml2017-Genspio/">slides</a>,
+ <a href="https://github.com/hammerlab/genspio">code</a></p>
+</li><li><p><em>Owl: A General-Purpose Numerical Library in OCaml</em> —
+ Liang Wang<br/> <a href="https://www.youtube.com/watch?v=Jyv3tJD1N3o&amp;index=7&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA">video</a>,
+ <a href="https://arxiv.org/pdf/1707.09616">extended abstract</a> from <a href="https://arxiv.org/abs/1707.09616">arXiv</a>,
+ <a href="https://docs.google.com/presentation/d/1A-7KiQLot3X2lLyZntrFGxsxaNir0g_2TlruBP4W2Uc/">presentation</a>
+ (<a href="slides__2017__liang_wang__owl-a-general-purpose-numerical-library-in-ocaml.pdf">local copy</a>)</p>
+</li><li><p><em>ROTOR: First Steps Towards a Refactoring Tool for OCaml</em> —
+ Reuben N. S. Rowe, Simon Thompson<br/> <a href="https://www.cs.kent.ac.uk/people/staff/rnsr/docs/rotor_ocaml-17_abstract.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__reuben-rowe_simon-thompson__rotor-first-steps-towards-a-refactoring-tool-for-ocaml.pdf">local copy</a>),
+ <a href="https://www.cs.kent.ac.uk/people/staff/rnsr/docs/ocaml_2017_slides.pdf">slides</a>
+ (<a href="slides__2017__reuben-rowe_simon-thompson__rotor-first-steps-towards-a-refactoring-tool-for-ocaml.pdf">local copy</a>),
+ <a href="https://gitlab.com/trustworthy-refactoring/">code</a>, <a href="https://hub.docker.com/r/reubenrowe/ocaml-rotor">Docker image</a></p>
+</li><li><p><em>Testing with Crowbar</em> —
+ Stephen Dolan, Mindy Preston<br/> (<a href="extended-abstract__2017__stephen-dolan_mindy-preston__testing-with-crowbar.pdf">local copy</a>)</p>
+</li><li><p><em>Tezos: the OCaml Crypto-Ledger</em> —
+ Benjamin Canou, Grégoire Henry, Pierre Chambart, Fabrice Le Fessant, Arthur Breitman
+ (<a href="extended-abstract__2017__benjamin-canou_gregoire-henry_pierre-chambart_fabrice-le-fessant_arthur-breitman__tezos-the-ocaml-crypto-ledger.pdf">local copy</a>)</p>
+</li><li><p><em>The State of the OCaml Platform: September 2017</em> —
+ Anil Madhavapeddy<br/> <a href="https://www.youtube.com/watch?v=y-1Zrzdd9KM&amp;index=6&amp;list=TLGGpj_CrU7rr7MxMjAxMjAxOA">video</a>,
+ <a href="https://speakerdeck.com/avsm/ocaml-platform-2017">slides</a>
+ (<a href="slides__2017__anil-madhavapeddy__the-state-of-the-ocaml-platform-september-2017.pdf">local copy</a>)</p>
+</li><li><p><em>Wodan: a pure OCaml, flash-aware filesystem library</em> —
+ Gabriel de Perthuis<br/> <a href="https://g2p.github.io/research/wodan.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__gabriel-de-perthuis__wodan-a-pure-ocaml-flash-aware-filesystem-library.pdf">local copy</a>)</p>
+</li></ul>
+
+<p>The following works will be presented as posters.</p>
+<ul><li><p><em>ocamli: Interpreted OCaml</em> —
+ John Whitington<br/> <a href="http://www.cs.le.ac.uk/people/jw642/ocamlworkshop.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__john_whitington__ocamli-interpreted-ocaml.pdf">local copy</a>)</p>
+</li><li><p><em>mSAT: An OCaml SAT Solver</em> —
+ Bury Guillaume<br/> <a href="https://gbury.eu/public/papers/icfp2017_msat.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__guillaume-bury__msat-an-ocaml-sat-solver.pdf">local copy</a>)</p>
+</li><li><p><em>Tyre – Typed Regular Expressions</em> —
+ Gabriel Radanne<br/> (<a href="https://www.irif.fr/~gradanne/papers/tyre/abstract.pdf">extended abstract</a>
+ (<a href="extended-abstract__2017__gabriel-radanne__tyre-typed-regular-expressions.pdf">local copy</a>))</p>
+</li><li><p><em>Jbuilder: a modern approach to OCaml development</em> —
+ Jeremie Dimino, Mark Shinwell<br/> (<a href="extended-abstract__2017__jeremie-dimino_mark-shinwell__jbuilder-a-modern-approach-to-ocaml-development.pdf">local copy</a>)</p>
+</li></ul>
+
+<h1 id="Call-for-presentations-past">Call for presentations (past)</h1>
+
+<h2 id="Scope">Scope</h2>
+
+<p>Presentations and discussions will focus on the OCaml
+programming language and its community. We aim to solicit talks
+on all aspects related to improving the use or development of
+the language and its programming environment, including, for
+example (but not limited to):</p>
+<ul><li><p>compiler developments, new backends, runtime and architectures</p>
+</li><li><p>practical type system improvements, such as (but not
+ limited to) GADTs, first-class modules, generic programming,
+ or dependent types</p>
+</li><li><p>new library or application releases, and their design
+ rationales</p>
+</li><li><p>tools and infrastructure services, and their enhancements</p>
+</li><li><p>prominent industrial or experimental uses of OCaml, or
+ deployments in unusual situations.</p>
+</li></ul>
+
+<h2 id="Presentations_1">Presentations</h2>
+
+<p>It will be an informal meeting with no formal proceedings. The
+presentation material will be available online from the workshop
+homepage. The presentations may be recorded, and made available
+at a later time.</p>
+<p>The main presentation format is a workshop talk, traditionally
+around 20 minutes in length, plus question time, but we also
+have a poster session during the workshop -- this allows to
+present more diverse work, and gives time for discussion. The
+program committee will decide which presentations should be
+delivered as posters or talks.</p>
+<h2 id="Submission">Submission</h2>
+
+<p>To submit a presentation, please register a description of the
+talk (about 2 pages long) at <a href="https://icfp-ocaml17.hotcrp.com/">https://icfp-ocaml17.hotcrp.com/</a>
+providing a clear statement of what will be provided by the
+presentation: the problems that are addressed, the solutions or
+methods that are proposed.</p>
+<p>LaTeX-produced PDFs are a common and welcome submission
+format. For accessibility purposes, we ask PDF submitters to
+also provide the sources of their submission in a textual
+format, such as .tex sources. Reviewers may read either the
+submitted PDF or the text version.</p>
+<h2 id="Important-dates">Important dates</h2>
+
+<ul><li><p>Wednesday 31st May (any time zone): Abstract submission deadline</p>
+</li><li><p>Wednesday 28th June: Author notification</p>
+</li><li><p>Friday 8th September 2017: OCaml Workshop</p>
+</li></ul>
+
+<h2 id="ML-family-workshop-and-post-proceedings">ML family workshop and post-proceedings</h2>
+
+<p>The ML family workshop, held on the previous day, deals with
+general issues of the ML-style programming and type systems,
+focuses on more research-oriented work that is less specific to
+a language in particular (OCaml). There is an overlap between
+the two workshops, and we have occasionally transferred
+presentations from one to the other in the past. The authors who
+feel their submission fits both workshops are encouraged to
+mention it at submission time and/or contact the Program Chairs.</p>
+<p>We are planning to publish combined post-proceedings and to
+invite interested authors of selected presentations to expand
+their abstracts for inclusion.</p>
+<h2 id="Program-Committee">Program Committee</h2>
+
+<ul><li><p>Ashish Agarwal, Solvuu, USA</p>
+</li><li><p>François Bobot, CEA, France</p>
+</li><li><p>Frédéric Bour, OCaml Labs, France</p>
+</li><li><p>Cristiano Calcagno, Facebook, UK</p>
+</li><li><p>Louis Gesbert, OcamlPro, France</p>
+</li><li><p>Sébastien Hinderer, INRIA, France</p>
+</li><li><p>Atsushi Igarashi, Kyoto University, Japan</p>
+</li><li><p>Oleg Kiselyov, Tohoku University, Japan</p>
+</li><li><p>Julia Lawall, INRIA/LIP6, France</p>
+</li><li><p>Sam Lindley, The University of Edinburgh, UK</p>
+</li><li><p>Louis Mandel, IBM Research, USA</p>
+</li><li><p>Zoe Paraskevopoulou, Princeton University, USA</p>
+</li><li><p>Gabriel Scherer, Northeastern University, USA</p>
+</li></ul>
+
+<h2 id="Questions-and-contact">Questions and contact</h2>
+
+<p>Please send any questions to the chair:
+<code>Gabriel Scherer &lt;gabriel.scherer@gmail.com&gt;</code></p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2017/index.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

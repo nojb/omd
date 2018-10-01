@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="common_error_messages.html" rel="alternate" hreflang="en"/>
+<link href="common_error_messages.fr.html" rel="alternate" hreflang="fr"/>
+<link href="common_error_messages.ja.html" rel="alternate" hreflang="ja"/>
+<link href="common_error_messages.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Common Error Messages &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/common_error_messages.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Common Error Messages</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+<li><a href="common_error_messages.fr.html">fr</a></li>
+<li><a href="common_error_messages.ja.html">日本語</a></li>
+<li><a href="common_error_messages.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Type-errors">Type errors</a>
+<ul><li><a href="#This-expression-has-type-but-is-here-used-with-type">This expression has type ... but is here used with type ...</a>
+</li><li><a href="#Warning-This-optional-argument-cannot-be-erased">Warning: This optional argument cannot be erased</a>
+</li><li><a href="#The-type-of-this-expression-contains-type-variables-that-cannot-be-generalized">The type of this expression... contains type variables that cannot be generalized</a>
+</li></ul>
+</li><li><a href="#Pattern-matching-warnings-and-errors">Pattern matching warnings and errors</a>
+<ul><li><a href="#This-pattern-is-unused">This pattern is unused</a>
+</li><li><a href="#This-pattern-matching-is-not-exhaustive">This pattern-matching is not exhaustive</a>
+</li></ul>
+</li><li><a href="#Problems-recompiling-valid-programs">Problems recompiling valid programs</a>
+<ul><li><a href="#x-cmi-is-not-a-compiled-interface">x.cmi is not a compiled interface</a>
+</li><li><a href="#Warning-Illegal-backslash-escape-in-string">Warning: Illegal backslash escape in string</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Common-Error-Messages">Common Error Messages</h1><p>This page gives a list of quick explanations for some error or warning
+messages that are emitted by the OCaml compilers. Longer explanations
+are usually given in dedicated sections of this tutorial.</p>
+<h2 id="Type-errors">Type errors</h2><h3 id="This-expression-has-type-but-is-here-used-with-type">This expression has type ... but is here used with type ...</h3><p>When the type of an object is not compatible with the context in which
+it is used, it is frequent to obtain this kind of message:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + <span class="ocaml-error-loc">2.5</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type float but an expression was expected of type
+         int
+</span></code></pre>
+
+<p>&#39;This expression has type <em>X</em> but is here used with type <em>Y</em>&#39; means that
+if the contents of the expression is isolated (2.5), its type is
+inferred as <em>X</em> (float). But the context, i.e. everything which is
+around (1 + ...) tells that the gap expects an expression of type <em>Y</em>
+(int) which is not compatible with <em>X</em>.</p>
+<p>More disturbing is the following message:</p>
+<pre class="text"><code class="text">This expression has type my_type but is here used with type my_type</code></pre><p>This error happens often while testing some type definitions using the
+<a href="basics.html">interactive toplevel</a>.  In OCaml, it is perfectly legal
+to define a type with a name
+that is already taken by another type. Consider the following session:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">my_type</span> = A | B</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type my_type = A | B
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">a</span> = A</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val a : my_type = A
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">my_type</span> = A | B</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type my_type = A | B
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = B</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val b : my_type = B
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">a = <span class="ocaml-error-loc">b</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type my_type/1013
+       but an expression was expected of type my_type/1009
+</span></code></pre>
+
+<p>For the compiler, the second definition of my_type is totally
+independent from the first definition. So we have defined two types
+which have the same name. Since &#39;a&#39; was defined earlier, it belongs to
+the first type while &#39;b&#39; belongs to the second type. In this example,
+redefining &#39;a&#39; after the last definition of my_type solves the problem.
+This kind of problem should not happen in real programs unless you use
+the same name for the same type in the same module, which is highly
+discouraged.</p>
+<h3 id="Warning-This-optional-argument-cannot-be-erased">Warning: This optional argument cannot be erased</h3><p>Functions with optional arguments must have at least one non-labelled
+argument. For instance, this is not OK:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">?(x = 0) ?(<span class="ocaml-error-loc">y = 0</span>) </span>= print_int (x + y)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 16: this optional argument cannot be erased.
+</span>val f : ?x:int -&gt; ?y:int -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p>The solution is simply to add one argument of type unit, like this:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">?(x = 0) ?(y = 0) () </span>= print_int (x + y)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : ?x:int -&gt; ?y:int -&gt; unit -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p>See the <a href="labels.html" title="Labels">Labels</a> section for more details on
+functions with labelled arguments.</p>
+<h3 id="The-type-of-this-expression-contains-type-variables-that-cannot-be-generalized">The type of this expression... contains type variables that cannot be generalized</h3><p>This happens in some cases when the full type of an object is not known
+by the compiler when it reaches the end of the compilation unit (file)
+but for some reason it cannot remain polymorphic. Example:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="keyword">ref</span> None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : '_weak1 option ref = {contents = None}
+</span></code></pre>
+
+<p>triggers the following message during the compilation:</p>
+<pre class="text"><code class="text">The type of this expression, &#39;_a option ref,
+contains type variables that cannot be generalized</code></pre><p>Solution: help the compiler with a type annotation, like for instance:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span>x : string option <span class="keyword">ref</span> = <span class="keyword">ref</span> None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : string option ref = {contents = None}
+</span></code></pre>
+
+<p>or:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="keyword">ref</span> (None : string option)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : string option ref = {contents = None}
+</span></code></pre>
+
+<p>Data of type <code>&#39;_a</code> may be allowed temporarily, for instance during a
+toplevel session. It means that the given object has an unknown type,
+but it cannot be any type: it is not polymorphic data. In the toplevel,
+our example gives these results:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="keyword">ref</span> None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : '_weak2 option ref = {contents = None}
+</span></code></pre>
+
+<p>The compiler tells us that the type of x is not fully known yet. But by
+using <code>x</code> later, the compiler can infer the type of <code>x</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">x := Some 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>Now <code>x</code> has a known type:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">x</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int option ref = {contents = Some 0}
+</span></code></pre>
+
+<p>More details are given in the <a href="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html#variables_de_types_faibles" title="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html#variables_de_types_faibles">OCaml
+FAQ</a>.</p>
+<h2 id="Pattern-matching-warnings-and-errors">Pattern matching warnings and errors</h2><h3 id="This-pattern-is-unused">This pattern is unused</h3><p>This warning should be considered as an error, since there is no reason
+to intentionally keep such code. It may happen when the programmer
+introduced a catch-all pattern unintentionally such as in the following
+situation:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">test_member</span> <span class="ocaml-variable">x tup </span>=
+    <span class="keyword">match</span> tup <span class="keyword">with</span>
+    | (y, _) | <span class="ocaml-error-loc">(_, y)</span> when y = x -&gt; true
+    | _ -&gt; false</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 12: this sub-pattern is unused.
+File &quot;&quot;, line 3, characters 4-19:
+Warning 57: Ambiguous or-pattern variables under guard;
+variable y may match different arguments. (See manual section 8.5)
+</span>val test_member : 'a -&gt; 'a * 'a -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<p>Obviously, the programmer had a misconception of what OCaml&#39;s pattern
+matching is about. Remember the following:</p>
+<ul><li><p>the tree of cases is traversed linearly, from left to right. There
+ is <em>no backtracking</em> as in regexp matching.</p>
+</li><li><p>a guard (&#39;when&#39; clause) is not part of a pattern. It is simply a
+ condition which is evaluated at most once and is used as a last
+ resort to jump to the next match case.</p>
+</li><li><p>lowercase identifiers (bindings such as &#39;y&#39; above) are just names,
+ so they will always match.</p>
+</li></ul>
+
+<p>In our example, it is now clear that only the first item of the pair
+will ever be tested. This leads to the following results:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">test_member 1 (1, 0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">test_member 1 (0, 1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+</span></code></pre>
+
+<h3 id="This-pattern-matching-is-not-exhaustive">This pattern-matching is not exhaustive</h3><p>OCaml&#39;s pattern matching can check whether a set of patterns is
+exhaustive or not, based on the <em>type</em> only. So in the following
+example, the compiler doesn&#39;t know what range of ints the &#39;mod&#39; operator
+would return:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">x </span>=
+    <span class="keyword"><span class="ocaml-error-loc">match</span></span><span class="ocaml-error-loc"> x mod 2 </span><span class="keyword"><span class="ocaml-error-loc">with</span></span><span class="ocaml-error-loc">
+    | 0 -&gt; true
+    | 1 | -1 -&gt; false</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+2
+</span>val is_even : int -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<p>A short solution without pattern matching would be:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">x </span>= x mod 2 = 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val is_even : int -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<p>In general, that kind of simplification is not possible and the best
+solution is to add a catch-all case which should never be reached:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">x </span>=
+    <span class="keyword">match</span> x mod 2 <span class="keyword">with</span>
+    | 0 -&gt; true
+    | 1 | -1 -&gt; false
+    | _ -&gt; <span class="keyword">assert</span> false</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val is_even : int -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<h2 id="Problems-recompiling-valid-programs">Problems recompiling valid programs</h2><h3 id="x-cmi-is-not-a-compiled-interface">x.cmi is not a compiled interface</h3><p>When recompiling some old program or compiling a program from an
+external source that was not cleaned properly, it is possible to get
+this error message:</p>
+<pre class="text"><code class="text">some_module.cmi is not a compiled interface</code></pre><p>It means that some_module.cmi is not valid according to the *current
+version* of the OCaml compiler. Most of the time, removing the old
+compiled files (*.cmi, *.cmo, *.cmx, ...) and recompiling is
+sufficient to solve this problem.</p>
+<h3 id="Warning-Illegal-backslash-escape-in-string">Warning: Illegal backslash escape in string</h3><p>Recent versions of OCaml warn you against unprotected backslashes in
+strings since they should be doubled. Such a message may be displayed
+when compiling an older program, and can be turned off with the <code>-w x</code>
+option.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\e</span>\n' <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\e)
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\\</span>e\n' <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\\)
+</span></code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/common_error_messages.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

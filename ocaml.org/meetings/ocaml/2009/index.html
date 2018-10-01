@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="." rel="alternate" hreflang="en"/>
+
+    
+    <title>2009 &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2009/index.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../meetings/">OCaml Meetings</a><span class="divider"></span></li>
+<li><a href="../../../meetings/ocaml/">User &amp; Developers Meetings</a><span class="divider"></span></li>
+<li class="active">2009</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Talks">Talks</a>
+<ul><li><a href="#OCamlCore-org-news-and-projects-by-Stefano-Zacchiroli-Sylvain-Le-Gall-and-administration-team">OCamlCore.org news and projects by Stefano Zacchiroli, Sylvain Le Gall and administration team</a>
+</li><li><a href="#OCaml-Batteries-Included-by-David-Teller">OCaml Batteries Included by David Teller</a>
+</li><li><a href="#Cameleon-Chamo-by-Maxence-Guesdon">Cameleon/Chamo by Maxence Guesdon</a>
+</li><li><a href="#Delimited-overloading-by-Christophe-Troestler">Delimited overloading by Christophe Troestler</a>
+</li><li><a href="#OCaml-as-fast-as-C-by-Sylvain-Le-Gall">OCaml as fast as C! by Sylvain Le Gall</a>
+</li><li><a href="#VHDL-symbolic-simulation-in-OCaml-by-Florent-Ouchet">VHDL symbolic simulation in OCaml by Florent Ouchet</a>
+</li><li><a href="#Parsing-technology-for-OCaml-from-stream-matching-to-dypgen-by-Christophe-Raffalli">Parsing technology for OCaml: from stream matching to dypgen by Christophe Raffalli</a>
+</li><li><a href="#OCaml-Windows-cross-compiler-by-Richard-W-M-Jones">OCaml Windows cross-compiler by Richard W.M. Jones.</a>
+</li></ul>
+</li><li><a href="#Participants">Participants</a>
+</li><li><a href="#Blogs-talking-about-the-meeting">Blogs talking about the meeting</a>
+</li><li><a href="#Organization-team">Organization team</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="OCaml-Users-Meeting-2009">OCaml Users Meeting 2009</h1>
+
+<p>Location: <strong>Grenoble, France</strong><br/>Date: Wednesday 4th February 2009</p>
+<h2 id="Talks">Talks</h2>
+
+<h3 id="OCamlCore-org-news-and-projects-by-Stefano-Zacchiroli-Sylvain-Le-Gall-and-administration-team">OCamlCore.org news and projects by Stefano Zacchiroli, Sylvain Le Gall and administration team</h3>
+
+<p>OCamlCore.org team is the group of people that take care of
+administrative part of <a href="http://www.ocamlcore.org/">OCamlCore.org</a>.
+OCamlCore.org is a set of resource provided to the OCaml community
+like <a href="http://forge.ocamlcore.org/">a forge</a> and a
+<a href="http://planet.ocamlcore.org/">planet</a>.</p>
+<p>This short talk will present what has been done during the last year
+on OCamlCore.org. It will also give some possible direction on what
+this platform can offer to the OCaml community in the next year.</p>
+<p><a href="https://forge.ocamlcore.org/docman/view.php/77/33/OCamlCore.org%20presentation.pdf">Slides</a> | <a href="http://www.ocamlcore.org/">Website</a></p>
+<h3 id="OCaml-Batteries-Included-by-David-Teller">OCaml Batteries Included by David Teller</h3>
+
+<p>OCaml Batteries included (or simply &#39;Batteries&#39;) is a community-driven
+effort to standardize on an consistent, documented, and comprehensive
+development platform for the OCaml programming language.</p>
+<p>Batteries is meant to serve the following purposes:</p>
+<ul><li><p>define a standard set of libraries which may be expected on every compliant installation of OCaml;</p>
+</li><li><p>organize these libraries into a hierarchy of modules, with one source of documentation;</p>
+</li><li><p>define a standard set of language extensions (based on CamlP4) which may be expected on every compliant installation of OCaml;</p>
+</li><li><p>provide consistent abstractions and APIs for otherwise independent libraries.</p>
+</li></ul>
+
+<p>The project was started after last year&#39;s OCaml Meeting in Paris. With
+this talk, we will show the current status of OCaml Batteries Included
+and how it may be useful for you and for newbies — and we&#39;ll try to
+convince you to switch to this foundation library.</p>
+<p><a href="https://forge.ocamlcore.org/docman/view.php/77/36/batteries-included.pdf">Slides</a> | <a href="http://batteries.forge.ocamlcore.org/">Website</a></p>
+<h3 id="Cameleon-Chamo-by-Maxence-Guesdon">Cameleon/Chamo by Maxence Guesdon</h3>
+
+<p>Cameleon is a set of tools put together to create an IDE for
+OCaml. One of these tools is Chamo, a source code editor written in
+ocaml, a kind of emacs but with ocaml instead of elisp to customize or
+add features.</p>
+<p>If people are interested, there can be a talk to introduce Chamo:</p>
+<ul><li><p>usage</p>
+</li><li><p>internal architecture,</p>
+</li><li><p>how to customize it and add more features.</p>
+</li></ul>
+
+<p><a href="https://forge.ocamlcore.org/docman/view.php/77/32/cameleon_chamo.pdf">Slides</a> | <a href="http://home.gna.org/cameleon/chamo.en.html">Website</a></p>
+<h3 id="Delimited-overloading-by-Christophe-Troestler">Delimited overloading by Christophe Troestler</h3>
+
+<p>Delimited overloading is a set of syntax extensions that allow</p>
+<ul><li><p>to locally overload operators, possibly performing some optimizations at the same time;</p>
+</li><li><p>to change the priority and associativity of prefix, postfix and infix operators;</p>
+</li><li><p>to provide enhanced macros compatible with delimited overloading.</p>
+</li></ul>
+
+<p>In this talk, we will demonstrate the possibilities of delimited
+overloading, explain some of the problems and solutions that we found
+while developing it, and show how you can use it for your own
+purposes.</p>
+<p><a href="https://forge.ocamlcore.org/docman/view.php/77/35/pa-do.pdf">Slides</a> | <a href="http://pa-do.forge.ocamlcore.org/">Website</a></p>
+<h3 id="OCaml-as-fast-as-C-by-Sylvain-Le-Gall">OCaml as fast as C! by Sylvain Le Gall</h3>
+
+<p>This talk will give some tips on how to achieve high performance using
+OCaml. It is based on the building of STSort, a fast sorting GNU sort
+like utilities. It will try to show how to go from specification of a
+full project to achieving a high level of performance for it.</p>
+<p>It will show how mixing functionnal and imperative style in an
+application is one of the important feature of OCaml.</p>
+<p><a href="http://forge.ocamlcore.org/docman/view.php/77/37/OCaml%20as%20fast%20as%20C.pdf">Slides</a></p>
+<h3 id="VHDL-symbolic-simulation-in-OCaml-by-Florent-Ouchet">VHDL symbolic simulation in OCaml by Florent Ouchet</h3>
+
+<p>In the context of hardware design, current synthesis flows show an
+increasing interest for formal methods applied on integrated circuits
+descriptions. This dedicated application, written in OCaml, makes the
+extraction of models easier and faster.</p>
+<p>The author of the application will:</p>
+<ul><li><p>shortly introduces the concept of hardware symbolic simulation;</p>
+</li><li><p>explains the reasons for advocating a strongly typed function language in this context;</p>
+</li><li><p>outlines application structure and provides evaluations of the efficiency of some language features;</p>
+</li><li><p>gives constructive feedback about the issues that were raised during this development.</p>
+</li></ul>
+
+<p><a href="http://forge.ocamlcore.org/docman/view.php/77/34/VSYML-ocaml-meeting-2009.pdf">Slides</a></p>
+<h3 id="Parsing-technology-for-OCaml-from-stream-matching-to-dypgen-by-Christophe-Raffalli">Parsing technology for OCaml: from stream matching to dypgen by Christophe Raffalli</h3>
+
+<p>We will give an overview of the various parsing technologies for
+OCaml: stream parttern matching, ocamlyacc, camlp4, menhir and
+dypgen. Then, we will focus on the powerful tools that dypgen (by
+Emmanuel Onzon) uniquely introduces together in parsing technology
+(not only for OCaml) and demonstrate them on a few examples (including
+parsing for a small piece of french).</p>
+<p><a href="http://dypgen.free.fr/">Website</a></p>
+<h3 id="OCaml-Windows-cross-compiler-by-Richard-W-M-Jones">OCaml Windows cross-compiler by Richard W.M. Jones.</h3>
+
+<p>10 minute talk given on the
+<a href="http://fedoraproject.org/wiki/MinGW">Windows cross-compiler work done at Red Hat</a>,
+and a demonstration of the OCaml cross-compiler.</p>
+<h2 id="Participants">Participants</h2>
+
+<p>Participant should sign up directly using the subscription form
+below. The subscription fees cover lunch and coffee pause. The
+subscription will be closed on 25th January 2009.</p>
+<p>As of 27th January 2009, the subscription is closed.</p>
+<p>People, who whish to join at the restaurant, should add (R) just after
+their name in the list. Organization team will use this list to book
+the restaurant on Ferburay 3rd. You can update your entry until
+February 2nd.</p>
+<ul><li><p>Balat Vincent (R)</p>
+</li><li><p>Bonichon Richard</p>
+</li><li><p>Canou Benjamin (R)</p>
+</li><li><p>Chambart Pierre</p>
+</li><li><p>Clement François</p>
+</li><li><p>Clerc Xavier</p>
+</li><li><p>Denielou Malo</p>
+</li><li><p>Doligez Damien</p>
+</li><li><p>Dubuguet Matthieu</p>
+</li><li><p>Fiorino Hulbert</p>
+</li><li><p>Gazagnaire Thomas (R)</p>
+</li><li><p>Glondu Stéphane</p>
+</li><li><p>Gross Vincent (R)</p>
+</li><li><p>Guesdon Maxence</p>
+</li><li><p>Henry Grégoire (R)</p>
+</li><li><p>Hirschowitz Tom</p>
+</li><li><p>Hyvernat Pierre</p>
+</li><li><p>Jambon Martin</p>
+</li><li><p>Jammes Fabrice</p>
+</li><li><p>Jones Richard (R)</p>
+</li><li><p>Koeck Jean-Denis (R)</p>
+</li><li><p>Le Gall Sylvain (R)</p>
+</li><li><p>Leblanc Serge</p>
+</li><li><p>Leroy Xavier</p>
+</li><li><p>Letouzey Pierre (R)</p>
+</li><li><p>Levy Michel</p>
+</li><li><p>Loddo Jean-Vincent</p>
+</li><li><p>Maingaud Séverine (R)</p>
+</li><li><p>Monat Christophe</p>
+</li><li><p>Ouchet Florent (R)</p>
+</li><li><p>Pouillard Nicolas (R)</p>
+</li><li><p>Puydt Julien</p>
+</li><li><p>Raffalli Christophe</p>
+</li><li><p>Ravet Vivien (R)</p>
+</li><li><p>Saiu Luca</p>
+</li><li><p>Schmitt Alan</p>
+</li><li><p>Shinwell Mark (R)</p>
+</li><li><p>Signoles Julien (R)</p>
+</li><li><p>Smeding Gideon</p>
+</li><li><p>Stentzel Cécile</p>
+</li><li><p>Teller David</p>
+</li><li><p>Theyssier Guillaume</p>
+</li><li><p>Troestler Christophe (R)</p>
+</li><li><p>Wang Philippe (R)</p>
+</li><li><p>Weis Pierre</p>
+</li><li><p>Yziquel Guillaume</p>
+</li><li><p>Zacchiroli Stefano</p>
+</li><li><p>Zigmann Renaud</p>
+</li></ul>
+
+<h2 id="Blogs-talking-about-the-meeting">Blogs talking about the meeting</h2>
+
+<ul><li><p><a href="http://camltastic.blogspot.com/2009/02/photos-from-ocaml-users-meeting.html">Richard Jones</a></p>
+</li><li><p><a href="http://blogs.gnome.org/snark/2009/02/04/ocaml-meeting-in-grenoble/">Snark</a></p>
+</li><li><p>Martin Jambon </p>
+</li><li><p><a href="http://le-gall.net/sylvain+violaine/blog/index.php?2008/12/19/48-ocaml-meeting-2009-in-grenoble-progress">Sylvain Le Gall</a></p>
+</li></ul>
+
+<h2 id="Organization-team">Organization team</h2>
+
+<ul><li><p>Sylvain Le Gall, main contact (gildor @nospam@ ocamlcore.org, tel: +33 (0) 6 87 82 40 93)</p>
+</li><li><p>Alan Schmitt, local organizer (alan.schmitt @nospam@ polytechnique.org)</p>
+</li><li><p>Serge Leblanc, local volunteer (serge.leblanc @nospam@ wanadoo.fr)</p>
+</li></ul>
+
+<p><a href="http://mirror.ocamlcore.org/wiki.cocan.org/events/europe/ocamlmeetinggrenoble2009/organization.html">Organization details</a></p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2009/index.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

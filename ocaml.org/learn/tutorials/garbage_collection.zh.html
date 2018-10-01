@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="garbage_collection.html" rel="alternate" hreflang="en"/>
+<link href="garbage_collection.ja.html" rel="alternate" hreflang="ja"/>
+<link href="garbage_collection.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Garbage Collection &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/garbage_collection.zh.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.zh.html">OCaml教程</a><span class="divider"></span></li>
+<li class="active">Garbage Collection</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="garbage_collection.html">en</a></li>
+<li><a href="garbage_collection.ja.html">日本語</a></li>
+<li class="active">中文</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">垃圾收集，引用计数，显式分配</a>
+<ul><li><a href="#GC">GC 对引用计数</a>
+</li></ul>
+</li><li><a href="#Gc">Gc 模块</a>
+</li><li><a href="#Weak">终结化和Weak模块</a>
+</li><li><a href="#">练习</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">垃圾收集</h1>
+
+<h2 id="">垃圾收集，引用计数，显式分配</h2><p>和所有的现代语言一样，OCaml提供垃圾收集器，所以你不用像C/C++一样显式地分配和释放内存。</p>
+<p>JWZ在他的文章 <a href="http://www.jwz.org/doc/java.html" title="http://www.jwz.org/doc/java.html">&quot;Java sucks&quot;
+rant（Java蛋疼（怒）！）</a>:</p>
+<blockquote><p>第一个好家伙是Java没有 <code>free()</code>。其他的都没有所谓了。这几乎掩盖了所有的缺点，不管有多糟糕，
+这个有点让后续文档基本都没有意义了，<strong>但是...</strong>（译注：但是啥大家自己看吧）</p>
+</blockquote>
+
+<p>OCaml的垃圾收集器是划时代的，比大部分的手动分配都要表现出色。和Java臭名昭著的GC不一样，
+OCaml的GC不会在启动时分配大量的内存，也不会有需要手动改写的限制。</p>
+<p>为什么GC可以比C里显式的内存分配还要快？我们通常假设调用<code>free</code>不消耗任何时间。实际上<code>free</code>
+会索引内存分配器的复杂数据结构，是一个很复杂很昂贵的操作。每次你调用<code>free</code>，所有的
+代码和数据都要加载到CPU缓存。而收集器则会释放一次性释放内存（比方说一个内存池分配器或者GC），
+因此只要加载一次到内存即可，昂贵的开销则被分摊开。（译注：这不完全是真的，取决于malloc的实现）</p>
+<p>GC 还会通过移动内容来收紧堆。（译注：也就是把在用的内存放到一起）这样会让内存的分配更加简单，
+更加快。一个简单的GC可以和L1，L2缓存很好地互动。</p>
+<p>当然，这些原因都不是可以排除编写一个手动分配器的理由，但这对于很多程序员而言都是相当难的活。</p>
+<p>OCaml的垃圾收集器有两个堆，<strong>主要堆</strong> 和 <strong>次要堆</strong>。这里有一个原则：大多数的对象都很小，
+并且频繁分配和很快就释放。这些对象首先进入次要堆，次要堆是GC的主要对象。其中只有很少对象是
+长期存在的。这些对象都会从次要堆升级到主要堆，而主要堆则没有GC得这么频繁。</p>
+<p>OCaml的GC是同步的。它不会运行在另外一个线程，并且它只能在一个分配申请时才被调用。</p>
+<h3 id="GC">GC 对引用计数</h3><p>Perl也有GC，但所用的是简单的<strong>引用计数</strong>。这种方法很简单，不过就是简单地在每个Perl的对象里
+持有一个来自其他对象的引用计数。当这个计数减少到0的时候，这意味着没有对象在引用这个对象，
+因此这个对象可以被释放。</p>
+<p>引用计数不被计算机科学家认为是一个很严格的GC，但它在实际上比一个完全的GC有多很多优点。
+通过引用计数，你可以不显式调用 <code>close</code>/<code>closedir</code> 。比方说：</p>
+<pre class="perl"><code class="perl">foreach (@files)
+{
+  my $io = new IO::File &#39;&lt; $_&#39; or die;
+  # read from $io
+}</code></pre><p>这段Perl代码迭代一系列的<code>@files</code>，然后打开并读取每个文件。这里没有需要关闭<code>$io</code>因为
+Perl使用的是引用计数，当我们到了循环的最后，<code>$io</code>会在定义域之外，因此引用计数会变成0，
+并马上被释放。（译注：这种风格是很不可取的，这依赖了语言解析器本身的实现，因此引入了一个
+很难察觉到的耦合）</p>
+<p>考虑一下下面这段OCaml代码：</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">read_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  <span class="comment">(* read from chan *)</span> <span class="governing">in</span>
+<span class="ocaml-module">List</span>.iter read_file files</code></pre>
+
+<p>调用 <code>read_file</code> 会打开文件但不会关闭它。因为OCaml用的是一个完全的GC，所以<code>chan</code> 
+在次要堆满之前不会被收集。并且，<strong>OCaml 即使在收集句柄的内存时也不会关闭通道</strong>，
+因此这样下去，进程迟早会耗尽文件描述符资源。</p>
+<p>在写OCaml程序，尤其是文件和目录处理或其他需要终结方法的重量级对象的时候你需要关注到这一点。</p>
+<p>为了公平起见，我下面也要提及以下引用计数的缺点：</p>
+<ul><li><p>所有的对象都要存放一个计数器。也就是说每个对象都有一个字的开销。程序会消耗更多的内存，
+也导致了程序更加慢，因为缓存更容易被塞满或者分配到不同的交换页。</p>
+</li><li><p>引用计数是很昂贵的。每次你修改一个到对象的指针的时候你都必须检查引用计数。当你不停地
+修改引用，那么这种检查就会更频繁，你的程序也会更慢，也会膨胀你的代码量。</p>
+</li><li><p>引用计数不能处理循环引用，或者自引用。我（原作者）曾经在很多语言里编程但不能回忆起曾经
+用到过这种结构（译注：嗯...双向链表就是这种结构）。</p>
+</li><li><p>当然，图算法就违反了前面的假设。不要尝试在Perl里实现TSP算法。</p>
+</li></ul>
+
+<h2 id="Gc">Gc 模块</h2><p><code>Gc</code> 模块包含很多有用的函数用来在OCaml程序里查询和调用GC。</p>
+<p>下面是在退出之前打印出GC统计数据的程序：</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+  <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
+  <span class="keyword">else</span>
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+    r *. x *. (1.0 -. x)
+  
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Random</span>.self_init ();
+  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480';
+  <span class="keyword">for</span> x = 0 <span class="keyword">to</span> 640 <span class="keyword">do</span>
+    <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
+    <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+      <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+      <span class="ocaml-module">Graphics</span>.plot x y
+    <span class="keyword">done</span>
+  <span class="keyword">done</span>;
+  <span class="ocaml-module">Gc</span>.print_stat stdout</code></pre>
+
+<p>下面是这段程序打印出来的内容：</p>
+<pre><code>minor_words: 115926165     # 非配的字的总数
+promoted_words: 31217      # 从次要堆升级到主要堆的字的总数
+major_words: 31902         # 直接分配在主要堆的大对象的字的总数
+minor_collections: 3538    # 次要堆收集的次数
+major_collections: 39      # 主要堆收集的次数
+heap_words: 63488          # 堆的大小，这里word大概是256K
+heap_chunks: 1
+top_heap_words: 63488
+live_words: 2694
+live_blocks: 733
+free_words: 60794
+free_blocks: 4
+largest_free: 31586
+fragments: 0
+compactions: 0</code></pre><p>可见，次要堆收集的次数大约是主要堆收集的100倍（只是这个例子的情况，不一定如此）。
+随着程序的运行，整整440MB内存被分配，尽管它们的大多数都会在次要堆里被收集，释放。
+只有大概128K被升级到长期存贮的主要堆，而另外由大对象构成的128K内存则直接分配在主要堆上。</p>
+<p>我们可以指示GC在某些事件发生时（比方说主要堆收集）打印出debug信息。试一下把下面的代码
+粘帖到上面例子的开始：</p>
+<pre><code class="ocaml"><span class="ocaml-module">Gc</span>.set { (<span class="ocaml-module">Gc</span>.get ()) <span class="keyword">with</span> <span class="ocaml-module">Gc</span>.verbose = 0x01 }</code></pre>
+
+<p>（我们还没有见到 <code>{ expression with field = value }</code> 形式，但是这很容易知道它
+做的些什么。上面的代码会让每次主要堆收集的时候都打印一条信息。</p>
+<h2 id="Weak">终结化和Weak模块</h2><p>我们可以写一个叫<strong>finaliser</strong>的函数，它会在GC释放对象之前被调用。</p>
+<p><code>Weak</code> 模块让我们创建一个所谓的弱指针。一个<strong>弱指针</strong>最好通过和一个普通指针来比较得出
+其含义。当我们有一个通常的OCaml对象，我们通过名字(也就是 <code>let name = ... in</code>)或者其他
+对象来引用那个对象。GC指导我们有一个引用到那个对象因而不会收集它。这就是一般我们说的
+普通指针。但是，如果你持有的是一个弱指针或者弱引用到一个对象，那么你就对GC给出了这个对象
+随时可以被收集的提示（但不意味着GC一定要收集它）。一些时间后，当你来检查这个对象的时候，
+你可以把弱指针转变成一个通常指针，或者通知GC去收集它。</p>
+<p>通过终止化和弱指针可以实现在内存对象数据库缓存。让我们想象一下我们有一个文件存储大量的
+用户记录。这些数据太大因而不能被完全加载到内存。并且其他程序会通过不同方法来访问这些
+文件里的数据，所以我们当我们在内存里持有它们的内存时，我们需要锁定单独的记录。</p>
+<p>对于我们这个数据库缓存的公共接口是下面这两个函数：</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">record</span> = { <span class="keyword">mutable</span> name : string; <span class="keyword">mutable</span> address : string }
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">get_record</span> : int -&gt; record
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">sync_records</span> : unit -&gt; unit</code></pre>
+
+<p> <code>get_record</code> 函数是最主要被调用的接口。它从缓存或硬盘里获取第n个记录并且返回它。这个
+程序就可以修改<code>record.name</code>和<code>record.address</code>域。然后就可以把这个记录束之高阁！
+在最后，GC会调用终结化会把记录重新写到硬盘里。</p>
+<p><code>sync_records</code> 函数也可以在用户程序里调用。这个函数同步银盘和内存里的所有记录拷贝。</p>
+<p>OCaml在现在退出时不会运行终结化。但是你可以强制把下面的指令加到代码里。下面的指令
+会让OCaml退出的时候调用一个GC周期：</p>
+<pre><code class="ocaml">at_exit <span class="ocaml-module">Gc</span>.full_major</code></pre>
+
+<p>我们的代码也会通过<code>Weak</code>模块来实现一个最近访问记录的缓存。使用<code>Weak</code>模块而不手动处理
+所有事的有点有两个：其一，GC对内存需求有全局观点，这让它在一个优势地来决断什么时候
+来缩小缓存。其二，我们的代码会相当简单。</p>
+<p>对于我们的例子，我们将要用一个简单的文件格式来表示用户纪录。这个文件不过是一个用户记录
+列表，每个用户纪录有256字节的固定大小。每个用户记录只有两个域（多余部分用空格填充），
+name域和address域。在一个记录被录入内存之前，程序必须首先获取记录的互斥锁，在这个
+在内存记录被写回文件之后，程序才会放开它。斜面是一些定义文件格式和读写，锁相关的底层
+代码：</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">record</span> = { <span class="keyword">mutable</span> name : string; <span class="keyword">mutable</span> address : string }
+  
+<span class="comment">(* On-disk format. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">record_size</span> = 256
+<span class="governing">let </span><span class="ocaml-variable">name_size</span> = 64
+<span class="governing">let </span><span class="ocaml-variable">addr_size</span> = 192
+  
+<span class="comment">(* Low-level load/save records <span class="keyword">to</span> file. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">seek_record</span> <span class="ocaml-variable">n fd </span>=
+  ignore(<span class="ocaml-module">Unix</span>.lseek fd (n * record_size) <span class="ocaml-module">Unix</span>.SEEK_SET)
+  
+<span class="governing">let</span> <span class="ocaml-function">write_record</span> <span class="ocaml-variable">record n fd </span>=
+  seek_record n fd;
+  ignore(<span class="ocaml-module">Unix</span>.write fd record.name 0 name_size);
+  ignore(<span class="ocaml-module">Unix</span>.write fd record.address 0 addr_size)
+  
+<span class="governing">let</span> <span class="ocaml-function">read_record</span> <span class="ocaml-variable">record n fd </span>=
+  seek_record n fd;
+  ignore(<span class="ocaml-module">Unix</span>.read fd record.name 0 name_size);
+  ignore(<span class="ocaml-module">Unix</span>.read fd record.address 0 addr_size)
+  
+<span class="comment">(* Lock/unlock the nth record <span class="governing">in</span> a file. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">lock_record</span> <span class="ocaml-variable">n fd </span>=
+  seek_record n fd;
+  <span class="ocaml-module">Unix</span>.lockf fd <span class="ocaml-module">Unix</span>.F_LOCK record_size
+  
+<span class="governing">let</span> <span class="ocaml-function">unlock_record</span> <span class="ocaml-variable">n fd </span>=
+  seek_record n fd;
+  <span class="ocaml-module">Unix</span>.lockf fd <span class="ocaml-module">Unix</span>.F_ULOCK record_size</code></pre>
+
+<p>我们也会需要一个函数来创建和清空<code>record</code>对象：</p>
+<pre><code class="ocaml"><span class="comment">(* Create a <span class="keyword">new</span>, empty record. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">new_record</span> <span class="ocaml-variable">() </span>=
+  { name = <span class="ocaml-module">String</span>.make name_size <span class="string">' '</span>;
+    address = <span class="ocaml-module">String</span>.make addr_size <span class="string">' '</span> }</code></pre>
+
+<p>因为这是一个很简单的程序，所以我们将先固定记录的数目。</p>
+<pre><code class="ocaml"><span class="comment">(* Total number <span class="keyword">of</span> records. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">nr_records</span> = 10000
+  
+<span class="comment">(* On-disk file. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">diskfile</span> =
+  <span class="ocaml-module">Unix</span>.openfile 'users.bin' [ <span class="ocaml-module">Unix</span>.O_RDWR; <span class="ocaml-module">Unix</span>.O_CREAT ] 0o666</code></pre>
+
+<p>先下载 <a href="../../img/users.bin.gz">users.bin.gz</a> 然后解压缩它才运行这个程序。</p>
+<p>我们的缓存相当简单：</p>
+<pre><code class="ocaml"><span class="comment">(* Cache <span class="keyword">of</span> records. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">cache</span> = <span class="ocaml-module">Weak</span>.create nr_records</code></pre>
+
+<p><code>get_record</code> 函数很短并且基本上只有两个部分。我们把记录从缓存里拿出来。如果缓存
+返回<code>None</code>，那么我们还没有把记录读取到缓存来，或者说它已经被写到硬盘里，并从缓存里
+删除。如果缓存返回<code>Some record</code>那么我们把<code>record</code>部分返回即可（这会把一个弱指针
+升级成一般指针）。</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
+  
+<span class="comment">(* The finaliser function. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">finaliser</span> <span class="ocaml-variable">n record </span>=
+  printf '*** objcache: finalising record %d\n%!' n;
+  write_record record n diskfile;
+  unlock_record n diskfile
+  
+<span class="comment">(* Get a record from the cache or off disk. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">get_record</span> <span class="ocaml-variable">n </span>=
+  <span class="keyword">match</span> <span class="ocaml-module">Weak</span>.get cache n <span class="keyword">with</span>
+  | Some record -&gt;
+      printf '*** objcache: fetching record %d from memory cache\n%!' n;
+      record
+  | None -&gt;
+      printf '*** objcache: loading record %d from disk\n%!' n;
+      <span class="governing">let </span><span class="ocaml-variable">record</span> = new_record () <span class="governing">in</span>
+      <span class="ocaml-module">Gc</span>.finalise (finaliser n) record;
+      lock_record n diskfile;
+      read_record record n diskfile;
+      <span class="ocaml-module">Weak</span>.set cache n (Some record);
+      record</code></pre>
+
+<p><code>sync_records</code> 函数更加简单。首先它会清空缓存并把所有弱指针都替换成<code>None</code>。这个的意思
+是GC可以收集并终结化所有的记录。但这不意味着GC一定会马上收集它们（实际上一般不会马上收集），
+所以要让GC马上收集记录，我们要引起一个主要堆的收集：</p>
+<pre><code class="ocaml"><span class="comment">(* Synchronise all records. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">sync_records</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">Weak</span>.fill cache 0 nr_records None;
+  <span class="ocaml-module">Gc</span>.full_major ()</code></pre>
+
+<p>最后，我们有一些测试代码。我不会把这些代码贴上，但是你可以在下载完全代码<a href="objcache.ml">objcache.ml</a>，
+并且编译它：</p>
+<pre class="shell"><code class="shell">ocamlc unix.cma objcache.ml -o objcache</code></pre>
+
+<h2 id="">练习</h2><p>下面是一些对上面例子扩展的例子，难度随题号上升：</p>
+<ol><li><p>用对象实现记录，并允许它透明地填充字符串。你会需要提供方法来设、得name和address域（
+因此一共有4个公共方法）。尽量将实现细节隐藏到类内部。</p>
+</li><li><p>扩展程序使得当获取记录的时候获取的是读锁，但是写的时候获取的是写锁。</p>
+</li><li><p>支持 <strong>不同数目的记录</strong> 并且添加一个函数来增加记录（贴士:OCaml支持弱哈希表）。</p>
+</li><li><p>加上 <strong>变长记录</strong>。</p>
+</li><li><p>让底层文件的表示格式为<strong>DBM-style hash</strong>.</p>
+</li><li><p>为用户提供一个通用目的的，关系型数据库的缓存（带锁）。</p>
+</li></ol>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.zh.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/garbage_collection.zh.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

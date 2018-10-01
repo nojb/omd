@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="teaching-ocaml.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Teaching OCaml &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/teaching-ocaml.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../learn/">Learn</a><span class="divider"></span></li>
+<li class="active">Teaching OCaml</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Teaching-OCaml">Teaching OCaml</h1>
+
+<p>OCaml is a high-level language that supports functional, imperative
+and object-oriented programming styles. As such, it is an excellent
+tool for teaching the fundamental concepts behind programming
+languages, type theory and systems.</p>
+<p>For the full description of the benefits of the OCaml language
+please refer to the article on
+“<a href="https://realworldocaml.org/v1/en/html/prologue.html">Why OCaml?</a>”.</p>
+<p>This page is devoted to resources for people who are teaching OCaml in
+a University setting. It contains a list of courses in different
+Universities that use OCaml as a teaching language. It can help with
+setting up a course structure as well as finding the relevant contacts
+to discuss and share experiences. We also include relevant resources
+such as references to commonly used textbooks and tools for
+setting up your preferred environment to work with OCaml. We hope that
+this will make the task of shaping a programming course that uses
+OCaml a slightly easier task.</p>
+<p><strong>Don&#39;t worry if things do not work</strong>! OCaml has a vibrant and rapidly
+ growing community behind it that is eager to help. If you find any
+ problems with any of the tutorials or something is missing please
+ let us know by
+ <a href="http://lists.ocaml.org/listinfo/teaching">getting in touch</a> so we
+ can help in making your experience with OCaml more pleasant. If you
+ would like to add your course or other resources please feel free to
+ <a href="https://github.com/ocaml/ocaml.org/issues/new">create an issue</a>.</p>
+<h3 id="Mailing-list">Mailing list</h3><p>We set-up a <a href="http://lists.ocaml.org/listinfo/teaching">mailing list</a> for professors who are teaching OCaml in schools and universities to discuss issues relating to using OCaml in an educational context.</p>
+<h2 id="Courses-taught-in-OCaml">Courses taught in OCaml</h2>
+
+<p>Here&#39;s a list of courses we know about that teach in OCaml.
+Please add yours if you don&#39;t see it listed!</p>
+<h3 id="North-America">North America</h3>
+
+<ol><li><p><a href="http://www.cs.bc.edu/~muller/teaching/cs110105/f14/">Boston College</a> - Computer Science I (CS 1101)</p>
+</li><li><p><a href="http://cs.brown.edu/courses/cs017/">Brown University</a> - An Integrated introducion (CS 17/18)  (along with Racket, Scala and Java)</p>
+</li><li><p><a href="http://users.cms.caltech.edu/~mvanier/cs4/Winter2016/">Caltech</a> - Fundamentals of Computer Programming</p>
+</li><li><p><a href="http://www1.cs.columbia.edu/~sedwards/classes/2014/w4115-fall/index.html">Columbia University</a> - Programming Languages and Translators</p>
+</li><li><p><a href="http://www.cs.cornell.edu/courses/cs3110/2016fa/">Cornell University</a> - Data Structures and Functional Programming (CS 3110)</p>
+</li><li><p><a href="http://people.fas.harvard.edu/~lib153/">Harvard University</a> - Principles of Programming Language Compilation (CS153)</p>
+</li><li><p><a href="http://www.fas.harvard.edu/~cs51">Harvard University</a> - Introduction to Computer Science II: Abstraction &amp; Design (CS51)</p>
+</li><li><p><a href="http://www.cs.mcgill.ca/~bpientka/cs302/">McGill University</a> - Programming Languages and Paradigms (COMP 302)</p>
+</li><li><p><a href="http://www.cs.princeton.edu/courses/archive/fall14/cos326/">Princeton University</a> - Functional Programming (COS 326)</p>
+</li><li><p><a href="http://www.cs.rice.edu/~javaplt/311/info.html">Rice University</a> - Principles of Programming Languages (COMP 311)</p>
+</li><li><p><a href="http://www.registrar.ucla.edu/schedule/subdet.aspx?term=14F&amp;srs=187510200">University of California, Los Angeles</a> - Programming Languages (along with Python and Java) (CS 131)</p>
+</li><li><p><a href="http://cseweb.ucsd.edu/classes/wi14/cse130-a/">University of California, San Diego</a> - Programming Languages: Principles and Paradigms (CSE130-a)  (along with Python and Prolog)</p>
+</li><li><p><a href="https://courses.engr.illinois.edu/cs421/fa2014/">University of Illinois at Urbana-Champaign</a> - Programming Languages and Compilers (CS 421)</p>
+</li><li><p><a href="http://www.cs.umd.edu/class/spring2014/cmsc330/">University of Maryland</a> (along with Ruby, Prolog, Java) - Organization of Programming Languages (CMSC 330)</p>
+</li><li><p><a href="http://people.cs.umass.edu/~arjun/teaching/631/">University of Massachusetts Amherst</a> - Programming Languages (CMPSCI 631)</p>
+</li><li><p><a href="http://people.cs.umass.edu/~arjun/courses/cs691f/">University of Massachusetts</a> - Programming Languages (CS691F)</p>
+</li><li><p><a href="http://www.cis.upenn.edu/~cis341/current/">University of Pennsylvania</a> - Compilers  (CIS341)</p>
+</li><li><p><a href="http://www.seas.upenn.edu/~cis120/current/">University of Pennsylvania</a> - Programming Languages and Techniques I (CIS120)</p>
+</li><li><p><a href="http://www.cs.virginia.edu/~weimer/4610/">University of Virginia</a> - Programming Languages (CS 4610)</p>
+</li></ol>
+
+<h3 id="Europe">Europe</h3>
+
+<ol><li><p><a href="https://services.brics.dk/java/courseadmin/dOvs">Aarhus University</a> - The compilation course (along with Java)</p>
+</li><li><p><a href="http://assert-false.net/callcc/Guyslain/Teaching/ProgFonc/index">Aix-Marseille University</a> - Functional Programming</p>
+</li><li><p><a href="http://epita.fr/">Epita</a> - Introduction to Algorithms (Year 1 &amp; 2)</p>
+</li><li><p><a href="http://supaero.isae.fr/en">ISAE/Supaéro</a> - Functional programming and introduction to type systems</p>
+</li><li><p><a href="http://www-apr.lip6.fr/~chaillou/Public/enseignement/2014-2015/tas/">University Pierre &amp; Marie Curie</a> - Types and static analysis (5I555)</p>
+</li><li><p><a href="http://www-licence.ufr-info-p6.jussieu.fr/lmd/licence/2014/ue/LI332-2014oct/">University Pierre &amp; Marie Curie</a> - Models of programming and languages interoperability (LI332)</p>
+</li><li><p><a href="https://sites.google.com/site/focs1112/">University of Birmingham</a> - Foundations of Computer Science (FOCS1112)</p>
+</li><li><p><a href="http://www.cl.cam.ac.uk/teaching/1415/L28/">University of Cambridge</a> - Advanced Functional Programming (L28)</p>
+</li><li><p><a href="http://cl-informatik.uibk.ac.at/teaching/ss06/ocaml/schedule.php">University of Innsbruck </a> -  Programming in OCAML (SS 06)</p>
+</li><li><p><a href="http://etudes.univ-rennes1.fr/masterInformatique/themes/PremiereAnnee/Programme/COMP">University of Rennes 1</a> - Compilation (COMP)</p>
+</li><li><p><a href="http://etudes.univ-rennes1.fr/masterInformatique/themes/PremiereAnnee/Programme/SEM">University of Rennes 1</a> - Semantics (SEM)</p>
+</li><li><p><a href="https://etudes.univ-rennes1.fr/licenceInformatique/themes/OrganisationEtudes/L3info/Programme">University of Rennes 1</a> - Programming 2 (PRG2)</p>
+</li><li><p><a href="https://international.uni.wroc.pl/en/course/functional-programming">University of Wrocław</a> - Functional Programming</p>
+</li><li><p><a href="http://www.dicosmo.org/CourseNotes/pfav/">Université Paris-Diderot</a> - Advanced Functional Programming (PFAV)</p>
+</li><li><p><a href="http://www.pps.univ-paris-diderot.fr/~treinen/teaching/pf5/">Université Paris-Diderot</a> - Functional Programming (PF5)</p>
+</li></ol>
+
+<h3 id="Asia">Asia</h3>
+
+<ol><li><a href="http://www.cse.iitd.ernet.in/~ssen/csl101/details.html">Indian Institute of Technology, Delhi</a> - Introduction to Computers and Programming (CSL 101) (along with Pascal and Java)</li></ol>
+
+<h3 id="Map-of-courses-around-the-world">Map of courses around the world</h3>
+
+<p><a href="https://www.google.com/maps/d/edit?mid=zk8_K4G_usic.kkzYvEvqV44Q">Add your course to the map!</a></p>
+<p>_(Tip: Click on the relevant layer (e.g., US,EU), search for your
+University, click on the marker and click on &#39;Add to map&#39;, fill in the
+info fields and you are done!)_</p>
+<iframe src="https://www.google.com/maps/d/embed?mid=zk8_K4G_usic.kkzYvEvqV44Q" width="640" height="480"></iframe>
+
+<h1 id="Resources">Resources</h1>
+
+<h2 id="Suggested-Textbooks">Suggested Textbooks</h2>
+
+<p>This is a list of books and lecture notes that are being used for
+teaching OCaml. There is also a wider list of books to choose from, which you can find on the <a href="http://ocaml.org/learn/books.html">books page</a>.</p>
+<ol><li><p><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">The OCaml System: Documentation and User&#39;s Manual</a> This the official User&#39;s Manual. It serves as a complete reference guide to OCaml. Updated for each version of OCaml, it contains the description of the language, of its extensions, and the documentation of the tools and libraries included in the official distribution.</p>
+</li><li><p><a href="http://www.seas.upenn.edu/~cis120/current/notes/120notes.pdf">Lecture notes</a>
+ for Penn&#39;s CIS120.  Like the course, this book covers both OCaml
+ and Java, and is intended for students with no programming
+ background.</p>
+</li><li><p><a href="http://shop.oreilly.com/product/0636920024743.do">Real World OCaml</a>,
+ also available <a href="https://realworldocaml.org/">online</a>.  Used by Harvard&#39;s CS51 course.</p>
+</li><li><p>Jason Hickey&#39;s <a href="http://courses.cms.caltech.edu/cs134/cs134b/book.pdf">Introduction to Objective Caml</a>,
+ originally developed as lecture notes for Jason&#39;s course at Caltech</p>
+</li></ol>
+
+<h2 id="Teaching-tools">Teaching tools</h2>
+
+<p>This section lists some of the available tools that are or can be used in a classroom or lab.</p>
+<h3 id="In-the-browser">In the browser</h3>
+
+<p>The OCaml bytecode is relatively straightforward to convert to Javascript. This allows any OCaml code to run in a Web browser, which is very convenient when delivering individual tutorials to a class as there&#39;s minimal set up time involved.</p>
+<p>For a quick example of OCaml in the browser, try any of the following:</p>
+<ol><li><p><a href="https://github.com/andrewray/iocaml/blob/master/README.md">IOCaml Notebooks</a></p>
+</li><li><p><a href="http://ocsigen.github.io/js_of_ocaml/">A compiler from OCaml bytecode to Javascript</a></p>
+</li><li><p><a href="http://try.ocamlpro.com/">Try OCaml</a></p>
+</li><li><p><a href="http://www.compileonline.com/compile_ocaml_online.php">Compile OCaml Online</a></p>
+</li><li><p><a href="http://codepad.org/">Codepad</a></p>
+</li><li><p><a href="https://dbgr.cc/l/ocaml">Run OCaml Code Online</a></p>
+</li></ol>
+
+<h3 id="OCaml-installation">OCaml installation</h3>
+
+<p>Check out our <a href="http://ocaml.org/docs/install.html">Install OCaml section</a></p>
+<p>Alternative guides</p>
+<ol><li><a href="https://github.com/realworldocaml/book/wiki/Installation-Instructions">Installation Instructions from Real World OCaml</a></li></ol>
+
+<h3 id="VM-images">VM images</h3>
+
+<p>This is a list of VM images that some Universities use to avoid setup
+delays and provide a consistent environment.</p>
+<ol><li><p><a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0-intel.dmg">OCaml 4.01 for MAC</a></p>
+</li><li><p><a href="https://cornell.app.box.com/s/acqwpvnidu5yq1osd8lb">Cornell&#39;s Linux VM VirtualBox image</a> (<a href="http://www.cs.cornell.edu/courses/CS3110/2014sp/hw/0/ps0.pdf">more info here</a>)</p>
+</li><li><p><a href="http://www.cs.princeton.edu/~cos326/Ubuntu326.ova">Princeton&#39;s Ubuntu VirtualBox VM</a> (more info on the course&#39;s <a href="http://www.cs.princeton.edu/courses/archive/fall14/cos326/resources.php">site</a>)</p>
+</li><li><p><a href="https://github.com/mirage/mirage-vagrant-vms">Mirage Virtualbox VMs via Vagrant</a></p>
+</li></ol>
+
+<h3 id="Tutorials-and-Exercises">Tutorials and Exercises</h3>
+
+<p><strong>University tutorials and notes</strong></p>
+<ol><li><p><a href="http://people.cs.umass.edu/~arjun/courses/cs691f/assignments/ocaml-tutorial.html">From UMass&#39;s CS691F Programming languages course</a></p>
+</li><li><p><a href="http://cseweb.ucsd.edu/classes/wi11/cse130/">CSE 130: Programming Languages Course at UCSA</a>. Click on <a href="http://cseweb.ucsd.edu/classes/wi11/cse130/">Lectures</a> and <a href="http://cseweb.ucsd.edu/classes/wi11/cse130/">Discussion Notes</a>. Have a look at Lec 7 (a pp presentation by Zach) for an inspiring introduction into map and fold.</p>
+</li><li><p><a href="http://www.cs.cornell.edu/courses/cs3110/2013fa/lecture_notes.php">CS 3110 Fall 2013 :: Data Structures and Functional Programming at Cornell</a>. The lecturing materials explain OCaml on the basis of the fundamental concepts of functional programming languages.</p>
+</li><li><p><a href="http://www.seas.upenn.edu/~cis500/cis500-f05/index.html">CIS 500: Software Foundations at UPenn</a>. A Software Fundations course with strong emphasis on Types. The <a href="http://www.seas.upenn.edu/~cis500/cis500-f05/resources/seas-ocaml.html">OCaml Tutorial</a> includes a gentle introduction to the OCaml interactive top-level system and compilation in OCaml.</p>
+</li></ol>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/teaching-ocaml.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

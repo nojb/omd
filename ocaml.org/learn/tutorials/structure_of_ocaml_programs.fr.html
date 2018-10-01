@@ -1,0 +1,686 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="structure_of_ocaml_programs.html" rel="alternate" hreflang="en"/>
+<link href="structure_of_ocaml_programs.fr.html" rel="alternate" hreflang="fr"/>
+<link href="structure_of_ocaml_programs.it.html" rel="alternate" hreflang="it"/>
+<link href="structure_of_ocaml_programs.ja.html" rel="alternate" hreflang="ja"/>
+<link href="structure_of_ocaml_programs.ko.html" rel="alternate" hreflang="ko"/>
+<link href="structure_of_ocaml_programs.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Structure des programmes OCaml &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../index.fr.html" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/index.fr.html">Apprendre</a></li>
+              <li><a href="../../docs/index.fr.html">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Contributions</a></li>
+              <li><a href="../../community/index.fr.html">Communauté</a></li>
+              <li><a href="../../community/planet/">Nouvelles</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/structure_of_ocaml_programs.fr.md" title="Éditer cette page" class="edit-this-page pull-right"><span>Éditer cette page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Rechercher" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/index.fr.html">Apprendre</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.fr.html">Tutoriel OCaml</a><span class="divider"></span></li>
+<li class="active">Structure des programmes OCaml</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="structure_of_ocaml_programs.html">en</a></li>
+<li class="active">fr</li>
+<li><a href="structure_of_ocaml_programs.it.html">it</a></li>
+<li><a href="structure_of_ocaml_programs.ja.html">日本語</a></li>
+<li><a href="structure_of_ocaml_programs.ko.html">한국어</a></li>
+<li><a href="structure_of_ocaml_programs.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contenu</a></li>
+          <ul><li><a href="#Variables-locales-plus-exactement-expressions-locales">« Variables » locales (<em>plus exactement</em> expressions locales)</a>
+</li><li><a href="#Variables-globales-plus-pr-cis-ment-expressions-globales">« Variables » globales (<em>plus précisément</em> expressions globales)</a>
+</li><li><a href="#Let-binding">Let-binding (?)</a>
+</li><li><a href="#R-f-rences-les-vraies-variables">Références : les vraies variables</a>
+</li><li><a href="#Fonctions-imbriqu-es">Fonctions imbriquées</a>
+</li><li><a href="#Modules-et-open">Modules et <code>open</code></a>
+</li><li><a href="#Le-module-Pervasives">Le module <code>Pervasives</code></a>
+</li><li><a href="#Renommage-de-modules">Renommage de modules</a>
+</li><li><a href="#L-39-op-rateur-de-s-quence">L&#39;opérateur de séquence <code>;</code></a>
+</li><li><a href="#La-disparition-de">La disparition de <code>;;</code></a>
+</li><li><a href="#Toutes-ces-notions-ensemble-un-exemple-de-code-r-el">Toutes ces notions ensemble : un exemple de code réel</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Structure-des-programmes-OCaml">Structure des programmes OCaml</h1><p>Maintenant nous allons passer un peu de temps à observer la structure
+d&#39;ensemble de quelque vrais programmes en OCaml. Je veux vous parler des
+définitions locales et globales, quand utiliser <code>;;</code> ou <code>;</code>, les
+modules, les fonctions imbriquées, les références. Pour cela nous allons
+passer sur plein de concepts d&#39;OCaml qui ne vous diront rien car nous ne
+les avons pas encore évoqués. Ne vous embarrassez pas des détails pour
+le moment. Occupez-vous uniquement de la forme générale des programmes,
+et aux fonctionnalités mises en avant.</p>
+<h2 id="Variables-locales-plus-exactement-expressions-locales">« Variables » locales (<em>plus exactement</em> expressions locales)</h2><p>Prenons la fonction <code>average</code> écrite en C, et ajoutons lui une variable
+locale. (à comparer avec la première version que nous avions)</p>
+<pre class="C"><code class="C">double
+average (double a, double b)
+{
+  double sum = a + b;
+  return sum / 2;
+}</code></pre><p>Faisons la même chose avec notre version OCaml :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    <span class="governing">let </span><span class="ocaml-variable">sum</span> = a +. b <span class="governing">in</span>
+    sum /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>La formule standard <code>let nom = expression in</code> sert à définir une
+expression locale nommée, et <code>nom</code> peut ensuite être utilisé dans la
+fonction à la place de <code>expression</code> jusqu&#39;au <code>;;</code> qui marque la fin du
+bloc de code. Remarquez que nous n&#39;avons pas changé l&#39;indentation après
+<code>in</code>. Considérez <code>let ... in</code> comme s&#39;il s&#39;agissait d&#39;une instruction.</p>
+<p>Maintenant, traduire les variables locales en C par ces expressions
+locales est une supercherie. En fait ils sont un peu différents. La
+variable C <code>sum</code> a un emplacement réservé dans la pile. Vous pouvez
+changer la valeur associée à <code>sum</code> plus loin dans la fonction si vous
+voulez, ou même prendre l&#39;adresse de <code>sum</code>. Ce n&#39;est PAS possible dans
+la version OCaml. Dans la version OCaml, <code>sum</code> est juste une abréviation
+pour l&#39;expression <code>a +. b</code>. Il est impossible d&#39;assigner ou de changer
+la valeur de <code>sum</code>. (Nous verrons comment avoir de vraies variables un
+peu plus loin).</p>
+<p>Voyons un autre exemple qui devrait clarifier les choses. Les deux bouts
+de code suivants devraient retourner la même valeur (à savoir (a+b) +
+(a+b)<sup>2</sup>):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) +. (a +. b) ** 2.</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : float -&gt; float -&gt; float = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">a b </span>=
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = a +. b <span class="governing">in</span>
+    x +. x ** 2.</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>Il se peut que la seconde version soit plus rapide (bien que la plupart
+des compilateurs devraient être capable de faire cette étape
+d&#39;&#39;élimination de sous-expressions communes&#39; à votre place), et en tout
+cas elle est plus lisible. Dans le second exemple, <code>x</code> est une
+abréviation pour l&#39;expression <code>a +. b</code>.</p>
+<h2 id="Variables-globales-plus-pr-cis-ment-expressions-globales">« Variables » globales (<em>plus précisément</em> expressions globales)</h2><p>Vous pouvez aussi donner des noms à des choses dans l&#39;environnement
+global, et comme pour les &#39;variables&#39; locales ci-dessus, ce ne sont pas
+vraiment des variables, mais des abbréviations pour ces choses. Voici un
+exemple pris dans un programme réel :</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">html</span> =
+  <span class="governing">let </span><span class="ocaml-variable">content</span> = read_whole_file file <span class="governing">in</span>
+  <span class="ocaml-module">GHtml</span>.html_from_string content
+  <span class="ocaml-prompt">;;</span><br/>
+<span class="governing">let</span> <span class="ocaml-function">menu_bold</span> <span class="ocaml-variable">() </span>=
+  <span class="keyword">match</span> bold_button#active <span class="keyword">with</span>
+  | true -&gt; html#set_font_style ~enable:[`BOLD] ()
+  | false -&gt; html#set_font_style ~disable:[`BOLD] ()
+  <span class="ocaml-prompt">;;</span><br/>
+<span class="governing">let</span> <span class="ocaml-function">main</span> <span class="ocaml-variable">() </span>=
+  <span class="comment">(* code omitted *)</span>
+  factory#add_item 'Cut' ~key:_X ~callback: html#cut
+  ;;</code></pre>
+
+<p>Dans ce vrai morceau de code, <code>html</code> est un &#39;widget&#39; (&#39;contrôle&#39;)
+d&#39;édition de HTML (un objet provenant de la bibliothèque lablgtk), créé
+une fois pour toute au début du programme par la première instruction
+<code>let html =</code>. Il y est ensuite fait référence dans plusieurs des
+fonctions suivantes.</p>
+<p>A noter que le nom <code>html</code> dans le bout de programme ci-dessus ne devrait
+pas être comparé à une vraie variable globale comme en C ou dans
+d&#39;autres langages impératifs. Aucun emplacement n&#39;est réservé pour
+&#39;stocker&#39; le &#39;pointeur sur <code>html</code>&#39;. Il n&#39;est pas non plus possible
+d&#39;assigner quelque chose à <code>html</code>, par exemple pour lui faire désigner
+un autre widget. Dans la section suivante nous parlerons des références,
+qui sont de vraies variables.</p>
+<h2 id="Let-binding">Let-binding (?)</h2><p>Les utilisations de <code>let ...</code> aussi bien au niveau global que dans une
+fonction, sont souvent appellées des <strong>let-binding</strong>.</p>
+<h2 id="R-f-rences-les-vraies-variables">Références : les vraies variables</h2><p>Comment faire si vous voulez une vraie variable que vous pouvez assigner
+puis changer à votre gré dans votre programme ? Il vous faut une
+<strong>référence</strong>. Les références sont similaires aux pointeurs en C/C++. En
+Java, toutes les variables qui stockent des objets sont en fait des
+références (pointeurs) sur ces objets. En Perl, les références sont des
+références - comme en OCaml.</p>
+<p>Voici comment créer une référence sur un entier (<code>int</code>) en OCaml :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">ref</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int ref = {contents = 0}
+</span></code></pre>
+
+<p>En fait cette instruction n&#39;est pas très utile. Nous avons créé une
+référence et puis, comme elle n&#39;a pas de nom, le glaneur de cellules a
+fait son travail et l&#39;a immédiatement libérée! (Il est même probable que
+le compileur ait éliminé cette instruction à la compilation). Donnons un
+nom à cette référence :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">my_ref</span> = <span class="keyword">ref</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val my_ref : int ref = {contents = 0}
+</span></code></pre>
+
+<p>Cette référence contient maintenant l&#39;entier 0. Mettons une autre valeur
+à la place (assignement) :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">my_ref := 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>Voyons ce que la référence contient à présent :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">!my_ref</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 100
+</span></code></pre>
+
+<p>Donc l&#39;opérateur <code>:=</code> est utilisé pour assigner les références, et <code>!</code>
+pour les déréférencer et accéder au contenu. Voici une comparaison
+approximative avec C/C++ :</p>
+<pre class="text"><code class="text">OCaml                   C/C++
+
+let my_ref = ref 0;;    int a = 0; int *my_ptr = &amp;a;
+my_ref := 100;;         *my_ptr = 100;
+!my_ref                 *my_ptr</code></pre>
+
+<p>Les références ont leurs usages, mais vous vous apercevrez que vous ne
+les utiliserez pas si souvent. La plupart du temps, vous utiliserez
+<code>let nom = expression in</code> pour nommer des expressions locales dans vos
+définitions de fonctions.</p>
+<h2 id="Fonctions-imbriqu-es">Fonctions imbriquées</h2><p>Le langage C n&#39;a pas réellement de notion de fonctions imbriquées. GCC
+les supporte, mais je ne connais pas de programme qui en tire parti. En
+tout cas, voici ce que la page info de gcc dit sur les fonctions
+imbriquées :</p>
+<p>Une « fonction imbriquée » est une fonction définie à l&#39;intérieur d&#39;une
+autre fonction (les fonctions imbriquées ne sont pas supportées par GNU
+C++.) Le nom de la fonction imbriquée est local au bloc dans lequel il
+est défini. Par exemple, définissons une fonction imbriquée nommée
+<code>square</code>, et appelons-là deux fois :</p>
+<pre class="C"><code class="C">foo (double a, double b)
+{
+  double square (double z) { return z * z; }
+
+  return square (a) + square (b);
+}</code></pre>
+
+<p>La fonction imbriquée a accès à toutes les variables de la fonction
+englobante qui sont visibles à l&#39;emplacement de sa définition. Cela
+s&#39;appelle la « portée lexicale ». Par exemple, voici une fonction
+imbriquée qui utilise une variable héritée nommée <code>offset</code> :</p>
+<pre class="C"><code class="C">bar (int *array, int offset, int size)
+{
+  int access (int *array, int index)
+    { return array[index + offset]; }
+  int i;
+  /* ... */
+  for (i = 0; i &lt; size; i++)
+    /* ... */ access (array, i) /* ... */
+}</code></pre><p>Vous comprenez l&#39;idée. Les fonctions imbriquées sont, cependant, très
+utiles et largement employées en OCaml. Voici un exemple d&#39;utilisation
+réel de fonction imbriquées :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">read_whole_channel</span> <span class="ocaml-variable">chan </span>=
+    <span class="governing">let </span><span class="ocaml-variable">buf</span> = <span class="ocaml-module">Buffer</span>.create 4096 <span class="governing">in</span>
+    <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+      <span class="governing">let </span><span class="ocaml-variable">newline</span> = input_line chan <span class="governing">in</span>
+      <span class="ocaml-module">Buffer</span>.add_string buf newline;
+      <span class="ocaml-module">Buffer</span>.add_char buf '\n';
+      loop ()
+    <span class="governing">in</span>
+    <span class="keyword">try</span>
+      loop ()
+    <span class="keyword">with</span>
+      End_of_file -&gt; <span class="ocaml-module">Buffer</span>.contents buf</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val read_whole_channel : in_channel -&gt; string = &lt;fun&gt;
+</span></code></pre>
+
+<p>Ne vous inquiétez pas de ce que ce code fait — il utilise beaucoup de
+concepts que nous n&#39;avons pas encore vu dans ce tutorial.
+Concentrez-vous plutôt sur la fonction imbriquée principale nommée
+<code>loop</code> qui ne prend qu&#39;un argument unit. On peut appeler <code>loop ()</code>
+depuis l&#39;intérieur de la fonction <code>read_whole_channel</code>, mais elle n&#39;est
+pas définie en dehors de cette fonction. La fonction imbriquée peut
+accéder aux variables définies dans la fonction principale (ici <code>loop</code>
+accède au nom local <code>buf</code>.)</p>
+<p>La syntaxe des fonctions imbriquées est la même que pour nommer les
+expressions locales : <code>let nom arguments = définition de fonction in</code>.</p>
+<p>Normalement, vous indenterez la définition de fonction, après être passé
+à la ligne comme dans l&#39;exemple précédent, et n&#39;oubliez pas d&#39;utiliser
+<code>let rec</code> à la place de <code>let</code> si votre fonction est récursive (comme
+dans cet exemple).</p>
+<h2 id="Modules-et-open">Modules et <code>open</code></h2><p>OCaml est accompagné d&#39;une quantité de modules amusants et intéressants,
+de bibliothèques de code utile. Par exemple on y trouve une bibliothèque
+pour dessiner des graphismes, interagir avec la collection de contrôles
+de l&#39;interface-utilisateur graphique, pour manipuler des grands nombres,
+des structures de données, ou pour faire des appels systèmes POSIX. Ces
+bibliothèques se trouvent dans <code>/usr/lib/ocaml/</code> (sous Unix en
+tout cas). Pour ces exemples, nous allons nous concentrer sur un module
+relativement simple appelé <code>Graphics</code>.</p>
+<p>Le module <code>Graphics</code> est constitué de sept fichiers (sur mon système) :</p>
+<pre class="text"><code class="text">/usr/lib/ocaml/graphics.a
+/usr/lib/ocaml/graphics.cma
+/usr/lib/ocaml/graphics.cmi
+/usr/lib/ocaml/graphics.cmx
+/usr/lib/ocaml/graphics.cmxa
+/usr/lib/ocaml/graphics.cmxs
+/usr/lib/ocaml/graphics.mli</code></pre><p>Pour l&#39;instant occupons-nous de <code>graphics.mli</code>. C&#39;est un fichier texte,
+que vous pouvez donc lire dès à présent. Notez que son nom est
+<code>graphics.mli</code> et non <code>Graphics.mli</code>. OCaml met automatiquement une
+capitale au nom du fichier pour obtenir le nom du module. C&#39;est
+déroutant quand on ne le sait pas !</p>
+<p>Il y a deux moyens pour utiliser les fonctions de <code>Graphics</code>. Ou bien on
+commence son programme par la déclaration <code>open Graphics;;</code>, ou bien on
+préfixe tous les appels de fonctions comme ceci : <code>Graphics.open_graph</code>.
+<code>open</code> ressemble un peu à l&#39;instruction <code>import</code> en Java, ou plus encore
+comme l&#39;instruction <code>use</code> en Perl.</p>
+<p>Pour utiliser les module <code>Graphics</code> dans la boucle interactive, il
+faut au préalable charger la librairie avec</p>
+<pre><code class="ocaml">#load 'graphics.cma';;</code></pre>
+
+<p>Une paire d&#39;exemples devrait éclaircir ce point. (Les deux exemples
+dessinent des choses différentes — essayez-les). Remarquez que le
+premier exemple appelle <code>open_graph</code> et le second <code>Graphics.open_graph</code>.</p>
+<pre><code class="ocaml"><span class="comment">(* To compile this example: ocamlc graphics.cma grtest1.ml -o grtest1 *)</span>
+
+<span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
+open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
+  set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
+  fill_circle 320 240 radius
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ()<span class="ocaml-prompt">;;</span><br/>
+<span class="comment">(* To compile this example: ocamlc graphics.cma grtest2.ml -o grtest2 *)</span>
+
+<span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/>
+<span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+        <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
+        <span class="keyword">else</span>
+                <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+                r *. x *. (1.0 -. x)<span class="ocaml-prompt">;;</span><br/>
+<span class="keyword">for</span> x = 0 <span class="keyword">to</span> 639 <span class="keyword">do</span>
+        <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
+        <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+                <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+                <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+                <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+                <span class="ocaml-module">Graphics</span>.plot x y
+        <span class="keyword">done</span>
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>
+read_line ();;</code></pre>
+
+<p>Ces deux exemples utilisent des fonctionnalités dont nous n&#39;avons pas
+encore parlé : boucles &#39;for&#39; dans le style impératif, if-then-else, et
+récursion. Nous en parlerons plus tard. Examinez-les cependant, et
+essayez de comprendre (1) comment ils fonctionnent, et (2) comment
+l&#39;inférence de type aide à éliminer des bugs.</p>
+<h2 id="Le-module-Pervasives">Le module <code>Pervasives</code></h2><p>Il y a un module que vous n&#39;avez jamais besoin d&#39;ouvrir avec <code>open</code>,
+c&#39;est le module <code>Pervasives</code> (allez jeter un oeil sur
+<code>/usr/lib/ocaml/VERSION/pervasives.mli</code>). Tous les symboles définis dans
+le module <code>Pervasives</code> sont implicitement importés dans tous les
+programmes OCaml.</p>
+<h2 id="Renommage-de-modules">Renommage de modules</h2><p>Que faire si vous voulez utiliser des symboles en provenance du module
+<code>Graphics</code>, mais ne voulez pas tous les importer, et n&#39;avez pas envie de
+taper <code>Graphics.</code> à chaque fois ? Renommez le module avec cette astuce :</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Gr</span> = <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
+<span class="ocaml-module">Gr</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gr</span>.fill_circle 320 240 240<span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
+
+<p>Cela devient vraiment utile quand vous voulez utiliser les symboles d&#39;un
+module imbriqué (les modules peuvent être imbriqués les uns dans les
+autres, eux-aussi), mais ne voulez pas avoir à taper à chaque fois le
+chemin d&#39;accès au module imbriqué.</p>
+<h2 id="L-39-op-rateur-de-s-quence">L&#39;opérateur de séquence <code>;</code></h2>
+
+<p>Le point-virgule <code>;</code> est un opérateur, comme <code>+</code>.  Bon, pas tout à
+fait comme <code>+</code> mais conceptuellement le même.  L&#39;opérateur <code>+</code> a pour
+type <code>int -&gt; int -&gt; int</code> — il prend deux entiers et retourne un entier
+(la somme des deux entrées).  Le point-virgule <code>;</code> peut être vu comme
+ayant le type <code>unit -&gt; &#39;b -&gt; &#39;b</code> — il prend deux valeurs et simplement
+retourne la seconde, la première expression étant garantie d&#39;être
+évaluée avant la seconde.  C&#39;est donc comme l&#39;opérateur <code>,</code> (virgule)
+en C.  Vous pouvez écrire <code>a; b; c; d</code> de la même manière que vous
+pouvez écrire <code>a + b + c + d</code>.</p>
+<p>C&#39;est un de ces « sauts conceptuels » qui n&#39;est pas toujours explicité
+très bien : en OCaml, presque tout est une expression.  <code>if/then/else</code>
+est une expression.  <code>a; b</code> est une expression.  <code>match foo with ...</code>
+est une expression.  Le code qui suit est parfaitement légal (et
+toutes les lignes font la même chose);</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= <span class="keyword">if</span> b <span class="keyword">then</span> x+y <span class="keyword">else</span> x+0
+   <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="keyword">if</span> b <span class="keyword">then</span> y <span class="keyword">else</span> 0)
+   <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="keyword">match</span> b <span class="keyword">with</span> true -&gt; y | false -&gt; 0)
+   <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="governing">let</span> <span class="ocaml-function">g</span> <span class="ocaml-variable">z </span>= <span class="keyword">function</span> true -&gt; z | false -&gt; 0 <span class="governing">in</span> g y b)
+   <span class="governing">let</span> <span class="ocaml-function">f</span> = <span class="keyword"><span class="keyword">fun</span></span> x -&gt; <span class="keyword">fun</span> b -&gt; <span class="keyword">fun</span> y -&gt; <span class="keyword">if</span> b <span class="keyword">then</span> x+y <span class="keyword">else</span> x+0
+   <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="governing">let </span><span class="ocaml-variable">_</span> = y + 3 <span class="governing">in</span> (); <span class="keyword">if</span> b <span class="keyword">then</span> y <span class="keyword">else</span> 0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; bool -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>Notez particulièrement la dernière ligne où j&#39;utilise l&#39;opérateur <code>;</code>
+pour « joindre » deux instructions.  Toutes les fonctions en OCaml
+peuvent être déclarées sous la forme :</p>
+<pre><code class="ocaml"> <span class="governing">let</span> <span class="ocaml-function">name</span> <span class="ocaml-variable">[parameters] </span>= expression ;;</code></pre>
+
+<p>En OCaml, la définition de ce qu&#39;est une expression est simplement un
+peu plus large qu&#39;en C.  En fait, C a le concept d&#39;« instructions » —
+mais toutes les instructions en C sont simplement des expressions en
+OCaml de type <code>unit</code> (combinées avec l&#39;opérateur <code>;</code>).</p>
+<p>La différence entre <code>;</code> et <code>+</code> est qu&#39;on peut utiliser <code>+</code> comme une
+fonction.  Par exemple, on peut définir une fonction <code>sum_list</code>, qui
+somme une liste d&#39;entier, par</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">sum_list</span> = <span class="ocaml-module">List</span>.fold_left ( + ) 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val sum_list : int list -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<h2 id="La-disparition-de">La disparition de <code>;;</code></h2>
+
+<p>Maintenant, nous allons nous pencher sur un point très important.
+Tous les exemples ci-dessus finissaient par un double point-virgule
+<code>;;</code>.  Cependant, si vous regardez à du code OCaml en dehors de ces
+tutoriaux, vous trouverez de codes complets qui n&#39;utilisent pas <code>;;</code>,
+pas même une seule fois.</p>
+<p>La vérité est que <code>;;</code> est principalement utilisé dans la boucle
+interactive (<em>toplevel</em>) et les tutoriaux pour marquer la fin d&#39;une
+phrase OCaml et l&#39;envoyer au toplevel pour évaluation.</p>
+<p>En dehors du toplevel, l&#39;usage de <code>;;</code> est, au mieux, infréquent et
+n&#39;est <em>jamais requis</em> pour du code bien écrit.
+En bref, le double point-virgule <code>;;</code> peut être utilisé pour trois
+raisons :</p>
+<ul><li><p>compatibilité avec le toplevel ;</p>
+</li><li><p>couper le code pour faciliter de débogage;</p>
+</li><li><p>introduire une expression « au plus haut niveau ».</p>
+</li></ul>
+
+<p>Insérer <code>;;</code> peut parfois se révéler utile pour les débutants lors du
+débogage vu qu&#39;il conclut la définition en cours.  Dans l&#39;exemple
+suivant, la définition de <code>f</code> ne s&#39;arrête pas à la ligne 1 à cause de
+la virgule <code>,</code>.  Par conséquent, le compilateur va générer une erreur
+à la fin de la seconde ligne :</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x </span>= x,
+<span class="governing">let </span><span class="ocaml-variable">g</span> = x * x</code></pre>
+
+<p>Insérer un double point-virgule entre <code>f</code> et <code>g</code> sépare les
+définitions de <code>f</code> de <code>g</code> :</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x </span>= x,
+<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">g</span> = x * x</code></pre>
+
+<p>Un autre usage de <code>;;</code> est d&#39;introduire une expression après des
+définitions :</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">b</span> = 'This started <span class="keyword">with</span>'
+<span class="governing">let </span><span class="ocaml-variable">s</span> = 'a very nonsensical message.'<span class="ocaml-prompt">;;</span><br/>print_endline b; print_endline s
+<span class="governing">open</span> <span class="ocaml-module">String</span>
+<span class="governing">let </span><span class="ocaml-variable">s</span> = concat '' ['Fortunately'; ', '; 'the'; '<span class="governing">end</span>'; 'is'; 'near'; <span class="string">'.'</span>]<span class="ocaml-prompt">;;</span><br/>print_endline s<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">s</span> = '<span class="governing">let </span><span class="governing">end</span> here' <span class="governing">in</span> print_endline s</code></pre>
+
+<p>En particulier, dans les exemples ci-dessus, toutes les lignes
+démarrant après un <code>;;</code> produisent des effets de bord et les effacer
+changerait uniquement l&#39;effet du code, pas des définitions.</p>
+<p>Cependant, cette utilisation de <code>;;</code> peut (devrait) toujours être
+remplacée par soit</p>
+<pre><code class="ocaml"><span class="governing">let</span> () = expression ()</code></pre>
+
+<p>si le résultat est de type <code>unit</code>, soit</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">_</span> = expression ()</code></pre>
+
+<p>sinon.  Notez que la première forme est plus sure puisqu&#39;elle requiert
+que le type retourné par l&#39;expression est <code>unit</code>, nous prémunissant,
+par exemple, de l&#39;oubli d&#39;un argument comme dans</p>
+<pre><code class="ocaml"><span class="governing">let</span> () =
+  print_newline
+  <span class="comment">(* Ici, nous avons oubli&eacute; () et le compilateur va se plaindre. *)</span></code></pre>
+
+<p>Avec cette convention, il n&#39;y a plus d&#39;expressions « au plus haut
+niveau » : tout module peut être écrit comme une suite de
+définitions.  Par conséquent, des directives de style considèrent que
+<code>;;</code> ne devrait jamais être utilisé en dehors de la boucle interactive
+(voir par exemple « <a href="guidelines.html">style guidelines</a> »).</p>
+<h2 id="Toutes-ces-notions-ensemble-un-exemple-de-code-r-el">Toutes ces notions ensemble : un exemple de code réel</h2><p>Dans cette section nous allons regarder quelques fragments de vrai code
+pris dans la bibliothèque lablgtk 1.2. (Lablgtk est la bibliothèque
+OCaml d&#39;interfaçage avec la bibliothèque de widgets Gtk, native sous
+Unix). Un avertissement : ces fragments utilisent beaucoup de concepts
+que nous n&#39;avons pas encore abordé. Ne vous arrêtez pas sur les détails,
+regardez plutôt la forme générale du code, comment les auteurs ont
+utilisé <code>;;</code>, où ils ont utilisé <code>;</code> et où ils ont utilisé <code>open</code>,
+comment ils ont indenté le code, et utilisé des expressions nommées
+locales ou globales.</p>
+<p>... Je vais quand même vous donner quelques indices pour que vous ne
+soyez pas totalement perdus !</p>
+<ul><li><p><code>?foo</code> et <code>~foo</code> est la façon de passer des paramètres optionels et
+ nommés en OCaml. Il n&#39;y a pas vraiment d&#39;équivalent dans les
+ langages de la famille de C, mais Perl, Python et Smalltalk
+ permettent tous de nommer les arguments d&#39;un appel de fonction, en
+ oublier certains, et fournir les autres dans n&#39;importe quel ordre.</p>
+</li><li><p><code>foo#bar</code> est un appel de méthode (appel de la méthode nommée <code>bar</code>
+ de l&#39;objet nommé <code>foo</code>). C&#39;est l&#39;équivalent de <code>foo-&gt;bar</code>, ou
+ <code>foo.bar</code> ou <code>$foo-&gt;bar</code> en C++, Java et Perl, respectivement.</p>
+</li></ul>
+
+<p>Premier fragment : Le programmeur ouvre une paire de modules standards
+(en omettant le <code>;;</code> parce que les mots clés suivants sont <code>open</code> et
+<code>let</code>, respectivement). Il crée ensuite une fonction nommée
+<code>file_dialog</code>. Dans cette fonction il définit une expression nommée
+appelée <code>sel</code> en utilisant une instruction <code>let sel = ... in</code> de deux
+lignes. Puis il appelle plusieurs méthodes de <code>sel</code>.</p>
+<pre><code class="ocaml"><span class="comment">(* First snippet *)</span>
+<span class="governing">open</span> <span class="ocaml-module">StdLabels</span>
+<span class="governing">open</span> <span class="ocaml-module">GMain</span>
+
+<span class="governing">let</span> <span class="ocaml-function">file_dialog</span> <span class="ocaml-variable">~title ~callback ?filename () </span>=
+  <span class="governing">let </span><span class="ocaml-variable">sel</span> =
+    <span class="ocaml-module">GWindow</span>.file_selection ~title ~modal:true ?filename () <span class="governing">in</span>
+  sel#cancel_button#connect#clicked ~callback:sel#destroy;
+  sel#ok_button#connect#clicked ~callback:do_ok;
+  sel#show ()</code></pre>
+
+<p>Deuxième fragment : Juste une longue liste de définitions au niveau
+global. Remarquez que l&#39;auteur a omis toutes les occurrences de <code>;;</code>
+grâce à la règle n°2.</p>
+<pre><code class="ocaml"><span class="comment">(* Second snippet *)</span>
+
+<span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:500 ~height:300 ~title:'editor' ()
+<span class="governing">let </span><span class="ocaml-variable">vbox</span> = <span class="ocaml-module">GPack</span>.vbox ~packing:window#add ()
+
+<span class="governing">let </span><span class="ocaml-variable">menubar</span> = <span class="ocaml-module">GMenu</span>.menu_bar ~packing:vbox#pack ()
+<span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory menubar
+<span class="governing">let </span><span class="ocaml-variable">accel_group</span> = factory#accel_group
+<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu 'File'
+<span class="governing">let </span><span class="ocaml-variable">edit_menu</span> = factory#add_submenu 'Edit'
+
+<span class="governing">let </span><span class="ocaml-variable">hbox</span> = <span class="ocaml-module">GPack</span>.hbox ~packing:vbox#add ()
+<span class="governing">let </span><span class="ocaml-variable">editor</span> = <span class="keyword">new</span> editor ~packing:hbox#add ()
+<span class="governing">let </span><span class="ocaml-variable">scrollbar</span> = <span class="ocaml-module">GRange</span>.scrollbar `VERTICAL ~packing:hbox#pack ()</code></pre>
+
+<p>Troisième fragment : L&#39;auteur importe tous les symboles du module
+<code>GdkKeysyms</code>. Puis nous avons un let-binding inhabituel.
+<code>let _ = expression</code> signifie &#39;évalue la valeur de expression (avec tous
+les effets de bords que cela comporte), puis jette le résultat&#39;. En
+l&#39;occurrence, &#39;calcule la valeur de l&#39;expression&#39; signifie exécuter
+<code>Main.main ()</code> qui est la boucle principale de Gtk, qui a pour effet de
+bord d&#39;ouvrir la fenêtre de l&#39;application à l&#39;écran. Le &#39;résultat&#39; de
+<code>Main.main ()</code> est sans importance - probablement la valeur <code>unit</code>, mais
+je n&#39;ai pas vérifié - et elle n&#39;est retournée que quand l&#39;application
+est en train de se terminer.</p>
+<p>Remarquez que dans ce fragment nous avons de longues successions de
+commandes procédurales. C&#39;est un programme impératif classique.</p>
+<pre><code class="ocaml"><span class="comment">(* Third snippet *)</span>
+
+<span class="governing">open</span> <span class="ocaml-module">GdkKeysyms</span>
+
+<span class="governing">let </span><span class="ocaml-variable">_</span> =
+  window#connect#destroy ~callback:<span class="ocaml-module">Main</span>.quit;
+  <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory file_menu ~accel_group <span class="governing">in</span>
+  factory#add_item '<span class="ocaml-module">Open</span>...' ~key:_O ~callback:editor#open_file;
+  factory#add_item 'Save' ~key:_S ~callback:editor#save_file;
+  factory#add_item 'Save <span class="keyword">as</span>...' ~callback:editor#save_dialog;
+  factory#add_separator ();
+  factory#add_item 'Quit' ~key:_Q ~callback:window#destroy;
+  <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory edit_menu ~accel_group <span class="governing">in</span>
+  factory#add_item 'Copy' ~key:_C ~callback:editor#text#copy_clipboard;
+  factory#add_item 'Cut' ~key:_X ~callback:editor#text#cut_clipboard;
+  factory#add_item 'Paste' ~key:_V ~callback:editor#text#paste_clipboard;
+  factory#add_separator ();
+  factory#add_check_item 'Word wrap' ~active:false
+    ~callback:editor#text#set_word_wrap;
+  factory#add_check_item 'Read only' ~active:false
+    ~callback:(<span class="keyword">fun</span> b -&gt; editor#text#set_editable (not b));
+  window#add_accel_group accel_group;
+  editor#text#event#connect#button_press
+    ~callback:(<span class="keyword">fun</span> ev -&gt;
+
+      <span class="governing">let </span><span class="ocaml-variable">button</span> = <span class="ocaml-module">GdkEvent</span>.<span class="ocaml-module">Button</span>.button ev <span class="governing">in</span>
+      <span class="keyword">if</span> button = 3 <span class="keyword">then</span> <span class="governing">begin</span>
+        file_menu#popup ~button ~time:(<span class="ocaml-module">GdkEvent</span>.<span class="ocaml-module">Button</span>.time ev); true
+      <span class="governing">end</span> <span class="keyword">else</span> false);
+  editor#text#set_vadjustment scrollbar#adjustment;
+  window#show ();
+  <span class="ocaml-module">Main</span>.main ()</code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/index.fr.html">Apprendre</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.fr.html">Exemples de code</a></li>
+      <li><a href="../../learn/tutorials/index.fr.html">Tutoriels</a></li>
+      <li><a href="../../learn/books.html">Livres</a></li>
+      <li><a href="../../learn/success.fr.html">Cas d'usage</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/index.fr.html">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.fr.html">Installer OCaml</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manuel</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Contributions</a></li>
+      <li><a href="../../releases/index.fr.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/index.fr.html">Communauté</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.fr.html">Lieux de discussion</a></li>
+      <li><a href="../../meetings/index.fr.html">Rencontres</a></li>
+      <li><a href="../../community/planet/">Nouvelles</a></li>
+      <li><a href="../../community/support.fr.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Signaler un bug d'OCaml</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Site Web</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/structure_of_ocaml_programs.fr.md" target="_blank">Éditer cette page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Problèmes du site Web</a></li>
+      <li><a href="../../about.html">À propos de ce site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Dépôt GitHub</a></li>
+      <li><a href="../../contributors.fr.html">Crédits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,146 @@
+.btn:hover { /* this is copied from .btn:active */
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+}
+
+h1 {
+  margin-top: 0px;
+  line-height: 50px;
+}
+
+h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: inherit;
+}
+
+/* Avoid the anchors to be underneath the banner when a one clicks on
+   a link pointing to them. */
+a[name], h2[id], h3[id], h4[id], h5[id], h6[id] {
+  position: relative;
+}
+a:target, h2:target, h3:target, h4:target, h5:target, h6:target {
+  padding-top: 75px;
+  margin-top: -75px;
+  z-index: -10; /* below the text (and hyperlinks that one can
+		   otherwise not click) */
+}
+a[name] {
+  display: inline-block; /* required for webkit browsers */
+}
+
+html.svg .navbar-search .search-query {
+  background-image: url(../img/search.svg);
+}
+
+@media (min-width: 980px) {
+  /* navbar not collapsed */
+  .navbar .nav > li > a {
+    padding: 27.5px 15px 23.5px;
+  }
+}
+
+/* Reduce the navbar height when the window height is small */
+@media (max-height: 600px) and (min-width: 980px) {
+  .navbar-inner {
+    min-height: 45px; /* instead of 75px => -15px on each side of the
+			 navbar elements */
+  }
+  body { padding-top: 59px }
+
+  .navbar-text { line-height: 45px }
+  .navbar .divider-vertical { height: 45px }
+
+  .navbar .brand { padding: 4.5px 20px 4.5px }
+  .navbar .nav > li > a {
+    padding: 11.5px 15px 9.5px;
+  }
+  .navbar-search {
+    margin-top: 5.5px;
+  }
+
+  a[name], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    padding-top: 45px;
+    margin-top: -45px;
+  }
+}
+
+/* Reduce the size of the collapsed nav-bar */
+@media (max-width: 979px) {
+  .navbar-inner {
+    min-height: 45px; /* instead of 75px => -15px above and below */
+  }
+
+  .navbar .brand { padding: 4.5px 20px 4.5px }
+  .navbar .btn-navbar { margin-top: 7.5px }
+
+  /* The collapsed navbar scrolls with the page. */
+  a[name], h2[id], h3[id], h4[id], h5[id], h6[id] {
+    padding-top: 0px;
+    margin-top: 0px;
+  }
+}
+
+/* Show quoted blocks */
+blockquote {
+  border-left: 2px solid #cfcfcf;
+  padding-left: 2ex;
+  padding-top: 0ex;
+  padding-bottom: 0ex;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
+}
+
+blockquote p {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+/* Section headers too close to the following text. */
+h1.ruled + ul, h1.ruled + ol {
+  padding-top: 1ex;
+}
+h1.ruled + pre {
+  margin-top: 1ex;
+}
+
+/* Adjustments for lists */
+.content li > ul {
+  padding-top: 2ex;
+}
+
+p + pre {
+  margin-top: -13px;
+}
+
+pre, pre code {
+  /* white-space: pre; */
+  /* overflow-x: auto; */
+  line-break: loose;
+  word-break: normal;
+}
+
+.breadcrumb {
+  font-weight: normal;
+  color: #6f6f6f; /* current page name */
+  border: 0;
+  padding: 0;
+  margin: 0px 0px 5px 0px;
+  *z-index: 1;
+}
+
+/* News */
+
+html.svg .news-feed li {
+  background: url(../img/news-go.svg) right center no-repeat;
+}
+
+.news-feed li.announcement {
+  padding: 15px 30px 15px 10px; /* same as normal news items */
+  background-image: url(../img/announcement-go.png);
+}
+html.svg .news-feed li.announcement {
+  background-image: url(../img/announcement-go.svg);
+}

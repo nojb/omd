@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="null_pointers_asserts_and_warnings.html" rel="alternate" hreflang="en"/>
+<link href="null_pointers_asserts_and_warnings.fr.html" rel="alternate" hreflang="fr"/>
+<link href="null_pointers_asserts_and_warnings.it.html" rel="alternate" hreflang="it"/>
+<link href="null_pointers_asserts_and_warnings.ja.html" rel="alternate" hreflang="ja"/>
+<link href="null_pointers_asserts_and_warnings.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Pointeurs nuls, asserts et warnings &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../index.fr.html" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/index.fr.html">Apprendre</a></li>
+              <li><a href="../../docs/index.fr.html">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Contributions</a></li>
+              <li><a href="../../community/index.fr.html">Communauté</a></li>
+              <li><a href="../../community/planet/">Nouvelles</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/null_pointers_asserts_and_warnings.fr.md" title="Éditer cette page" class="edit-this-page pull-right"><span>Éditer cette page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Rechercher" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/index.fr.html">Apprendre</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.fr.html">Tutoriel OCaml</a><span class="divider"></span></li>
+<li class="active">Pointeurs nuls, asserts et warnings</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="null_pointers_asserts_and_warnings.html">en</a></li>
+<li class="active">fr</li>
+<li><a href="null_pointers_asserts_and_warnings.it.html">it</a></li>
+<li><a href="null_pointers_asserts_and_warnings.ja.html">日本語</a></li>
+<li><a href="null_pointers_asserts_and_warnings.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contenu</a></li>
+          <ul><li><a href="#Pointeurs-nuls">Pointeurs nuls</a>
+</li><li><a href="#Assertions-avertissements-erreurs-fatales-et-criture-vers-stderr">Assertions, avertissements, erreurs fatales, et écriture vers stderr</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Pointeurs-nuls-asserts-et-warnings">Pointeurs nuls, asserts et warnings</h1>
+
+<h2 id="Pointeurs-nuls">Pointeurs nuls</h2><p>Supposons que votre site web dispose d&#39;un sondage, demandant à vos
+lecteurs leurs noms et leurs âges. Le problème, c&#39;est que pour une
+raison quelconque certains de vos lecteurs refusent de donner leur âge -
+ils refusent avec obstination de remplir ce champ. Que doit faire
+l&#39;administrateur de la base de données ?</p>
+<p>Supposons que l&#39;âge soit représenté par un entier (<code>int</code>), il y a deux
+façons de régler le problème. La façon la plus commune (et la plus
+<em>incorrecte</em>) est d&#39;utiliser une valeur &#39;magique&#39; pour l&#39;âge pour
+signifier que cette information c&#39;est pas disponible. Si, par exemple,
+age = -1, alors l&#39;âge n&#39;a pas été saisi, sinon il a été saisi (même
+incorrectement !). Tout se passe bien jusqu&#39;au moment de calculer, par
+exemple, l&#39;âge moyen de votre audience. Si vous oubliez de traiter
+spécialement la valeur magique, vous allez conclure que l&#39;âge moyen de
+vos visiteurs est 7 ans et demi, supprimer tous les mots compliqués de
+votre site, et demander à votre graphiste d&#39;employer davantage les
+couleurs primaires.</p>
+<p>L&#39;autre méthode, plus correcte, est de stocker les âges dans un champ de
+type &#39;entier ou NULL&#39;. Par exemple, en SQL, la table pour stocker les
+âges ressemblerait à :</p>
+<pre class="SQL"><code class="SQL">create table users
+(
+  userid serial,
+  name text not null,
+  age int             -- may be null
+);</code></pre><p>Si l&#39;âge n&#39;est pas connu, c&#39;est la valeur spéciale SQL <code>NULL</code> qui est
+enregistrée. SQL ne tient pas compte de ces entrées si on demande à
+calculer la moyenne des âges, etc.</p>
+<p>Les langages de programmation ont aussi leurs valeurs nulles, mais leur
+facilité d&#39;utilisation est variable. En Perl, n&#39;importe quel scalaire
+(nombre ou chaîne) peut prendre la valeur <code>undef</code> (la valeur nulle en
+Perl). C&#39;est la source de beaucoup d&#39;avertissements (warnings), souvent
+ignorés par les programmeurs inexpérimentés, bien que ce soit souvent le
+signe d&#39;un problème réel. En Java, les références vers des objets
+peuvent prendre la valeur nulle, et il peut être judicieux dans notre
+cas de stocker les âges avec des <code>Integer</code>, et d&#39;admettre que les
+références vers un âge puissent prendre la valeur <code>null</code>. En C les
+pointeurs peuvent, bien sûr, être nuls, mais pour utiliser cette
+fonctionalité avec un bête entier, il faut tout d&#39;abord l&#39;encapsuler
+dans une structure allouée dynamiquement dans le tas (<code>malloc()</code>).</p>
+<p>OCaml propose une solution élégante pour les valeurs nulles, en
+utilisant un simple type variant polymorphique, défini (jusqu&#39;à
+récemment, dans le module <code>Pervasives</code>) comme :</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">'a option</span> = None | Some <span class="keyword">of</span> 'a</code></pre>
+
+<p>Une « valeur nulle » s&#39;écrit <code>None</code>. Le type de age dans notre exemple (un
+entier ou la valeur nulle) est <code>int option</code> (le type est écrit « à
+l&#39;envers », comme <code>int list</code> ou <code>int binary_tree</code> dans le chapitre
+précédent).</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Some 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int option = Some 3
+</span></code></pre>
+
+<p>Une liste d&#39;entiers optionels ?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">[ None; Some 3; Some 6; None ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int option list = [None; Some 3; Some 6; None]
+</span></code></pre>
+
+<p>Et une liste optionelle d&#39;entiers ?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Some [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list option = Some [1; 2; 3]
+</span></code></pre>
+
+<h2 id="Assertions-avertissements-erreurs-fatales-et-criture-vers-stderr">Assertions, avertissements, erreurs fatales, et écriture vers stderr</h2><p>Perl se distingue par un riche ensemble de commandes pour déboguer les
+programmes et gérer les erreurs inattendues, en particulier la
+possibilité d&#39;imprimer l&#39;état de la pile d&#39;appels, de lever et de
+ratrapper des exceptions, etc. OCaml n&#39;est pas aussi bien doté en
+fonctionnalités de débogage - mieux que Java, à peu près équivalent au
+C, mais loin d&#39;égaler Perl. (Nous reparlerons des exceptions en détail
+plus tard.)</p>
+<p>Tout d&#39;abord, les assertions. <code>assert</code> prend comme argument une
+expression booléenne, et lève une exception si elle est fausse. En
+supposant que vous ne rattrapiez pas cette exception (ce qui est
+recommandé, tout particulièrement pour les débutants), son effet sera de
+stopper le programme, et d&#39;afficher l&#39;emplacement (nom du fichier,
+numéro de ligne et de colonne) où l&#39;erreur est survenue. Par exemple :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="ocaml-error-loc">'</span>Win32')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>(Bien entendu, cette exception ne sera pas levée sous Win32.)</p>
+<p>Vous pouvez utiliser <code>assert false</code> pour stopper votre programme dans
+les situations critiques, mais il est souvent préférable d&#39;utiliser...</p>
+<p><code>failwith &#39;message d&#39;erreur&#39;</code>, pour lever une exception <code>Failure</code>, qui
+elle aussi, à moins d&#39;être rattrappée, va stopper le programme et
+afficher le message d&#39;erreur fourni. <code>failwith</code> est souvent utilisé lors
+du filtrage, comme dans cet exemple réel :</p>
+<pre><code class="ocaml"><span class="keyword">match</span> <span class="ocaml-module">Sys</span>.os_type <span class="keyword">with</span>
+| 'Unix' | 'Cygwin' -&gt;   <span class="comment">(* code omit *)</span>
+| 'Win32' -&gt;             <span class="comment">(* code omit *)</span>
+| 'MacOS' -&gt;             <span class="comment">(* code omit *)</span>
+| _ -&gt; <span class="keyword">failwith</span> 'Ce syst&egrave;me n'est pas support&eacute;'</code></pre>
+
+<p>A noter l&#39;utilisation d&#39;un couple de fonctionnalités supplémentaires du
+système de filtrage. L&#39;union de motifs est utilisée pour reconnaître
+<code>&#39;Unix&#39;</code> ou <code>&#39;Cygwin&#39;</code>, et le motif spécial <code>_</code> pour reconnaître
+&#39;n&#39;importe quoi d&#39;autre&#39;.</p>
+<p>Si vous voulez déboguer votre programme mais, comme moi, avez une
+aversion pour les débogueurs autres que gdb, vous voudrez sûrement faire
+afficher des avertissements par vos fonctions. Voici un exemple (notez
+le code surligné) :</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
+open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
+  &lt;em&gt;prerr_endline ('radius is ' ^ (string_of_int radius));&lt;/em&gt;
+  set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
+  fill_circle 320 240 radius
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
+
+<p>Si vous préférez le style <code>printf</code> du langage C, essayez plutôt le
+module <code>Printf</code> d&#39;OCaml :</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/><span class="governing">open</span> <span class="ocaml-module">Printf</span><span class="ocaml-prompt">;;</span><br/>
+open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
+  &lt;em&gt;eprintf 'radius is %d\n' radius;&lt;/em&gt;
+
+  set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
+  fill_circle 320 240 radius
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/index.fr.html">Apprendre</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.fr.html">Exemples de code</a></li>
+      <li><a href="../../learn/tutorials/index.fr.html">Tutoriels</a></li>
+      <li><a href="../../learn/books.html">Livres</a></li>
+      <li><a href="../../learn/success.fr.html">Cas d'usage</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/index.fr.html">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.fr.html">Installer OCaml</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manuel</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Contributions</a></li>
+      <li><a href="../../releases/index.fr.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/index.fr.html">Communauté</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.fr.html">Lieux de discussion</a></li>
+      <li><a href="../../meetings/index.fr.html">Rencontres</a></li>
+      <li><a href="../../community/planet/">Nouvelles</a></li>
+      <li><a href="../../community/support.fr.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Signaler un bug d'OCaml</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Site Web</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/null_pointers_asserts_and_warnings.fr.md" target="_blank">Éditer cette page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Problèmes du site Web</a></li>
+      <li><a href="../../about.html">À propos de ce site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Dépôt GitHub</a></li>
+      <li><a href="../../contributors.fr.html">Crédits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

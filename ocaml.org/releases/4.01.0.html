@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="4.01.0.html" rel="alternate" hreflang="en"/>
+<link href="4.01.0.fr.html" rel="alternate" hreflang="fr"/>
+
+    
+    <title>OCaml 4.01.0 &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.01.0.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../releases/">Releases</a><span class="divider"></span></li>
+<li class="active">OCaml 4.01.0</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+<li><a href="4.01.0.fr.html">fr</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="OCaml-4-01-0">OCaml 4.01.0</h1><p><strong>License</strong><br/>
+ The OCaml system is open source software: the compiler is distributed
+under the terms of the Q Public License, and its library is under LGPL;
+please read the <a href="../docs/license.html">license</a> document for more details. A
+BSD-style license is also available for a fee through the <a href="../consortium/">OCaml
+Consortium</a>.</p>
+<p>This page describes OCaml version <strong>4.01.0</strong>,
+released on 2013-09-12. Go <a href="./">here</a> for a list of all releases.</p>
+<h2 id="What-39-s-New">What&#39;s New</h2>
+
+<p>Some of the highlights in release 4.01 are:</p>
+<ul><li><p>It is now possible to have several variant constructors or record
+ fields of the same name in scope, and type information will be used
+ to disambiguate which one is used -- instead of always using the
+ last one. See <a href="http://www.lexifi.com/blog/type-based-selection-label-and-constructors">this
+ post</a>
+ for a more detailed description of the feature.</p>
+</li><li><p>New warnings can be activated to warn about identifiers that are
+ used after having been shadowed by an <code>open</code> construct. The <code>open</code>
+ keyword can be written <code>open!</code> to silence this warning (as <code>method!</code>
+ silences the method warning).</p>
+</li><li><p>The compiler now suggests possible typos on &#39;unbound identifier&#39;
+ errors.</p>
+</li><li><p>Infix application operators <code>(|&gt;)</code> and <code>(@@)</code> are added to
+ <code>Pervasives</code>.</p>
+</li><li><p>The <code>-short-path</code> option changes the way the type-checker prints
+ types to pick a short representation (eg. <code>string</code> instead of
+ <code>StringSet.elt</code>).</p>
+</li><li><p>This release saw a lot of polishing with sets of changes in many
+ places: the type system for GADTs, compilation speed with
+ <code>-bin-annot</code>, ocamlbuild, the test suite, low-level optimizations,
+ etc.</p>
+</li></ul>
+
+<p>For more information, please consult the <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/notes/Changes">comprehensive list of
+changes</a>.</p>
+<h2 id="Source-distribution"><img src="../img/source.gif" alt=""/>Source distribution</h2>
+
+<ul><li><p><a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0.tar.gz">Source tarball</a>
+ (.tar.gz) for compilation under Unix (including Linux and MacOS X)
+ and Microsoft Windows (including Cygwin).</p>
+</li><li><p>Also available in
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0.tar.xz">.tar.xz</a> format.</p>
+</li><li><p><a href="https://opam.ocaml.org/">OPAM</a> is a source-based distribution of
+ OCaml and many companion libraries and tools. Compilation and
+ installation are automated by powerful package managers.</p>
+</li><li><p>You also have read-only <a href="svn.html">SVN access</a> to the working
+ sources and to all previous public releases.</p>
+</li></ul>
+
+<p>The <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/notes/INSTALL">INSTALL</a> file of the
+distribution provides detailed compilation and installation instruction.</p>
+<h2 id="Precompiled-binaries-for-Linux"><img src="../img/linux.gif" alt=""/>Precompiled binaries for Linux</h2>
+
+<ul><li><p><a href="http://packages.debian.org/ocaml">Debian packages</a>.</p>
+</li><li><p><a href="https://admin.fedoraproject.org/pkgdb/package/ocaml/">Fedora
+ packages</a>.</p>
+</li><li><p><a href="http://packages.gentoo.org/packages/?category=dev-lang;name=ocaml">Gentoo
+ packages</a>.</p>
+</li></ul>
+
+<h2 id="Precompiled-binaries-for-MacOS-X"><img src="../img/macos.gif" alt=""/>Precompiled binaries for MacOS X</h2>
+
+<p>Binary package compiled on Mac OS 10.7.5 with XCode tools 4.6.3
+(probably not compatible with earlier versions of Mac OS X):</p>
+<ul><li><p><a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01.0-intel.dmg">for 64-bit Intel</a>
+ (4.01.0)</p>
+</li></ul>
+
+<h2 id="Precompiled-binaries-for-Microsoft-Windows"><img src="../img/windows.gif" alt=""/>Precompiled binaries for Microsoft Windows</h2>
+
+<p>Four ports of OCaml for Microsoft Windows are currently available. For
+additional information, please consult the list of <a href="../learn/portability.html">portability
+issues</a> or the <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/notes/README.win32">Windows release
+notes</a>.</p>
+<ul><li><p><a href="http://protz.github.com/ocaml-installer/">Cygwin-based native Win32 port
+ (4.00.0)</a>. A self
+ installer. The interactive loop comes with a simple graphical user
+ interface. Some features require the Cygwin environment, which the
+ installer can fetch for you. However, the compilers are, and
+ generate true Win32 executables, which do not require Cygwin to run.</p>
+</li><li><p>Microsoft-based native Win32 port. No binary distribution available
+ yet; download the source distribution and compile it.</p>
+</li><li><p><a href="http://cygwin.com/">Cygwin</a>-based port. Requires Cygwin. No
+ graphical user interface is provided. The compilers generate
+ executables that do require Cygwin. The precompiled binaries are
+ part of the Cygwin distribution; you can install them using the
+ Cygwin <code>setup</code> tool. Alternatively, download the source distribution
+ and compile it under Cygwin.</p>
+</li><li><p>Microsoft-based native Win64 port Same features as the
+ Microsoft-based native Win32 port, but generates 64-bit code. No
+ binary distribution available yet; download the source distribution
+ and compile it.</p>
+</li></ul>
+
+<h2 id="Precompiled-binaries-for-Solaris">Precompiled binaries for Solaris</h2>
+
+<p>Available at <a href="http://sunfreeware.com/">sunfreeware.com</a>.</p>
+<h2 id="Alternative-Compilers">Alternative Compilers</h2>
+
+<p>Additionally, the following projects allow you to compile OCaml code to
+targets traditionally associated with other languages:</p>
+<ul><li><p>The <a href="http://ocsigen.org/js_of_ocaml/">js_of_ocaml project</a>, an
+ OCaml to Javascript compiler (stable)</p>
+</li><li><p>The <a href="http://ocamljava.x9c.fr/">ocaml-java project</a>, an OCaml to Java
+ compiler (stable)</p>
+</li></ul>
+
+<h2 id="User-39-s-manual"><img src="../img/doc.gif" alt=""/>User&#39;s manual</h2><p>The user&#39;s manual for OCaml can be:</p>
+<ul><li><p><a href="http://caml.inria.fr/pub/docs/manual-ocaml-4.01/index.html">browsed online</a>,</p>
+</li><li><p>downloaded as a single
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01-refman.ps.gz">PostScript</a>,
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01-refman.pdf">PDF</a>, or <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01-refman.txt">plain
+ text</a> document,</p>
+</li><li><p>downloaded as a single
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01-refman-html.tar.gz">TAR</a> or
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01-refman-html.zip">ZIP</a> archive
+ of HTML files,</p>
+</li><li><p>downloaded as a single
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.01/ocaml-4.01-refman.info.tar.gz">tarball</a>
+ of Emacs <code>info</code> files,</p>
+</li><li><p>an enhanced version which marks up differences to OCaml 4.00 can also be
+ <a href="http://www.askra.de/software/ocaml-doc/4.01/">browsed online</a>.</p>
+</li></ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.01.0.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

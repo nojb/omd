@@ -1,0 +1,524 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="calling_c_libraries.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Calling C libraries &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/calling_c_libraries.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    <div class="span1"></div>
+    <div id="content-primary" class="span10">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Calling C libraries</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+
+<h1 id="Calling-C-libraries">Calling C libraries</h1>
+
+<h2 id="Note-from-Rich">Note from Rich</h2><p>Chapters 12 and 13 really need to be rewritten from scratch.</p>
+<p>I&#39;ve left them here — you can read them, but the formatting is screwy.</p>
+<h2 id="MiniGtk">MiniGtk</h2><p>While the structure of lablgtk outlined in <a href="introduction_to_gtk.html" title="Introduction to Gtk">Introduction to
+Gtk</a> seems perhaps
+over-complex, it&#39;s worth considering exactly why the author chose two
+layers. To appreciate this, you really need to get your hands dirty and
+look at other ways that a Gtk wrapper might have been written.</p>
+<p>To this end I played around with something I call
+<dfn>MiniGtk</dfn>, intended as a simple Gtk wrapper. All MiniGtk is
+capable of is opening a window with a label, but after writing MiniGtk I
+had renewed respect for the author of lablgtk!</p>
+<p>MiniGtk is also a good tutorial for people who want to write OCaml
+bindings around their favorite C library. If you&#39;ve ever tried to write
+bindings for Perl or Java, you&#39;ll find doing the same for OCaml is
+surprisingly easy, although you do have to worry a bit about the garbage
+collector.</p>
+<p>Let&#39;s talk first about how MiniGtk is structured: rather than using a
+two layered approach as with lablgtk, I wanted to implement MiniGtk
+using a single (object-oriented) layer. This means that MiniGtk consists
+of a bunch of class definitions. Methods in those classes pretty much
+directly translate into calls to the C <code>libgtk-1.2.so</code> library.</p>
+<p>I also wanted to rationalise the module naming scheme for Gtk. So there
+is exactly one top-level module called (surprise!) <code>Gtk</code> and all classes
+are inside this module. A test program looks like this:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">win</span> = <span class="keyword">new</span> <span class="ocaml-module">Gtk</span>.window ~title:'My window' ()<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">lbl</span> = <span class="keyword">new</span> <span class="ocaml-module">Gtk</span>.label ~text:'Hello' ()<span class="ocaml-prompt">;;</span><br/>win#add lbl<span class="ocaml-prompt">;;</span><br/>
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Gtk</span>.main ()</code></pre>
+
+<p>I defined a single abstract type to cover all <code>GtkObject</code>s (and
+&#39;subclasses&#39; of this C structure). In the <code>Gtk</code> module you&#39;ll find this
+type definition:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">obj</span></code></pre>
+
+<p>As discussed in the last chapter, this defines an abstract type of which
+it is impossible to create any instances. In OCaml, at least. Certain C
+functions are going to create instances of this type. For instance, the
+function which creates new labels (ie. <code>GtkLabel</code> structures) is defined
+this way:</p>
+<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_label_new</span>&nbsp;: string -&gt; obj = 'gtk_label_new_c'</code></pre>
+
+<p>This strange function definition defines an <dfn>external
+function</dfn>, one coming from C. The C function is called
+<code>gtk_label_new_c</code>, and it takes a string and returns one of our abstract
+<code>obj</code> types.</p>
+<p>OCaml doesn&#39;t quite let you call <em>any</em> C function yet. You need to write
+a little C wrapper around the library&#39;s function to translate to and
+from OCaml&#39;s internal types and C types. <code>gtk_label_new_c</code> (note the
+additional <code>_c</code>) is my wrapper around the real Gtk C function called
+<code>gtk_label_new</code>. Here it is. I&#39;ll explain more about it later.</p>
+<pre class="C"><code class="C">CAMLprim value
+gtk_label_new_c (value str)
+{
+  CAMLparam1 (str);
+  CAMLreturn (wrap (GTK_OBJECT (
+    gtk_label_new (String_val (str)))));
+ }</code></pre><p>Before explaining this function further, I&#39;m going to take a step back
+and look at the hierarchy of our Gtk classes. I&#39;ve chosen to reflect the
+actual Gtk widget hierarchy as closely as possible. All Gtk widgets are
+derived from a virtual base class called <code>GtkObject</code>. In fact from this
+class is derived <code>GtkWidget</code> and the whole variety of Gtk widgets are
+derived from this. So we define our own <code>GtkObject</code> equivalent class
+like this (note that <code>object</code> is a reserved word in OCaml).</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">obj</span>
+
+<span class="governing">class virtual</span> <span class="ocaml-function">gtk_object</span> <span class="ocaml-variable">(obj : obj) </span>=
+<span class="governing">object</span> (self)
+  <span class="governing"><span class="governing">val</span></span> <span class="ocaml-variable">obj</span> = obj
+  <span class="governing">method</span> <span class="ocaml-function">obj</span><span class="type"></span> = obj
+<span class="governing">end</span></code></pre>
+
+<p><code>type obj</code> defines our abstract object type, and <code>class gtk_object</code>
+takes one of these &#39;things&#39; as a parameter to its constructor. Recall
+from above that this parameter is actually the C <code>GtkObject</code> structure
+(in fact it&#39;s a specially wrapped pointer to this structure).</p>
+<p>You can&#39;t create <code>gtk_object</code> instances directly because it&#39;s a virtual
+class, but if you could you&#39;d have to construct them like this:
+<code>new gtk_object obj</code>. What would you pass as that <code>obj</code> parameter? You&#39;d
+pass the return value of, for instance, <code>gtk_label_new</code> (go back and
+have a look at how that <code>external</code> function was typed). This is shown
+below:</p>
+<pre><code class="ocaml"><span class="comment">(* Example code, not really part <span class="keyword">of</span> MiniGtk! *)</span>
+<span class="governing">class</span> <span class="ocaml-function">label</span> <span class="ocaml-variable">text </span>=
+  <span class="governing">let </span><span class="ocaml-variable">obj</span> = gtk_label_new text <span class="governing">in</span>
+  <span class="governing">object</span> (self)
+    <span class="governing">inherit</span> gtk_object obj
+  <span class="governing">end</span></code></pre>
+
+<p>Of course the real <code>label</code> class doesn&#39;t inherit directly from
+<code>gtk_object</code> as shown above, but in principle this is how it works.</p>
+<p>Following the Gtk class hierarchy the only class derived directly from
+<code>gtk_object</code> is our <code>widget</code> class, defined like this:</p>
+<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_widget_show</span>&nbsp;: obj -&gt; unit = 'gtk_widget_show_c'
+<span class="governing">external</span> <span class="ocaml-function">gtk_widget_show_all</span>&nbsp;: obj -&gt; unit = 'gtk_widget_show_all_c'
+
+<span class="governing">class virtual</span> <span class="ocaml-function">widget</span> <span class="ocaml-variable">?show obj </span>=
+  <span class="governing">object</span> (self)
+    <span class="governing">inherit</span> gtk_object obj
+    <span class="governing">method</span> <span class="ocaml-function">show</span><span class="type"></span> = gtk_widget_show obj
+    <span class="governing">method</span> <span class="ocaml-function">show_all</span><span class="type"></span> = gtk_widget_show_all obj
+    <span class="governing">initializer</span> <span class="keyword">if</span> show &lt;&gt; Some false <span class="keyword">then</span> self#show
+  <span class="governing">end</span></code></pre>
+
+<p>This class is considerably more complex. Let&#39;s look at the
+initialization code first:</p>
+<pre><code class="ocaml"><span class="governing">class virtual</span> <span class="ocaml-function">widget</span> <span class="ocaml-variable">?show obj </span>=
+  <span class="governing">object</span> (self)
+    <span class="governing">inherit</span> gtk_object obj
+    <span class="governing">initializer</span>
+      <span class="keyword">if</span> show &lt;&gt; Some false <span class="keyword">then</span> self#show
+  <span class="governing">end</span></code></pre>
+
+<p>The <code>initializer</code> section may well be new to you. This is code which
+runs when an object is being created - the equivalent of a constructor
+in other languages. In this case we check the boolean optional <code>show</code>
+argument and unless the user specified it explicitly as <code>false</code> we
+automatically call the <code>#show</code> method. (All Gtk widgets need to be
+&#39;shown&#39; after being created unless you want a widget to be created but
+hidden).</p>
+<p>The actual definition of the methods happens with the help of a couple
+of external functions. These are basically direct calls to the C library
+(well, in fact there&#39;s a tiny bit of wrapper code, but that&#39;s not
+functionally important).</p>
+<pre><code class="ocaml"><span class="governing">method</span> <span class="ocaml-function">show</span><span class="type"></span> = gtk_widget_show obj
+<span class="governing">method</span> <span class="ocaml-function">show_all</span><span class="type"></span> = gtk_widget_show_all obj</code></pre>
+
+<p>Notice that we pass the underlying <code>GtkObject</code> to both C library calls.
+This makes sense because these functions are prototyped as
+<code>void gtk_widget_show (GtkWidget *);</code> in C (<code>GtkWidget</code> and <code>GtkObject</code>
+are safely used interchangably in this context).</p>
+<p>I want to describe the <code>label</code> class (the real one this time!), but in
+between <code>widget</code> and <code>label</code> is <code>misc</code>, a generic class which describes
+a large class of miscellaneous widgets. This class just adds padding and
+alignment around a widget such as a label. Here is its definition:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">may</span> <span class="ocaml-variable">f x </span>=
+  <span class="keyword">match</span> x <span class="keyword">with</span>
+  | None -&gt; ()
+  | Some x -&gt; f x
+
+<span class="governing">external</span> <span class="ocaml-function">gtk_misc_set_alignment</span>&nbsp;:
+  obj -&gt; float * float -&gt; unit = 'gtk_misc_set_alignment_c'
+<span class="governing">external</span> <span class="ocaml-function">gtk_misc_set_padding</span>&nbsp;:
+  obj -&gt; int * int -&gt; unit = 'gtk_misc_set_padding_c'
+
+<span class="governing">class virtual</span> <span class="ocaml-function">misc</span> <span class="ocaml-variable">?alignment ?padding ?show obj </span>=
+  <span class="governing">object</span> (self)
+    <span class="governing">inherit</span> widget ?show obj
+    <span class="governing">method</span> <span class="ocaml-function">set_alignment</span><span class="type"></span> = gtk_misc_set_alignment obj
+    <span class="governing">method</span> <span class="ocaml-function">set_padding</span><span class="type"></span> = gtk_misc_set_padding obj
+    <span class="governing">initializer</span>
+      may (gtk_misc_set_alignment obj) alignment;
+      may (gtk_misc_set_padding obj) padding
+  <span class="governing">end</span></code></pre>
+
+<p>We start with a helper function called
+<code>may : (&#39;a -&gt; unit) -&gt; &#39;a option -&gt; unit</code> which invokes its first
+argument on the contents of its second unless the second argument is
+<code>None</code>. This trick (stolen from lablgtk of course) is very useful when
+dealing with optional arguments as we&#39;ll see.</p>
+<p>The methods in <code>misc</code> should be straightforward. What is tricky is the
+initialization code. First notice that we take optional <code>alignment</code> and
+<code>padding</code> arguments to the constructor, and we pass the optional <code>show</code>
+and mandatory <code>obj</code> arguments directly up to <code>widget</code>. What do we do
+with the optional <code>alignment</code> and <code>padding</code>? The initializer uses these:</p>
+<pre><code class="ocaml"><span class="governing">initializer</span>
+  may (gtk_misc_set_alignment obj) alignment;
+  may (gtk_misc_set_padding obj) padding </code></pre>
+
+<p>It&#39;s that tricky <code>may</code> function in action. <em>If</em> the user gave an
+<code>alignment</code> argument, then this will set the alignment on the object by
+calling <code>gtk_misc_set_alignment obj the_alignment</code>. But more commonly
+the user will omit the <code>alignment</code> argument, in which case <code>alignment</code>
+is <code>None</code> and this does nothing. (In effect we get Gtk&#39;s default
+alignment, whatever that is). A similar thing happens with the
+<code>padding</code>. Note there is a certain simplicity and elegance in the way
+this is done.</p>
+<p>Now we can finally get to the <code>label</code> class, which is derived directly
+from <code>misc</code>:</p>
+<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_label_new</span>&nbsp;:
+    string -&gt; obj  = 'gtk_label_new_c'
+<span class="governing">external</span> <span class="ocaml-function">gtk_label_set_text</span>&nbsp;:
+    obj -&gt; string -&gt; unit = 'gtk_label_set_text_c'
+<span class="governing">external</span> <span class="ocaml-function">gtk_label_set_justify</span>&nbsp;:
+    obj -&gt; <span class="ocaml-module">Justification</span>.t -&gt; unit = 'gtk_label_set_justify_c'
+<span class="governing">external</span> <span class="ocaml-function">gtk_label_set_pattern</span>&nbsp;:
+    obj -&gt; string -&gt; unit = 'gtk_label_set_pattern_c'
+<span class="governing">external</span> <span class="ocaml-function">gtk_label_set_line_wrap</span>&nbsp;:
+    obj -&gt; bool -&gt; unit = 'gtk_label_set_line_wrap_c'
+
+class label ~text
+  ?justify ?pattern ?line_wrap ?alignment
+  ?padding ?show () =
+  <span class="governing">let </span><span class="ocaml-variable">obj</span> = gtk_label_new text <span class="governing">in</span>
+  <span class="governing">object</span> (self)
+    <span class="governing">inherit</span> misc ?alignment ?padding ?show obj
+    <span class="governing">method</span> <span class="ocaml-function">set_text</span><span class="type"></span> = gtk_label_set_text obj
+    <span class="governing">method</span> <span class="ocaml-function">set_justify</span><span class="type"></span> = gtk_label_set_justify obj
+    <span class="governing">method</span> <span class="ocaml-function">set_pattern</span><span class="type"></span> = gtk_label_set_pattern obj
+    <span class="governing">method</span> <span class="ocaml-function">set_line_wrap</span><span class="type"></span> = gtk_label_set_line_wrap obj
+    <span class="governing">initializer</span>
+      may (gtk_label_set_justify obj) justify;
+      may (gtk_label_set_pattern obj) pattern;
+      may (gtk_label_set_line_wrap obj) line_wrap
+  <span class="governing">end</span></code></pre>
+
+<p>Although this class is bigger than the ones we&#39;ve looked at up til now,
+it&#39;s really more of the same idea, <em>except</em> that this class isn&#39;t
+virtual. You can create instances of this class which means it finally
+has to call <code>gtk_..._new</code>. This is the initialization code (we discussed
+this pattern above):</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">label</span> <span class="ocaml-variable">~text ... () </span>=
+  <span class="governing">let </span><span class="ocaml-variable">obj</span> = gtk_label_new text <span class="governing">in</span>
+  <span class="governing">object</span> (self)
+    <span class="governing">inherit</span> misc ... obj
+  <span class="governing">end</span></code></pre>
+
+<p>(Pop quiz: what happens if we need to define a class which is both a
+base class from which other classes can be derived, and is also a
+non-virtual class of which the user should be allowed to create
+instances?)</p>
+<h4 id="Wrapping-calls-to-C-libraries">Wrapping calls to C libraries</h4><p>Now we&#39;ll look in more detail at actually wrapping up calls to C library
+functions. Here&#39;s a simple example:</p>
+<pre class="C"><code class="C">/* external gtk_label_set_text :
+     obj -&gt; string -&gt; unit
+       = &#39;gtk_label_set_text_c&#39; */
+
+CAMLprim value
+gtk_label_set_text_c (value obj, value str)
+{
+  CAMLparam2 (obj, str);
+  gtk_label_set_text (unwrap (GtkLabel, obj),
+    String_val (str));
+  CAMLreturn (Val_unit);
+}</code></pre><p>Comparing the OCaml prototype for the external function call (in the
+comment) with the definition of the function we can see two things:</p>
+<ul><li><p>The C function that OCaml calls is named <code>&#39;gtk_label_set_text_c&#39;</code>.</p>
+</li><li><p>Two arguments are passed (<code>value obj</code> and <code>value str</code>) and a unit is
+ returned.</p>
+</li></ul>
+
+<p>Values are OCaml&#39;s internal representation of all sorts of things from
+simple integers through to strings and even objects. I&#39;m not going to go
+into any great detail about the <code>value</code> type because it is more than
+adequately covered in the OCaml manual. To use <code>value</code> you need to just
+know what macros are available to convert between a <code>value</code> and some C
+type. The macros look like this:</p>
+<dl> <dt>`String_val (val)`</dt> <dd> Convert from a `value`
+which is known to be a string to a C string (ie. `char *`). </dd>
+<dt>`Val_unit`</dt> <dd> The OCaml unit `()` as a `value`. </dd>
+<dt>`Int_val (val)`</dt> boolean <dd> Convert from a `value` which
+is known to be an integer to a C `int`. </dd>
+<dt>`Val_int (i)`</dt> <dd> Convert from a C integer `i` into an
+integer `value`. </dd> <dt>`Bool_val (val)`</dt> <dd> Convert
+from a `value` which is known to be a boolean to a C boolean (ie. an
+`int`). </dd> <dt>`Val_bool (i)`</dt> <dd> Convert from a C
+integer `i` into a boolean `value`. </dd> </dl>
+
+<p>You can guess the others or consult the manual. Note that there is no
+straightforward conversion from C <code>char *</code> to a value. This involves
+allocating memory, which is somewhat more complicated.</p>
+<p>In <code>gtk_label_set_text_c</code> above, the <code>external</code> definition, plus strong
+typing and type inference, has already ensured that the arguments are of
+the correct type, so to convert <code>value str</code> to a C <code>char *</code> we called
+<code>String_val (str)</code>.</p>
+<p>The other parts of the function are a bit stranger. To ensure that the
+garbage collector &#39;knows&#39; that your C function is still using <code>obj</code> and
+<code>str</code> while the C function is running (remember that the garbage
+collector might be triggered within your C function by a number of
+events - a callback to OCaml or using one of OCaml&#39;s allocation
+functions), you need to frame the function to add code to tell the
+garbage collector about the &#39;roots&#39; that you&#39;re using. And tell the
+garbage collector when you finish using those roots too, of course. This
+is done by framing the function within <code>CAMLparamN</code> ... <code>CAMLreturn</code>.
+Hence:</p>
+<pre class="C"><code class="C">CAMLparam2 (obj, str);
+...
+CAMLreturn (Val_unit); </code></pre><p><code>CAMLparam2</code> is a macro saying that you&#39;re using two <code>value</code> parameters.
+(There is another macro for annotating local <code>value</code> variables too). You
+need to use <code>CAMLreturn</code> instead of plain <code>return</code> which tells the GC
+you&#39;ve finished with those roots. It might be instructive to examine
+what code is inlined when you write <code>CAMLparam2 (obj, str)</code>. This is the
+generated code (with the author&#39;s version of OCaml, so it might vary
+between implementations slightly):</p>
+<pre class="C"><code class="C">struct caml__roots_block *caml__frame
+    = local_roots;
+struct caml__roots_block caml__roots_obj;
+
+caml__roots_obj.next = local_roots;
+local_roots = &amp;caml__roots_obj;
+caml__roots_obj.nitems = 1;
+caml__roots_obj.ntables = 2;
+caml__roots_obj.tables [0] = &amp;obj;
+caml__roots_obj.tables [1] = &amp;str; </code></pre><p>And for <code>CAMLreturn (foo)</code>:</p>
+<pre class="C"><code class="C">local_roots = caml__frame;
+return (foo); </code></pre><p>If you follow the code closely you&#39;ll see that <code>local_roots</code> is
+obviously a linked list of <code>caml__roots_block</code> structures. One (or more)
+of these structures is pushed onto the linked list when we enter the
+function, and all of these are popped back off when we leave, thus
+restoring <code>local_roots</code> to its previous state when we leave the
+function. (<em>If</em> you remembered to call <code>CAMLreturn</code> instead of <code>return</code>
+of course - otherwise <code>local_roots</code> will end up pointing at
+uninitialised data on the stack with &#39;hilarious&#39; consequences).</p>
+<p>Each <code>caml__roots_block</code> structure has space for up to five <code>value</code>s
+(you can have multiple blocks, so this isn&#39;t a limitation). When the GC
+runs we can infer that it must walk through the linked list, starting at
+<code>local_roots</code>, and treat each <code>value</code> as a root for garbage collection
+purposes. The consequences of <em>not</em> declaring a <code>value</code> parameter or
+local <code>value</code> variable in this way would be that the garbage collector
+might treat that variable as unreachable memory and thus reclaim it
+while your function is running!</p>
+<p><code>CAMLprim</code> is a Windows-only thing and so we won&#39;t talk about it ...</p>
+<p>Finally there is the mysterious <code>unwrap</code> macro. This is one I wrote
+myself, or rather, this is one I mostly copied from lablgtk. There are
+two related functions, called <code>wrap</code> and <code>unwrap</code> and as you might
+possibly have guessed, they wrap and unwrap <code>GtkObject</code>s in OCaml
+<code>value</code>s. These functions establish the somewhat magical relationship
+between <code>GtkObject</code> and our opaque, mysterious <code>obj</code> type which we
+defined for OCaml (see the very first part of this chapter to remind
+yourself).</p>
+<p>The problem is how do we wrap up (and hide) the C <code>GtkObject</code> structure
+in a way that we can pass it around as an opaque &#39;thing&#39; (<code>obj</code>) through
+our OCaml code, and hopefully pass it back later to a C function which
+can unwrap it and retrieve the same <code>GtkObject</code> back again?</p>
+<p>In order for it to get passed to OCaml code at all, we must somehow
+convert it to a <code>value</code>. Luckily we can quite easily use the C API to
+create <code>value</code> blocks which the OCaml garbage collector <em>won&#39;t</em> examine
+too closely ......</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/calling_c_libraries.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="portability.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Portability &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/portability.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../learn/">Learn</a><span class="divider"></span></li>
+<li class="active">Portability</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Portability">Portability</h1><h2 id="Supported-platforms">Supported platforms</h2><p>The bytecoded system currently runs on any POSIX-compliant operating
+system with an ANSI-compliant C compiler (and tries hard to accommodate
+deviations from POSIX and ANSI-C). It should run straight out of the box
+on all Unix and Unix-compatible systems, including Linux and MacOS X.
+(See below for MS Windows.) While not mandatory, it is recommended to
+use the GNU gcc compiler to compile the distribution.</p>
+<p>The native-code compiler currently supports the following
+processor/operating system combinations:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Processors</th>
+<th align="left">Operating systems</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tier 1 platforms<br/> (actively used and maintained by the core Caml team):</td>
+</tr>
+<tr class="even">
+<td align="left">AMD64 (Intel and AMD x86 processors in 64-bit mode)</td>
+<td align="left">Linux, MacOS X</td>
+</tr>
+<tr class="odd">
+<td align="left">IA32 (Intel and AMD x86 processors in 32-bit mode)</td>
+<td align="left">Linux, FreeBSD, MacOS X, Microsoft Windows</td>
+</tr>
+<tr class="even">
+<td align="left">Power PC</td>
+<td align="left">Linux, Mac OS X</td>
+</tr>
+<tr class="odd">
+<td align="left">ARM</td>
+<td align="left">Linux</td>
+</tr>
+<tr class="even">
+<td align="left">Tier 2 platforms<br/> (maintained but less actively, with help from users):</td>
+</tr>
+<tr class="odd">
+<td align="left">AMD64</td>
+<td align="left">Microsoft Windows, FreeBSD, OpenBSD</td>
+</tr>
+<tr class="even">
+<td align="left">IA32</td>
+<td align="left">NetBSD, OpenBSD, Solaris 9</td>
+</tr>
+<tr class="odd">
+<td align="left">PowerPC</td>
+<td align="left">NetBSD</td>
+</tr>
+<tr class="even">
+<td align="left">SPARC
+  (<a href="https://github.com/ocaml/ocaml/pull/659">discontinued
+  since 2017</a>)</td>
+<td align="left">Solaris 9, Linux, NetBSD</td>
+</tr>
+</tbody>
+</table>
+
+<p>Other operating systems for the processors above have not been tested,
+but the compiler may work under other operating systems with little
+work.</p>
+<h2 id="Ports-for-Microsoft-Windows">Ports for Microsoft Windows</h2><p>There are no less than four ports of Objective Caml for Microsoft
+Windows available:</p>
+<ul><li><p>a native Windows port, using the Microsoft development tools
+ (Microsoft Windows SDK), called &#39;Native MSVC&#39;;</p>
+</li><li><p>a Cygwin port consisting of the Unix sources compiled under the
+ <a href="http://cygwin.com/">Cygwin</a> Unix-like environment for Windows, called &#39;Cygwin&#39;.</p>
+</li><li><p>a Cygwin cross-compiler to native Windows, using <a href="http://www.mingw.org/">MinGW</a>, 
+ development tools, called &#39;MinGW Cygwin&#39;;</p>
+</li><li><p>a native Windows port, using a self-contained MinGW
+ <a href="http://www.typerex.org/ocpwin.html">distributed by OCamlPro</a>, called &#39;OCPWin&#39;.</p>
+</li></ul>
+
+<p>Each of these ports exists for either Win32 or Win64 platforms.</p>
+<p>Here is a summary of the main differences between these ports:</p>
+<table width="100%">
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Native MSVC</th>
+<th align="left">MinGW Cygwin</th>
+<th align="left">Cygwin</th>
+<th align="left"><a href="http://www.typerex.org/ocpwin.html">OCPWin</a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Third-party software required<br/> - for base bytecode system<br/> - for <code>ocamlc -custom</code><br/> - for native-code generation</td>
+<td align="left"><br/> none<br/> Windows SDK<br/> Windows SDK</td>
+<td align="left"><br/> none<br/> Cygwin<br/> Cygwin</td>
+<td align="left"><br/> Cygwin<br/> Cygwin<br/> Cygwin</td>
+<td align="left"><br/> none<br/> none<br/> none</td>
+</tr>
+<tr class="even">
+<td align="left">Speed of bytecode interpreter</td>
+<td align="left">70 %</td>
+<td align="left">100 %</td>
+<td align="left">100 %</td>
+<td align="left">100 %</td>
+</tr>
+<tr class="odd">
+<td align="left">Debugger</td>
+<td align="left">partial</td>
+<td align="left">partial</td>
+<td align="left">full</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Libraries<br/> - Unix<br/> - Threads<br/> - Graphics</td>
+<td align="left"><br/> partial<br/> yes<br/> yes</td>
+<td align="left"><br/> partial<br/> yes<br/> yes</td>
+<td align="left"><br/> full<br/> yes<br/> no</td>
+<td align="left"><br/> partial<br/> yes<br/> yes</td>
+</tr>
+<tr class="odd">
+<td align="left">Restrictions on generated executables</td>
+<td align="left">none</td>
+<td align="left">none</td>
+<td align="left">yes*</td>
+<td align="left">yes*</td>
+</tr>
+</tbody>
+</table>
+
+<p><br/></p>
+<p>Note (*): Cygwin-generated <code>.exe</code> files refer to a DLL that is distributed
+under the GPL. Thus, these <code>.exe</code> files can only be distributed under a
+license that is compatible with the GPL. Executables generated by MSVC
+or by MinGW have no such restrictions, while OCPWin allows commercial 
+use except for OCaml compiler parts of itself.</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/portability.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

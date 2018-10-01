@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="Solver_mechanism.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Solver mechanism &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Solver_mechanism.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/ocamlbuild/">Ocamlbuild</a><span class="divider"></span></li>
+<li class="active">Solver mechanism</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Solver-mechanism">Solver mechanism</h1><h2 id="Rules">Rules</h2>
+
+<p>Ocamlbuild has rules which say how to build targets. These rules are
+similar to those of a Makefile: they contain a list of <em>dependencies</em>, a
+list of <em>productions</em>, and the command that build the productions.</p>
+<h3 id="Triggering-rules">Triggering rules</h3><p>When trying to build a target, Ocamlbuild looks for all rules that are
+<em>valid</em> for this target. A rule is valid for a given target if, and only
+if:</p>
+<ul><li><p>its dependencies can be built (i.e. there is a valid rule for each
+ dependency),</p>
+</li><li><p>the target name matches one of the rule&#39;s productions.</p>
+</li></ul>
+
+<p>The tags of the target or the dependencies have no effect on whether a
+rule is valid or not.</p>
+<p>Then, Ocamlbuild tries the first valid rule. Because rules can
+discover new dependencies, they can fail if there is no valid rule to
+make the new dependencies. In this case, Ocamlbuild continues with the
+next valid rule, until a rule succeeds. If all valid rules fail, then
+the solver fails to build the target.</p>
+<h3 id="Dynamic-dependencies">Dynamic dependencies</h3><p>A rule can generate new dependencies at run-time. For example, imagine
+you use the following <code>example.itarget</code> file: <code>bla.byte plop.native</code>.
+When executing the following command: ocamlbuild example.otarget</p>
+<ul><li><p>Ocamlbuild looks for rules which match <code>example.otarget</code> as a
+ target.</p>
+</li><li><p>There is one such rule, which has one single dependency:
+ <code>example.itarget</code>.</p>
+</li><li><p>The file <code>example.itarget</code> already exists, so there is no need to
+ build it: the rule is valid, and it is executed.</p>
+</li><li><p>The file <code>example.itarget</code> is read, and the rule adds two
+ dependencies: <code>bla.byte</code> and <code>plop.native</code>.</p>
+</li><li><p><code>Ocamlbuild</code> tries to build these new dependencies before finishing
+ to build <code>example.otarget</code>.</p>
+</li></ul>
+
+<h3 id="Debugging-rules">Debugging rules</h3><p>To understand how the solver works, you can simply run Ocamlbuild
+using a command such as: <code>ocamlbuild -classic-display -verbose 10 target</code>.
+You&#39;ll get both the backtrace in case of a failure, and the actual names
+and order of the rules that are triggered.</p>
+<p>This is especially useful if you are developing a plugin and are adding
+new rules.</p>
+<h2 id="Tags">Tags</h2><p>All files have tags associated to them. This is the easiest way to
+change the behaviour of the rules. To add or delete tags from a file,
+use the <code>_tags</code> file.</p>
+<h3 id="Holes">Holes</h3><p>When a rule is triggered, the tags of the files may modify the command
+of the rule. Commands come with holes in them; these holes are lists of
+tags that are replaced by the corresponding options.</p>
+<p>For instance, the <code>ocamlc</code> command used to compile an <code>.ml</code> file to a
+<code>.cmo</code> file contains a hole. This hole contains the tags of the <code>.ml</code>
+file, along with some other tags such as <code>ocaml</code>, <code>byte</code> and <code>compile</code>.
+When a hole contains the tags <code>ocaml</code>, <code>compile</code> and <code>thread</code>, the
+<code>-thread</code> option is added to the command, in place of the hole.</p>
+<p>So if you try to compile an <code>.ml</code> file which is tagged with the <code>thread</code>
+tag, then the file will be compiled using the <code>-thread</code> option.</p>
+<h3 id="Other-uses">Other uses</h3>
+
+<p>Some tags, such as <code>not_hygienic</code> or <code>precious</code>, are not used in holes.
+In fact, if you program your own plugin, you may use tags in any way
+that suits your needs. But remember that fancy stuff makes it difficult
+to understand the semantics of your tag!</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Solver_mechanism.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

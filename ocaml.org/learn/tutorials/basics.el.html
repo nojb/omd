@@ -1,0 +1,593 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="el" xml:lang="el">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="basics.de.html" rel="alternate" hreflang="de"/>
+<link href="basics.el.html" rel="alternate" hreflang="el"/>
+<link href="basics.html" rel="alternate" hreflang="en"/>
+<link href="basics.fr.html" rel="alternate" hreflang="fr"/>
+<link href="basics.it.html" rel="alternate" hreflang="it"/>
+<link href="basics.ja.html" rel="alternate" hreflang="ja"/>
+<link href="basics.ko.html" rel="alternate" hreflang="ko"/>
+<link href="basics.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>The Basics &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.el.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">The Basics</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="basics.de.html">de</a></li>
+<li class="active">el</li>
+<li><a href="basics.html">en</a></li>
+<li><a href="basics.fr.html">fr</a></li>
+<li><a href="basics.it.html">it</a></li>
+<li><a href="basics.ja.html">日本語</a></li>
+<li><a href="basics.ko.html">한국어</a></li>
+<li><a href="basics.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Running-OCaml-code">Running OCaml code</a>
+</li><li><a href="#">Σχόλια</a>
+</li><li><a href="#">Καλώντας Συναρτήσεις</a>
+</li><li><a href="#">Ορίζοντας μια συνάρτηση</a>
+</li><li><a href="#">Βασικοί τύποι</a>
+</li><li><a href="#">Μετατροπές τύπων άμεσα και έμμεσα</a>
+<ul><li><a href="#">Άμεση ή έμμεση μετατροπή; Τι είναι καλύτερο;</a>
+</li></ul>
+</li><li><a href="#">Συνήθεις συναρτήσεις και αναδρομικές συναρτήσεις</a>
+</li><li><a href="#">Τύποι συναρτήσεων</a>
+<ul><li><a href="#">Πολυμορφικές συναρτήσεις</a>
+</li></ul>
+</li><li><a href="#">Διεπαφές τύπων</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="The-Basics">The Basics</h1>
+
+<h2 id="Running-OCaml-code">Running OCaml code</h2>
+
+<p>Ο απλούστερος τρόπος να ξεκινήσετε είναι να τρέξετε μια διαδραστική
+συνεδρία στον φυλλομετρητή σας, στο
+<a href="https://ocsigen.org/js_of_ocaml/2.7/files/toplevel/index.html">https://ocsigen.org/js_of_ocaml/2.7/files/toplevel/index.html</a>.</p>
+<p>Για να εγκαταστήσετε την Ocaml στον υπολογιστή σας, δείτε τις <a href="../../docs/install.html">Οδηγίες Εγκατάστασης</a>.</p>
+<p>Για να δοκιμάσετε γρήγορα μικρές εκφράσεις της Ocaml, μπορείτε να δοκιμάσετε το ένα topelevel, ή ένα REPL (Read (διάβασε) - Eval (αποτίμησε) - Print (τύπωσε) Loop (βρόχο) ). Η εντολή <code>ocaml</code> προσφέρει ένα πολύ βασικό toplevel (πρέπει να εγκαταστήσετε το <code>rlwrap</code> μέσω του διαχειριστή πακέτων του συστήματός σας και να τρέξετε το <code>rlwrap ocaml</code> για να έχετε ιστορικό). Αν μπορείτε να το εγκατασήστε μέσω του <a href="../../docs/install.html#OPAM">OPAM</a> ή του διαχειριστή πακέτων του συστήματός σας προτίνουμε να χρησιμοποείσετε το <a href="https://github.com/diml/utop">utop</a> toplevel, το οποίο έχει την ίδια βασική διεπαφή αλλά είναι πολύ πιο βολικό στη χρήση (ιστορικό εντολών, αυτόματη συμπλήρωση, και άλλα).</p>
+<p>Γράψτε <code>;;</code> για να δηλώστε ότι έχετε τελειώσει να γράφετε μια δήλωση.</p>
+<pre class="console"><code class="console">$ ocaml
+        OCaml version 4.07.0
+
+# 1+1;;
+- : int = 2</code></pre>
+
+<pre class="console"><code class="console">───────┬────────────────────────────────────────────────────────────┬─────
+       │ Welcome to utop version 1.18 (using OCaml version 4.02.3)! │
+       └────────────────────────────────────────────────────────────┘
+
+Type #utop_help for help about using utop.
+
+─( 10:12:16 )─&lt; command 0 &gt;───────────────────────────────────────────────
+utop # 1 + 1;;
+- : int = 2</code></pre>
+
+<p>Για να μεταγλωττίσετε ένα πρόγραμμα σε Ocaml με όνομα <code>my_prog.ml</code> σε ένα εκτελέσιμο σε γλώσσα μηχανής, χρησιμοποιήστε το <code>ocamlbuilld my_prog.native</code>:</p>
+<pre class="shell"><code class="shell">$ mkdir my_project
+$ cd my_project
+$ echo &#39;let () = print_endline &#39;Hello, World!&#39;&#39; &gt; my_prog.ml
+$ ocamlbuild my_prog.native
+Finished, 4 targets (0 cached) in 00:00:00.
+$ ./my_prog.native
+Hello, World!</code></pre>
+
+<p>Δείτε <a href="compiling_ocaml_projects.html">Μεταγλωττίζοντας Πρότζεκ σε Ocaml</a> για περισσότερες πληροφορίες.</p>
+<h2 id="">Σχόλια</h2><p>Τα σχόλια στη Ocaml ξεκινάν με <code>(*</code> και τελειώνουν με <code>*)</code> κάπως έτσι:</p>
+<pre><code class="ocaml"><span class="comment">(* &Alpha;&upsilon;&tau;&#972; &epsilon;&#943;&nu;&alpha;&iota; &#941;&nu;&alpha; &sigma;&chi;&#972;&lambda;&iota;&omicron; &mu;&iota;&alpha;&sigmaf; &gamma;&rho;&alpha;&mu;&mu;&#942;&sigmaf;. *)</span>
+
+<span class="comment">(* &Alpha;&upsilon;&tau;&#972; &epsilon;&#943;&nu;&alpha;&iota; &#941;&nu;&alpha;
+ * &sigma;&chi;&#972;&lambda;&iota;&omicron; &sigma;&epsilon;
+ * &pi;&omicron;&lambda;&lambda;&#941;&sigmaf; &gamma;&rho;&alpha;&mu;&mu;&#941;&sigmaf;.
+ *)</span></code></pre>
+
+<p>Με άλλα λόγια, η σύμβαση για σχόλια είναι παρόμοια με την αρχική C
+(<code>/* ... */</code>). Δεν υπάρχει μέχρι στιγμής συντακτικό για σχόλια μας γραμμής (όπως
+<code># ...</code> στην Perl ή <code>// ...</code> σε C99/C++/Java).</p>
+<p>Η Ocaml προσμετρά τα εμφολευμένα σχόλια <code>(* ... *)</code>, και αυτό σας επιτρέπει να σχολιο-ποιείτε
+περιοχές κώδικα πολύ εύκολα:</p>
+<pre><code class="ocaml"><span class="comment">(* &Alpha;&upsilon;&tau;&#972;&sigmaf; &omicron; &kappa;&#974;&delta;&iota;&kappa;&alpha;&sigmaf; &delta;&epsilon; &lambda;&epsilon;&iota;&tau;&omicron;&upsilon;&rho;&gamma;&epsilon;&#943; &gamma;&iota;&alpha; &kappa;&#940;&pi;&omicron;&iota;&omicron; &lambda;&#972;&gamma;&omicron; ...
+
+(* Primality test. *)
+<span class="governing">let</span> <span class="ocaml-function">is_prime</span> <span class="ocaml-variable">n </span>=
+  (* note <span class="keyword">to</span> self: ask about this on the mailing lists *) XXX<span class="ocaml-prompt">;;</span><br/>
+*)</span></code></pre>
+
+<h2 id="">Καλώντας Συναρτήσεις</h2><p>Ας υποθέσουμε ότι έχετε γράψει μια συνάρτηση - θα την ονομάσουμε <code>repeated</code> - η οποία
+παίρνει μια συμβολοσειρά <code>s</code> και έναν αριθμό <code>n</code> και επιστρέφει μια νέα συμβολοσειρά η οποία
+περιέχει την αρχική συμβολοσειρά <code>s</code> επαναλαμβανόμενη <code>n</code> φορές.</p>
+<p>Στις πιο πολλές γλώσσες της οικογένειας της c μια κλήση σε αυτή τη συνάρτηση θα έμοιαζε κάπως έτσι:</p>
+<pre class="C"><code class="C">repeated (&#39;hello&#39;, 3)  /* this is C code */</code></pre><p>Αυτό σημαίνει &#39;κάλεσε τη συνάρτηση <code>repeated</code> με δύο ορίσματα, πρώτο
+όρισμα τη συμβολοσειρά <code>hello</code> και δεύτερο όρισμα τον αριθμό 3&#39;</p>
+<p>Η Ocaml, παρόμοια με άλλες συναρτησιακές γλώσσες, χρησιμοποιεί διαφορετικό συντακτικό,
+κάτι που γίνεται συχνά αίτιο λαθών. Εδώ φαίνεται ο τρόπος που θα γράφαμε ότι και παραπάνω
+σε Ocaml:</p>
+<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
+
+<p>Προσοχή: — <strong>δεν</strong> βάζουμε παρενθέσεις, και <strong>δεν</strong> βάζουμε κόμμα μεταξύ των ορισμάτων.</p>
+<p>Η σύνταξη <code>repeated (&#39;hello&#39;, 3)</code> <strong>έχει</strong> νόημα στην OCaml. Σημαίνει
+&#39;κάλεσε τη συνάρτηση <code>repeated</code> με ΕΝΑ όρισμα, το οποίο είναι μια δομή
+&#39;ζεύγος&#39; δύο στοιχείων&#39;. Φυσικά αυτό θα ήταν λάθος, αφού η  συνάρτηση <code>repeated</code>
+περιμένει δύο ορίσματα, και όχι ένα, και το πρώτο όρισμα πρέπει να είναι
+συμβολοσειρά , και όχι ζεύγος. Αλλά ας μην ανησυχούμε για τα ζεύγη (&#39;tuples&#39;, &#39;τούπλες&#39;)
+ακόμα. Αντίθετα ας συγκρατήστε απλά ότι είναι λάθος να βάζουμε παρενθέσεις και
+κόμματα γύρω από τα ορίσματα μιας κλήσης συνάρτησης.</p>
+<p>Ας πάρουμε μια άλλη συνάρτηση <code>prompt_string</code> — η οποία παίρνει μια συμβολοσειρά
+ως ερώτηση στο χρήστη και επιστρέφει την απάντηση του χρήστη ως μια συμβολοσειρά.
+Θέλουμε να περάσουμε αυτή την απάντηση στην repeated <code>repeated</code>.
+Ορίστε οι τρόποι να το κάνουμε αυτό σε C και σε Ocaml:</p>
+<pre class="C"><code class="C">/* C κώδικας: */
+repeated (prompt_string (&#39;Όνομα παρακαλώ: &#39;), 3)</code></pre>
+
+<pre><code class="ocaml"><span class="comment">(* OCaml &kappa;&#974;&delta;&iota;&kappa;&alpha;&sigmaf;: *)</span>
+repeated (prompt_string '&#908;&nu;&omicron;&mu;&alpha; &pi;&alpha;&rho;&alpha;&kappa;&alpha;&lambda;&#974;: ') 3</code></pre>
+
+<p>Παρατηρείστε προσεκτικά τις παρενθέσεις και το κόμμα που λείπει. Στην
+περίπτωση της Ocaml, οι παρενθέσεις περικλείουν το πρώτο όρισμα της <code>repeated</code>
+επειδή αυτό το όρισμα είναι το αποτέλεσμα μιας άλλης κλήσης συνάρτησης.
+Γενικά ο κανόνα είναι: &#39;παρένθεση γύρω από την πλήρη κλήση συνάρτησης -
+όχι παρενθέσεις γύρω από τα ορίσματα μιας κλήσεις συνάρτησης&#39;. Να μερικά
+παραδείγματα:</p>
+<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
+f (g 3 4)            <span class="comment">(* f has one argument, g has two arguments *)</span></code></pre>
+
+<div style="display: none">
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">repeated</span> <span class="ocaml-variable">(s: string) (i: int) </span>=
+    <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>implementation not given'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre></div>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated (<span class="ocaml-error-loc">'</span>hello', 3)     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<h2 id="">Ορίζοντας μια συνάρτηση</h2><p>Ξέρετε πώς να ορίσετε μια συνάρτηση (ή στατική μέθοδο για όσους μιλάνε Java)
+στις ήδη υπάρχουσες γλώσσες. Πώς το κάνουμε αυτό στην Ocaml;</p>
+<p>Το συντακτικό της Ocaml είναι ευχάριστα συνοπτικό. Να μια συνάρτηση
+που παίρνει ως ορίσματα δύο αριθμούς μεταβλητής υποδιαστολής και υπολογίζει
+το μέσο όρο τους:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+  (a +. b) /. 2.0;;</code></pre>
+
+<p>Γράψτε το παραπάνω σε ένα &#39;toplevel&#39; της Ocaml (στα συστήματα Unix γράψτε
+την εντολή <code>ocaml</code> στον φλοιό-terminal) και θα δείτε το παρακάτω:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>Αν παρατηρείστε προσεκτικά τον ορισμό της συνάρτησης, και επίσης και
+τι εμφανίζει η Ocaml αφού το γράψετε, θα σας δημιουργηθούν κάποιες απορίες:</p>
+<ul><li><p>Τι κάνουν όλες αυτές οι τελείες μέσα στον κώδικα;</p>
+</li><li><p>Τι σημαίνει αυτό το πράμα: <code>float -&gt; float -&gt; float</code>;</p>
+</li></ul>
+
+<p>Θα απαντήσουμε αυτές τις ερωτήσεις στα επόμενα τμήματα, αλλά πρώτα ας
+ορίσουμε την ίδια συνάρτηση σε C (ο ορισμός σε Java είναι αρκετά παρόμοιος με τη C),
+και ελπίζουμε ότι θα προκληθούν κι άλλες ερωτήσεις.
+Ορίστε η συνάρτηση ορισμένη σε C:</p>
+<pre class="C"><code class="C">double average (double a, double b)
+{
+  return (a + b) / 2;
+}</code></pre><p>Δείτε πόσο πιο συνοπτικά την ορίσαμε με την Ocaml παραπάνω. Ελπίζουμε ότι
+θα ρωτάτε:</p>
+<ul><li><p>Γιατί δεν πρέπει να ορίσουμε τους τύπους των <code>a</code> και <code>b</code> στην περίπτωση της
+ OCaml; Πώς ξέρει η Ocaml τους τύπους αυτούς; (άραγε <em>ξέρει όντως</em> η Ocaml ποιοι
+ είναι οι τύποι, ή η Ocaml έχει εντελώς δυναμικό σύστημα τύπων; )</p>
+</li><li><p>Στη C το <code>2</code> μετατρέπεται κάτω από το τραπέζι σε <code>double</code>, δε μπορεί η Ocaml
+ να κάνει το ίδιο;</p>
+</li><li><p>Με ποιον τρόπο γράφουμε <code>return</code> στην Ocaml;</p>
+</li></ul>
+
+<p>Ας δώσουμε μερικές απαντήσεις.</p>
+<ul><li><p>Η Ocaml έχει αυστηρά <em>στατικός σύστημα τύπων</em> (με άλλα λόγια δεν
+ αλλάζει τίποτα δυναμικά μεταξύ int, float και string όπως στην Perl).</p>
+</li><li><p>Η Ocaml χρησιμοποιεί <em>διεπαφή τύπων</em> για να εκμαιεύσει τους τύπους,
+ έτσι ώστε να μη χρειάζεται να το κάνετε εσείς. Αν χρησιμοποιείτε το
+ toplevel της Ocaml όπως παραπάνω, τότε η Ocaml θα σας πει το συμπερασμένο
+ τύπο για τη συνάρτησή σας.</p>
+</li><li><p>H OCaml δεν κάνει καμιά μετατροπή τύπων κάτω από το τραπέζι.Αν θέλετε
+ float , πρέπει να γράψετε <code>2.0</code> επειδή το <code>2</code> είναι integer. Η OCaml
+ <strong>δεν μετατρέπει αυτόματα</strong> μεταξύ int, float, string ή οποιονδήποτε άλλο τύπο.</p>
+</li><li><p>Μια παρενέργεια του συμπερασμού τύπων στην Ocaml είναι ότι οι συναρτήσεις
+ (συμπεριλαμβανομένων και των τελεστών) δε μπορούν να  υπερφορτωθούν.
+ Η OCaml ορίζει το <code>+</code> ως την πρόσθεση για <em>ακεραίους</em>. Για να προσθέσετε floats
+ πρέπει να χρησιμοποιείστε το <code>+.</code> (προσοχή στην τελεία). Παρόμοια χρησιμοποιείστε
+ <code>-.</code>, <code>*.</code>, <code>/.</code>  για τις πράξεις στους floats.</p>
+</li><li><p>Η OCaml δεν έχει δεσμευμένη λέξη <code>return</code> — η τελευταία έκφραση σε μια συνάρτηση
+ γίνεται το αποτέλεσμα της συνάρτησης αυτής αυτόματα.</p>
+</li></ul>
+
+<p>Θα παρουσιάσουμε περισσότερες λεπτομέρειες σε επόμενα τμήματα και κεφάλαια.</p>
+<h2 id="">Βασικοί τύποι</h2><p>Οι βασικοί τύποι στην Ocaml είναι:</p>
+<pre class="text"><code class="text">OCaml type  Range
+
+int         31-bit προσημασμένος ακέραιος (περίπου +/- 1 δισεκατομμύριο) σε 32-bit
+            επεξεργαστές, ή 63-bit προσημασμένος ακέραιος σε 64-bit επεξεργαστές
+float       IEEE αριθμός κινητής υποδιαστολής διπλής ακρίβειας, ισοδύναμο με double της C
+bool        Μπουλιανή μεταβλητή true ή false
+char        Ένας 8-bit χαρακτήρας
+string      Μια συμβολοσειρά
+unit        Γράφετε ως ()</code></pre><p>Η Ocaml χρησιμοποιεί ένα από τα bits σε έναν int εσωτερικά, ώστε να μπορεί
+να διαχειρίζεται αυτόματα τη χρησιμοποίηση μνήμης (συλλογή σκουπιδιών).
+Γι αυτό ο βασικός τύπος <code>int</code> έχει 31-bits και όχι 32 (63 σε 64-bits
+επεξεργαστές). Στην πράξη αυτό δεν είναι πρόβλημα εκτός από μερικές
+ειδικές περιπτώσεις. Για παράδειγμα αν μετράτε πράγματα σε έναν βρόχο,
+τότε η Ocaml σας περιορίζει στα 1 δισεκατομμύριο αντί για 2 δισεκατομμύρια.
+Αυτό δεν είναι πρόβλημα καθώς αν μετράτε πράγματα κοντά σε αυτό το όριο
+θα έπρεπε να χρησιμοποιείτε βιβλιοθήκες μεγάλων αριθμών (όπως τα modules <code>Nat</code>
+και <code>Big_int</code> της Ocaml). Παρόλα αυτά αν πρέπει να διαχειριστείτε αντικείμενα
+όπως τύπο μεγέθους 32-bits (π.χ. γράφετε κώδικα για κρυπτογραφικές ή δικτυακές
+εφαρμογές), η Ocaml σας παρέχει έναν τύπο <code>nativeint</code> ο οποίος ταυτίζεται με
+τον τύπο ακεραίων του επεξεργαστή σας.</p>
+<p>Η Ocaml δεν έχει κάποιο βασικό μη προσημασμένο τύπο για ακέραιους, αλλά
+μπορείτε να έχετε τα ίδια αποτελέσματα με τη χρήση του <code>nativeint</code>. Η Ocaml
+δε φαίνεται να έχει αριθμούς κινητής υποδιαστολής απλής ακρίβειας.</p>
+<p>Η Ocaml παρέχει τον τύπο <code>char</code> ο οποίος χρησιμοποιείτε για χαρακτήρες
+οι οποίο γράφονται για παράδειγμα ως <code>&#39;x&#39;</code>. Δυστυχώς ο τύπος <code>char</code> δεν
+υποστηρίζει Unicode ή UTF-8. Αυτό είναι ένα σημαντικό πρόβλημα στην Ocaml
+που πρέπει να διορθωθεί, αλλά για την ώρα υπάρχου <a href="http://camomile.sourceforge.net/" title="http://camomile.sourceforge.net/">πλήρεις βιβλιοθήκες για Unicode</a>
+που υποστηρίζουν Unicode και UTF-8.</p>
+<p>Οι συμβολοσειρές δεν είναι απλά λίστες χαρακτήρων. Έχουν το δικό τους,
+πιο αποδοτικό τρόπο αναπαράστασης.</p>
+<p>Ο τύπος <code>unit</code> μοιάζει σαν το <code>void</code> της C, αλλά θα μιλήσουμε γι αυτόν
+παρακάτω.</p>
+<h2 id="">Μετατροπές τύπων άμεσα και έμμεσα</h2><p>Στις γλώσσες της οικογένειας της C οι ακέραιοι μπορούν να γίνουν αριθμοί
+κινητής υποδιαστολής υπό κάποιες προϋποθέσεις. Για παράδειγμα  αν γράψετε
+<code>1 + 2.5</code> τότε το πρώτο όρισμα (που είναι ακέραιος) θα γίνει αριθμός κινητής υποδιαστολής,
+και το αποτέλεσμα θα είναι και αυτό αριθμός κινητής υποδιαστολής.
+Είναι σαν να είχατε γράψει <code>((double) 1) + 2.5</code>, αλλά έμμεσα.</p>
+<p>Η Ocaml δεν κάνει ποτέ έμμεση μετατροπή τύπων. Στην Ocaml το <code>1 + 2.5</code>
+θα παράξει σφάλμα τύπου. Ο τελεστής <code>+</code> στην OCaml απαιτεί δύο ακέραιους
+ως ορίσματα και εδώ του δίνουμε έναν ακέραιο και έναν αριθμό κινητής
+υποδιαστολής οπότε μας λέει το εξής:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + <span class="ocaml-error-loc">2.5</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type float but an expression was expected of type
+         int
+</span></code></pre>
+
+<p>(Σε απλά ελληνικά αυτό σημαίνει &#39;μου έδωσες έναν αριθμό κινητής υποδιαστολής εδώ,
+αλλά εγώ περίμενα ακέραιο&#39;).</p>
+<p>Για να προσθέσετε δύο αριθμούς κινητής υποδιαστολής πρέπει να χρησιμοποιήσετε
+διαφορετικό τελεστή, τον <code>+.</code> (προσοχή στην τελεία).</p>
+<p>Η Ocaml δεν μετατρέπει τους ακέραιους σε αριθμούς κινητής υποδιαστολής οπότε
+και το παρακάτω είναι επίσης λάθος:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">1</span> +. 2.5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>Τώρα η Ocaml παραπονιέται για το πρώτο όρισμα.</p>
+<p>Και τι γίνεται αν θέλετε να προσθέσετε έναν ακέραιο με έναν κινητής υποδιαστολής;
+(Έστω <code>i</code> και <code>f</code> αντίστοιχα). Στην OCaml πρέπει να κάνετε άμεση μετατροπή τύπων:</p>
+<pre><code class="ocaml">(float_of_int i) +. f</code></pre>
+
+<p>Η <code>float_of_int</code> είναι μια συνάρτηση που παίρνει <code>int</code> και επιστρέφει <code>float</code>.
+Υπάρχουν πάρα πολλές άλλες τέτοιες συναρτήσεις που έχουν ονόματα όπως
+<code>int_of_float</code>, <code>char_of_int</code>, <code>int_of_char</code>, <code>string_of_int</code> και τα λοιπά,
+και κάνουν συνήθως αυτό που περιμένετε.</p>
+<p>Αφού η μετατροπή <code>int</code> σε <code>float</code> είναι αρκετά συχνή, η συνάρτηση <code>float_of_int</code>
+έχει ένα συντομότερο συνώνυμο: το παραπάνω παράδειγμα μπορεί να γραφτεί και ως:</p>
+<pre><code class="ocaml">float i +. f</code></pre>
+
+<p>(Παρατηρήστε ότι σε αντίθεση με τη C, είναι εντελώς νόμιμο στην Ocaml για έναν
+τύπο και μια συνάρτηση να έχουν το ίδιο όνομα.)</p>
+<h3 id="">Άμεση ή έμμεση μετατροπή; Τι είναι καλύτερο;</h3><p>Μπορείτε να νομίζετε πως η άμεση μετατροπή τύπων είναι άσχημη, ακόμη και
+χρονοβόρα, και έχετε δίκιο. Όμως κανείς μπορεί να επιχειρηματολογήσει υπέρ της.
+Αρχικά, η Ocaml χρειάζεται αυτή την άμεση μετατροπή για να μπορεί να εκτελεί
+το συμπερασμό τύπων, ένα εργαλείο που μπορεί να σας γλυτώσει πολύ χρόνο
+και σίγουρα αναπληρώνει την επιπλέον πληκτρολόγηση που απαιτεί η άμεση μετατροπή.
+Κατά δεύτερον αν έχετε αφιερώσει χρόνο αποσφαλματώνοντας προγράμματα γραμμένα
+σε C θα ξέρετε ότι (α) λάθη που οφείλονται στην έμμεση μετατροπή τύπων είναι
+δύσκολο να εντοπιστούν και (β) χάνετε τον πιο πολύ χρόνο κοιτώντας την οθόνη
+προσπαθώντας να εντοπίσετε που έχουν συμβεί οι έμμεσες μετατροπές. Κάνοντας
+μόνο άμεσες μετατροπές σας βοηθά στην αποσφαλμάτωση. Τρίτον μερικές μετατροπές
+(ειδικά από ακέραιους σε κινητής υποδιαστολής) είναι πολύ ακριβές λειτουργίες.
+Γι&#39; αυτό θα ήταν καλό να μην είναι κρυμμένες.</p>
+<h2 id="">Συνήθεις συναρτήσεις και αναδρομικές συναρτήσεις</h2><p>Σε αντίθεση με τις γλώσσες που προήλθαν από τη C, μια συνάρτηση δεν είναι
+αναδρομική εκτός αν το δηλώσετε ρητά γράφοντας <code>let rec</code> αντί για <code>let</code>. Να
+ένα παράδειγμα αναδρομικής συνάρτησης:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Προσέξτε ότι η <code>range</code> καλεί τον εαυτό της.</p>
+<p>Η μόνη διαφορά μεταξύ <code>let</code> και <code>let rec</code> είναι το πεδίο στο οποίο είναι
+ορατό το όνομα της συνάρτησης. Αν η παραπάνω συνάρτηση είχε δηλωθεί απλά
+με <code>let</code>, τότε η κλήση στη <code>range</code> θα έψαχνε να βρει για μια ήδη δηλωμένη
+συνάρτηση με όνομα <code>range</code>, και όχι τη συνάρτηση που ορίζουμε τώρα.
+Γράφοντας <code>let</code> σας επιτρέπει να επανα-ορίσετε μια τιμή όσον αφορά
+τον προηγούμενο ορισμό της. Για παράδειγμα:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">positive_sum</span> <span class="ocaml-variable">a b </span>=
+    <span class="governing">let </span><span class="ocaml-variable">a</span> = max a 0
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">b</span> = max b 0 <span class="governing">in</span>
+    a + b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val positive_sum : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>Αυτός ο επανα-ορισμός κρύβει το προηγούμενο δέσιμο των <code>a</code> και <code>b</code> από
+τον ορισμό της συνάρτησης. Σε μερικές περιπτώσεις οι προγραμματιστές
+προτιμούν αυτό το μοτίβο από το να χρησιμοποιήσουν ένα νέο όνομα μεταβλητής
+(<code>let a_pos = max a 0</code>) μιας και καθιστά το παλιό δέσιμο μη προσβάσιμο
+και άρα μόνο οι τελευταίες τιμές των <code>a</code> και <code>b</code> είναι προσβάσιμες.</p>
+<p>Δεν υπάρχει διαφορά στην απόδοση μεταξύ συναρτήσεων που ορίστηκαν με <code>let</code>
+και με συναρτήσεις που ορίστηκαν με <code>let rec</code>, οπότε αν προτιμάτε μπορείτε
+πάντα να χρησιμοποιήσετε το <code>let rec</code> και να έχετε την ίδια σημασιολογία
+με της γλώσσες της οικογένειας της C.</p>
+<h2 id="">Τύποι συναρτήσεων</h2><p>Εξαιτίας του συμπερασμού τύπων, σπάνια θα χρειαστεί να δηλώσετε ρητά
+τον τύπο μιας συνάρτησης. Όμως η Ocaml συχνά τυπώνει τον τύπο που έχει
+συμπεράνει για μια συνάρτηση, οπότε χρειάζεται να ξέρετε το συντακτικό
+των τύπων. Για μια συνάρτηση <code>f</code> που παίρνει ορίσματα <code>arg1</code>,
+<code>arg2</code>, ... <code>argn</code>, και επιστρέφει τύπο <code>rettype</code>, ο μεταγλωττιστής θα τυπώσει:</p>
+<pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
+
+<p>Η σύνταξη με το βέλος φαίνεται παράξενη τώρα, αλλά μόλις δούμε την
+έννοια του currying θα καταλάβετε γιατί επιλέχτηκε. Για την ώρα θα
+δούμε μόνο μερικά παραδείγματα.</p>
+<p>Η συνάρτηση <code>repeated</code> που παίρνει μια συμβολοσειρά και έναν ακέραιο
+και επιστρέφει μια συμβολοσειρά έχει τύπο:</p>
+<pre><code class="ocaml">repeated : string -&gt; int -&gt; string</code></pre>
+
+<p>Η συνάρτηση <code>average</code> που παίρνει δύο αριθμούς κινητής υποδιαστολής και
+επιστρέφει έναν αριθμό κινητής υποδιαστολής έχει τύπο:</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>Η συνάρτηση <code>int_of_char</code> που παρέχεται από την Ocaml:</p>
+<pre><code class="ocaml">int_of_char : char -&gt; int</code></pre>
+
+<p>Αν μια συνάρτηση δεν επιστρέφει τίποτα (<code>void</code> για προγραμματιστές που
+έρχονται από C και Java), τότε γράφουμε ότι επιστρέφει τύπο <code>unit</code>. Εδώ
+για παράδειγμα βλέπουμε τον τύπο της συνάρτησης που κάνει ότι και η <code>fputc</code>
+στη C:</p>
+<pre><code class="ocaml">output_char : out_channel -&gt; char -&gt; unit</code></pre>
+
+<h3 id="">Πολυμορφικές συναρτήσεις</h3><p>Τώρα για κάτι λίγο πιο περίεργο. Τι συμβαίνει όταν μια συνάρτηση μπορεί
+να πάρει οτιδήποτε ως όρισμα; Να μια περίεργη συνάντηση που παίρνει
+ένα όρισμα, αλλά το αγνοεί και επιστρέφει πάντα 3:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3</code></pre>
+
+<p>Ποιος είναι ο τύπος της συνάρτησης; Στην Ocaml χρησιμοποιούμε μια
+ειδική μεταβλητή τύπων και εννοούμε &#39;ότι τύπος θες&#39;. Είναι ένα χαρακτήρας
+μονών εισαγωγικών ακολουθούμενος από ένα γράμμα. Ο τύπος της από πάνω
+συνάρτησης θα γραφόταν κανονικά ως:</p>
+<pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
+
+<p>Όπου <code>&#39;a</code> σημαίνει στην πραγματικότητα οποιοσδήποτε τύπος. Μπορείτε
+για παράδειγμα να ονομάσετε αυτή τη συνάρτηση ως <code>give_me_a_three &#39;foo&#39;</code>
+ή <code>give_me_a_three 2.0</code>. Και τα δύο είναι νόμιμες εκφράσεις στην Ocaml.</p>
+<p>Δε θα σας είναι ακόμα σαφές γιατί οι πολυμορφικές συναρτήσεις είναι χρήσιμες
+αλλά είναι πολύ χρήσιμες και πολύ συνηθισμένες, οπότε και θα τις μελετήσουμε
+αργότερα. (Συμβουλή: ο πολυμορφισμός είναι κάτι σαν τα templates στην C++
+ή τα generics στη Java 1.5).</p>
+<h2 id="">Διεπαφές τύπων</h2><p>Είδαμε λοιπόν ότι οι συναρτησιακές γλώσσες προγραμματισμού έχουν
+πολλά ενδιαφέροντα χαρακτηριστικά, και η Ocaml είναι η γλώσσα που έχει
+όλα αυτά τα χαρακτηριστικά μαζεμένα μέσα της ταυτόχρονα, κάνοντάς τη
+μια πολύ πρακτική γλώσσα για αληθινούς προγραμματιστές. Το περίεργο
+είναι ότι τα πιο πολλά από τα εργαλεία της δεν έχουν καμία σχέση με
+τον συναρτησιακό προγραμματισμό. Στην πραγματικότητα έχουμε ήδη φτάσει
+στο πρώτο χρήσιμο χαρακτηριστικό και δεν έχουμε μιλήσει καν γιατί
+ο συναρτησιακός προγραμματισμός λέγεται &#39;συναρτησιακός&#39;. Το χαρακτηριστικό
+αυτό είναι ο συμπερασμός τύπων</p>
+<p>Με απλά λόγια: δε χρειάζεται να δηλώνεται τους τύπους των συναρτήσεων
+σας και τον μεταβλητών σας, επειδή η Ocaml θα το κάνει μόνη της για εσάς!</p>
+<p>Ακόμα, η Ocaml πάει ένα βήμα παραπέρα και ελέγχει αν όλοι οι τύποι που έχετε
+δημιουργήσει ταιριάζουν. Ακόμα και μεταξύ διαφορετικών αρχείων.</p>
+<p>Αλλά η Ocaml είναι και μια πρακτική γλώσσα, και για αυτό το λόγο περιέχει
+κερκόπορτες μέσα στο σύστημα τύπων της που σας επιτρέπουν να παρακάμψετε
+τους ελέγχους που εκτελεί για τις σπάνιες περιπτώσεις που έχετε λόγο να το
+κάνετε. Μόνο οι guru της γλώσσας είναι πιθανό να βρουν λόγο να παρακάμψουν
+το σύστημα τύπων όμως.</p>
+<p>Ας επιστρέψουμε όμως στη συνάρτηση <code>average</code> την οποία γράψαμε στο
+toplevel της Ocaml.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>Ως εκ θαύματος η Ocaml κατάλαβα από μόνη της ότι η συνάρτηση παίρνει
+δύο αριθμούς κινητής υποδιαστολής και επιστρέφει επίσης έναν
+αριθμό κινητής υποδιαστολής.</p>
+<p>Πώς το κατάφερε αυτό;  Αρχικά βλέπει που χρησιμοποιούνται τα <code>a</code> και <code>b</code>,
+συγκεκριμένα στην έκφραση <code>(a +. b)</code>. Όμως το <code>+.</code> είναι μια συνάρτηση
+που πάντα παίρνει δύο αριθμούς κινητής υποδιαστολής ως ορίσματα, άρα
+με απλή λογική επαγωγή τα <code>a</code>και  <code>b</code> πρέπει να είναι και τα δύο αριθμοί
+κινητής υποδιαστολής.</p>
+<p>Δεύτερον το &#39;/.&#39; επιστρέφει έναν αριθμό κινητής υποδιαστολής, και αυτή
+η τιμή είναι η ίδια με την τιμή επιστροφής της συνάρτησης <code>average</code>. Άρα
+η <code>average</code> πρέπει να επιστρέφει έναν αριθμό κινητής υποδιαστολής. Το
+συμπέρασμα είναι ότι η <code>average</code> έχει τελικά τύπο:</p>
+<pre><code class="ocaml">average : float -&gt; float -&gt; float</code></pre>
+
+<p>Ο συμπερασμός τύπων είναι προφανώς εύκολος για τόσο μικρά προγράμματα,
+αλλά λειτουργεί και σε πολύ μεγαλύτερα, και σας γλυτώνει τρομερό χρόνο
+αφού αφαιρεί μια ολόκληρη κατηγορία λαθών που προκαλούν συχνά segfaults,
+<code>NullPointerException</code>s και <code>ClassCastException</code>s σε άλλες γλώσσες (ή
+σημαντικές αλλά συχνά παραβλεπόμενες προειδοποιήσεις, όπως στην Perl).</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/basics.el.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

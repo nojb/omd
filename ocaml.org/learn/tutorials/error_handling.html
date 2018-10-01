@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="error_handling.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Error Handling &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/error_handling.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Error Handling</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Exceptions">Exceptions</a>
+<ul><li><a href="#Documentation">Documentation</a>
+</li><li><a href="#Stacktraces">Stacktraces</a>
+</li><li><a href="#Printing">Printing</a>
+</li></ul>
+</li><li><a href="#Result-type">Result type</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Error-Handling">Error Handling</h1>
+
+<h2 id="Exceptions">Exceptions</h2>
+
+<p>One way of handling errors in OCaml is exceptions. The
+standard library relies heavily upon them.</p>
+<p>Exceptions belong to the type <code>exn</code> (an extensible sum type):</p>
+<pre><code class="ocaml">
+exception Foo <span class="keyword">of</span> string
+
+<span class="governing">let</span> <span class="ocaml-function">i_will_fail</span> <span class="ocaml-variable">() </span>=
+  <span class="keyword">raise</span> (Foo 'ohnoes!')
+
+</code></pre>
+
+<p>Here, we add a variant <code>Foo</code> to the type <code>exn</code>, and create a function
+that will raise this exception. Now, how do we handle exceptions?
+The construct is <code>try ... with ...</code>:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">safe_inverse</span> <span class="ocaml-variable">n </span>=
+  <span class="keyword">try</span> Some (1/n)
+  <span class="keyword">with</span> Division_by_zero -&gt; None
+
+<span class="governing">let</span> <span class="ocaml-function">safe_list_find</span> <span class="ocaml-variable">p l </span>=
+  <span class="keyword">try</span> Some (<span class="ocaml-module">List</span>.find p l)
+  <span class="keyword">with</span> Not_found -&gt; None</code></pre>
+
+<p>We can try those functions:</p>
+<pre><code class="ocaml"># 1/0<span class="ocaml-prompt">;;</span><br/>Exception: <span class="ocaml-module">Division_by_zero</span>.
+# safe_inverse 2<span class="ocaml-prompt">;;</span><br/>- : int option = Some 0
+# safe_inverse 0<span class="ocaml-prompt">;;</span><br/>- : int option = None
+
+# <span class="ocaml-module">List</span>.find (<span class="keyword">fun</span> x-&gt;x mod 2 =0)  [1;3;5]
+Exception: <span class="ocaml-module">Not_found</span>.
+# safe_find (<span class="keyword">fun</span> x-&gt;x mod 2 =0)  [1;3;4;5]
+- : int option = Some 4
+# safe_find (<span class="keyword">fun</span> x-&gt;x mod 2 =0)  [1;3;5]
+- : int option = None</code></pre>
+
+<p>The biggest issue with exceptions is that they do not appear in types.
+One has to read the documentation to see that, indeed, <code>Map.S.find</code>
+or <code>List.hd</code> are not total functions, and that they might fail.</p>
+<p>It is considered good practice nowadays, when a function can fail in
+cases that are not bugs (i.e., not <code>assert false</code>, but network failures,
+keys not present, etc.)
+to return a more explicit type such as <code>&#39;a option</code> or <code>(&#39;a, &#39;b) result</code>.
+A relatively common idiom is to have such a safe version of the function,
+say, <code>val foo : a -&gt; b option</code>, and an exception raising
+version <code>val foo_exn : a -&gt; b</code>.</p>
+<h3 id="Documentation">Documentation</h3>
+
+<p>Functions that can raise exceptions should be documented like this:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">foo</span> : a -&gt; b
+<span class="comment">(** foo does this <span class="governing">and</span> that, here is how it works, etc.
+    @<span class="keyword">raise</span> Invalid_argument <span class="keyword">if</span> a doesn't satisfy blabla
+    @<span class="keyword">raise</span> Sys_error <span class="keyword">if</span> filesystem is not happy *)</span></code></pre>
+
+<h3 id="Stacktraces">Stacktraces</h3>
+
+<p>To get a stacktrace when a unhandled exception makes your program crash, you
+need to compile the program in &#39;debug&#39; mode (with <code>-g</code> when calling
+<code>ocamlc</code>, or <code>-debug</code> when calling <code>ocamlbuild</code>).
+Then:</p>
+<pre><code>OCAMLRUNPARAM=b ./myprogram [args]</code></pre><p>And you will get a stacktrace.</p>
+<p>Alternatively, you can call, from within the program,</p>
+<pre><code class="ocaml"><span class="governing">let</span> () = <span class="ocaml-module">Printexc</span>.record_backtrace true</code></pre>
+
+<h3 id="Printing">Printing</h3>
+
+<p>To print an exception, the module <code>Printexc</code> comes in handy. For instance,
+the following function <code>notify_user : (unit -&gt; &#39;a) -&gt; &#39;a</code> can be used
+to call a function and, if it fails, print the exception on <code>stderr</code>.
+If stacktraces are enabled, this function will also display it.</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">notify_user</span> <span class="ocaml-variable">f </span>=
+  <span class="keyword">try</span> f()
+  <span class="keyword">with</span> e -&gt;
+    <span class="governing">let </span><span class="ocaml-variable">msg</span> = <span class="ocaml-module">Printexc</span>.to_string e
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">stack</span> = <span class="ocaml-module">Printexc</span>.get_backtrace () <span class="governing">in</span>
+    <span class="ocaml-module">Printf</span>.eprintf 'there was an error: %s%s\n' msg stack;
+    <span class="keyword">raise</span> e</code></pre>
+
+<p>OCaml knows how to print its builtin exception, but you can also tell it
+how to print your own exceptions:</p>
+<pre><code class="ocaml">exception Foo <span class="keyword">of</span> int
+
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Printexc</span>.register_printer
+    (function
+      | Foo i -&gt; Some (<span class="ocaml-module">Printf</span>.sprintf 'Foo(%d)' i)
+      | _ -&gt; None <span class="comment">(* <span class="keyword">for</span> other exceptions *)</span>
+    )</code></pre>
+
+<p>Each printer should take care of the exceptions it knows about, returning
+<code>Some &lt;printed exception&gt;</code>, and return <code>None</code> otherwise (let the other printers
+do the job!).</p>
+<h2 id="Result-type">Result type</h2>
+
+<p>Since OCaml 4.03, the stdlib contains the following type
+(can also be found in the retrocompatibility package <code>result</code>, on
+opam):</p>
+<pre><code class="ocaml"><span class="governing">type</span> ('a, 'b) result =
+  | Ok <span class="keyword">of</span> 'a
+  | Error <span class="keyword">of</span> 'b</code></pre>
+
+<p>A value <code>Ok x</code> means that the computation succeeded with <code>x</code>, and
+a value <code>Error e</code> means that it failed.
+Pattern matching can be used to deal with both cases, as with any
+other sum type. The advantage here is that a function <code>a -&gt; b</code> that
+fails can be modified so its type is <code>a -&gt; (b, error) result</code>,
+which makes the failure explicit.
+The error case <code>e</code> in <code>Error e</code> can be of any type
+( the <code>&#39;b</code> type variable), but a few possible choices
+are:</p>
+<ul><li><p><code>exn</code>, in which case the result type just makes exceptions explicit.</p>
+</li><li><p><code>string</code>, where the error case is a message that indicates what failed.</p>
+</li><li><p><code>string lazy_t</code> or <code>Sexplib.Sexp.t lazy_t</code> (used in JaneStreet&#39;s Core
+ library), a more elaborate form of error message that is only evaluated
+ if printing is required.</p>
+</li><li><p>some polymorphic variant, with one case per
+ possible error. This is very accurate (each error can be dealt with
+ explicitely and occurs in the type) but the use of polymorphic variants
+ sometimes make error messages hard to read.</p>
+</li></ul>
+
+<p>For easy combination of functions that can fail, many libraries
+(<code>rresult</code>, <code>containers</code>, <code>core</code>, <code>batteries</code>, etc.) provide lots of
+useful combinators on the <code>result</code> type: <code>map</code>, <code>&gt;&gt;=</code>, etc.</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/error_handling.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

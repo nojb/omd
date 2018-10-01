@@ -1,0 +1,591 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="data_types_and_matching.html" rel="alternate" hreflang="en"/>
+<link href="data_types_and_matching.fr.html" rel="alternate" hreflang="fr"/>
+<link href="data_types_and_matching.it.html" rel="alternate" hreflang="it"/>
+<link href="data_types_and_matching.ja.html" rel="alternate" hreflang="ja"/>
+<link href="data_types_and_matching.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Tipi di dati e matching &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/data_types_and_matching.it.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.it.html">Tutorials su OCaml</a><span class="divider"></span></li>
+<li class="active">Tipi di dati e matching</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="data_types_and_matching.html">en</a></li>
+<li><a href="data_types_and_matching.fr.html">fr</a></li>
+<li class="active">it</li>
+<li><a href="data_types_and_matching.ja.html">日本語</a></li>
+<li><a href="data_types_and_matching.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Liste-linkate">Liste linkate</a>
+<ul><li><a href="#Il-tipo-di-una-lista-linkata">Il tipo di una lista linkata</a>
+</li></ul>
+</li><li><a href="#Strutture">Strutture</a>
+</li><li><a href="#Varianti-union-qualificate-ed-enum">Varianti (union qualificate ed enum)</a>
+<ul><li><a href="#Varianti-ricorsive-utilizzate-per-gli-alberi">Varianti ricorsive (utilizzate per gli alberi)</a>
+</li><li><a href="#Varianti-parametrizzate">Varianti parametrizzate</a>
+</li></ul>
+</li><li><a href="#Liste-strutture-e-varianti-sommario">Liste, strutture e varianti - sommario</a>
+</li><li><a href="#Pattern-matching-sui-tipi-di-dati">Pattern matching (sui tipi di dati)</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Tipi-di-dati-e-matching">Tipi di dati e matching</h1>
+
+<h2 id="Liste-linkate">Liste linkate</h2>
+
+<p>Così come Perl, OCaml ha il supporto per le liste implementato nel
+linguaggio. Tutti gli elementi di una lista in OCaml devono essere dello
+stesso tipo. Per scrivere una lista, usate:</p>
+<pre><code class="ocaml">[1; 2; 3]</code></pre>
+
+<p>(Si notino i punti e virgola, NON virgole).</p>
+<p><code>[]</code> è la lista vuota.</p>
+<p>Una lista ha un&#39;<strong>head</strong> (testa) (il primo elemento) ed una <strong>tail</strong>
+(coda) (il resto degli elementi). La testa è un elemento, e la coda è
+una lista, così nell&#39;esempio sopra la testa è l&#39;intero <code>1</code> mentre la
+coda è la <em>lista</em> <code>[2; 3]</code>.</p>
+<p>Un modo alternativo di scrivere una lista è quello di usare l&#39;operatore
+<strong>cons</strong> <code>head :: tail</code>. Così i seguenti modi di scrivere una lista sono
+esattamente equivalenti:</p>
+<pre><code class="ocaml">[1; 2; 3]
+1 :: [2; 3]
+1 :: 2 :: [3]
+1 :: 2 :: 3 :: []</code></pre>
+
+<p>Perché menziono l&#39;operatore cons? Bene, è utile quando cominciamo a fare
+<em>pattern matching</em> sulle liste, riguardo la qual cosa parlerò sotto.</p>
+<h3 id="Il-tipo-di-una-lista-linkata">Il tipo di una lista linkata</h3>
+
+<p>Il tipo di una list linkata di interi è <code>int list</code>, ed in generale il
+tipo di una lista linkata di <code>foo</code> è <code>foo list</code>.</p>
+<p>Ciò implica che tutti gli elementi di una lista linkata devono avere il
+medesimo tipo. Ma il tipo può essere polimorfico (cioè <code>&#39;a list</code>), che è
+davvero utile se volete scrivere funzioni generiche che operano su
+&#39;liste di checchessia&#39;. (Ma si noti: <code>&#39;a list</code> non significa che
+ciascun elemento preso singolamente ha un diverso tipo - non potete
+comunque usare questo per costruire una lista contenente, diciamo, int e
+string insieme. Significa che il tipo degli elementi è qualsiasi, ma
+tutti del medesimo qualsiasi tipo.)</p>
+<p>La funzione <code>length</code> definita come parte del modulo di OCaml <code>List</code> è un
+buon esempio di ciò. Non importa se le lista contiene interi o stringhe
+o oggetti o piccoli animali da pelliccia, la funzione <code>List.length</code> può
+comunque essere chiamata su di essa. Il tipo di <code>List.length</code> è dunque:</p>
+<pre><code class="ocaml"><span class="ocaml-module">List</span>.length : 'a list -&gt; int</code></pre>
+
+<h2 id="Strutture">Strutture</h2>
+
+<p>C e C++ hanno il concetto di una semplice <code>struct</code>, abbreviazione per
+&#39;structure&#39; (struttura). Java ha le classi che possono essere utilizzate
+con effetti simili, sebbene molto più laboriosamente.</p>
+<p>Considerate questa semplice struttura C:</p>
+<pre><code>struct pair_of_ints {
+  int a, b;
+};</code></pre><p>Il più semplice equivalente a ciò in OCaml è una <strong>tupla</strong> come <code>(3, 4)</code>
+che ha il tipo <code>int * int</code>. Diversamente dalle liste, le tuple possono
+contenere elementi di differenti tipi, così ad esempio
+<code>(3, &#39;hello&#39;, &#39;x&#39;)</code> ha tipo <code>int * string * char</code>.</p>
+<p>Un modo alternativo lievemente più complesso di scrivere una struttura C
+è quello di utilizzare un <strong>record</strong>. I record, come le struct C, vi
+consentono di dare nomi agli elementi. Le tuple non vi lasciano dare
+nomi agli elementi, ma dovete invece ricordare l&#39;ordine in cui essi
+appaiono. Ecco l&#39;equivalente della nostra struct C sopra:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</code></pre>
+
+<p>Questo definisce il tipo, ed ecco come effettivamente <em>creiamo</em> oggetti
+di questo tipo:</p>
+<pre><code class="ocaml">{ a=3; b=5 }</code></pre>
+
+<p>Si noti che usiamo <code>:</code> nella definizione di tipo mentre usiamo <code>=</code> quando creiamo
+oggetti di questo tipo.</p>
+<p>Seguono alcuni esempi di ciò digitati nel toplevel:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type pair_of_ints = { a : int; b : int; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">{a=3; b=5}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : pair_of_ints = {a = 3; b = 5}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">{a=3}</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some record fields are undefined: b
+</span></code></pre>
+
+<p>Così OCaml non vi consente di lasciare nella vostra struttura dei campi
+indefiniti.</p>
+<h2 id="Varianti-union-qualificate-ed-enum">Varianti (union qualificate ed enum)</h2>
+
+<p>Una &#39;union qualificata&#39; (&#39;qualified union&#39;) non esiste realmente in C,
+sebbene vi sia il supporto per essa nel compilatore gcc. Ecco il pattern
+comunemente usato per una union qualificata in C:</p>
+<pre><code>struct foo {
+  int type;
+#define TYPE_INT 1
+#define TYPE_PAIR_OF_INTS 2
+#define TYPE_STRING 3
+  union {
+    int i;        // If type == TYPE_INT.
+    int pair[2];  // If type == TYPE_PAIR_OF_INTS.
+    char *str;    // If type == TYPE_STRING.
+  } u;
+};</code></pre><p>Dovrei pensare che l&#39;abbiamo visto tutti, e non è un bel vedere. Per
+cominciare non è sicuro: il programmatore potrebbe commettere uno
+sbaglio ed usare accidentalmente, diciamo, il campo <code>u.i</code> quando di
+fatto nella sua struttura è stata immagazzinata una stringa. Inoltre il
+compilatore non può facilmente verificare se in un&#39;istruzione switch
+sono stati verificati tutti i possibili tipi (si potrebbe invece
+utilizzare un tipo <code>enum</code> per risolvere questo particolare problema). Il
+programmatore potrebbe dimenticare di impostare il campo <code>type</code>, il che
+avrebbe per effetto ogni sorta di giochi e divertimenti. Inoltre è
+ingombrante.</p>
+<p>Ecco l&#39;equivalente elegante e conciso in OCaml:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">foo</span> = Nothing | Int <span class="keyword">of</span> int | Pair <span class="keyword">of</span> int * int | String <span class="keyword">of</span> string</code></pre>
+
+<p>Quella è la definizione del tipo. La prima parte di ciascun <code>|</code> separato a parte è detto costruttore. 
+Esso può essere chiamata in qualunque
+modo, purché cominci con una lettera maiuscola. Se il costruttore può
+essere usato per la definizione di un valore, è seguito dalla parte
+<code>of type</code>, dove type comincia sempre per lettera minuscola. Nell&#39;esempio
+sopra, Nothing è usato come costante e gli altri costruttori sono usati
+con dei valori.</p>
+<p>Per <em>creare</em> effettivamente cose di questo tipo scrivereste:</p>
+<pre><code class="ocaml">Nothing
+Int 3
+Pair (4, 5)
+String 'hello'
+    <span class="comment">(* &amp;c. *)</span></code></pre>
+
+<p>Ciascuna di queste espressioni ha tipo <code>foo</code>.</p>
+<p>Si noti che si usa <code>of</code> nello scrivere la definizione del tipo, ma NON
+nello scrivere elementi di quel tipo.</p>
+<p>Per estensione, una semplice <code>enum</code> di C definita come:</p>
+<pre><code>enum sign { positive, zero, negative };</code></pre><p>può essere scritta in OCaml come:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">sign</span> = Positive | Zero | Negative</code></pre>
+
+<h3 id="Varianti-ricorsive-utilizzate-per-gli-alberi">Varianti ricorsive (utilizzate per gli alberi)</h3>
+
+<p>Le varianti possono essere ricorsive, e l&#39;utilizzo comune di ciò è per
+la definizione di strutture ad albero. Qui è davvero dove la potenza
+espressiva dei linguaggi funzionali li contraddistingue:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">binary_tree</span> = Leaf <span class="keyword">of</span> int | Tree <span class="keyword">of</span> binary_tree * binary_tree</code></pre>
+
+<p>Ecco alcuni alberi binari. Per fare pratica, provate a disegnarli sulla
+carta.</p>
+<pre><code class="ocaml">Leaf 3
+Tree (Leaf 3, Leaf 4)
+Tree (Tree (Leaf 3, Leaf 4), Leaf 5)
+Tree (Tree (Leaf 3, Leaf 4), Tree (Tree (Leaf 3, Leaf 4), Leaf 5))</code></pre>
+
+<h3 id="Varianti-parametrizzate">Varianti parametrizzate</h3>
+
+<p>L&#39;albero binario della sezione precedente ha interi a ciascuna foglia,
+ma se volessimo descrivere la <em>forma</em> di un albero binario, e soltanto
+poi decidere esattamente che cosa immagazzinare in ciascuna foglia?
+Possiamo farlo usando una variante parametrizzata (o polimorfica), come
+questa:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a binary_tree</span> =
+    | Leaf <span class="keyword">of</span> 'a
+    | Tree <span class="keyword">of</span> 'a binary_tree * 'a binary_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type 'a binary_tree = Leaf of 'a | Tree of 'a binary_tree * 'a binary_tree
+</span></code></pre>
+
+<p>Questo è un tipo generale. Il tipo specifico che immagazzina interi in
+ciascuna foglia è chiamato <code>int binary_tree</code>. In modo simile il tipo
+specifico che conserva stringhe in ciascuna foglia è chiamato
+<code>string binary_tree</code>. Nel prossimo esempio digitiamo alcune istanze nel
+top-level e consentiamo al sistema di inferenza dei tipi di mostrare i
+tipi per noi:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float binary_tree = Leaf 3.
+</span></code></pre>
+
+<p>Notate come il nome del tipo sia di dietro. Confrontate ciò con i nomi
+dei tipi per le liste, p.e. <code>int list</code> etc.</p>
+<p>Non è in effetti una coincidenza che <code>&#39;a list</code> è scritto &#39;di dietro&#39;
+nello stesso modo. Le liste sono tipi varianti parametrizzati in modo
+semplice con la seguente definizione, leggermente strana:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">'a list</span> = [] | :: <span class="keyword">of</span> 'a * 'a list   <span class="comment">(* non &egrave; codice OCaml reale *)</span></code></pre>
+
+<p>Di fatto la definizione sopra non è valida per la compilazione. Ecco una
+definizione sostanzialmente equivalente:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a list</span> = Nil | <span class="ocaml-error-loc">::</span> <span class="keyword">of</span> 'a * 'a list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">Nil</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound constructor Nil
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">1 :: <span class="ocaml-error-loc">Nil</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This variant expression is expected to have type int list
+       The constructor Nil does not belong to type list
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">1 :: 2 :: <span class="ocaml-error-loc">Nil</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This variant expression is expected to have type int list
+       The constructor Nil does not belong to type list
+</span></code></pre>
+
+<p>Ricordate quando in precedenza avevamo detto che le liste potevano
+essere scritte in due modi, con il semplice &#39;zucchero sintattico&#39; di
+<code>[1; 2; 3]</code> o più formalmente come <code>1 :: 2 :: 3 :: []</code>. Se osservate la
+definizione di <code>&#39;a list</code> scritta sopra, potreste riuscire a scorgere la
+ragione della definizione formale.</p>
+<h2 id="Liste-strutture-e-varianti-sommario">Liste, strutture e varianti - sommario</h2>
+
+<pre class="text"><code class="text">Nome in OCaml  Esempio di definizione di tipo Esempio di utilizzo
+lista          int list                       [1; 2; 3]
+tupla          int * string                   (3, &#39;hello&#39;)
+record         type pair =                    { a = 3; b = &#39;hello&#39; }
+                 { a: int; b: string }
+variante       type foo =
+                 | Int of int                 Int 3
+                 | Pair of int * string
+variante       type sign =
+                 | Positive                   Positive
+                 | Zero                       Zero
+                 | Negative
+variante       type &#39;a my_list =
+parametrizzata   | Empty                      Cons (1, Cons (2, Empty))
+                 | Cons of &#39;a * &#39;a my_list</code></pre>
+
+<h2 id="Pattern-matching-sui-tipi-di-dati">Pattern matching (sui tipi di dati)</h2>
+
+<p>Una Caratteristica Davvero Forte dei linguaggi funzionali è dunque la
+possibilità di disassemblare le strutture dati e fare pattern matching
+sui dati. Anche questa non è realmente una caratteristica &#39;funzionale&#39; -
+si potrebbe immaginare la comparsa di una variazione di C che consenta
+di fare ciò - ma nondimeno è una Caratteristica Forte.</p>
+<p>Cominciamo con una necessità di un programma reale: vorrei rappresentare
+semplici espressioni matematiche come <code>n * (x + y)</code> e moltiplicarle
+simbolicamente così da ottenere <code>n * x + n * y</code>.</p>
+<p>Definiamo un tipo per queste espressioni:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">expr</span> =
+    | Plus <span class="keyword">of</span> expr * expr        <span class="comment">(* means a + b *)</span>
+    | Minus <span class="keyword">of</span> expr * expr       <span class="comment">(* means a - b *)</span>
+    | Times <span class="keyword">of</span> expr * expr       <span class="comment">(* means a * b *)</span>
+    | Divide <span class="keyword">of</span> expr * expr      <span class="comment">(* means a / b *)</span>
+    | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    Plus of expr * expr
+  | Minus of expr * expr
+  | Times of expr * expr
+  | Divide of expr * expr
+  | Value of string
+</span></code></pre>
+
+<p>L&#39;espressione <code>n * (x + y)</code> sarebbe scritta:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
+         string
+</span></code></pre>
+
+<p>Scriviamo una funzione che stampi
+<code>Times (Value &#39;n&#39;, Plus (Value &#39;x&#39;, Value &#39;y&#39;))</code> come qualcosa che
+somigli più a <code>n * (x + y)</code>. Sto in realtà per scrivere due funzioni,
+una che converta l&#39;espressione in una stringa comoda da leggere, ed una
+che la stampi (il motivo è che potrei voler scrivere la stessa stringa
+in un file e non vorrei solo per questo ripetere l&#39;intera funzione).</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+    | Minus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+    | Times (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+    | Divide (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_expr</span> <span class="ocaml-variable">e </span>=
+    print_endline (<span class="ocaml-error-loc">to_string</span> e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value to_string
+</span></code></pre>
+
+<p>(NB: L&#39;operatore <code>^</code> concatena stringhe.)</p>
+<p>Ecco la funzione di stampa in azione:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span> (Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
+Hint: Did you mean print_char?
+</span></code></pre>
+
+<p>La forma generale per il pattern matching è:</p>
+<pre><code class="ocaml"><span class="keyword">match</span> value <span class="keyword">with</span>
+| pattern    -&gt;  result
+| pattern    -&gt;  result
+  ...</code></pre>
+
+<p>Il pattern sulla sinistra può essere semplice, come nella funzione
+<code>to_string</code> sopra, o complesso e annidato. Il prossimo esempio è la
+nostra funzione per moltiplicare espressioni nella forma <code>n * (x + y)</code> o
+<code>(x + y) * n</code> e per questo utilizzeremo un pattern annidato:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">multiply_out</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Times (e1, Plus (e2, e3)) -&gt;
+       Plus (Times (multiply_out e1, multiply_out e2),
+             Times (multiply_out e1, multiply_out e3))
+    | Times (Plus (e1, e2), e3) -&gt;
+       Plus (Times (multiply_out e1, multiply_out e3),
+             Times (multiply_out e2, multiply_out e3))
+    | Plus (left, right) -&gt;
+       Plus (multiply_out left, multiply_out right)
+    | Minus (left, right) -&gt;
+       Minus (multiply_out left, multiply_out right)
+    | Times (left, right) -&gt;
+       Times (multiply_out left, multiply_out right)
+    | Divide (left, right) -&gt;
+       Divide (multiply_out left, multiply_out right)
+    | Value v -&gt; Value v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val multiply_out : expr -&gt; expr = &lt;fun&gt;
+</span></code></pre>
+
+<p>Eccola in azione:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span>(multiply_out(Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
+Hint: Did you mean print_char?
+</span></code></pre>
+
+<p>Come funziona la funzione <code>multiply_out</code>? La chiave è nei primi due
+pattern. Il primo pattern è <code>Times (e1, Plus (e2, e3))</code> che coincide con
+espressioni della forma <code>e1 * (e2 + e3)</code>. Guardate ora a destra del
+primo pattern match, e convincetevi che è l&#39;equivalente di
+<code>(e1 * e2) + (e1 * e3)</code>.</p>
+<p>Il secondo pattern fa la stessa cosa, ma per espressioni della forma
+<code>(e1 + e2) * e3</code>.</p>
+<p>I restanti pattern non cambiano la forma dell&#39;espressione, ma <em>chiamano</em>
+ricorsivamente in modo cruciale la funzione <code>multiply_out</code> sulle loro
+sottoespressioni. Questo assicura che vengano moltiplicate anche tutte
+le sottoespressioni all&#39;interno dell&#39;espressione (se voleste soltanto
+moltiplicare in un&#39;espressione gli elementi di livello più alto,
+potreste sostituire tutti i restanti pattern con una semplice regola
+<code>e -&gt; e</code>).</p>
+<p>Possiamo fare il contrario (cioè fattorizzare subespressioni comuni)?
+Certo che possiamo! (Ma è un po&#39; più complicato). La seguente versione
+funziona solo per l&#39;espressione di livello superiore. La potreste
+certamente estendere per farla collimare con tutti i livelli di
+un&#39;espressione e con casi più complessi:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">factorize</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (Times (e1, e2), Times (e3, e4)) when e1 = e3 -&gt;
+       Times (e1, Plus (e2, e4))
+    | Plus (Times (e1, e2), Times (e3, e4)) when e2 = e4 -&gt;
+       Times (Plus (e1, e3), e4)
+    | e -&gt; e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val factorize : expr -&gt; expr = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Value <span class="string">'x'</span>),
+                   Times (Value <span class="string">'n'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
+         string
+</span></code></pre>
+
+<p>La funzione factorize scritta sopra introduce un altro paio di
+caratteristiche. È possibile aggiungere quelle che sono conosciute come
+<strong>guardie</strong> ad ogni pattern match. È una guardia il condizionale che
+segue il <code>when</code>, ed essa significa che il pattern match si ha soltanto
+se il pattern coincide <em>e</em> la condizione nella clausola introdotta da
+<code>when</code> è soddisfatta.</p>
+<pre><code class="ocaml"><span class="keyword">match</span> value <span class="keyword">with</span>
+| pattern  [ when condition ] -&gt;  result
+| pattern  [ when condition ] -&gt;  result
+  ...</code></pre>
+
+<p>La seconda caratteristica è l&#39;operatore <code>=</code> che indaga l&#39;&#39;uguaglianza
+strutturale&#39; fra due espressioni. Il che significa che va a verificare
+in ciascuna espressione ricorsivamente che esse siano esattamente le
+medesime a tutti i livelli sottostanti.</p>
+<p>OCaml può verificare durante la compilazione che nei pattern siano state
+coperte tutte le possibilità. Ho modificato la definizione di tipo di
+<code>type expr</code> sopra aggiungendo una variante <code>Product</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">expr</span> = Plus <span class="keyword">of</span> expr * expr      <span class="comment">(* means a + b *)</span>
+            | Minus <span class="keyword">of</span> expr * expr     <span class="comment">(* means a - b *)</span>
+            | Times <span class="keyword">of</span> expr * expr     <span class="comment">(* means a * b *)</span>
+            | Divide <span class="keyword">of</span> expr * expr    <span class="comment">(* means a / b *)</span>
+            | Product <span class="keyword">of</span> expr list     <span class="comment">(* means a * b * c * ... *)</span>
+            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    Plus of expr * expr
+  | Minus of expr * expr
+  | Times of expr * expr
+  | Divide of expr * expr
+  | Product of expr list
+  | Value of string
+</span></code></pre>
+
+<p>Ho quindi ricompilato la funzione <code>to_string</code> senza modificarla. OCaml
+ha riportato il seguente avviso:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+    | Minus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+    | Times (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+    | Divide (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.it.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/data_types_and_matching.it.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

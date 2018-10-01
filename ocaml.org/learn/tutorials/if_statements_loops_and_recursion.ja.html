@@ -1,0 +1,1165 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="if_statements_loops_and_recursion.html" rel="alternate" hreflang="en"/>
+<link href="if_statements_loops_and_recursion.fr.html" rel="alternate" hreflang="fr"/>
+<link href="if_statements_loops_and_recursion.it.html" rel="alternate" hreflang="it"/>
+<link href="if_statements_loops_and_recursion.ja.html" rel="alternate" hreflang="ja"/>
+<link href="if_statements_loops_and_recursion.ko.html" rel="alternate" hreflang="ko"/>
+<link href="if_statements_loops_and_recursion.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>If文、ループと再帰 &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/if_statements_loops_and_recursion.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">If文、ループと再帰</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="if_statements_loops_and_recursion.html">en</a></li>
+<li><a href="if_statements_loops_and_recursion.fr.html">fr</a></li>
+<li><a href="if_statements_loops_and_recursion.it.html">it</a></li>
+<li class="active">日本語</li>
+<li><a href="if_statements_loops_and_recursion.ko.html">한국어</a></li>
+<li><a href="if_statements_loops_and_recursion.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#if-if">if文(実は、if式)</a>
+</li><li><a href="#begin-end">begin ... end を使う</a>
+</li><li><a href="#for-while">for ループと while ループ</a>
+</li><li><a href="#">リストをループする</a>
+</li><li><a href="#">文字列をループする</a>
+</li><li><a href="#">再帰</a>
+<ul><li><a href="#1">アプローチ 1</a>
+</li><li><a href="#2">アプローチ 2</a>
+</li><li><a href="#3">アプローチ 3</a>
+</li><li><a href="#">補遺</a>
+</li><li><a href="#">再帰の例: リストの最大の要素</a>
+</li><li><a href="#">末尾再帰</a>
+</li></ul>
+</li><li><a href="#mutable">更新可能な(mutable)レコード、参照(再び!)、配列</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="If">If文、ループと再帰</h1>
+
+<h2 id="if-if">if文(実は、if式)</h2>
+
+<p>OCaml には <code>if</code> 文が2種類ある、といっても別に変な意味ではない:</p>
+<pre><code class="ocaml"><span class="keyword">if</span> &#30495;&#20605;&#12398;&#26465;&#20214; <span class="keyword">then</span> &#24335;
+  
+<span class="keyword">if</span> &#30495;&#20605;&#12398;&#26465;&#20214; <span class="keyword">then</span> &#24335; <span class="keyword">else</span> &#20182;&#12398;&#24335;</code></pre>
+
+<p>使い慣れた在来の言語とは違って、<code>if</code>
+文は実は式である。言いかえれば、いわゆる if 文によりも、
+<code>真偽の条件 ? 式 : 他の式</code> のほうに、もっとよく似ている。</p>
+<p>if文の簡単な例:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val max : 'a -&gt; 'a -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>余談だが、OCaml のトップレベルでこれを入力すると、 OCaml
+にとってこの関数は、多相で、以下のような型を持つことがわかる:</p>
+<pre><code class="ocaml">max : 'a -&gt; 'a -&gt; 'a</code></pre>
+
+<p>OCaml によれば、 <code>max</code> をどの型に使ってもよいということになる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3.5 13.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 13.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max <span class="string">'a'</span> <span class="string">'b'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char = 'b'
+</span></code></pre>
+
+<p>これは、<code>&gt;</code>が実は多相だからだ。どの型にでも使えて、オブジェクトにさえ(バイナリ比較が行われる)使える。</p>
+<p>[注 `Pervasives` モジュールに、 `min` 、`max` 関数がもう定義してある。]</p>
+<p>もっとじっくり、 if 式を見てみよう。 <code>range</code>
+関数は、前にもう登場したが、そのときはたいした説明をしなかった。再帰関数や、リストや、if式の知識を結びつければ、何をやっているかわかるはずだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>この関数の典型的な呼ばれかたを調べてみよう。まずは、簡単な <code>a &gt; b</code>
+の場合で、はじめよう。 <code>range 11 10</code> と呼ぶと、 <code>[]</code> (空リスト)
+が返ってくる。それだけ。</p>
+<p><code>range 10 10</code> と呼ぶとどうだろう。 <code>10 &gt; 10</code> は偽だから、 <code>else</code>
+節が評価されて、それは: <code>10::(range 11 10)</code>
+(カッコを補って、評価の順番をわかりやすくしておいた。)
+となり、すでにやったように、 <code>range 11 10</code> = <code>[]</code> なので、これは:
+<code>10 :: []</code> となる。リストの正式な書きかたと、 <code>::</code>
+(cons)演算子のことは、覚えている? <code>10 :: []</code> は、 <code>[ 10 ]</code>
+とまったく同じだ。</p>
+<p><code>range 9 10</code> をやってみよう:</p>
+<pre><code class="ocaml">range 9 10
+&rarr; 9 :: (range 10 10)
+&rarr; 9 :: [ 10 ]
+&rarr; [9; 10]</code></pre>
+
+<p>となれば、 <code>range 1 10</code> を評価すると <code>[ 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 ]</code>
+になるのは明らかだろう。</p>
+<p>これは、再帰の簡単な例になっている。関数型プログラミングでは、ループよりも再帰が好まれる、が、すこし先を急ぎすぎた。再帰についてはこの章の最後でもっと掘りさげることにする。</p>
+<p>それはさておき、<code>if</code> 文についてだ。この関数は何をやっている?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x y </span>=
+    x + <span class="keyword">if</span> y &gt; 0 <span class="keyword">then</span> y <span class="keyword">else</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>ヒント: if 式のまわりにカッコを補うとよい。 <code>y</code>を
+<a href="https://en.wikipedia.org/wiki/Diode#Current.E2.80.93voltage_characteristic" title="https://en.wikipedia.org/wiki/Diode#Current.E2.80.93voltage_characteristic">ダイオード</a>ではさんだようになっている。</p>
+<p><code>abs</code> (絶対値)関数は、 <code>Pervasives</code> でこう定義されている:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">abs</span> <span class="ocaml-variable">x </span>=
+    <span class="keyword">if</span> x &gt;= 0 <span class="keyword">then</span> x <span class="keyword">else</span> -x</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val abs : int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>また、 <code>Pervasives</code> の、 <code>string_of_float</code> 関数をみると、2つの <code>if</code>
+式が複雑に入れ子している:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">l</span> = string_length s <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">i </span>=
+    <span class="keyword">if</span> i &gt;= l <span class="keyword">then</span> s ^ <span class="string">'.'</span>
+    <span class="keyword">else</span> <span class="keyword">if</span> s.[i] = <span class="string">'.'</span> || s.[i] = <span class="string">'e'</span> <span class="keyword">then</span> s
+    <span class="keyword">else</span> loop (i+1) <span class="governing">in</span>
+  loop 0</code></pre>
+
+<p>この関数を調べてみよう。関数を <code>f</code> = 12.34 で呼んだとする。すると <code>s</code> =
+&#39;12.34&#39;、<code>l</code> = 5 だ。 <code>loop</code> をはじめて呼び、このとき <code>i</code> = 0 である。</p>
+<p><code>i</code> は、 <code>l</code> 以上ではなく、 <code>s.[i]</code> (<code>s</code> の <code>i</code> 番めの文字)
+はピリオドでも <code>&#39;e&#39;</code> でもない。よって <code>loop(i+1)</code> が呼ばれる。つまり
+<code>loop 1</code>。</p>
+<p><code>i</code> = 1 でも同じ動きをして、結局 <code>loop 2</code> を呼ぶ。</p>
+<p><code>i</code> = 2 で、ようやく、 <code>s.[i]</code> がピリオドであり(もとの文字列が <code>s</code> =
+&#39;12.34&#39; だから)、ここですぐに <code>s</code> を返し、関数 <code>string_of_float</code> は
+&#39;12.34&#39; を返す。</p>
+<p><code>loop</code> は何をするのだろう? 実は、 <code>format_float</code>
+から返された文字列に、ピリオドが(または <code>&#39;e&#39;</code>
+が)あるかどうかをチェックしているのだ。 <code>string_of_float</code> を <code>12.0</code>
+で呼んだとしよう。 <code>format_float</code> は文字列 &#39;12&#39; を返すが、
+<code>string_of_float</code> は &#39;12.&#39; か &#39;12.0&#39;
+を返さなければならない。(OCamlでは、小数にはピリオドをつけて、整数と区別しなければならないからだ。)そのためのチェックだ。</p>
+<p>この関数の妙な再帰の使いかたは、効率のためにやっているのが本音だ。OCamlはループに対応しているのに、なぜ著者はループを使わなかったのだろう?次の節で、OCamlの
+for ループには制限があって、 <code>string_of_float</code>
+のなかでは使えないことにふれる。ここで、まあ、より直感的ではあるが、おおよそ2倍も遅くなる
+<code>string_of_float</code> の書き方を示しておく:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="keyword">if</span> <span class="ocaml-module">String</span>.contains s <span class="string">'.'</span> || <span class="ocaml-module">String</span>.contains s <span class="string">'e'</span>
+  <span class="keyword">then</span> s
+  <span class="keyword">else</span> s ^ <span class="string">'.'</span></code></pre>
+
+<h2 id="begin-end">begin ... end を使う</h2>
+
+<p>これは lablgtk からのコードである:</p>
+<pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
+  <span class="keyword">fun</span> _ -&gt; f obj
+<span class="keyword">else</span> <span class="governing">begin</span>
+  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  <span class="keyword">raise</span> Not_found
+<span class="governing">end</span></code></pre>
+
+<p><code>begin</code> と <code>end</code>
+はカッコを開閉する<strong>構文糖</strong>というものである。うえの例では、 <code>else</code>
+節の2つの文をひとつにまとめている。もし、著者がこう書いてしまったらどうなるだろう:</p>
+<pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
+  <span class="keyword">fun</span> _ -&gt; f obj
+<span class="keyword">else</span>
+  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  <span class="keyword">raise</span> Not_found</code></pre>
+
+<p>きっちりカッコをつけて、インデントをちゃんとしてやると、上の式はこうなる:</p>
+<pre><code class="ocaml">(<span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
+   <span class="keyword">fun</span> _ -&gt; f obj
+ <span class="keyword">else</span>
+   eprintf 'Glade-warning: %s expects a %s argument.\n' name cls
+);
+<span class="keyword">raise</span> Not_found</code></pre>
+
+<p>これでは、意図したとおりになっていない。 <code>begin</code> と <code>end</code>
+は、複数の文をひとまとめにするのに必要で、 if 式の <code>then</code> や <code>else</code>
+節で使われる。なんなら、単にふつうのカッコ <code>( ... )</code>
+を使ってもよい(私がそうだ。 Pascal なんて<strong>まっぴらごめんだ</strong>
+:-)。簡単な例をふたつ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
+      print_endline <span class="ocaml-error-loc">'</span>THEN'
+    <span class="keyword">else</span> <span class="governing">begin</span>
+      print_endline 'ELSE';
+      <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
+      print_endline <span class="ocaml-error-loc">'</span>THEN'
+    <span class="keyword">else</span> (
+      print_endline 'ELSE';
+      <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
+    )</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h2 id="for-while">for ループと while ループ</h2>
+
+<p>OCaml には、制限つきだが、おなじみの <strong>for</strong> ループもある。</p>
+<pre><code class="ocaml"><span class="keyword">for</span> variable = start_value <span class="keyword">to</span> end_value <span class="keyword">do</span>
+  expression
+<span class="keyword">done</span>
+  
+<span class="keyword">for</span> variable = start_value <span class="keyword">downto</span> end_value <span class="keyword">do</span>
+  expression
+<span class="keyword">done</span></code></pre>
+
+<p>lablgtk からの簡単な実例:</p>
+<pre><code class="ocaml"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> n_jobs () <span class="keyword">do</span>
+  do_next_job ()
+<span class="keyword">done</span></code></pre>
+
+<p>OCaml の for ループは、こう書くのを短くしただけだ。</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">i</span> = 1 <span class="governing">in</span>
+do_next_job ();
+<span class="governing">let </span><span class="ocaml-variable">i</span> = 2 <span class="governing">in</span>
+do_next_job ();
+<span class="governing">let </span><span class="ocaml-variable">i</span> = 3 <span class="governing">in</span>
+do_next_job ();
+  ...
+<span class="governing">let </span><span class="ocaml-variable">i</span> = n_jobs () <span class="governing">in</span>
+do_next_job ();
+()</code></pre>
+
+<p>OCaml には、手前の for
+ループから脱出するという概念がない(実際には、例外を throw して外側で
+catch すれば<em>できないことはない</em>が、これは遅いし、みっともない)。
+関数型プログラマは、明示的なループよりも再帰を好み、こと for
+ループについては、どうもいけ好かなく感じている。それというのも、OCaml の
+for ループが比較的に弱いからだ。再帰については下で説明する。</p>
+<p>OCaml の for ループの中の式は、評価されたら <code>unit</code>
+になるべきである(さもないと、警告がでる)。また、for ループ 式全体も、
+<code>unit</code> を返す。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> 10 <span class="keyword">do</span> <span class="ocaml-error-loc">i</span> <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 10: this expression should have type unit.
+</span>- : unit = ()
+</span></code></pre>
+
+<p>OCaml の <strong>While ループ</strong> はこう書く:</p>
+<pre><code class="ocaml"><span class="keyword">while</span> boolean-condition <span class="keyword">do</span>
+  expression
+<span class="keyword">done</span></code></pre>
+
+<p>for ループと同じく、言語には while ループから脱出する方法がない。例外を
+throw すれば別だが、やっぱり、 while
+ループは、かなり使いにくい。関数型プログラマは再帰を好むので、 while
+ループは言語のなかで第2級の身分なのである。</p>
+<p>while
+ループで思考するのをやめてみれば、そんなもの、ちっとも使う必要はなかったと気づくだろう。しかし、古くからの友達、参照が、すがりついてくる。
+OCaml に参照がもしなかったら、と、ちょっと考えてみよう:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = false <span class="governing">in</span>
+<span class="keyword">while</span> not quit_loop <span class="keyword">do</span>
+  print_string 'Have you had enough yet? (y/n) ';
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
+  <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
+    <span class="comment">(* how <span class="keyword">do</span> I set quit_loop <span class="keyword">to</span> true ?!? *)</span>
+<span class="keyword">done</span></code></pre>
+
+<p><code>quit_loop</code> は本当の&#39;変数&#39;ではないことを思い出してほしい。 - let
+束縛は、<code>false</code> の略として <code>quit_loop</code>
+をつくっているだけなのだ。よって、 while ループの条件は (赤で示した)
+常に真であり、永遠にループしてしまう。</p>
+<p>幸運にも OCaml には参照が
+<em>ある</em>ので、上のようなコードを書いたって別にいい。 <code>!</code>
+(びっくりマーク)は C/Java では &#39;not&#39;
+の意味だが、ここでは&#39;ポインタの参照をたどる&#39;意味で使われているので、混同しないように。実は
+Forth とおなじである。 <code>!</code> は &#39;get&#39; とか &#39;deref&#39; と読むとよいだろう。</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = <span class="keyword">ref</span> false <span class="governing">in</span>
+<span class="keyword">while</span> not !quit_loop <span class="keyword">do</span>
+  print_string 'Have you had enough yet? (y/n) ';
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
+  <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
+    quit_loop := true
+<span class="keyword">done</span>;;</code></pre>
+
+<h2 id="">リストをループする</h2>
+
+<p>リストをループしよう・・・おっと、手続き型プログラマさん、愛用のリボルバ－ForLoopスペシャル
+に手をかけないでくださいよ! OCaml
+には、リストをループするための、もっと手軽で速い方法がある。それらは
+<code>List</code> モジュールに置かれている。 <code>List</code>
+にはいい関数が何ダースもあるわけだが、ここでは、そのなかでも最も便利なものについてだけ、説明することにする。</p>
+<p>まずは、これから使うリストをひとつ定義しよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">my_list</span> = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val my_list : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span></code></pre>
+
+<p>リストのすべての要素のおのおので、関数を呼びたいときは、 <code>List.iter</code>
+でこうする:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">elem </span>=
+    <span class="ocaml-module">Printf</span>.printf <span class="string">'I'</span>m looking at element %d now<span class="ocaml-error-loc">\</span>n' elem <span class="governing">in</span>
+    <span class="ocaml-module">List</span>.iter f my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal character (\\)
+</span></code></pre>
+
+<p><code>List.iter</code> を使うことをいつでも念頭において、 for
+ループときたらセキズイ反射で思い出すように。</p>
+<p>リストの要素をおのおのに応じて <em>変換</em> したいときは -
+例えば、リストの要素のおのおのを2倍したいとか - <code>List.map</code>
+を使う。この関数は、前に Perl
+でプログラムをしたことがある人なら馴染みがあるだろう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.map (( * ) 2) my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6; 8; 10; 12; 14; 16; 18; 20]
+</span></code></pre>
+
+<p>Perl には、 &#39;grep&#39;
+という便利な関数がある。これはリストのなかで条件を満たす要素だけをフィルタしてとりだすものだ。</p>
+<ul><li><p>例えば、リストのなかのすべての偶数を返すとか。 OCaml では、この関数は
+<code>List.filter</code> と呼ばれている。</p>
+</li></ul>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">i </span>=
+    i mod 2 = 0 <span class="governing">in</span>
+  <span class="ocaml-module">List</span>.filter is_even my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6; 8; 10]
+</span></code></pre>
+
+<p>リストの中身に探したい要素が見つかるかどうかには、 <code>List.mem</code> (member
+の略)を使う:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.mem 12 my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+</span></code></pre>
+
+<p><code>List.for_all</code> と <code>List.exists</code> は、述語論理の &#39;forall&#39; 、 &#39;exist&#39;
+演算子と同じである。</p>
+<p>2つのリストを同時に処理していくのには、 これらの関数の &#39;-2&#39;
+版がある。つまり、 <code>iter2</code> 、<code>map2</code> 、 <code>for_all2</code> 、<code>exist2</code> 。</p>
+<p><code>map</code> と <code>filter</code>
+関数は、リストの要素を別個に、ひとつひとつで処理するものだった。
+<strong>Fold</strong>
+は、もっと変な処理をする。これについては、&#39;リストの各要素の間に演算子をはさむ&#39;のだと考えるのが一番だ。リストの数字をすべて足したいとしよう。こ
+こでやりたいのは、いってみれば、リストの要素の間にプラス記号をはさんでいくということだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 55
+</span></code></pre>
+
+<p>fold
+処理がやるのはこれだ。しかし、これは実際にはもうすこし厄介な話になる。まずはじめに、もし空リストを
+fold しようとしたらどうなるだろう?
+リストを足し算するときには、答えが0になってくれたほうが、エラーになるよりいいだろう。しかしリストを掛け算するときには、答えが1になってくれたほ
+うがありがたい。となると、なんらかの&#39;デフォルト&#39;を、引数として fold
+にあたえてやることになる。2つめの問題は、 <code>+</code> や <code>*</code>
+のような簡単な演算子のときはいいが、もし何か結合的でない演算子(つまり、
+(a <em>op</em> b) <em>op</em> c と a <em>op</em> (b <em>op</em> c)
+が等しくない)のときはどうなるかということだ。その場合は、リストの左端からはじめて右にやっていくのと、右からはじめて左にやっていくのとで、違いがでてくる。このために、
+fold には2種類あって、 <code>List.fold_left</code> (左から右に) と
+<code>List.fold_right</code> (右から左に、これは効率が悪くなる)と なっている。</p>
+<p><code>List.fold_left</code> を使って、整数リスト用の <code>sum</code> と <code>product</code>
+関数を定義してみよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">sum</span> = <span class="ocaml-module">List</span>.fold_left ( + ) 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val sum : int list -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">product</span> = <span class="ocaml-module">List</span>.fold_left ( * ) 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val product : int list -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">sum my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 55
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">product my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3628800
+</span></code></pre>
+
+<p>こりゃ簡単! ひょっとしたら、数学の階乗もこれでいけるぞ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">fact</span> <span class="ocaml-variable">n </span>= product (range 1 n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fact : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">fact 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3628800
+</span></code></pre>
+
+<p>(注 この階乗の関数にはちょっと問題がある。整数のオーバーフローのせいで、
+<code>n</code> がかなり小さいときでも誤った答えがでてしまう。本当の階乗の関数には
+<code>Big_int</code> モジュールを使うことになる。)</p>
+<h2 id="">文字列をループする</h2>
+
+<p><code>String</code>
+モジュールには、何ダースもの便利な文字列関係の関数がつまっていて、それらのいくつかは、文字列をループすることに関するものである。</p>
+<p><code>String.fill</code> と <code>String.blit</code> はそれぞれCの <code>memset</code> と <code>strcpy</code>
+と等しい。 <code>String.copy</code> は、 <code>strdup</code> のように、文字列をコピーする。</p>
+<p><code>String.iter</code> 関数もあり、 <code>List.iter</code>
+のように動く。違うことといえば文字列の文字について動くことくらいだ。</p>
+<h2 id="">再帰</h2>
+
+<p>さあ、難しい話題にとりかかろう -
+再帰だ。関数型プログラマは、再帰関数へのその愛をもって語られる。再帰関数は、どこを切っても手続き型プログラミングのループに負けずとも劣らない。関
+数型言語においてループは第2級の身分であり、その一方で、再帰関数には最高のサポートがはかられている。</p>
+<p>再帰関数を書くには、意識改革をして、 for ループや while
+ループから脱却する必要がある。次の節で、例をだしつつ、導入をしていこう。</p>
+<p>最初の例では、ファイルの全体をメモリに読み込む(長い文字列として)。これには実質的に、3つのアプローチが考えられる:</p>
+<h3 id="1">アプローチ 1</h3>
+
+<p>ファイルの長さを得て、読み込みを <code>really_input</code>
+メソッドで一気に行う。もっとも単純だが、チャンネルに対しては、それが実はファイルではないため、うまくいかない(例えば、キーボード入力を読むなどができない)。なので、他の2つのアプローチも見てみよう。</p>
+<h3 id="2">アプローチ 2</h3>
+
+<p>手続き型アプローチで、 while ループを使い、例外で脱出する。</p>
+<h3 id="3">アプローチ 3</h3>
+
+<p>再帰のループ。再帰を脱出するには、やはり例外を使う。</p>
+<p>ここで、新しい概念を少し紹介しよう。後の2つのアプローチでは、 <code>Buffer</code>
+モジュールを使うことになる -
+バッファは伸ばしていけるので、これを、テキストを効率的に終端に追加していける文字列のように、みたてることができる。また、
+<code>End_of_file</code> 例外を catch
+するようにする。これは入力関数が、入力の終了に達すると throw
+する。さらに、 <code>Sys.argv.(1)</code>
+を使って、コマンドラインのパラメータの1番目を取得する。</p>
+<pre><code class="ocaml"><span class="comment">(* Read whole file: Approach 1 *)</span>
+<span class="governing">open</span> <span class="ocaml-module">Printf</span>
+
+<span class="governing">let</span> <span class="ocaml-function">read_whole_chan</span> <span class="ocaml-variable">chan </span>=
+  <span class="governing">let </span><span class="ocaml-variable">len</span> = in_channel_length chan <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">String</span>.create len <span class="governing">in</span>
+  really_input chan result 0 len;
+  result
+
+<span class="governing">let</span> <span class="ocaml-function">read_whole_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  read_whole_chan chan
+
+<span class="governing">let</span> () =
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
+  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+
+<p>アプローチ 1 は動くけども、ちょっと不満が残る。 <code>read_whole_chan</code>
+は、チャンネルに対しては、それがファイルではないために、動かない。となると、キーボード入力やソケットが読めない。アプローチ
+2 は while ループが入る:</p>
+<pre><code class="ocaml"><span class="comment">(* Read whole file: Approach 2 *)</span>
+<span class="governing">open</span> <span class="ocaml-module">Printf</span>
+
+<span class="governing">let</span> <span class="ocaml-function">read_whole_chan</span> <span class="ocaml-variable">chan </span>=
+  <span class="governing">let </span><span class="ocaml-variable">buf</span> = <span class="ocaml-module">Buffer</span>.create 4096 <span class="governing">in</span>
+  <span class="keyword">try</span>
+    <span class="keyword">while</span> true <span class="keyword">do</span>
+      <span class="governing">let </span><span class="ocaml-variable">line</span> = input_line chan <span class="governing">in</span>
+      <span class="ocaml-module">Buffer</span>.add_string buf line;
+      <span class="ocaml-module">Buffer</span>.add_char buf '\n'
+    <span class="keyword">done</span>;
+    <span class="keyword">assert</span> false <span class="comment">(* This is never executed
+                    (always <span class="keyword">raise</span> Assert_failure). *)</span>
+  <span class="keyword">with</span>
+    End_of_file -&gt; <span class="ocaml-module">Buffer</span>.contents buf
+
+<span class="governing">let</span> <span class="ocaml-function">read_whole_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  read_whole_chan chan
+
+<span class="governing">let</span> () =
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
+  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+
+<p>アプローチ 2 のカギは、中央の while ループにある。手前の while
+ループから脱出するには例外を使うのが唯一の方法だと言ったのを覚えているだろうか?
+ここでやっているのはまさにそれだ。例外はまだ紹介していないが、
+<code>End_of_file</code> 例外を <code>input_line</code> が throw
+して、ファイルの終端に達したことがわかるというのは、難なく理解してもらえるだろう。バッファ
+<code>buf</code>
+にはファイルの中身が蓄積される。ファイルの終端に達したらそれを返してやる
+(<code>Buffer.contents buf</code>)。</p>
+<p>ちょっと気になる点がある。なんだか余分に見える assert (<code>assert false</code>) が、 while
+ループの後ろについている。何のためにあるんだろう?
+思い出してほしいのは、while ループや、 for ループは、ただの式であり、
+<code>unit</code> オブジェクト (<code>()</code>) を返すということだ。ところが、 OCaml は <code>try</code>
+の中から返される型と、  <code>catch</code> から返される型の一致を要求する。
+この場合には、 <code>End_of_file</code>
+の結果として <code>文字列</code> が返されるから、 <code>try</code> の中身も文字列を&#39;返す&#39;必要がある - 無限
+while ループなので、実際には文字列を返したりはしないけれども。
+<code>assert false</code> は多相型なので、 <code>with</code> 部分で返されたものが何であれ互換があるとして扱われる。</p>
+<p>これが、再帰バージョンだ。アプローチ 2 より <em>短い</em>
+ことに注意。ただ、わかりやすくはない。少なくとも手続き型プログラマには:</p>
+<pre><code class="ocaml"><span class="comment">(* Read whole file: Approach 3 *)</span>
+<span class="governing">open</span> <span class="ocaml-module">Printf</span>
+
+<span class="governing">let</span> <span class="ocaml-function">read_whole_chan</span> <span class="ocaml-variable">chan </span>=
+  <span class="governing">let </span><span class="ocaml-variable">buf</span> = <span class="ocaml-module">Buffer</span>.create 4096 <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+    <span class="governing">let </span><span class="ocaml-variable">line</span> = input_line chan <span class="governing">in</span>
+    <span class="ocaml-module">Buffer</span>.add_string buf line;
+    <span class="ocaml-module">Buffer</span>.add_char buf '\n';
+    loop () <span class="governing">in</span>
+  <span class="keyword">try</span>
+    loop ()
+  <span class="keyword">with</span>
+    End_of_file -&gt; <span class="ocaml-module">Buffer</span>.contents buf
+
+<span class="governing">let</span> <span class="ocaml-function">read_whole_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  read_whole_chan chan
+
+<span class="governing">let</span> () =
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
+  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+
+<p>またもや無限ループがある - しかしこれは再帰を使っている。 <code>loop</code>
+は関数の終わりで自身を呼ぶ。無限の再帰だが、 <code>input_line</code> が
+<code>End_of_file</code> 例外を throw したら脱出する。</p>
+<p>アプローチ 3
+は、巨大なファイルをあたえるとスタックがオーバーフローしそうにみえるが、この場合は大丈夫だ。末尾再帰(下で説明する)なので、コンパイラが再帰
+<code>loop</code> 関数を本当の while ループに (!)
+変えてくれて、一定のスタック領域で実行される。</p>
+<p>次の例では、再帰が、データ構造の型を構築したり調べたりするのにどれほど素晴らしいかを、示そう。特にツリーに有効だ。ファイルシステムでファイルを表すために、再帰の型をつくる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">filesystem</span> = File <span class="keyword">of</span> string | Directory <span class="keyword">of</span> filesystem list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type filesystem = File of string | Directory of filesystem list
+</span></code></pre>
+
+<p><code>opendir</code> と <code>readdir</code>
+関数は、ディレクトリを開いたり、ディレクトリの要素を読んだりするのに使う。悩ましい
+<code>End_of_file</code> 例外を隠した、手軽な <code>readdir_no_ex</code>
+関数を定義しよう。この例外は <code>readdir</code>
+がディレクトリの終わりに達したときに throw される:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Unix</span>  <span class="comment">(*  You may need <span class="keyword">to</span> #load '<span class="ocaml-module">Unix</span>.cma' *)</span>
+    
+  <span class="governing">let</span> <span class="ocaml-function">readdir_no_ex</span> <span class="ocaml-variable">dirh </span>=
+    <span class="keyword">try</span>
+      Some (readdir dirh)
+    <span class="keyword">with</span>
+      End_of_file -&gt; None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val readdir_no_ex : Unix.dir_handle -&gt; string option = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>readdir_no_ex</code> の型はこうだ。前の、null
+ポインタの話を思い出してほしい。</p>
+<pre><code class="ocaml">readdir_no_ex : dir_handle -&gt; string option</code></pre>
+
+<p><code>filesystem</code>
+型を文字列に変換する単純な再帰関数も書いておこう。出力などに使える:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">string_of_filesystem</span> <span class="ocaml-variable">fs </span>=
+    <span class="keyword">match</span> fs <span class="keyword">with</span>
+    | File filename -&gt; filename ^ '\n'
+    | Directory fs_list -&gt;
+        <span class="ocaml-module">List</span>.fold_left (^) <span class="ocaml-error-loc">'</span>' (<span class="ocaml-module">List</span>.map string_of_filesystem fs_list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p><code>fold_left</code> と <code>map</code> を使っているのに注意。 <code>map</code> は リストの各
+<code>filesystem</code> を <code>文字列</code> に(再帰的に)変換するのに使われている。
+<code>fold_left (^) &#39;&#39;</code>は、リストをひとつの大きな文字列に結合している。それからパターンマッチングも使っている。(ライブラリには
+<code>String.concat</code> という関数が定義されていて、これは本質的に
+<code>fold_left (^)</code> と一緒だが、より効率的な実装がされている)</p>
+<p>では、ディレクトリ構造を、再帰的に読む関数を定義しよう。
+返り値は、再帰的な、<code>filesystem</code>
+データ構造である。この関数を順をおってみていこう。この節の終わりに、関数の全体を載せておく。まずは、関数のあらまし:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+  <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+    <span class="comment">(* ..... *)</span> <span class="governing">in</span>
+  Directory (loop ())</code></pre>
+
+<p><code>opendir</code> を呼んで、あたえられたパスを開くと、 <code>dir_handle</code>
+を返してくる。あとでこの名前を <code>readdir_no_ex</code>
+を使って読むようになる。関数の返り値は、 <code>Directory fs_list</code>
+になるだろう。そこで、関数の残りを書き上げるのにあと必要なのは、
+<code>filesystem</code> のリストを返す <code>loop</code> 関数を書くことだ。 <code>loop</code>
+の型は、こうなるだろう:</p>
+<pre><code class="ocaml">loop : unit -&gt; filesystem list</code></pre>
+
+<p>loop をどう定義したらいい? それが次のステップだ。</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
+  <span class="comment">(* ..... *)</span></code></pre>
+
+<p>はじめに、ディレクトリハンドルから次の <code>filename</code> を読み込んでいる。
+<code>filename</code> の型は <code>string option</code> で、つまり、 <code>None</code> or <code>Some &#39;foo&#39;</code>
+である。 <code>foo</code> はディレクトリの次の filename の名前だ。さらに、 <code>&#39;.&#39;</code> と
+<code>&#39;..&#39;</code>
+ファイルはとばす必要がある(すなわち、カレントディレクトリと親ディレクトリ)。これはパターンマッチングでバッチリだ:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
+  <span class="keyword">match</span> filename <span class="keyword">with</span>
+  | None -&gt; []
+  | Some <span class="string">'.'</span> -&gt; loop ()
+  | Some '..' -&gt; loop ()
+  | Some filename -&gt;
+     <span class="comment">(* ..... *)</span></code></pre>
+
+<p><code>None</code> のときは簡単だ。再帰的に考えれば(!)、もし <code>loop</code>
+が呼ばれて、ディレクトリの終わりに達したら、 <code>loop</code>
+はその内容をリストで返さなければならない - もし内容がなかったら -
+そのときは空リスト(<code>[]</code>)を返す。</p>
+<p><code>&#39;.&#39;</code> か <code>&#39;..&#39;</code> なら、単にそのファイルはとばして、 <code>loop</code>
+をまた呼べばいい。</p>
+<p><code>loop</code> が本当にファイル名を読んだとき(一番下の <code>Some filename</code>
+がマッチしたとき)はどうしたらいいだろう? <code>pathname</code>
+はファイルへのフルパスとする。ファイルを &#39;stat&#39;
+すれば、本当はディレクトリだったりするかどうかがわかる。もしディレクトリ
+<em>だったら</em> 、これに <code>read_directory</code> を再帰的に呼び出してやって、
+<code>Directory something</code> を返してもらって、それを <code>this</code>
+とする。もしファイルが本当にファイルだったら(ディレクトリではなかったら)、
+<code>this</code> は <code>File pathname</code>
+とする。それから、ちょっと賢いことをやっている: <code>this :: loop()</code>
+を返すのだ。 <code>loop()</code>
+を、残りのディレクトリの中身(リスト)の計算のために、再帰的に呼んでいる。それを、
+<code>this</code> の後ろにつけている。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+    <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+    <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+      <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
+      <span class="keyword">match</span> filename <span class="keyword">with</span>
+      | None -&gt; []
+      | Some <span class="string">'.'</span> -&gt; loop ()
+      | Some <span class="ocaml-error-loc">'</span>..' -&gt; loop ()
+      | Some filename -&gt;
+          <span class="governing">let </span><span class="ocaml-variable">pathname</span> = path ^ <span class="string">'/'</span> ^ filename <span class="governing">in</span>
+          <span class="governing">let </span><span class="ocaml-variable">stat</span> = lstat pathname <span class="governing">in</span>
+          <span class="governing">let </span><span class="ocaml-variable">this</span> = <span class="keyword">if</span> stat.st_kind = S_DIR <span class="keyword">then</span>
+                       read_directory pathname
+                     <span class="keyword">else</span>
+                       File pathname <span class="governing">in</span>
+          this :: loop () <span class="governing">in</span>
+    Directory (loop ())</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>かなり複雑な再帰だったろう。これは作り物の例ではあるけど、現実の関数型プログラムで
+使う再帰のパターンとしては、よく出てくるレベルである。
+ふたつ、この例から覚えておいてほしいのは:</p>
+<ul><li><p>リストをつくるための再帰の使いかた:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="governing">rec</span> <span class="lower">loop</span> <span class="keywordsign">(</span><span class="keywordsign">)</span> <span class="keywordsign">=</span>
+  <span class="lower">a</span> <span class="keyword">match</span> <span class="keywordsign">or</span> <span class="keyword">if</span> <span class="lower">statement</span>
+  <span class="keywordsign">|</span> <span class="lower">base</span> <span class="lower">case</span> <span class="keywordsign">-&#62;</span> <span class="keywordsign operator">[]</span>
+  <span class="keywordsign">|</span> <span class="lower">recursive</span> <span class="lower">case</span> <span class="keywordsign">-&#62;</span> <span class="lower">element</span> <span class="keywordsign">::</span> <span class="lower">loop</span> <span class="keywordsign">(</span><span class="keywordsign">)</span></code></pre>
+
+<p>これを、前の <code>range</code> 関数と比べてほしい。再帰のパターンがまったく同じだ:</p>
+<pre class="ocamltop"><code class="ocamltop">let rec range a b =
+  if a &gt; b then []            (* Base case *)
+  else a :: range (a+1) b     (* Recursive case *)</code></pre></li><li><p>ツリーをつくるための再帰の使いかた:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="governing">rec</span> <span class="lower">read_directory</span> <span class="lower">path</span> <span class="keywordsign">=</span>
+  <span class="comment">(* blah blah *)</span>
+  <span class="keyword">if</span> <span class="lower">file</span><span class="keywordsign">-</span><span class="lower">is</span><span class="keywordsign">-</span><span class="lower">a</span><span class="keywordsign">-</span><span class="lower">directory</span> <span class="keyword">then</span>
+    <span class="lower">read_directory</span> <span class="lower">path</span><span class="keywordsign">-</span><span class="keyword">to</span><span class="keywordsign">-</span><span class="lower">file</span>
+  <span class="keyword">else</span>
+    <span class="constructor module">Leaf</span> <span class="lower">file</span></code></pre>
+
+<p>ここまでくれば、このプログラムを動かすのにあと必要なのは、
+<code>read_directory</code>
+を呼んで結果を出力するように、ちょっとコードをたしてやることだけだ:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="lower">path</span> <span class="keywordsign">=</span> <span class="constructor module">Sys</span><span class="keywordsign">.</span><span class="lower">argv</span><span class="keywordsign">.</span><span class="keywordsign">(</span><span class="number">1</span><span class="keywordsign">)</span> <span class="governing">in</span>
+<span class="governing">let</span> <span class="lower">fs</span> <span class="keywordsign">=</span> <span class="lower">read_directory</span> <span class="lower">path</span> <span class="governing">in</span>
+<span class="lower">print_endline</span> <span class="keywordsign">(</span><span class="lower">string_of_filesystem</span> <span class="lower">fs</span><span class="keywordsign">)</span></code></pre></li></ul>
+
+<h3 id="">補遺</h3>
+
+<p>この例を caml-list
+メーリングリストに投稿したところ、たくさんの反響をいただいた。(ここから
+<a href="http://mirror.ocamlcore.org/caml.inria.fr/pub/ml-archives/caml-list/2003/06/2732fbf1bed1ae50fefb6ea410ea9955.en.html" title="http://caml.inria.fr/pub/ml-archives/caml-list/2003/06/2732fbf1bed1ae50fefb6ea410ea9955.en.html">スレッドが読める</a>。)</p>
+<p>まず、基本的な問題として、 <code>read_directory</code> 
+は、膨大なディレクトリ構造を相手にすると、エラーがでてしまう。明示的に
+<code>closedir</code>
+を呼ばずにいたので、ディレクトリハンドルが閉じていなかった。これはガーベジコレクタには任せられないケースだ。
+OCaml
+のガーベジコレクタは、開いたファイルやディレクトリのハンドルを、閉じたり回収したりは
+<strong>してくれない</strong> からだ。</p>
+<p>修正は非常に簡単: <code>closedir</code> を、 <code>read_directory</code>
+関数の終わりで呼ぶようにする。</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+  <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+    <span class="comment">(* ... *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">result</span> = Directory (loop ()) <span class="governing">in</span>
+  closedir dirh;
+  result</code></pre>
+
+<p>次は、 <code>readdir</code> が、&#39;例外ともいえない&#39;ときに、例外を throw
+している件だ。つまり、 <code>End_of_file</code> のこと。この場合に例外を throw
+するのが正しいのか、どうも納得いかない。普通にプログラムを書くと、
+<code>try ... with</code>
+節なんてものを書かずに済みそうなものだ。例外というのは、&#39;手に負えないような、なにか本当に変なことが起きた&#39;
+という意味と思われるからだ。例えばディスクの容量やメモリを使いきってしまったとか。関数のふつうの処理の一部として例外を
+throw するようなのは( <code>readdir</code> を使うプログラムはすべて、 <code>End_of_file</code>
+の扱いに 備えなければ<em>ならない</em>のだから)、例外という名にふさわしくない。</p>
+<p>しかし、 Eric Cooper
+が、この関数を、例外を使わずに書く方法を思いついた。これも、関数型プログラマがよく使うテクニックのひとつによっている。つまり、
+<strong>accumulator</strong> (蓄積器)
+に関数を呼んだ結果をためておいて渡すのだが、なんと、関数に <em>引数</em>
+として渡してしまうのだ(!)。 accumulator は &#39;これまでの結果&#39;
+という意味で使われる。この例外の場合( <code>End_of_file</code>
+)になったら、切り上げて、これまでの結果を返す。これが彼のコードである。
+accumulator 引数への参照を赤く示した:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_filesystem</span> <span class="ocaml-variable">path </span>=
+    <span class="keyword">if</span> (lstat path).st_kind = S_DIR <span class="keyword">then</span>
+      Directory (read_directory path)
+    <span class="keyword">else</span>
+      File path
+    
+  <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+    <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+    <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">entries </span>=
+      <span class="keyword">try</span>
+        <span class="keyword">match</span> readdir dirh <span class="keyword">with</span>
+        | <span class="string">'.'</span> | <span class="ocaml-error-loc">'</span>..' -&gt; loop entries
+        | filename -&gt;
+           loop (read_filesystem (path ^ <span class="string">'/'</span> ^ filename) :: entries)
+      <span class="keyword">with</span> End_of_file -&gt; entries <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">list</span> = loop [] <span class="governing">in</span>
+    closedir dirh;
+    list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: pattern expected.
+</span></code></pre>
+
+<p><code>End_of_file -&gt; entries</code>
+に注意。&#39;例外になったので、切り上げて、これまでの結果を返す&#39;という意味である。</p>
+<p>次のフィードバック -
+これをやるのに最も簡単なのは、実は、再帰を全く使わずに、手続き型のループを使うことなのだそうだ(
+while ループが最適だろう)。その中で、リストへの参照をとっておいて、先の
+accumulator のように結果を格納していくのだという。 <code>readdir</code> は例外を
+throw するので、単純に while ループを脱出でき、 <em>さらに、</em> <code>with</code>
+節を使って、 <code>!list</code>
+(結果を積み上げたリストへの、参照を引く)を返すことができる。</p>
+<p>これはちゃんと動く。時には手続き型でコードを書くのがベストということもあるわけだ。
+<em>特に</em>、このような、 <code>opendir ... readdir ... closedir</code>
+といった、本質的に手続き型の C
+プログラマ向けに作られたようなAPIを扱うときには、手続き型の解法のほうが簡単だということに別に驚くことはない。
+OCaml は、<a href="https://web.archive.org/web/20110611043853/http://www.elsewhere.org/jargon/html/entry/bondage-and-discipline-language.html" title="http://www.elsewhere.org/jargon/html/entry/bondage-and-discipline-language.html">緊縛と調教
+言語</a>
+にあらず。手続き型のアプローチがわかりやすいときは、それを使えばいいのだ。</p>
+<p>これは、 Fabrice Le Fessant による、手続き型のアプローチの、概形だ:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">list</span> = <span class="keyword">ref</span> [] <span class="governing">in</span>
+<span class="governing">let </span><span class="ocaml-variable">dir</span> = opendir '.......' <span class="governing">in</span>
+<span class="keyword">try</span>
+  <span class="keyword">while</span> true <span class="keyword">do</span>
+    <span class="keyword">match</span> readdir dir <span class="keyword">with</span>
+    | <span class="string">'.'</span> | '..' -&gt; ()
+    | filename -&gt; list := filename :: !list
+  <span class="keyword">done</span>;
+  <span class="keyword">assert</span> false
+<span class="keyword">with</span> End_of_file -&gt; !list</code></pre>
+
+<h3 id="">再帰の例: リストの最大の要素</h3>
+
+<p>リストをあつかう再帰の、基本的なパターンをみてみよう:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  a <span class="keyword">match</span> or <span class="keyword">if</span> statement
+  | base case -&gt; []
+  | recursive case -&gt; element :: loop ()</code></pre>
+
+<p>ここで大切なことは、match、 base case、 recursive case
+パターンの使いかただ。これからの例 - リストのなかで最大の要素を求める -
+では、2つの base case と、ひとつの recursive case
+をとることになる。いきなりコードの話に入る前に、ちょっと足をとめて、じっくりこの問題を考えてみよう。この問題を考えることで、解法が&#39;まるで魔法の
+ように&#39;頭に浮かぶようになるだろう(約束するよ :-)</p>
+<p>まずはじめに、リストの最大の要素というのは、もっとも値が大きなもののことをいう、とはっきりさせておこう。リスト
+<code>[1; 2; 3; 4; 1]</code> の最大の要素は、 <code>4</code> だ。</p>
+<p>特別な場合などあるだろうか? あるとも。 空リスト <code>[]</code>
+の最大の要素とはなんだ? <em>そんなものはない</em> 。
+そこで、空リストを渡したときは、エラーを throw するようにするべきだ。</p>
+<p><code>[4]</code> のような、要素がひとつだけのリストの最大の要素とはなんだ?
+これは簡単だ。それはその要素自身だ。よって、 <code>list_max [4]</code> は <code>4</code>
+を返すべきで、一般に、 <code>list_max [x]</code> は <code>x</code> を返すべきとなる。</p>
+<p>最大の要素は、一般の <code>x :: remainder</code> (これは、リストの &#39;cons&#39; 記法で、
+<code>remainder</code> はつまり tail で、リストだ)のときは、何になるだろう?</p>
+<p>じっくり考えてみよう。ここで、 <code>remainder</code>
+の最大の要素を知っているとして、それを <code>y</code> としよう。 <code>x :: remainder</code>
+の最大の要素はなんだろう? それは、 <code>x &gt; y</code> か <code>x &lt;= y</code> かで決まる。もし
+<code>x</code> が <code>y</code> より大きければ、全体の最大値は <code>x</code> で、逆に <code>x</code> が <code>y</code>
+より小さければ、全体の最大値は <code>y</code> だ。</p>
+<p>本当にこれでいけるだろうか? <code>[1; 2; 3; 4; 1]</code> をまたみてみる。これは、
+<code>1 :: [2; 3; 4; 1]</code> だ。では、remainder 、 <code>[2; 3; 4; 1]</code>
+の最大の要素は、 <code>4</code> だ。よって、 <code>x = 1</code> と <code>y = 4</code>
+ということになった。先頭の要素 <code>x = 1</code> は、もう <code>y = 4</code>
+のほうが大きいとわかったから、どうでもよく、結局、リスト全体の最大値は
+<code>y = 4</code> というわけだ。</p>
+<p>上記のルールをコードにしていけば、求める関数ができる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">list_max</span> <span class="ocaml-variable">xs </span>=
+      <span class="keyword">match</span> xs <span class="keyword">with</span>
+      | [] -&gt;   <span class="comment">(* empty list: fail *)</span>
+         <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>list_max called on empty list'
+      | [x] -&gt; <span class="comment">(* single element list: return the element *)</span>
+         x
+      | x :: remainder -&gt; <span class="comment">(* multiple element list: recursive case *)</span>
+         max x (list_max remainder)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>コメントを加えておいたので、上で決めたルールや特別な場合が、どうコードの各行に対応しているか、見てほしい。</p>
+<p>動くかな?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [1; 2; 3; 4; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1; 100]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span></code></pre>
+
+<p>示した解法はこのように、(a) 手続き型の for-loop
+による解法とはかけはなれている。 (b)
+やりたいことが非常に率直に表されている。関数型プログラマがよくいう、関数型スタイルは手続き型スタイルよりもずっとレベルが高いというのはこういうこ
+とで、より単純で、より良いということだ。信じるかどうかはあなた次第だ。確かなのは、関数型で書いたもののほうが、より理にかなっていて、
+<code>list_max</code>
+が正しいことを公理的（形式的）に証明するのにも役立つ。(ここでの&#39;正しい&#39;というのは、数学的な方法で、このプログラムにバグがないことを証明できるということだ。これは、スペースシャトルや原子力発電所や、ようするに高品質なソフトウェアが求められる場合に、重要である。)</p>
+<h3 id="">末尾再帰</h3>
+
+<p><code>range</code> 関数をまた見てみよう。もう、おなじみになってしまった:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>ちょっとこれを書き直して、プログラムの構造がもっとわかりやすくなるようにする(中身は同じまま):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span>
+      <span class="governing">let </span><span class="ocaml-variable">result</span> = range (a+1) b <span class="governing">in</span>
+      a :: result</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>呼び出そう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.length (range 1 10)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 10
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.length (range 1 1000000)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Stack overflow during evaluation (looping recursion?).
+</span></code></pre>
+
+<p>うーむ…
+ぱっと見たかんじでは、再帰プログラミングにまつわる問題のようだ。つまり、関数型プログラミングの屋台骨に問題があるのか!
+繰り返しではなく再帰をつかってコードを書いたために、大きな入力のときにスタック領域を使いきってしまう可能性がでてきた、もうだめか?</p>
+<p>いいや、そんなことはない。コンパイラは単純な最適化をして、ある形の再帰関数を
+while
+ループに置き換えてくれる。したがって、この形の再帰関数は、一定のスタック領域で動き、効率も手続き型の
+while ループと同じである。これらの関数を <strong>末尾再帰関数</strong> という。</p>
+<p>末尾再帰関数とは、全体の最後でのみ再帰呼出しをするものをいう。上の
+<code>loop ()</code> 関数があっただろう? それらはすべて、この形をしていた:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  <span class="comment">(* <span class="keyword">do</span> something *)</span>
+  loop ()</code></pre>
+
+<p><code>loop ()</code> の再帰呼出しが一番最後でだけなので、 <code>loop</code> は
+末尾再帰であり、コンパイラは全体を while ループにしてくれるだろう。</p>
+<p>不幸にも、 <code>range</code>
+は末尾再帰でない、上の長めにしたほうを見ればわかるだろう。 <code>range</code>
+の再帰呼出しがあるのは一番最後ではない。というのも、最後にあるのは <code>::</code>
+(cons) 処理だからだ。結果として、コンパイラは再帰を while
+ループにしてくれず、この関数はスタック領域を無駄に使うことになる。</p>
+<p>上の補遺で扱った、 Eric Cooper の &#39;accumulator&#39;
+法を思い出そう、この方法は関数型プログラミングでいろいろに使われていると私は言った。さあ、こいつの出番だ。こいつを使えば、上の
+<code>range</code>
+のような関数を、末尾再帰を守った形に書けるようになる。効率的で、大きな入力でも大丈夫なようになるのだ。</p>
+<p><code>range</code> 関数を書き直して、 accumulator
+引数に、&#39;今までの結果&#39;が入るようにしてやろう:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+  <span class="comment">(* ... *)</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+  range2 a b []</code></pre>
+
+<p>(ここは、入れ子関数を本当なら使うところだ)</p>
+<p><code>accum</code>
+引数に結果を蓄積していく。それが&#39;今までの結果&#39;だ。渡すのは空リストだ(&#39;今までの結果は無し&#39;)。
+簡単なのは、 <code>a &gt; b</code> のときだ:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+  <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> accum
+  <span class="keyword">else</span>
+    <span class="comment">(* ... *)</span></code></pre>
+
+<p>もし <code>a &gt; b</code> なら(つまり、もし再帰の最後まできたら)、やめて、結果(
+<code>accum</code> )を返す。</p>
+<p>巧みなのは、 <code>else</code> 節の書きかたである。 <code>range2</code>
+の呼出しが一番最後になっているのを確かめよう。この関数は末尾再帰になっている:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> accum
+    <span class="keyword">else</span> range2 (a+1) b (a :: accum)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range2 : int -&gt; int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>ただひとつ、ちょっとした問題がこの関数にはある:
+リストを逆に作ってしまうのだ!
+これを直すのは簡単で、rangeをこう定義しなおせばよい:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>= <span class="ocaml-module">List</span>.rev (range2 a b [])</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>これでもいいが、すこし遅いのはどうかと思う。100万の要素のリストをつくらねばならないこともあるのだから:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.length (range 1 1000000)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 1000000
+</span></code></pre>
+
+<p>以下の実装は、前のものより2倍速い。リストを逆順にしなくてよいからだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+    <span class="keyword">if</span> b &lt; a <span class="keyword">then</span> accum
+    <span class="keyword">else</span> range2 a (b-1) (b :: accum)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range2 : int -&gt; int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    range2 a b []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>末尾再帰について簡潔にまとめたが、現実の世界では、ある関数が末尾再帰になるかどうかを求めるのは、かな
+り難しいことがある。ここで本当に学んだことはなんだろう?
+それは、再帰関数には、未熟なプログラマにとって危険な罠が潜んでいるということである。
+関数がちゃんと動いているように見えても、それは小さな入力(テストの間)のときだけで、大きな入力にさらされた途端、ボロがでてしまうことがある。これ
+は、再帰関数を <em>使わず</em> に、明示的な while
+ループを使うのも、可能ならよいということだ。</p>
+<h2 id="mutable">更新可能な(mutable)レコード、参照(再び!)、配列</h2>
+
+<p>前にレコードについては触れた。これはCの <code>構造体</code>のようなものだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type pair_of_ints = { a : int; b : int; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">{a=3; b=5}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : pair_of_ints = {a = 3; b = 5}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">{a=3}</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some record fields are undefined: b
+</span></code></pre>
+
+<p>ひとつ、紹介しなかった機能がある: OCaml
+のレコードは、更新可能なフィールドを持てる。普通に書いて
+<code>{a = 3; b = 5}</code>
+のようにすると、更新不可能になり、定数的なオブジェクトになる。ところで、もしレコードが
+<em><strong>更新可能な</strong></em>
+フィールドを持つなら、レコードの中のそれらのフィールドを更新するための手段があるはずだ。これは、
+OCaml
+の手続き型な機能で、なぜなら関数型言語は普通、更新可能なオブジェクトを許さないからだ(更新可能なオブジェクトには他に、参照や、更新可能な配列があ
+る。すぐあとで触れる。)</p>
+<p>これが、更新可能なフィールドを持って定義されたオブジェクトだ。このフィールドは、このオブジェクトが何回アクセスされたかを数えるのに、使われる。これは思うに、キャッシュの仕組みに使えそうだ。これを見て、どのオブジェクトをメモリから追い出すかを決めればよい。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">name</span> = { name : string; <span class="keyword">mutable</span> access_count : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type name = { name : string; mutable access_count : int; }
+</span></code></pre>
+
+<p>この関数は name を扱うもので、 <code>name</code> フィールドを出力し、更新可能な
+<code>access_count</code> フィールドをインクリメントする:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_name</span> <span class="ocaml-variable">name </span>=
+    print_endline (<span class="ocaml-error-loc">'</span>The name is ' ^ name.name);
+    name.access_count &lt;- name.access_count + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p><code>print_name</code> は、変な、まったく関数型でないことをやっている:
+<code>access_count</code> パラメータを変更している。もし
+5章をつぶさに読んでいれば、この関数が &#39;純粋&#39; でないとわかるだろう。
+OCaml は関数型言語だが、それを強引に押し付けたりはしないのだ。</p>
+<p>とにかく、 <code>print_name</code> を動かしてみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = { name = <span class="ocaml-error-loc">'</span>Richard Jones'; access_count = 0 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_name</span> n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_name
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_name</span> n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_name
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
+</span></code></pre>
+
+<p>明示的に <code>mutable</code> とつけたフィールドだけが、 <code>&lt;-</code>
+演算子を使って代入できる。 mutable
+でないフィールドに代入しようとしても、 OCaml にはばまれる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">n.name &lt;- <span class="ocaml-error-loc">'</span>John Smith'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>すでにお手のものになった参照は、更新可能な <code>contents</code>
+フィールドを持ったレコードを使って実装されている。 <code>Pervasives</code>
+にある定義を確かめてみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a <span class="keyword">ref</span></span> = { <span class="keyword">mutable</span> contents : 'a }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type 'a ref = { mutable contents : 'a; }
+</span></code></pre>
+
+<p>さらに、OCaml がトップレベルで出力する参照の値を、よく見てみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">r</span> = <span class="keyword">ref</span> 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val r : int Pervasives.ref = {Pervasives.contents = 100}
+</span></code></pre>
+
+<p>配列は、 OCaml が提供する、また違った種の更新可能な構造体だ。 OCaml
+では、リストは連結リストとして実装されているが、連結リストだと遅い処理がいくつかある。例えば、リストの先頭を得たり、リストをまわって各要素になん
+らかの処理をしていくというのは、難なく速い。しかし、リストの n
+番めの要素に飛ぶとか、リストにランダムアクセスをしようとかは、処理が遅い。
+OCaml の <code>Array</code>
+型は本物の配列なので、ランダムアクセスは速いが、要素の挿入や削除は遅い。
+<code>配列</code> も更新可能なので、要素をどうとでも更新できる。</p>
+<p>配列のイロハは簡単だ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">a</span> = <span class="ocaml-module"><span class="ocaml-error-loc">Array</span></span><span class="ocaml-error-loc">.create</span> 10 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 3: deprecated: Array.create
+Use Array.make instead.
+</span>val a : int array = [|0; 0; 0; 0; 0; 0; 0; 0; 0; 0|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 0 <span class="keyword">to</span> <span class="ocaml-module">Array</span>.length a - 1 <span class="keyword">do</span>
+    a.(i) &lt;- i
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">a</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int array = [|0; 1; 2; 3; 4; 5; 6; 7; 8; 9|]
+</span></code></pre>
+
+<p>注: 配列を書くための構文は、 <code>[| element: element; ...|]</code></p>
+<p>OCaml
+のコンパイラは、きつい数値計算をこなすことを考えて、設計されている(
+FORTRAN が伝統的に使われていた分野だ)。</p>
+<p>そのために、様々な最適化が、数字の配列やベクトルや行列に特化して、なされている。これは、密な行列の掛け算をするベンチマークのコードだ。
+for
+ループを使い、全体としてかなり手続き型なスタイルをとっているので注意してほしい:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">size</span> = 30
+    
+  <span class="governing">let</span> <span class="ocaml-function">mkmatrix</span> <span class="ocaml-variable">rows cols </span>=
+    <span class="governing">let </span><span class="ocaml-variable">count</span> = <span class="keyword">ref</span> 1
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">last_col</span> = cols - 1
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">Array</span>.make_matrix rows cols 0 <span class="governing">in</span>
+    <span class="keyword">for</span> i = 0 <span class="keyword">to</span> rows - 1 <span class="keyword">do</span>
+      <span class="governing">let </span><span class="ocaml-variable">mi</span> = m.(i) <span class="governing">in</span>
+      <span class="keyword">for</span> j = 0 <span class="keyword">to</span> last_col <span class="keyword">do</span>
+        mi.(j) &lt;- !count;
+        incr count
+      <span class="keyword">done</span>;
+    <span class="keyword">done</span>;
+    m
+    
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">inner_loop</span> <span class="ocaml-variable">k v m1i m2 j </span>=
+    <span class="keyword">if</span> k &lt; 0 <span class="keyword">then</span> v
+    <span class="keyword">else</span> inner_loop (k - 1) (v + m1i.(k) * m2.(k).(j)) m1i m2 j
+    
+  <span class="governing">let</span> <span class="ocaml-function">mmult</span> <span class="ocaml-variable">rows cols m1 m2 m3 </span>=
+    <span class="governing">let </span><span class="ocaml-variable">last_col</span> = cols - 1
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">last_row</span> = rows - 1 <span class="governing">in</span>
+    <span class="keyword">for</span> i = 0 <span class="keyword">to</span> last_row <span class="keyword">do</span>
+      <span class="governing">let </span><span class="ocaml-variable">m1i</span> = m1.(i) <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">m3i</span> = m3.(i) <span class="governing">in</span>
+      <span class="keyword">for</span> j = 0 <span class="keyword">to</span> last_col <span class="keyword">do</span>
+        m3i.(j) &lt;- inner_loop last_row 0 m1i m2 j
+      <span class="keyword">done</span>;
+    <span class="keyword">done</span>
+    
+  <span class="governing">let</span> () =
+    <span class="governing">let </span><span class="ocaml-variable">n</span> =
+      <span class="keyword">try</span> int_of_string <span class="ocaml-module">Sys</span>.argv.(1)
+      <span class="keyword">with</span> Invalid_argument _ -&gt; 1
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">m1</span> = mkmatrix size size
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">m2</span> = mkmatrix size size
+    <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">m3</span> = <span class="ocaml-module">Array</span>.make_matrix size size 0 <span class="governing">in</span>
+    <span class="keyword">for</span> i = 1 <span class="keyword">to</span> n - 1 <span class="keyword">do</span>
+      mmult size size m1 m2 m3
+    <span class="keyword">done</span>;
+    mmult size size m1 m2 m3;
+    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>%d %d %d %d\n' m3.(0).(0) m3.(2).(3) m3.(3).(2) m3.(4).(4)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/if_statements_loops_and_recursion.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

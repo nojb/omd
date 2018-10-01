@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="Making_plugins.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Making Plugins &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Making_plugins.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/ocamlbuild/">Ocamlbuild</a><span class="divider"></span></li>
+<li class="active">Making Plugins</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Getting-started">Getting started</a>
+<ul><li><a href="#Hello-world">Hello, world!</a>
+</li><li><a href="#The-dispatch-function">The dispatch function</a>
+</li></ul>
+</li><li><a href="#Basic-operations">Basic operations</a>
+<ul><li><a href="#Change-options">Change options</a>
+</li><li><a href="#Manage-tags">Manage tags</a>
+</li><li><a href="#Declare-libraries">Declare libraries</a>
+</li></ul>
+</li><li><a href="#Advanced-operations">Advanced operations</a>
+<ul><li><a href="#Add-or-modify-rules">Add or modify rules</a>
+</li><li><a href="#Link-external-modules-with-your-plugin">Link external modules with your plugin</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Making-plugins">Making plugins</h1><h2 id="Getting-started">Getting started</h2><p>An OCamlbuild plugin is a single Ocaml file, named &#39;myocamlbuild.ml&#39;,
+which must be in the root directory of your project. Before building any
+target, this file will be compiled, linked to and executed by
+OCamlbuild. This means that your plugin will have access to some parts
+of OCamlbuild, namely the <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.PLUGIN.html">plugin
+API</a>.</p>
+<h3 id="Hello-world">Hello, world!</h3><p>Before actually using the API, let&#39;s show that the plugin is indeed
+executed by OCamlbuild. Write a simple <code>myocamlbuild.ml</code> such as:</p>
+<pre><code class="ocaml">print_string 'Hello, world!\n'</code></pre>
+
+<p>Now execute OCamlbuild. You should
+get something like this:</p>
+<pre class="shell"><code class="shell">$ ocamlbuild
+Finished, 1 target (0 cached) in 00:00:00.
+Hello, world!
+Finished, 0 targets (0 cached) in 00:00:00.</code></pre>
+
+<p>This shows that your plugin has been compiled,
+and then executed.</p>
+<h3 id="The-dispatch-function">The dispatch function</h3>
+
+<p>The <code>dispatch</code> function is the most important function of the
+<a href="http://nicolaspouillard.fr/ocamlbuild/html/Signatures.PLUGIN.html#VALdispatch">API</a>.
+It allows you to control <em>when</em> your code will be executed. In practice,
+it takes a function as an argument and executes it with a different
+parameter at the beginning and at the end of the following stages:</p>
+<ul><li><p>hygiene (checking that the source tree is clean),</p>
+</li><li><p>options (parsing the command line options),</p>
+</li><li><p>rules (adding the default rules to the system).</p>
+</li></ul>
+
+<p>For demonstration purposes, try the following plugin, which prints the
+value of the <code>-ocamlc</code> option before, and after the &#39;options&#39; stage:</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span> <span class="comment">(* open the main API module *)</span>
+ 
+<span class="governing">let</span> () =
+  dispatch <span class="governing">begin</span> function
+  | Before_options -&gt;
+      <span class="ocaml-module">Printf</span>.printf 'Before options, the -ocamlc option is set <span class="keyword">to</span> %s.\n'
+        (<span class="ocaml-module">Command</span>.string_of_command_spec !<span class="ocaml-module">Options</span>.ocamlc)
+  | After_options -&gt;
+      <span class="ocaml-module">Printf</span>.printf 'After options, The -ocamlc option is set <span class="keyword">to</span> %s.\n'
+        (<span class="ocaml-module">Command</span>.string_of_command_spec !<span class="ocaml-module">Options</span>.ocamlc)
+  | _ -&gt; ()
+  <span class="governing">end</span></code></pre>
+
+<p>Now if you run Ocamlbuild, you can see when the option is applied:</p>
+<pre class="shell"><code class="shell">$ ocamlbuild -ocamlc bla
+Before options, the -ocamlc option is set to &lt;virtual OCAMLC&gt;.
+After options, The -ocamlc option is set to bla.</code></pre>
+
+<p>Usually, you will want your code to be executed after the &#39;rules&#39; stage
+(i.e., using the <code>After_rules</code> hook). But for some needs, you will use
+other hooks, for instance:</p>
+<ul><li><p><code>Before_options</code>: to change the default value of some options</p>
+</li><li><p><code>After_options</code>: to enforce the value of some options</p>
+</li><li><p><code>Before_hygiene</code>: to tag or untag some files as precious or non
+ hygienic</p>
+</li></ul>
+
+<h2 id="Basic-operations">Basic operations</h2><p>To start slowly, let&#39;s see how to write a plugin which does what you can
+do <em>without</em> a plugin. This will allow us to better understand how
+plugins are plugged into OCamlbuild.</p>
+<h3 id="Change-options">Change options</h3><p>You can use a plugin to set the value of an OCamlbuild option such as
+<code>-no-hygiene</code> or <code>-ocamlc</code>. This way you won&#39;t have to write the option
+everytime on the command line.</p>
+<p>To set an option, simply set the option reference. All these references
+are defined in the
+<a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.OPTIONS.html">Options</a>
+module of the API.</p>
+<p>Remember that if you change the reference <code>Before_options</code>, the value set
+in your plugin can still be overriden by the command line. If you want
+to force the value of an option you have to do it <code>After_options</code>. See
+the example in the previous section.</p>
+<h3 id="Manage-tags">Manage tags</h3><p>Your plugin can replace your <code>_tags</code> file(s). Indeed, a plugin can read
+or change the tags of a file. This is usually done <code>After_rules</code>.</p>
+<h4 id="List-the-tags-of-a-file">List the tags of a file</h4><p>To list the tags of a file, use the API function tags_of_pathname. For
+example, a useful debugging function might be:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">print_info</span> <span class="ocaml-variable">f </span>=
+  <span class="ocaml-module">Format</span>.fprintf <span class="ocaml-module">Format</span>.std_formatter
+    '@[&lt;hv 2&gt;Tags <span class="keyword">for</span> file %s:@ %a@]@.' f
+    <span class="ocaml-module">Tags</span>.print (tags_of_pathname f)</code></pre>
+
+<h4 id="Tag-a-file">Tag a file</h4><p>To add tags to a file, use the API function <code>tag_file</code>. For example, to
+tag the file <code>bla.ml</code> with the tag <code>use_unix</code>:</p>
+<pre><code>tag_file &#39;bla.ml&#39; [&#39;use_unix&#39;]</code></pre>
+
+<h4 id="Untag-a-file">Untag a file</h4><p>To remove tags from a file, use the same API <code>tag_file</code> with a minus
+before the tag&#39;s name. For example, to remove the tag <code>use_unix</code> from
+the file <code>bla.ml</code>:</p>
+<pre><code>tag_file &#39;bla.ml&#39; [&#39;-use_unix&#39;]</code></pre>
+
+<h4 id="Example">Example</h4><p>If you dispatch the following code after the rules <code>After_rules</code>:</p>
+<pre><code class="ocaml">print_info 'bla.ml';
+tag_file 'bla.ml' ['test'];
+print_info 'bla.ml';
+tag_file 'bla.ml' ['-test'; '-ocaml'];
+print_info 'bla.ml';</code></pre>
+
+<p>You will get the following result:</p>
+<pre><code>Tags for file bla.ml:
+  extension:ml, file:bla.ml, ocaml, quiet, traverse, use_graph, use_nums,
+  use_str, use_unix
+Tags for file bla.ml:
+  extension:ml, file:bla.ml, ocaml, quiet, test, traverse, use_graph,
+  use_nums, use_str, use_unix
+Tags for file bla.ml:
+  extension:ml, file:bla.ml, quiet, traverse, use_graph, use_nums, use_str,
+  use_unix</code></pre>
+
+<h3 id="Declare-libraries">Declare libraries</h3><p>If you don&#39;t like to use the <code>-lib</code> option, you can write a plugin which
+will use your libraries automatically.</p>
+<h4 id="Standard-libraries">Standard libraries</h4><p>Libraries such as unix, num, str or bigarray are already declared in
+OCamlbuild, so all you have to do is tag your files using <code>use_unix</code>,
+<code>use_num</code> and so on using the <code>tag_file</code> API.</p>
+<h4 id="Other-libraries">Other libraries</h4><p>See <a href="Using_an_external_library.html">Using an external library</a> if
+your libraries are installed, or <a href="Using_internal_libraries.html">Using internal
+libraries</a> otherwise. You might
+also prefer <a href="Using_ocamlfind_with_ocamlbuild.html">Using ocamlfind with
+ocamlbuild</a>.</p>
+<h2 id="Advanced-operations">Advanced operations</h2><p>These operations cannot be done without a plugin. Because one cannot
+imagine everything you&#39;ll want to do, you might not find exactly what
+you need here. Be sure to read the <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.PLUGIN.html">API
+documentation</a>,
+to experiment with stuff and, why not, to read the OCamlbuild source.</p>
+<h3 id="Add-or-modify-rules">Add or modify rules</h3><p>Before reading this section, be sure you understand the <a href="Solver_mechanism.html">solver
+mechanism</a>.</p>
+<h4 id="Rules">Rules</h4><p>Once you know how rules are handled by OCamlbuild, all you have to
+know is that adding a rule is done using the &#39;rule&#39; function of the
+<a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.PLUGIN.html">API</a>.</p>
+<p>Usually, all you have to do is call the &#39;rule&#39; function with these
+arguments:</p>
+<ul><li><p>The name of the rule. It should be unique. This is the name that
+ appears when using the &#39;-documentation&#39; or <code>-verbose</code> options.</p>
+</li><li><p><code>~dep</code>: the dependency (use <code>~deps</code> if there are more than 1)</p>
+</li><li><p><code>~prod</code>: the production (use <code>~prods</code> if there are more than 1)</p>
+</li><li><p>The action of the rule, i.e. a function which returns the command to
+ use to produce the productions. This command may have holes (see the
+ <code>T</code> constructor of type
+ <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.COMMAND.html">Command.spec</a>).</p>
+</li></ul>
+
+<h5 id="File-names">File names</h5><p>The <code>~deps</code> and <code>~prod</code> parameters don&#39;t have to be exact path names. For
+example, with <code>~dep=&#39;%.ml&#39;</code> and <code>~prod=&#39;%.byte&#39;</code>, you can produce
+<code>bla.byte</code> from <code>bla.ml</code>, or <code>foo.byte</code> from <code>foo.ml</code>, or... If you need
+more than one <code>%</code> you can use <code>%(name)</code> where name is any identifier. For
+example, the file <code>why.not.ml</code> matches the pattern <code>%(bla).%(foo).ml</code>
+with <code>%(bla)=why</code> and <code>%(foo)=not</code>.</p>
+<p>The action of the rules takes two arguments. The first one is usually
+called <code>env</code> and is used to replace your <code>%</code> in a string. For example,
+with the previous example, <code>env &#39;%(foo).%(bla).plop&#39;</code> returns
+<code>&#39;not.why.plop&#39;</code>.</p>
+<h5 id="Commands">Commands</h5><p>Your action returns a command (see module
+<a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.COMMAND.html">Command</a>)
+which should build the productions of the rule.</p>
+<p>There are some pre-defined commands in the
+<a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.PLUGIN.html">Ocamlbuild_plugin</a>
+module, such as usual Unix commands (<code>cp</code>, <code>mv</code>, ...).</p>
+<p>Commands may come with tag holes that will be filled depending on the
+tags. For instance:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">ml</span> = env '%.ml' <span class="governing">in</span>
+Cmd(S[ocamlc; A '-c';
+      T(tags_of_pathname ml ++ 'ocaml' ++ 'compile' ++ 'byte'); A ml])</code></pre>
+
+<p>Usually, the executed command will be (if <code>env &#39;%.ml&#39; = &#39;bla.ml&#39;</code>):</p>
+<pre class="shell"><code class="shell">ocamlc -c bla.ml</code></pre>
+
+<p>But say the file <code>bla.ml</code> is tagged with <code>thread</code>. There is a
+flag rule which says that the tags <code>ocaml</code>, <code>compile</code> and <code>thread</code>
+together should produce the <code>-thread</code> option. In this case, the executed
+command becomes:</p>
+<pre class="shell"><code class="shell">ocamlc -c -thread bla.ml</code></pre>
+
+<h5 id="Dynamic-dependencies">Dynamic dependencies</h5><p>The second argument of the action is usually called <code>build</code> and is used
+to build new dependencies that you couldn&#39;t write in the <code>~deps</code>
+parameter. It takes a conjunction of alternative targets. For instance,
+<code>build [[&#39;a&#39;; &#39;b&#39;]; [&#39;c&#39;]]</code> will try to build two targets: <code>&#39;a&#39;</code> and <code>&#39;c&#39;</code>, or
+<code>&#39;b&#39;</code> and <code>&#39;c&#39;</code>.</p>
+<p>The value returned by <code>build</code> tells you which files have been built. For
+instance, <code>build [[&#39;a&#39;; &#39;b&#39;]; [&#39;c&#39;]]</code> may return <code>[Good &#39;a&#39;; Bad exn]</code>. This
+means that <code>&#39;a&#39;</code> has been built, but that <code>&#39;c&#39;</code> couldn&#39;t be built. You
+should raise the <code>exn</code> exception if you can&#39;t do without <code>&#39;c&#39;</code>.</p>
+<p>The
+<a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.OUTCOME.html">Outcome</a>
+module has some handy functions to help you with the return values of
+<code>build</code>.</p>
+<h5 id="Examples">Examples</h5>
+
+<ul><li><p><a href="A_plugin_example_for_compiling_LaTeX.html">A plugin example for compiling
+ LaTeX</a></p>
+</li><li><p><a href="Using_alphaCaml_with_ocamlbuild.html">Using alphaCaml with
+ ocamlbuild</a></p>
+</li></ul>
+
+<h4 id="Tags-and-flags">Tags and flags</h4>
+
+<p>You can also use the <code>dep</code> and <code>flag</code> functions. The <code>dep</code> function
+allows you to automatically build some dependencies when a file is
+tagged with some given tags, and the <code>flag</code> function allows you to
+associate command options with tags (to fill the holes of a command).
+For instance, here is how to declare that tags <code>&#39;ocaml&#39;</code>, <code>&#39;compile&#39;</code> and
+<code>&#39;thread&#39;</code> should become <code>&#39;-thread&#39;</code>:</p>
+<pre><code>flag [&#39;ocaml&#39;; &#39;compile&#39;; &#39;thread&#39;] (A &#39;-thread&#39;)</code></pre>
+
+<p>Examples:</p>
+<ul><li><p><a href="A_plugin_for_camlp4_syntax_extension__pa_openin_.html">A plugin for camlp4 syntax extension (pa
+ openin)</a></p>
+</li></ul>
+
+<h3 id="Link-external-modules-with-your-plugin">Link external modules with your plugin</h3>
+
+<p>There is no direct support to link external modules with your plugin.
+For now the only way to achieve this is to invoke ocamlbuild as follows
+(the example uses the Str module) :</p>
+<pre class="shell"><code class="shell">ocamlbuild -ocamlc &#39;ocamlc str.cma&#39; -ocamlopt &#39;ocamlopt str.cmxa&#39;</code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Making_plugins.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

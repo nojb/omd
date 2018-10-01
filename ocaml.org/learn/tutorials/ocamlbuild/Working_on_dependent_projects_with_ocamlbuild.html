@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="Working_on_dependent_projects_with_ocamlbuild.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Working on dependent projects with ocamlbuild &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Working_on_dependent_projects_with_ocamlbuild.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/ocamlbuild/">Ocamlbuild</a><span class="divider"></span></li>
+<li class="active">Working on dependent projects with ocamlbuild</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Internal-and-external-project-interface">Internal and external project interface</a>
+</li><li><a href="#Caveats">Caveats</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Working-on-dependent-projects-with-ocamlbuild">Working on dependent projects with ocamlbuild</h1>
+
+<p>If you are on a file system that supports symbolic links, the following
+setup allows to work simultaneously on a <code>base</code> project and two
+independent projects <code>p1</code> and <code>p2</code> that depend on <code>base</code>. The setup is
+very simple and any change to the sources of <code>base</code> automatically gets
+propagated in the builds of <code>p1</code> and <code>p2</code>.</p>
+<p>Suppose the sources are distributed as follows :</p>
+<pre class="shell"><code class="shell">base/src
+p1/src
+p2/src</code></pre>
+
+<p>Simply create these symbolic links :</p>
+<pre class="shell"><code class="shell">ln -s ../base/src p1/base
+ln -s ../base/src p2/base</code></pre>
+
+<p>and modify <code>p1</code> and <code>p2</code>&#39;s <code>_tags</code> files as follows :</p>
+<pre class="shell"><code class="shell">echo &#39;&lt;base&gt;: include&#39; &gt;&gt; p1/_tags
+echo &#39;&lt;base&gt;: include&#39; &gt;&gt; p2/_tags</code></pre>
+
+<p>The rest will be sorted out by ocamlbuild. When a change is done in
+<code>base/src</code> nothing needs to be recompiled there: new builds of <code>p1</code> or
+<code>p2</code> will automatically use the latest version of <code>base</code>&#39;s sources.</p>
+<h2 id="Internal-and-external-project-interface">Internal and external project interface</h2><p>Sometimes in the <code>base</code> project you want to have both an internal and an
+external interface for module definitions. For example in the following
+layout assume <code>b.ml</code> accesses definitions in <code>a.ml</code> that clients of the
+<code>base</code> project should not see.</p>
+<pre class="shell"><code class="shell">base/src/a.ml
+base/src/b.ml</code></pre>
+
+<p>In order to do this, adjust the directory layout to :</p>
+<pre class="shell"><code class="shell">base/src/internal/a.ml
+base/src/internal/b.ml
+base/src/base.ml
+base/src/base.mli</code></pre>
+
+<p>With <code>base.ml</code> as follows :</p>
+<pre class="shell"><code class="shell">module A = A
+module B = B</code></pre>
+
+<p>and <code>base.mli</code> restricting the signatures of A and B as needed.
+Finally add the following <code>p1/myocamlbuild.ml</code> and <code>p2/myocamlbuild.ml</code>
+plugins.</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span><span class="ocaml-prompt">;;</span><br/><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_pack</span><span class="ocaml-prompt">;;</span><br/>dispatch <span class="governing">begin</span> function
+| After_rules -&gt;
+    <span class="ocaml-module">Pathname</span>.define_context 'base' ['base/internal']
+| _ -&gt; ()
+<span class="governing">end</span>;;</code></pre>
+
+<h2 id="Caveats">Caveats</h2><ul><li><p>Scalability. Since both <code>p1</code> and <code>p2</code> build their own version of
+ <code>base</code>, this means longer build times after an <code>ocamlbuild -clean</code>.
+ On the other hand with ocamlbuild you don&#39;t need to clean as much as
+ you had with makefiles.</p>
+</li><li><p>If <code>base/src</code> needs a plugin to build you will have to integrate it
+ into <code>p1</code> and <code>p2</code>&#39;s myocamlbuild.ml. This caveat may be removed in
+ the future once ocamlbuild supports multiple plugins. Note that if
+ you are only using tagged caml sources nothing special needs to be
+ done, just put your tags in <code>base/src/_tags</code>.</p>
+</li></ul>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Working_on_dependent_projects_with_ocamlbuild.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

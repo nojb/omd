@@ -1,0 +1,544 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="setting_up_with_oasis.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Setting up with OASIS &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/setting_up_with_oasis.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Setting up with OASIS</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Getting-started">Getting started</a>
+<ul><li><a href="#What-is-your-project">What is your project ?</a>
+</li><li><a href="#A-little-bit-of-OASIS-boilerplate">A little bit of OASIS boilerplate</a>
+</li></ul>
+</li><li><a href="#The-meat-of-your-project">The meat of your project</a>
+<ul><li><a href="#An-executable">An executable</a>
+</li><li><a href="#Defining-libraries">Defining libraries</a>
+</li><li><a href="#Other-optional-sections">Other optional sections</a>
+</li></ul>
+</li><li><a href="#Going-further">Going further</a>
+<ul><li><a href="#Sub-libraries-and-OCamlfind-manipulations">Sub libraries and OCamlfind manipulations</a>
+</li><li><a href="#Flags-and-conditional-compilation">Flags and conditional compilation</a>
+</li><li><a href="#Tests">Tests</a>
+</li><li><a href="#Syntax-extensions">Syntax extensions</a>
+</li><li><a href="#Interfacing-with-C-code">Interfacing with C code</a>
+</li></ul>
+</li><li><a href="#Wrapping-up-a-package">Wrapping up a package</a>
+</li><li><a href="#Examples">Examples</a>
+</li><li><a href="#Under-the-hood">Under the hood</a>
+<ul><li><a href="#Ocamlbuild">Ocamlbuild</a>
+</li><li><a href="#The-OASIS-files">The OASIS files</a>
+</li><li><a href="#Setup-options">Setup options</a>
+</li><li><a href="#Plugins-and-Features">Plugins and Features</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Setting-up-an-OCaml-project-with-OASIS">Setting up an OCaml project with OASIS</h1>
+
+<p><a href="http://oasis.forge.ocamlcore.org/">OASIS</a> allows to give a high level description of your project and will generate a build system and packaging information for you. It allows to set up a project in a quick and simple way. The goal of this tutorial is not to explain all the details of OASIS, but to provide the necessary information to setup a project.</p>
+<h2 id="Getting-started">Getting started</h2>
+
+<p>You first need to install OASIS. The preferred way is with opam:</p>
+<pre><code>opam install oasis</code></pre>
+
+<p>You can also install it under debian-based system.</p>
+<pre><code>sudo apt-get install oasis</code></pre>
+
+<p>Finally, a tarball is available on <a href="http://oasis.forge.ocamlcore.org/">OASIS&#39;s main page</a>.</p>
+<h3 id="What-is-your-project">What is your project ?</h3>
+
+<p>Your project description is going to be located in an <code>_oasis</code> file, at the root of your project. Let&#39;s start by a general description of your project!</p>
+<pre class="oasis"><code class="oasis">Name: FooBar
+Version: 0.1
+Synopsis: A library about Foo and Bar.
+Authors: Me &lt;me@myhost.com&gt;
+License: LGPL with OCaml linking exception
+
+Description: FooBar allows to combine foo and bar efficiently. It also allows to interface with baz.
+Homepage: http://foobar.org</code></pre>
+
+<p>This description might seem unnecessary at first, but will be mandatory if you want to package and distribute your library later on. It&#39;s also a nice source of information for the interested user.</p>
+<p>Only the first set of field is mandatory. You can find a list of all the available licenses <a href="http://oasis.forge.ocamlcore.org/MANUAL.html#license">here</a>.</p>
+<h3 id="A-little-bit-of-OASIS-boilerplate">A little bit of OASIS boilerplate</h3>
+
+<p>OASIS needs some information to proceed. We will come back and explain the details <a href="#PluginsandFeatures">later on</a>. Just copy this part to your <code>_oasis</code> for now.</p>
+<pre class="oasis"><code class="oasis">OASISFormat: 0.4
+BuildTools: ocamlbuild
+Plugins: META (0.4), DevFiles (0.4)</code></pre>
+
+<p>From now on, we will assume that the <code>_oasis</code> contains everything described previously.</p>
+<h2 id="The-meat-of-your-project">The meat of your project</h2>
+
+<h3 id="An-executable">An executable</h3>
+
+<p>An <code>_oasis</code> file is organized in sections, each section defining a small part of your project. <code>_oasis</code> files are white-space sensitive, fields in a section must be properly indented.</p>
+<p>We will start by defining an executable <code>foo</code> with sources located in an <code>src</code> directory.</p>
+<pre class="oasis"><code class="oasis">Executable &#39;foo&#39;
+  Path: src
+  MainIs: foo.ml</code></pre>
+
+<p>Now that the <code>_oasis</code> file is defined, we can generate a build system. At the root of your project, run the following command:</p>
+<pre><code>oasis setup -setup-update dynamic</code></pre>
+
+<p>This will produce the following files : <code>setup.ml</code>, <code>configure</code> and a <code>Makefile</code>.
+These files are the only one necessary for OASIS to work, and you should put only those in a version control system. OASIS will produce some other files during building that you can safely ignore. More details about the various OASIS files are given <a href="#Theoasisfiles">here</a>.</p>
+<p>You can now build your project by running:</p>
+<pre><code>make</code></pre>
+
+<p>It will produce the <code>foo.byte</code> file than you can execute.</p>
+<p>To produce native executables and use external libraries, we add some fields to the section:</p>
+<pre class="oasis"><code class="oasis">Executable &#39;foo&#39;
+  Path: src
+  MainIs: foo.ml
+  CompiledObject: best
+  BuildDepends:
+    some_lib,
+    some_other_lib</code></pre>
+
+<p><code>CompiledObject</code> can take the values <code>byte</code>, <code>native</code> or <code>best</code>. <code>best</code> is equal to <code>native</code> if it is available or <code>byte</code> otherwise. When the compilation is native, the produced binary is called <code>foo.native</code>.
+<code>BuildDepends</code> is a comma separated list of ocamlfind packages. <a href="//ocaml.org/learn/tutorials/dev_tools.html#Findlibocamlfind">ocamlfind</a> handles packages locally in your system and is used by opam. You can list ocamlfind packages with <code>ocamlfind list</code>.</p>
+<h3 id="Defining-libraries">Defining libraries</h3>
+
+<p>To define a library, we use the <code>Library</code> section. Here we will define two libraries with some inter dependencies.</p>
+<pre class="oasis"><code class="oasis">Library &#39;foo&#39;
+  Path: foo_src
+  Modules: Foo
+  InternalModules: InternalFoo
+
+Library &#39;bar&#39;
+  Path: bar_src
+  Modules: Bar
+  InternalModules:
+    InternalBar, InternalFooBar
+  BuildDepends: foo, unix</code></pre>
+
+<p>As you can see, <code>BuildDepends</code> is also used for intra-project dependencies: the bar library is dependent on the foo library.
+<code>Modules</code> and <code>InternalModules</code> are comma separated list of modules. They should contain only capitalized name with no file extensions. They can include module provided by any type of file, being <code>.ml</code>, <code>.mli</code>, <code>.mll</code> or <code>.mly</code> (for <a href="http://caml.inria.fr/pub/docs/manual-ocaml/lexyacc.html">ocamllex, ocamlyacc</a> and <a href="http://cristal.inria.fr/~fpottier/menhir/">menhir</a>).
+<code>InternalModules</code> is used to list modules that are part of the library but should be kept hidden and not be part of the public interface of the library.</p>
+<p><code>make</code> builds the various libraries and <code>make install</code> installs them. OASIS handles the installation using ocamlfind.</p>
+<h3 id="Other-optional-sections">Other optional sections</h3>
+
+<p>Executable and Library are enough to create a basic project. The following sections allow to provide more information and build extra things to distribute your project.</p>
+<h4 id="Documentation">Documentation</h4>
+
+<p>Documentation is a very important part of a library. OASIS allows to build an <a href="http://caml.inria.fr/pub/docs/manual-ocaml/ocamldoc.html">ocamldoc</a>-powered HTML documentation for the complete project quite easily.</p>
+<pre class="oasis"><code class="oasis">AlphaFeatures: ocamlbuild_more_args
+Document &#39;foobar_api&#39;
+  Type: ocamlbuild (0.4)
+  BuildTools: ocamldoc
+
+  Title: API reference for FooBar
+  XOCamlbuildPath: .
+  XOCamlbuildExtraArgs:
+    &#39;-docflags &#39;-colorize-code -short-functors -charset utf-8&#39;&#39;
+  XOCamlbuildLibraries: foo, bar</code></pre>
+
+<p>The important part is the <code>XOCamlbuildLibraries</code> field, which is a list of ocamlfind libraries defined in the <code>_oasis</code> file.
+<code>XOCamlbuildExtraArgs</code> allows to give some ocamldoc command line flags. Those presented here are considered essential.
+Running <code>make doc</code> will create a folder <code>foobar_api.docdir</code> which contains the documentation as HTML files.</p>
+<h4 id="SourceRepository-and-gitignore">SourceRepository and <code>.gitignore</code></h4>
+
+<p>As meta-data, OASIS also allows to define the address of the source repository. This can be used by packaging tools.</p>
+<pre class="oasis"><code class="oasis">SourceRepository master
+  Type: git
+  Location: https://my_git_host.org/foobar.git
+  Branch: master
+  Browser: https://my_git_host.org/foobar</code></pre>
+
+<p>While we are on the subject of version control system, here is an example of <code>.gitignore</code> file that will ignore just the right file for your project using OASIS.</p>
+<pre><code>.gitignore
+_build
+*.native
+*.byte
+*.docdir
+
+setup.data
+setup.log</code></pre>
+
+<h2 id="Going-further">Going further</h2>
+
+<p>You now should be able to build simple projects with OASIS.
+You should also know enough to browse the <a href="http://oasis.forge.ocamlcore.org/MANUAL.html">The official OASIS documentation</a> and look at <a href="#Examples">some examples</a> to find out the various fields you can put in an <code>_oasis</code> file.</p>
+<p>However, OASIS has more features!</p>
+<h3 id="Sub-libraries-and-OCamlfind-manipulations">Sub libraries and OCamlfind manipulations</h3>
+
+<p>OCamlfind allows to organize libraries into hierarchies, for example let&#39;s look at some of lwt&#39;s ocamlfind libraries:</p>
+<pre><code>lwt
+lwt.extra
+lwt.glib
+lwt.preemptive
+lwt.syntax
+lwt.syntax.log
+lwt.syntax.options</code></pre>
+
+<p>It is possible to define such hierarchy in OASIS using two additional fields: <code>FindLibName</code> and <code>FindLibParent</code>.
+Let say we want to isolate the core of <code>foo</code> in a library <code>foo.core</code>:</p>
+<pre class="oasis"><code class="oasis">Library &#39;foo_core&#39;
+  FindLibName: core
+  FindLibParent: foo
+  Path: foo
+  Modules: Foo
+
+Library &#39;foo&#39;
+  Path: foo
+  Modules: FooMore
+  BuildDepends: foo.core</code></pre>
+
+<h3 id="Flags-and-conditional-compilation">Flags and conditional compilation</h3>
+
+<p>OASIS allows to define a set of flags that can be activated by the user or by a package manager like opam.</p>
+<pre class="oasis"><code class="oasis">Flag &#39;with-baz&#39;
+  Description: Build baz support for bar
+  Default: false</code></pre>
+
+<p><code>configure --enable-with-baz</code> will turn this flag on. Be careful that <code>_</code> will be turned into <code>-</code> in the command line option.</p>
+<p>You can then condition the build of some library or executable by this flag.</p>
+<pre class="oasis"><code class="oasis">Library &#39;bar_with_baz&#39;
+  Build$: flag(baz)
+  FindLibName: baz
+  FindLibParent: bar
+  Path: bar
+  Modules: BarBaz
+  BuildDepends: bar, baz</code></pre>
+
+<p>Notice the <code>$:</code> which is specific for boolean fields.
+Conditional values are explained in details <a href="http://oasis.forge.ocamlcore.org/MANUAL.html#conditional-value">here</a>.</p>
+<h3 id="Tests">Tests</h3>
+
+<p>OASIS can also handle tests, be them unit tests or not. First we want to test our <code>foo</code> executable defined earlier.</p>
+<pre class="oasis"><code class="oasis">Test &#39;test_foo&#39;
+  TestTools: foo
+  Command: $foo test/some_test_input</code></pre>
+
+<p><code>TestTools</code> allows to give the dependency.
+To enable and run the tests, run <code>configure --enable-tests</code> and <code>make test</code>. Tests are disabled by default.</p>
+<p>For unit testing, we can declare an executable only for tests, using the <a href="http://ounit.forge.ocamlcore.org/">oUnit</a> testing framework for example, and a test using it. For this, we use the predefined flag <code>tests</code>.</p>
+<pre class="oasis"><code class="oasis">Executable &#39;test_bar_and_baz&#39;
+  Path: test
+  MainIs: test_bar.ml
+  Build$: flag(tests) &amp;&amp; flag(baz)
+  CompiledObject: best
+  Install: false
+  BuildDepends: bar, baz, bar.baz, oUnit
+
+Test &#39;test_bar_and_baz&#39;
+  Run$: flag(tests) &amp;&amp; flag(baz)
+  TestTools: test_bar_and_baz
+  Command: $test_bar_and_baz
+  WorkingDirectory: test</code></pre>
+
+<h3 id="Syntax-extensions">Syntax extensions</h3>
+
+<h4 id="Using-a-syntax-extension">Using a syntax extension</h4>
+
+<p>Camlp4 syntax extensions are almost always bundled as ocamlfind subpackages finishing in <code>.syntax</code>. When this is the case, we can just add the name of the package as a dependency:</p>
+<pre class="oasis"><code class="oasis">Library &#39;foo&#39;
+  Path: foo
+  Modules: FooMore
+  BuildDepends: foo.core, lwt, lwt.syntax</code></pre>
+
+<p>OASIS will deduce that camlp4 must be used.</p>
+<p>If the package&#39;s name doesn&#39;t end by <code>.syntax</code> (which is pretty unlikely), you can add this to the <code>_tags</code> file, outside of the OASIS section (<code>OASIS_START</code>/<code>OASIS_STOP</code>):</p>
+<pre><code>true: syntax(camlp4o)</code></pre><p>See <a href="#Ocamlbuild">this section</a> for details about the <code>_tags</code> file.</p>
+<h4 id="Creating-a-syntax-extension">Creating a syntax extension</h4>
+
+<p>To define a syntax extension, we must define the special properties <code>XMETAType</code>:</p>
+<pre class="oasis"><code class="oasis">Library &#39;foo_syntax&#39;
+  Path: foo_syntax
+  FindLibName: syntax
+  FindLibParent: foo
+  Modules: Pa_foo
+  BuildDepends: campl4
+  XMETAType: syntax</code></pre>
+
+<p>This will ensure that this library is properly packaged by ocamlfind as a syntax extension.</p>
+<h3 id="Interfacing-with-C-code">Interfacing with C code</h3>
+
+<p>To build a joint library with OCaml and C code, we can use the <code>CSources</code> field.
+The <code>CCLib</code> allows to link against C libraries and the <code>CCOpt</code> field allows to pass options to the C compiler.</p>
+<pre class="oasis"><code class="oasis">Library &#39;foo-with-C&#39;
+  Path: lib
+  Modules: FooC
+  CSources: fooC_stubs.c, fooC_stubs.h
+  BuildDepends: foo
+  CCLib: -lfoo
+  CCOpt: -O2 -Wall -Wextra -Wno-unused-parameter # Better safe than sorry.</code></pre>
+
+<p>You should be careful not to call your C files the same as your OCaml files, in order to avoid clashes between <code>.so</code> generated files. The usual idiom is to append <code>_stubs</code> to the name.</p>
+<p>For details about C bindings, you can consult <a href="calling_c_libraries.html">this tutorial</a>.</p>
+<h2 id="Wrapping-up-a-package">Wrapping up a package</h2>
+
+<p>Earlier, we generated the build system with the command line <code>oasis setup -setup-update dynamic</code>. This <code>dynamic</code> feature means that OASIS will be called to regenerate the build system when the <code>_oasis</code> file changes. It also produces very few and small files. This means that it&#39;s very convenient for the developer. However, it makes the build system dependent on OASIS, which is not acceptable for releases.
+In order to generate an OASIS independent build system, you can simply run <code>oasis setup</code>. You can learn more about this <a href="#Setupoptions">here</a>.</p>
+<p>The OASIS description file can be used to generate packages. Two tools are available for that: <a href="https://github.com/ocaml/oasis2opam">oasis2opam</a> will generate an opam descriptions and <a href="http://oasis.forge.ocamlcore.org/oasis2debian.html">oasis2debian</a> for <code>.deb</code> packages. Of course, don&#39;t forget to use the <em>non dynamic</em> setup before packaging, as describe earlier, or the package will need OASIS to be build.</p>
+<p>In order to ease the deployment, small scripts can be used. For example, <a href="https://github.com/ocsigen/tyxml">tyxml</a> uses a <a href="https://github.com/ocsigen/tyxml/blob/master/Makefile.dist"><code>Makefile.dist</code></a> and <a href="https://github.com/ocsigen/lwt">lwt</a> a <a href="https://github.com/ocsigen/lwt/blob/master/dist.sh"><code>dist.sh</code></a>.</p>
+<h2 id="Examples">Examples</h2>
+
+<p>OASIS is better learned by examples <code>_oasis</code> files you can copy and tweak. OASIS sources contain a gallery of <a href="https://github.com/ocaml/oasis/tree/master/examples">very instructive examples</a>.</p>
+<p>However, nothing is better than real world examples:</p>
+<ul><li><p><a href="https://github.com/whitequark/ocaml-inotify/blob/master/_oasis">ocaml-inotify</a> contains a very simple yet feature-full <code>_oasis</code> file that will showcase all the various elements explained in this tutorial.</p>
+</li><li><p><a href="https://github.com/ocsigen/lwt/blob/master/_oasis">lwt</a>&#39;s <code>_oasis</code> is very complete and will probably cover all your needs.</p>
+</li><li><p><a href="https://github.com/mirage/ocaml-cohttp/blob/master/_oasis#L17">cohttp</a> shows how to avoid dependencies to syntax packages with <code>XMETARequires</code>.</p>
+</li><li><p><a href="https://github.com/ocaml-batteries-team/batteries-included">batteries</a> uses OASIS for meta-data only and handles the build system separately using the <code>XCustom</code> fields.</p>
+</li><li><p><a href="http://oasis.forge.ocamlcore.org/alreadyusing.html">Some other examples</a>.</p>
+</li></ul>
+
+<h2 id="Under-the-hood">Under the hood</h2>
+
+<p>This section aims to explain in slightly greater depth some of the technical details behind OASIS.</p>
+<h3 id="Ocamlbuild">Ocamlbuild</h3>
+
+<p>OASIS uses <a href="//ocaml.org/learn/tutorials/dev_tools.html#ocamlbuild">ocamlbuild</a> as underlying build system. This has several consequences.</p>
+<ul><li><p>Compilation is done in the <code>_build</code> directory, not in the sources itself. binaries and documentations target are symlinked to the root directory of the project, in order to be accessible directly.</p>
+</li><li><p>Some options and customization of the build system are only available by modifying the <code>myocamlbuild.ml</code> and <code>_tags</code> files.
+Those files are partially generated by OASIS so, if you modify them, you should keep the OASIS section. If the setup was dynamic, this files are not present at all, you should then add the section yourself.</p>
+</li></ul>
+
+<p>For <code>myocamlbuild</code>:</p>
+<pre><code class="ocaml"><span class="comment">(* OASIS_START *)</span>
+<span class="comment">(* OASIS_STOP *)</span></code></pre>
+
+<p>For <code>_tags</code>:</p>
+<pre class="conf"><code class="conf"># OASIS_START
+# OASIS_STOP</code></pre>
+
+<h3 id="The-OASIS-files">The OASIS files</h3>
+
+<p>OASIS generates all the file needed by an OCaml installation, which is quite an important amount. In this section, we will give a detailed description of each files.</p>
+<p>All these files will contain an OASIS section that should not be modified.</p>
+<ul><li><p>OASIS</p>
+<ul><li><p><code>setup.ml</code> contains the logic of the build system.</p>
+</li><li><p><code>Makefile</code> and <code>configure</code> are convenient files produced by the plugin <code>DevFiles</code>. They call <code>setup.ml</code>.</p>
+</li><li><p><code>setup.log</code> is produced by the configure step.</p>
+</li><li><p><code>setup.data</code> is produced during the build process.</p>
+</li></ul></li><li><p>OCamlbuild</p>
+<ul><li><p><code>_tags</code> allows to give specific options to the various file in your project.</p>
+</li><li><p><code>myocamlbuild.ml</code> allows to customize the build system by using Ocamlbuild&#39;s library.</p>
+</li><li><p><code>*.mllib</code>, <code>*.mldylib</code> and <code>*.clib</code> are targets that indicate how to build the various sub libraries.</p>
+</li></ul></li><li><p>OCamlfind</p>
+<ul><li><code>META</code> is the library specification for ocamlfind.</li></ul></li></ul>
+
+<h3 id="Setup-options">Setup options</h3>
+
+<p><code>oasis setup</code> accepts an option <code>-setup-update</code> defined in the help as:</p>
+<pre><code>  -setup-update {none|weak|dynamic}  Define the way `setup.ml` should update
+                                     when `_oasis` change.</code></pre>
+
+<p>This option allows to adapt the way OASIS will generate the build system according to your needs.</p>
+<ul><li><p><code>none</code>, the normal mode, will generate all the files presented in the previous section and their content. The build system generated will be independent of OASIS and will only need Ocamlbuild.</p>
+</li><li><p><code>dynamic</code> will only generate three files : <code>setup.ml</code>, <code>configure</code> and <code>Makefile</code>.
+Other files are dynamically created when building.
+These three files are quite small (especially <code>setup.ml</code>) and are not going to be modified. Hence they can be safely pushed into a repository.
+If you want to include some code in <code>_tags</code> for example, just put an empty OASIS section, as described <a href="#Ocamlbuild">here</a>, and OASIS will dynamically populate it at runtime.
+This allows to push only the minimum amount of generated file in the repository and is very convenient for developing. The downside is that this setup need OASIS to be installed.</p>
+</li></ul>
+
+<h3 id="Plugins-and-Features">Plugins and Features</h3>
+
+<p>We used during this tutorial some plugins without explaining exactly what they do. We will give here a brief description of each of these plugins, plus some other potentially useful ones.</p>
+<ul><li><p><a href="http://oasis.forge.ocamlcore.org/MANUAL.html#plugins">Plugins</a> (the <code>Plugins</code> field):</p>
+<ul><li><p><code>META</code> makes OASIS generates the <code>META</code> file used by ocamlfind.</p>
+</li><li><p><code>DevFiles</code> makes OASIS generates <code>configure</code> and <code>Makefile</code>.</p>
+</li><li><p><code>StdFiles</code> makes OASIS generates <code>README.txt</code>, <code>INSTALL.txt</code> and <code>AUTHORS.txt</code> using the metadatas contained in <code>_oasis</code>.</p>
+</li></ul></li><li><p><a href="http://oasis.forge.ocamlcore.org/MANUAL.html#features">Features</a> (<code>AlphaFeatures</code> and <code>BetaFeatures</code> fields) are various recent additions to OASIS that are not completely battle-tested.
+We give here only those that are stable enough to be used.
+Note that they will be integrated into OASIS properly in a short to mid term.</p>
+<ul><li><p><code>ocamlbuild_more_args</code> (alpha) enables the <code>XOCamlbuildExtraArgs</code> field that allows to provide arguments to Ocamlbuild directly. It&#39;s a way to internalize in <code>_oasis</code> some information that would be in <code>_tags</code> otherwise.</p>
+</li><li><p><code>compiled_setup_ml</code> (alpha) will make OASIS compiles the <code>setup.ml</code> file instead of interpreting it, giving a significant speed up.</p>
+</li><li><p><code>pure_interface</code> (alpha) is necessary to be able to compile standalone <code>.mli</code> files (without any <code>.ml</code>). This feature is used in tyxml for example.</p>
+</li><li><p><code>stdfiles_markdown</code> (alpha) makes OASIS generate StdFiles in markdown format.</p>
+</li></ul></li></ul>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/setting_up_with_oasis.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

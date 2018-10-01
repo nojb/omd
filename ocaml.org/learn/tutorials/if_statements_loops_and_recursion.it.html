@@ -1,0 +1,1106 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="if_statements_loops_and_recursion.html" rel="alternate" hreflang="en"/>
+<link href="if_statements_loops_and_recursion.fr.html" rel="alternate" hreflang="fr"/>
+<link href="if_statements_loops_and_recursion.it.html" rel="alternate" hreflang="it"/>
+<link href="if_statements_loops_and_recursion.ja.html" rel="alternate" hreflang="ja"/>
+<link href="if_statements_loops_and_recursion.ko.html" rel="alternate" hreflang="ko"/>
+<link href="if_statements_loops_and_recursion.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>If, loop e ricorsione &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/if_statements_loops_and_recursion.it.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.it.html">Tutorials su OCaml</a><span class="divider"></span></li>
+<li class="active">If, loop e ricorsione</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="if_statements_loops_and_recursion.html">en</a></li>
+<li><a href="if_statements_loops_and_recursion.fr.html">fr</a></li>
+<li class="active">it</li>
+<li><a href="if_statements_loops_and_recursion.ja.html">日本語</a></li>
+<li><a href="if_statements_loops_and_recursion.ko.html">한국어</a></li>
+<li><a href="if_statements_loops_and_recursion.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Istruzioni-if-sono-in-realt-espressioni-if">Istruzioni if (sono in realtà espressioni if)</a>
+</li><li><a href="#Usare-begin-end">Usare begin ... end</a>
+</li><li><a href="#Cicli-for-e-cicli-while">Cicli for e cicli while</a>
+</li><li><a href="#Eseguire-loop-sulle-liste">Eseguire loop sulle liste</a>
+</li><li><a href="#Eseguire-loop-sulle-stringhe">Eseguire loop sulle stringhe</a>
+</li><li><a href="#Ricorsione">Ricorsione</a>
+<ul><li><a href="#Approccio-1">Approccio 1</a>
+</li><li><a href="#Approccio-2">Approccio 2</a>
+</li><li><a href="#Approccio-3">Approccio 3</a>
+</li><li><a href="#Addendum">Addendum</a>
+</li><li><a href="#Recursion-example-maximum-element-in-a-list">Recursion example: maximum element in a list</a>
+</li><li><a href="#Tail-recursion">Tail recursion</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="If-loop-e-ricorsione">If, loop e ricorsione</h1>
+
+<h2 id="Istruzioni-if-sono-in-realt-espressioni-if">Istruzioni if (sono in realtà espressioni if)</h2>
+
+<p>OCaml ha un&#39;istruzione if con due variazioni, e l&#39;ovvio significato:</p>
+<pre><code class="ocaml"><span class="keyword">if</span> condizione-booleana <span class="keyword">then</span> espressione
+  
+<span class="keyword">if</span> condizione-booleana <span class="keyword">then</span> espressione <span class="keyword">else</span> altra-espressione</code></pre>
+
+<p>Diversamente che nei linguaggi convenzionali a cui sarete abituati, le
+istruzioni if sono in realtà espressioni. In altre parole, sono molto
+più come <code>condizione-booleana ? espressione : altra-espressione</code> che
+come le istruzioni if a cui potreste essere abituati.</p>
+<p>Ecco un semplice esempio di istruzione if:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val max : 'a -&gt; 'a -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>Per inciso, se digitate questo nel toplevel di OCaml, noterete che OCaml
+decide che questa funzione è polimorfica, con il seguente tipo:</p>
+<pre><code class="ocaml">max : 'a -&gt; 'a -&gt; 'a</code></pre>
+
+<p>Ed appunto OCaml vi lascia utilizzare <code>max</code> su qualunque tipo:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3.5 13.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 13.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max <span class="string">'a'</span> <span class="string">'b'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char = 'b'
+</span></code></pre>
+
+<p>Questo perché <code>&gt;</code> è di fatto polimorfico. Funziona su qualunque tipo,
+anche su oggetti (fa un confronto binario).</p>
+<p>[Si noti che il modulo `Pervasives` definisce `min` e `max` per il
+programmatore.]</p>
+<p>Osserviamo un po&#39; più da vicino l&#39;espressione if. Segue la funzione
+<code>range</code> che vi ho mostrato in precedenza senza tante spiegazioni.
+Dovreste poter combinare la vostra conoscenza delle funzioni ricorsive,
+delle liste e delle espressioni if per vedere che cosa fa:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Esaminiamo alcune chiamate tipiche a questa funzione. Cominciamo con il
+caso facile di <code>a &gt; b</code>. Una chiamata a <code>range 11 10</code> restituisce <code>[]</code>
+(la lista vuota) e questo è tutto.</p>
+<p>E la chiamata a <code>range 10 10</code>? Visto che <code>10 &gt; 10</code> è falso, è valutata
+la clausola <code>else</code>, che è: <code>10 :: (range 11 10)</code> (Ho aggiunto le
+parentesi per rendere più chiaro l&#39;ordine in cui le espressioni sono
+valutate). Abbiamo appena ricavato che è <code>range 11 10</code> = <code>[]</code>, per cui
+questo è: <code>10 :: []</code>. Ricordate la nostra descrizione formale delle
+liste e l&#39;operatore <code>::</code> (cons)? <code>10 :: []</code> è esattamente lo stesso che
+<code>[ 10 ]</code>.</p>
+<p>Proviamo <code>range 9 10</code>:</p>
+<pre><code class="ocaml">   range 9 10
+=&gt; 9 :: (range 10 10)
+=&gt; 9 :: [ 10 ]
+=&gt; [9; 10]</code></pre>
+
+<p>Dovrebbe essere discretamente chiaro che <code>range 1 10</code> è valutato a
+<code>[ 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 ]</code>.</p>
+<p>Quello che abbiamo qui è un semplice caso di ricorsione. La
+programmazione funzionale si può dire preferisca la ricorsione ai cicli,
+ma mi sto superando. Discuteremo meglio la ricorsione alla fine di
+questo capitolo.</p>
+<p>Torniamo per un momento alle istruzioni if. Che cosa fa questa funzione?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x y </span>=
+    x + <span class="keyword">if</span> y &gt; 0 <span class="keyword">then</span> y <span class="keyword">else</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>Indizio: aggiungete delle parentesi intorno all&#39;intera espressione if.
+Unisce <code>y</code> come un <a href="https://en.wikipedia.org/wiki/Diode#Current.E2.80.93voltage_characteristic" title="https://en.wikipedia.org/wiki/Diode#Current.E2.80.93voltage_characteristic">diodo
+elettronico</a>.</p>
+<p>La funzione <code>abs</code> (valore assoluto) è definita in <code>Pervasives</code> come:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">abs</span> <span class="ocaml-variable">x </span>=
+  <span class="keyword">if</span> x &gt;= 0 <span class="keyword">then</span> x <span class="keyword">else</span> -x</code></pre>
+
+<p>Sempre in <code>Pervasives</code>, la funzione <code>string_of_float</code> contiene un
+complesso paio di espressioni if annidate:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">l</span> = string_length s <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">i </span>=
+    <span class="keyword">if</span> i &gt;= l <span class="keyword">then</span> s ^ <span class="string">'.'</span>
+    <span class="keyword">else</span> <span class="keyword">if</span> s.[i] = <span class="string">'.'</span> || s.[i] = <span class="string">'e'</span> <span class="keyword">then</span> s
+    <span class="keyword">else</span> loop (i+1)
+  <span class="governing">in</span>
+  loop 0</code></pre>
+
+<p>Esaminiamo questa funzione. Si supponga che la funzione sia chiamata con
+<code>f</code> = 12.34. Allora <code>s</code> = &#39;12.34&#39;, e <code>l</code> = 5. Chiamiamo <code>loop</code> la prima
+volta con <code>i</code> = 0.</p>
+<p><code>i</code> non è maggiore o uguale a <code>l</code>, e <code>s.[i]</code> (il carattere <code>i</code>^th^ in
+<code>s</code>) non è un punto o una <code>&#39;e&#39;</code>. Così è chiamata <code>loop (i+1)</code>, p.e.
+<code>loop 1</code>.</p>
+<p>Passiamo per la stessa danza per <code>i</code> = 1, e finiamo chiamando <code>loop 2</code>.</p>
+<p>Per <code>i</code> = 2, tuttavia, <code>s.[i]</code> è un punto (fate riferimento alla stringa
+originale, <code>s</code> = &#39;12.34&#39;). Così questa restituisce immediatamente <code>s</code>, e
+la funzione <code>string_of_float</code> restituisce &#39;12.34&#39;.</p>
+<p>Che cosa sta facendo <code>loop</code>? Di fatto sta verificando se la stringa
+restituita da <code>format_float</code> contiene un punto (o <code>&#39;e&#39;</code>). Si supponga
+che abbiamo chiamato <code>string_of_float</code> con <code>12.0</code>. <code>format_float</code>
+restituirebbe la stringa &#39;12&#39;, ma <code>string_of_float</code> deve restituire
+&#39;12.&#39; o &#39;12.0&#39; (poiché le costanti floating point in OCaml devono
+contenere un punto affinché si possano distinguere dalle costanti
+intere). Di qui il controllo.</p>
+<p>Lo strano uso della ricorsione in questa funzione serve quasi certamente
+all&#39;efficienza. OCaml supporta i loop, dunque perché gli autori non
+hanno usato loop for? Vedremo nella prossima sezione che i loop for di
+OCaml sono limitati in una maniera che impedisce che siano usati in
+<code>string_of_float</code>. Ecco tuttavia un modo più lineare, ma
+approssimativamente lento il doppio, di scrivere <code>string_of_float</code>:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="keyword">if</span> <span class="ocaml-module">String</span>.contains s <span class="string">'.'</span> || <span class="ocaml-module">String</span>.contains s <span class="string">'e'</span> <span class="keyword">then</span> s
+  <span class="keyword">else</span> s ^ <span class="string">'.'</span></code></pre>
+
+<h2 id="Usare-begin-end">Usare begin ... end</h2>
+
+<p>Ecco del codice da lablgtk:</p>
+<pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
+  <span class="keyword">fun</span> _ -&gt; f obj
+<span class="keyword">else</span> <span class="governing">begin</span>
+  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  <span class="keyword">raise</span> Not_found
+<span class="governing">end</span></code></pre>
+
+<p><code>begin</code> ed <code>end</code> sono ciò che è noto nel caso delle parentesi aperte e
+chiuse come <strong>zucchero sintattico</strong>. Nell&#39;esempio sopra, tutto ciò che
+essi fanno è raggruppare insiemele due istruzioni nella clausola <code>else</code>.
+Supponete che l&#39;autore avesse invece scritto questo:</p>
+<pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
+  <span class="keyword">fun</span> _ -&gt; f obj
+<span class="keyword">else</span>
+  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  <span class="keyword">raise</span> Not_found</code></pre>
+
+<p>Un completo uso delle parentesi ed un&#39;appropriata indentazione
+dell&#39;espressione sopra dànno:</p>
+<pre><code class="ocaml">(<span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
+   <span class="keyword">fun</span> _ -&gt; f obj
+ <span class="keyword">else</span>
+   eprintf 'Glade-warning: %s expects a %s argument.\n' name cls
+);
+<span class="keyword">raise</span> Not_found</code></pre>
+
+<p>Nient&#39;affatto ciò che si intendeva. Così le parole <code>begin</code> e <code>end</code> sono
+necessarie per raggruppare insieme istruzioni multiple in una clausola
+<code>then</code> o <code>else</code> di un&#39;espressione if. Potete anche usare le parentesi
+tonde ordinarie <code>( ... )</code> se preferite (ed io lo preferisco, perché
+<strong>detesto</strong> Pascal :-). ecco due semplici esempi:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
+    print_endline <span class="ocaml-error-loc">'</span>THEN'
+  <span class="keyword">else</span> <span class="governing">begin</span>
+    print_endline 'ELSE';
+    <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
+  <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
+    print_endline <span class="ocaml-error-loc">'</span>THEN'
+  <span class="keyword">else</span> (
+    print_endline 'ELSE';
+    <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
+  )</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h2 id="Cicli-for-e-cicli-while">Cicli for e cicli while</h2>
+
+<p>OCaml supporta una forma piuttosto limitata del familiare <strong>ciclo for</strong>:</p>
+<pre><code class="ocaml"><span class="keyword">for</span> variable = start <span class="keyword">to</span> <span class="governing">end</span> <span class="keyword">do</span>
+  expression
+<span class="keyword">done</span>
+  
+<span class="keyword">for</span> variable = start <span class="keyword">downto</span> <span class="governing">end</span> <span class="keyword">do</span>
+  expression
+<span class="keyword">done</span></code></pre>
+
+<p>Un esempio semplice ma reale da lablgtk:</p>
+<pre><code class="ocaml"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> n_jobs () <span class="keyword">do</span>
+  do_next_job ()
+<span class="keyword">done</span></code></pre>
+
+<p>In OCaml i loop for sono semplicemente scorciatoie per scrivere:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">i</span> = 1 <span class="governing">in</span>
+do_next_job ();
+<span class="governing">let </span><span class="ocaml-variable">i</span> = 2 <span class="governing">in</span>
+do_next_job ();
+<span class="governing">let </span><span class="ocaml-variable">i</span> = 3 <span class="governing">in</span>
+do_next_job ();
+  ... &amp; co. ...
+<span class="governing">let </span><span class="ocaml-variable">i</span> = n_jobs () <span class="governing">in</span>
+do_next_job ();</code></pre>
+
+<p>OCaml non supporta il concetto di uscita anticipata da un loop (in
+realtà, <em>potreste</em> sollevare un&#39;eccezione e farlo uscire, ma ciò sarebbe
+lento e rozzo). I programmatori funzionali tendono ad utilizzare la
+ricorsione al posto dei loop espliciti, e guardano con sospetto ai cicli
+for, donde il motivo per cui il loop for di OCaml è relativamente
+impotente. Parliamo della ricorsione più sotto.</p>
+<p>L&#39;espressione all&#39;interno di un loop for di OCaml dovrebbe essere
+valutata a <code>unit</code> (altrimenti otterreste un&#39;avviso), e l&#39;intera
+espressione del loop for restituisce <code>unit</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> 10 <span class="keyword">do</span> <span class="ocaml-error-loc">i</span> <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 10: this expression should have type unit.
+</span>- : unit = ()
+</span></code></pre>
+
+<p>I <strong>cicli while</strong> in OCaml sono scritti:</p>
+<pre><code class="ocaml"><span class="keyword">while</span> condizione-booleana <span class="keyword">do</span>
+  espressione
+<span class="keyword">done</span></code></pre>
+
+<p>Come per i cicli for, non v&#39;è alcun modo fornito dal linguaggio di
+uscire in anticipo da un ciclo while, eccetto il sollevare un&#39;eccezione,
+e ciò significa che i cicli while hanno un&#39;utilizzo abbastanza limitato.
+Ancora, ricordate che ai programmatori funzionali piace la ricorsione, e
+quindi i cicli while sono cittadini di seconda classe nel linguaggio.</p>
+<p>Se smettete di considerare i cicli while, potreste vedere che non hanno
+alcuna reale utilità se non in congiunzione con i nostri vecchi amici
+riferimenti. Immaginiamo per un momento che OCaml non abbia i
+riferimenti:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = false <span class="governing">in</span>
+<span class="keyword">while</span> not quit_loop <span class="keyword">do</span>
+  print_string 'Have you had enough yet? (y/n) ';
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
+  <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
+    <span class="comment">(* come <span class="keyword">do</span> a quit_loop valore true ?!? *)</span>
+<span class="keyword">done</span></code></pre>
+
+<p>Ricordate che <code>quit_loop</code> non è una vera &#39;variabile&#39; - essa soltanto
+rende <code>quit_loop</code> un alias per <code>false</code>. Ciò significa che l&#39;intera
+condizione while (mostrata in rosso) è sempre vera, e che il loop va
+avanti all&#39;infinito!</p>
+<p>Fortunatamente OCaml <em>ha</em> i riferimenti, così che possiamo scrivere il
+codice sopra se vogliamo. Non confondetevi pensando che il <code>!</code> (punto
+esclamativo) significhi &#39;non&#39; come in C/Java. È utilizzato qui con il
+significato &#39;dereferenzia il puntatore&#39;, in modo simile di fatto a
+quanto avviene in Forth. Fate meglio a leggere <code>!</code> come &#39;get&#39; o &#39;deref&#39;.</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = <span class="keyword">ref</span> false <span class="governing">in</span>
+<span class="keyword">while</span> not !quit_loop <span class="keyword">do</span>
+  print_string 'Have you had enough yet? (y/n) ';
+  <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
+  <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
+    quit_loop := true
+<span class="keyword">done</span></code></pre>
+
+<h2 id="Eseguire-loop-sulle-liste">Eseguire loop sulle liste</h2>
+
+<p>Se volete ciclare su una lista, non fate i programmatori imperativi e
+non cercate di raggiungere la vostra fidata rivoltella Mr. For Loop!
+OCaml ha dei modi migliori e più veloci di eseguire loop sulle liste, e
+sono tutti collocati nel modulo <code>List</code>. Vi sono infatti decine di buone
+funzioni in <code>List</code>, ma qui parlerò soltanto di quelle più utili.</p>
+<p>Per prima cosa, definiamo una lista da usare:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">my_list</span> = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val my_list : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span></code></pre>
+
+<p>Se volete chiamare una funzione una volta su ciascun elemento della
+lista, usate <code>List.iter</code>, così:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">elem </span>=
+    <span class="ocaml-module">Printf</span>.printf <span class="string">'I'</span>m looking at element %d now<span class="ocaml-error-loc">\</span>n' elem <span class="governing">in</span>
+  <span class="ocaml-module">List</span>.iter f my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal character (\\)
+</span></code></pre>
+
+<p><code>List.iter</code> è in effetti ciò che dovreste pensare in primo luogo di
+utilizzare ogni volta che il vostro cervello vi suggerisce di usare un
+ciclo for.</p>
+<p>Se volete <em>trasformare</em> ciascun elemento separatamente nella lista - per
+esempio, duplicare ciascun elemento della lista - allora usate
+<code>List.map</code>. Questa funzione sarà familiare a chi ha già programmato in
+Perl.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.map (( * ) 2) my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6; 8; 10; 12; 14; 16; 18; 20]
+</span></code></pre>
+
+<p>Perl ha l&#39;utile funzione &#39;grep&#39; per filtrare soltanto gli elementi di
+una lista che soddisfano qualche condizione - p.e. restituire soltanto i
+numeri pari di una lista. In OCaml questa funzione è chiamata
+<code>List.filter</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">i </span>=
+    (i mod 2) = 0 <span class="governing">in</span>
+  <span class="ocaml-module">List</span>.filter is_even my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6; 8; 10]
+</span></code></pre>
+
+<p>Per trovare se una lista contiene particolari elementi, usate <code>List.mem</code>
+(abbreviazione per member):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.mem 12 my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+</span></code></pre>
+
+<p><code>List.for_all</code> e <code>List.exists</code> sono lo stesso degli operatori &#39;forall&#39;
+ed &#39;exist&#39; nella logica dei predicati (rispettivamente, &#39;per ogni&#39; ed
+&#39;esiste&#39;, NdT).</p>
+<p>Per operare su due liste allo stesso tempo, vi sono varianti &#39;-2&#39; di
+alcune di queste funzioni, vale a dire <code>iter2</code>, <code>map2</code>, <code>for_all2</code>,
+<code>exists2</code>.</p>
+<p>Le funzioni <code>map</code> e <code>filter</code> operano su singoli elementi di liste
+isolati. <strong>Fold</strong> è un&#39;operazione più insolita a cui si può
+pensare nel modo migliore come all&#39;&#39;inserimento di un operatore a
+separare ciascun elemento della lista&#39;. Supponete che volessi sommare
+insieme tutti gli elementi della mia lista. In termini eloquenti ciò che
+voglio fare è inserire un segno più fra gli elementi della mia lista:</p>
+<pre><code>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10</code></pre><p>L&#39;operazione fold fa questo, sebbene i dettagli esatti siano un pochino
+più complicati. Prima di tutto, che cosa accade se tento di eseguire
+fold su una lista vuota? Nel caso della somma sarebbe carino se il
+risultato fosse zero, invece che un errore. Tuttavia se tentasssi di
+trovare il prodotto della lista preferirei che la risposta fosse invece
+uno. Devo dunque ovviamente fornire una qualche sorta di argomento di
+&#39;default&#39; al mio fold. Il secondo problema non si presenta con semplici
+operatori come <code>+</code> e <code>*</code>: che cosa accade se l&#39;operatore che sto
+utilizzando non è associativo, cioè (a <em>op</em> b) <em>op</em> c non è uguale a
+<em>op</em> (b <em>op</em> c)? In tal caso importerebbe se partissi da sinistra e
+operassi verso destra, piuttosto che se partissi da destra e operassi
+verso sinistra. Per questo motivo vi sono due versioni di fold, chiamate
+<code>List.fold_left</code> (lavora da sinistra verso destra) e <code>List.fold_right</code>
+(lavora da destra verso sinistra, ed è anche meno efficiente).</p>
+<p>Usiamo <code>List.fold_left</code> per definire le funzioni <code>sum</code> e <code>product</code> per
+liste di interi:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">sum</span> = <span class="ocaml-module">List</span>.fold_left ( + ) 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val sum : int list -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">product</span> = <span class="ocaml-module">List</span>.fold_left ( * ) 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val product : int list -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">sum my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 55
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">product my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3628800
+</span></code></pre>
+
+<p>È stato facile! Notate che ho trovato per caso un modo di fare
+fattoriali matematici:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">fact</span> <span class="ocaml-variable">n </span>= product (range 1 n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fact : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">fact 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3628800
+</span></code></pre>
+
+<p>(Notate che questa funzione fattoriale non è molto utile poiché compie
+overflow sugli interi e dà risposte errate anche per valori abbastanza
+piccoli di <code>n</code>. Una funzione fattoriale reale utilizzerebbe il modulo
+<code>Big_int</code>.)</p>
+<h2 id="Eseguire-loop-sulle-stringhe">Eseguire loop sulle stringhe</h2>
+
+<p>Il modulo <code>String</code> contiene anche parecchie dozzine di utili funzioni
+relative alle stringhe, ed alcune di esse hanno a che fare con
+l&#39;esecuzione di loop su stringhe.</p>
+<p><code>String.fill</code> e <code>String.blit</code> sono gli equivalenti rispettivamente di
+<code>memset</code> e <code>strcpy</code> di C. <code>String.copy</code> copia una stringa, come
+<code>strdup</code>.</p>
+<p>Vi è anche una funzione <code>String.iter</code> che funziona come <code>List.iter</code>, ma
+sui caratteri della stringa.</p>
+<h2 id="Ricorsione">Ricorsione</h2>
+
+<p>Veniamo ora ad un argomento importante - la ricorsione. I programmatori
+funzionali sono definiti in base al loro amore per le funzioni
+ricorsive, ed in molti modi le funzioni ricorsive nella programmazione
+funzionale sono l&#39;equivalente dei loop nella programmazione imperativa.
+Nei linguaggi funzionali i loop sono cittadini di seconda classe, mentre
+le funzioni ricorsive hanno tutte il migliore supporto.</p>
+<p>Scrivere funzioni ricorsive necessita di un cambio di impostazione
+mentale rispetto allo scrivere cicli for e cicli while. Sicché ciò che
+vi darò in questa sezione sarà semplicemente un&#39;introduzione e degli
+esempi.</p>
+<p>Nel primo esempio leggeremo in memoria un intero file (in una lunga
+stringa). Per questo vi sono essenzialmente tre possibili approcci:</p>
+<h3 id="Approccio-1">Approccio 1</h3>
+
+<p>Prendi la lunghezza di un file e leggilo tutto in una volta usando il
+metodo <code>really_input</code>. Questo è il più semplice, ma potrebbe non
+funzionare su canali che non sono realmente file (p.e. lettura di input
+da tastiera), motivo per cui guardiamo gli altri due approcci.</p>
+<h3 id="Approccio-2">Approccio 2</h3>
+
+<p>L&#39;approccio imperativo, che utilizza un ciclo while da cui si esce
+usando un&#39;eccezione.</p>
+<h3 id="Approccio-3">Approccio 3</h3>
+
+<p>Un loop ricorsico, che esce dalla ricorsione ancora usando un&#39;eccezione.</p>
+<p>Introdurremo qui alcuni concetti nuovi. I nostri secondi due approcci
+utilizzeranno il modulo <code>Buffer</code> - un buffer espandibile che potete
+pensare come una stringa nella quale potete efficacemente aggiungere
+altro testo in coda. Intercetteremo inoltre l&#39;eccezione <code>End_of_file</code>
+che le funzioni di input sollevano quando raggiungono la fine
+dell&#39;input. Utilizzeremo anche <code>Sys.argv.(1)</code> per prendere il primo
+parametro dalla linea di comando.</p>
+<pre><code class="ocaml"><span class="comment">(* Leggi l'intero file: Approccio 1 *)</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">read_whole_chan</span> <span class="ocaml-variable">chan </span>=
+  <span class="governing">let </span><span class="ocaml-variable">len</span> = in_channel_length chan <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">String</span>.create len <span class="governing">in</span>
+  really_input chan result 0 len;
+  result
+  
+<span class="governing">let</span> <span class="ocaml-function">read_whole_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  read_whole_chan chan
+  
+<span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1)
+  
+<span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename
+  
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Printf</span>.printf 'I read %d characters from %s\n'
+                (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+
+<p>L&#39;approccio 1 funziona ma non è molto soddisfacente poiché
+<code>read_whole_chan</code> non funziona su canali diversi da file come input da
+tastiera o socket. L&#39;approccio 2 coinvolge un ciclo while:</p>
+<pre><code class="ocaml"><span class="comment">(* Leggi l'intero file: Approccio 2 *)</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">read_whole_chan</span> <span class="ocaml-variable">chan </span>=
+  <span class="governing">let </span><span class="ocaml-variable">buf</span> = <span class="ocaml-module">Buffer</span>.create 4096 <span class="governing">in</span>
+  <span class="keyword">try</span>
+    <span class="keyword">while</span> true <span class="keyword">do</span>
+      <span class="governing">let </span><span class="ocaml-variable">line</span> = input_line chan <span class="governing">in</span>
+      <span class="ocaml-module">Buffer</span>.add_string buf line;
+      <span class="ocaml-module">Buffer</span>.add_char buf '\n'
+    <span class="keyword">done</span>;
+    ''
+  <span class="keyword">with</span>
+    End_of_file -&gt; <span class="ocaml-module">Buffer</span>.contents buf
+  
+<span class="governing">let</span> <span class="ocaml-function">read_whole_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  read_whole_chan chan
+  
+<span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1)
+  
+<span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename
+  
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Printf</span>.printf 'I read %d characters from %s\n'
+                (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+
+<p>La chiave all&#39;approccio 2 è quella di guardare il ciclo while centrale.
+Ricordate che ho detto che il solo modo di uscire da un ciclois to look
+at the central while in anticipo è con un&#39;eccezione? Questo è
+esattamente ciò che facciamo qui. Sebbene io non abbia ancora coperto le
+eccezioni, probabilmente non avrete alcun problema a comprendere
+l&#39;eccezione <code>End_of_file</code> sollevata nel codice sopra da <code>input_line</code>
+quando essa incontra la fine del file. Il buffer <code>buf</code> accumula i
+contenuti del file, e quando incontriamo la fine del file la restituiamo
+(<code>Buffer.contents buf</code>).</p>
+<p>Un punto curioso riguardo ciò è che l&#39;insieme extra apparentemente
+superfluo di virgolette (<code>&#39;&#39;</code>) subito dopo il ciclo while. A che
+servono? Ricordate che i cicli while, come i cicli for, sono
+semplicemente espressioni, e che restituiscono l&#39;oggetto <code>unit</code> (<code>()</code>).
+Tuttavia OCaml richiede che il tipo restituito all&#39;interno di un <code>try</code>
+corrisponda con il tipo ritornato di ciascun&#39;eccezione intercettata. In
+questo caso, poiché <code>End_of_file</code> risulta in un <code>string</code>, il corpo
+principale del <code>try</code> deve anch&#39;esso &#39;restituire&#39; una stringa - anche se
+a causa del ciclo while infinito la stringa non potrebbe mai essere
+effettivamente restituita.</p>
+<p>Ecco la nostra versione ricorsiva. Notate che è <em>più breve</em>
+dell&#39;approccio 2, ma non così facile da capire almeno per i
+programmatori imperativi:</p>
+<pre><code class="ocaml"><span class="comment">(* Leggi l'intero file: Approccio 3 *)</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">read_whole_chan</span> <span class="ocaml-variable">chan </span>=
+  <span class="governing">let </span><span class="ocaml-variable">buf</span> = <span class="ocaml-module">Buffer</span>.create 4096 <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+    <span class="governing">let </span><span class="ocaml-variable">line</span> = input_line chan <span class="governing">in</span>
+    <span class="ocaml-module">Buffer</span>.add_string buf line;
+    <span class="ocaml-module">Buffer</span>.add_char buf '\n';
+    loop ()
+  <span class="governing">in</span>
+  <span class="keyword">try</span>
+    loop ()
+  <span class="keyword">with</span>
+    End_of_file -&gt; <span class="ocaml-module">Buffer</span>.contents buf
+  
+<span class="governing">let</span> <span class="ocaml-function">read_whole_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  read_whole_chan chan
+  
+<span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1)
+  
+<span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename
+  
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Printf</span>.printf 'I read %d characters from %s\n'
+                (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+
+<p>Abbiamo ancora un ciclo infinito - ma in questo caso fatto usando la
+ricorsione. <code>loop</code> chiama se stessa alla fine della funzione. La
+ricorsione infinita è interrotta quando <code>input_line</code> solleva
+un&#39;eccezione <code>End_of_file</code>.</p>
+<p>Sembrerebbe che l&#39;approccio 3 potrebbe causare un overflow dello stack
+se gli date un file particolarmente grosso, ma di fatto non è questo il
+caso. A causa della ricorsione a coda (discussa sotto) il compilatore
+trasformerà la funzione ricorsiva <code>loop</code> in un vero ciclo while (!) che
+è eseguito in uno spazio di stack costante.</p>
+<p>Nel prossimo esempio mostreremo come la ricorsione è eccellente per
+costruire o esaminare alcuni tipi di strutture dati, in paricolare gli
+alberi. Facciamoci un tipo ricorsivo per rappresentare i file in un
+filesystem:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">filesystem</span> = File <span class="keyword">of</span> string | Directory <span class="keyword">of</span> filesystem list;;</code></pre>
+
+<p>Le funzioni <code>opendir</code> e <code>readdir</code> sono utilizzate per aprire una
+directory e leggere gli elementi dalla directory. Definirò una pratica
+funzione <code>readdir_no_ex</code> che nasconde la fastidiosa eccezione
+<code>End_of_file</code> che <code>readdir</code> solleva quando raggiunge la fine della
+directory:</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Unix</span>  <span class="comment">(* Potreste dover inserire prima #load '<span class="ocaml-module">Unix</span>.cma' *)</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">readdir_no_ex</span> <span class="ocaml-variable">dirh </span>=
+  <span class="keyword">try</span>
+    Some (readdir dirh)
+  <span class="keyword">with</span>
+    End_of_file -&gt; None</code></pre>
+
+<p>Il tipo di <code>readdir_no_ex</code> è quello sotto. Riconsiderate la nostra
+precedente discussione sui puntatori nulli.</p>
+<pre><code class="ocaml">readdir_no_ex : dir_handle -&gt; string option</code></pre>
+
+<p>Definirò inoltre una semplice funzione ricorsiva che potrò utilizzare
+per convertire il tipo <code>filesystem</code>in una stringa per stampare (p.e.):</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">string_of_filesystem</span> <span class="ocaml-variable">fs </span>=
+  <span class="keyword">match</span> fs <span class="keyword">with</span>
+  | File filename -&gt; filename ^ '\n'
+  | Directory fs_list -&gt;
+     <span class="ocaml-module">List</span>.fold_left (^) '' (<span class="ocaml-module">List</span>.map string_of_filesystem fs_list)</code></pre>
+
+<p>Si noti l&#39;uso di <code>fold_left</code> e di <code>map</code>. La funzione <code>map</code> è usata per
+convertire (ricorsivamente) ciascun <code>filesystem</code> nella lista in un
+<code>string</code>. Quindi <code>fold_left (^) &#39;&#39;</code> concatena insieme la lista in
+un&#39;unica grande stringa. Notate anche l&#39;utilizzo del pattern matching.
+(La libreria definisce una funzione chiamata <code>String.concat</code> che è
+essenzialmente equivalente a <code>fold_left (^) &#39;&#39;</code>, ma implementata in modo
+più efficiente).</p>
+<p>Definiamo ora una funzione che legga una struttura di una directory,
+ricorsivamente, e restituisca una struttura dati ricorsiva <code>filesystem</code>.
+Mostrerò questa funzione passo per passo, ma stamperò l&#39;intera funzione
+alla fine di questa sezione. In primo luogo il profilo della funzione:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+  <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+    <span class="comment">(* ..... *)</span>
+  <span class="governing">in</span>
+  Directory (loop ())</code></pre>
+
+<p>La chiamata a <code>opendir</code> apre il percorso fornito e restituisce un
+<code>dir_handle</code> dal quale potremo poi leggere i nomi utilizzando
+<code>readdir_no_ex</code>. Il valore restituito della funzione sarà un
+<code>Directory fs_list</code>, dunque tutto ciò che dobbiamo fare per completare
+la funzione è scrivere la nostra funzione <code>loop</code> che restituisce una
+lista di <code>filesystem</code>. Il tipo di <code>loop</code> sarà:</p>
+<pre><code class="ocaml">loop : unit -&gt; filesystem list</code></pre>
+
+<p>Come definiamo dei loop? Vediamolo ancora per passi.</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
+  <span class="comment">(* ..... *)</span></code></pre>
+
+<p>Per prima cosa leggiamo il prossimo nome di file (filename) dall&#39;handle
+della directory. <code>filename</code> ha tipo <code>string option</code>, in altre parole
+potrebbe essere <code>None</code> o <code>Some &#39;foo&#39;</code>, dove <code>foo</code> è il nome del prossimo
+filename nella directory. Dobbiamo anche ignorare i file <code>&#39;.&#39;</code> e <code>&#39;..&#39;</code>
+(cioè la directory attuale e la directory madre). Possiamo tutti fare
+questo con un bel pattern match:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
+  <span class="keyword">match</span> filename <span class="keyword">with</span>
+  | None -&gt; []
+  | Some <span class="string">'.'</span> -&gt; loop ()
+  | Some '..' -&gt; loop ()
+  | Some filename -&gt;
+      <span class="comment">(* ..... *)</span></code></pre>
+
+<p>Il caso <code>None</code> è facile. Pensando ricorsivamente (!) se è <code>loop</code> è
+chiamata, e abbiamo raggiunto la fine della directory, <code>loop</code> deve
+restituire una lista di voci - e non ci sono voci - sicché restituisce
+la lista vuota (<code>[]</code>).</p>
+<p>Per <code>&#39;.&#39;</code> e <code>&#39;..&#39;</code> ignoriamo semplicemente il file e chiamiamo ancora
+<code>loop</code>.</p>
+<p>Che cosa facciamo quando <code>loop</code> legge un vero nome di file (il match
+<code>Some filename</code> sotto)? Sia <code>pathname</code> il percorso completo per il file.
+Eseguiamo &#39;stat&#39; sul file per vedere se è realmente una directory. Se
+<em>è</em> una directory, impostiamo <code>this</code> chiamando ricorsivamente
+<code>read_directory</code> che restituirà <code>Directory qualcosa</code>. Notate che il
+risultato complessivo di <code>read_directory</code> è <code>Directory (loop ())</code>. Se il
+file è realmente un file (non una directory) facciamo che <code>this</code> sia
+<code>File pathname</code>. Facciamo quindi qualcosa di intelligente: restituiamo
+<code>this :: loop ()</code>. Questa è la seconda chiamata ricorsiva a <code>loop ()</code>
+per calcolare i rimanenti membri della directory (una lista), a cui
+preponiamo <code>this</code>.</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+  <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+    <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
+    <span class="keyword">match</span> filename <span class="keyword">with</span>
+    | None -&gt; []
+    | Some <span class="string">'.'</span> -&gt; loop ()
+    | Some '..' -&gt; loop ()
+    | Some filename -&gt;
+        <span class="governing">let </span><span class="ocaml-variable">pathname</span> = path ^ <span class="string">'/'</span> ^ filename <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">stat</span> = lstat pathname <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">this</span> = <span class="keyword">if</span> stat.st_kind = S_DIR <span class="keyword">then</span>
+          read_directory pathname
+        <span class="keyword">else</span>
+          File pathname <span class="governing">in</span>
+        this :: loop ()
+  <span class="governing">in</span>
+  Directory (loop ())</code></pre>
+
+<p>È un caso di ricorsione piuttosto complesso, ma sebbene questo sia un
+esempio ad arte esso è abbastanza tipico dei complessi pattern di
+ricorsione che si trovano nei programmi funzionali del mondo reale. Le
+due importanti lezioni da trarre da questo sono:</p>
+<ul><li><p>L&#39;utilizzo della ricorsione per costruire una lista:</p>
+<pre class="ocaml"><code class="ocaml"><span class="lower">et</span> <span class="governing">rec</span> <span class="lower">loop</span> <span class="keywordsign">(</span><span class="keywordsign">)</span> <span class="keywordsign">=</span>
+ <span class="lower">un&#39;istruzione</span> <span class="keyword">match</span> <span class="lower">o</span> <span class="keyword">if</span>
+ <span class="keywordsign">|</span> <span class="lower">caso</span> <span class="lower">base</span> <span class="keywordsign">-&#62;</span> <span class="keywordsign operator">[]</span>
+ <span class="keywordsign">|</span> <span class="lower">caso</span> <span class="lower">ricorsivo</span> <span class="keywordsign">-&#62;</span> <span class="lower">elemento</span> <span class="keywordsign">::</span> <span class="lower">loop</span> <span class="keywordsign">(</span><span class="keywordsign">)</span></code></pre>
+
+<p>Confrontate questo con la nostra precedente funzione <code>range</code>. Il pattern
+di ricorsione è esattamente il medesimo:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="governing">rec</span> <span class="lower">range</span> <span class="lower">a</span> <span class="lower">b</span> <span class="keywordsign">=</span>
+  <span class="keyword">if</span> <span class="lower">a</span> <span class="keywordsign">&#62;</span> <span class="lower">b</span> <span class="keyword">then</span> <span class="keywordsign operator">[]</span>            <span class="comment">(* Caso base *)</span>
+  <span class="keyword">else</span> <span class="lower">a</span> <span class="keywordsign">::</span> <span class="lower">range</span> <span class="keywordsign">(</span><span class="lower">a</span><span class="keywordsign">+</span><span class="number">1</span><span class="keywordsign">)</span> <span class="lower">b</span>     <span class="comment">(* Caso ricorsivo *)</span></code></pre></li><li><p>L&#39;utilizzo della ricorsione per costruire alberi:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="governing">rec</span> <span class="lower">read_directory</span> <span class="lower">path</span> <span class="keywordsign">=</span>
+  <span class="comment">(* bla bla *)</span>
+  <span class="keyword">if</span> <span class="lower">file</span><span class="keywordsign">-</span><span class="lower">is</span><span class="keywordsign">-</span><span class="lower">a</span><span class="keywordsign">-</span><span class="lower">directory</span> <span class="keyword">then</span>
+    <span class="lower">read_directory</span> <span class="lower">path</span><span class="keywordsign">-</span><span class="keyword">to</span><span class="keywordsign">-</span><span class="lower">file</span>
+  <span class="keyword">else</span>
+    <span class="constructor module">Leaf</span> <span class="lower">file</span></code></pre></li></ul>
+
+<p>Tutto ciò che rimane ora per rendere questo un programma funzionante è
+un poco di codice per chiamare <code>read_directory</code> e mostrare il risultato:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">path</span> = <span class="ocaml-module">Sys</span>.argv.(1)
+<span class="governing">let </span><span class="ocaml-variable">fs</span> = read_directory path
+  
+<span class="governing">let</span> () = print_endline (string_of_filesystem fs);;</code></pre>
+
+<h3 id="Addendum">Addendum</h3>
+
+<p>Dopo aver postato questo esempio sulla mailing list caml-list ho
+ricevuto molte repliche. (Potete <a href="http://mirror.ocamlcore.org/caml.inria.fr/pub/ml-archives/caml-list/2003/06/2732fbf1bed1ae50fefb6ea410ea9955.en.html" title="http://caml.inria.fr/pub/ml-archives/caml-list/2003/06/2732fbf1bed1ae50fefb6ea410ea9955.en.html">leggere l&#39;intero
+thread</a>.)</p>
+<blockquote><p>First of all there is a basic fault with <code>read_directory</code> directory
+which will cause it to fail if you try to run it on very large directory
+structures. I don&#39;t explicitly call <code>closedir</code> to close the directory
+handle. The garbage collector doesn&#39;t help, because in OCaml the garbage
+collector does <strong>not</strong> collect and close open file and directory
+handles.</p>
+<p>The fix is pretty trivial: add a call to <code>closedir</code> at the end of the
+<code>read_directory</code> function:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+  <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+    <span class="comment">(* ... *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">result</span> = Directory (loop ()) <span class="governing">in</span>
+  closedir dirh;
+  result</code></pre>
+
+<p>Next up is the issue of <code>readdir</code> throwing an exception in a rather
+&#39;unexceptional&#39; situation, namely <code>End_of_file</code>. I don&#39;t agree that
+throwing an exception in this case is the right thing to do. In typical
+programs I want to never have to write a <code>try ... with</code> clause, because
+exceptions are supposed to mean &#39;something really bad happened which I&#39;m
+not prepared to deal with&#39;, like running out of disk space or memory.
+Throwing an exception as part of the routine running of a function
+(every program which uses <code>readdir</code> <em>has</em> to be prepared to handle
+<code>End_of_file</code>), that&#39;s not an exceptional situation.</p>
+<p>However, Eric Cooper came up with a way to write the function and check
+the exception, and this highlights another frequent technique used by
+functional programmers. Namely, passing an <strong>accumulator</strong> which
+contains the result of the function call, but passed as an <em>argument</em> to
+the function (!) Really the accumulator means &#39;this is the result so
+far&#39;, so in the exceptional case (<code>End_of_file</code>) we give up and return
+the result so far. Here is his code with all the references to the
+accumulator argument in red:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_filesystem</span> <span class="ocaml-variable">path </span>=
+  <span class="keyword">if</span> (lstat path).st_kind = S_DIR <span class="keyword">then</span>
+    Directory (read_directory path)
+  <span class="keyword">else</span>
+    File path
+  
+<span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">read_directory</span> <span class="ocaml-variable">path </span>=
+  <span class="governing">let </span><span class="ocaml-variable">dirh</span> = opendir path <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">entries </span>=
+    <span class="keyword">try</span>
+      <span class="keyword">match</span> readdir dirh <span class="keyword">with</span>
+      | <span class="string">'.'</span> | '..' -&gt; loop entries
+      | filename -&gt;
+          loop (read_filesystem (path ^ <span class="string">'/'</span> ^ filename) :: entries)
+    <span class="keyword">with</span> End_of_file -&gt; entries
+  <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">list</span> = loop [] <span class="governing">in</span>
+  closedir dirh;
+  list</code></pre>
+
+<p>Notice <code>End_of_file -&gt; entries</code> which means &#39;when we get the exception,
+give up and return the result so far&#39;.</p>
+<p>Next up - it was pointed out that the easiest way to do this is actually
+not to use recursion at all, but instead to do the loop imperatively (a
+while loop is probably best) and have a reference to a list to store the
+ongoing accumulated result. Because <code>readdir</code> throws an exception, we
+have a simple way to break out of the while loop, <em>and</em> in the
+<code>with</code>-clause we can just return <code>!list</code> (dereference the reference to
+the list of entries we&#39;ve built up).</p>
+<p>It all works nicely, and proves that writing code imperatively is often
+best, <em>particularly</em> as in this case where
+<code>opendir ... readdir ... closedir</code> is essentially an imperative API,
+designed for C programmers. It&#39;s no surprise, therefore, that the
+imperative solution is easier. OCaml, not being a <a href="https://web.archive.org/web/20110611043853/http://www.elsewhere.org/jargon/html/entry/bondage-and-discipline-language.html" title="http://www.elsewhere.org/jargon/html/entry/bondage-and-discipline-language.html">bondage and
+discipline
+language</a>,
+doesn&#39;t mind you using the imperative approach when it makes sense.</p>
+<p>Here is the outline of the imperative approach by Fabrice Le Fessant:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">list</span> = <span class="keyword">ref</span> [] <span class="governing">in</span>
+<span class="governing">let </span><span class="ocaml-variable">dir</span> = opendir '.......' <span class="governing">in</span>
+<span class="keyword">try</span>
+  <span class="keyword">while</span> true <span class="keyword">do</span>
+    <span class="keyword">match</span> readdir dir <span class="keyword">with</span>
+    | <span class="string">'.'</span> | '..' -&gt; ()
+    | filename -&gt; list := filename :: !list
+  <span class="keyword">done</span>
+<span class="keyword">with</span> End_of_file -&gt; !list</code></pre>
+
+<h3 id="Recursion-example-maximum-element-in-a-list">Recursion example: maximum element in a list</h3>
+
+<p>Remember the basic recursion pattern for lists:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  a <span class="keyword">match</span> or <span class="keyword">if</span> statement
+  | base case -&gt; []
+  | recursive case -&gt; element :: loop ()</code></pre>
+
+<p>The key here is actually the use of the match / base case / recursive
+case pattern. In this example - finding the maximum element in a list -
+we&#39;re going to have two base cases and one recursive case. But before I
+jump ahead to the code, let&#39;s just step back and think about the
+problem. By thinking about the problem, the solution will appear &#39;as if
+by magic&#39; (I promise you :-)</p>
+<p>First of all, let&#39;s be clear that the maximum element of a list is just
+the biggest one. eg. The maximum element of the list <code>[1; 2; 3; 4; 1]</code>
+is <code>4</code>.</p>
+<p>Are there any special cases? Yes there are. What&#39;s the maximum element
+of the empty list <code>[]</code>? There <em>isn&#39;t one</em>. If we are passed an empty
+list, we should throw an error.</p>
+<p>What&#39;s the maximum element of a single element list such as <code>[4]</code>?
+That&#39;s easy: it&#39;s just the element itself. So <code>list_max [4]</code> should
+return <code>4</code>, or in the general case, <code>list_max [x]</code> should return <code>x</code>.</p>
+<p>What&#39;s the maximum element of the general list <code>x :: remainder</code> (this is
+the &#39;cons&#39; notation for the list, so <code>remainder</code> is the tail - also a
+list)?</p>
+<p>Think about this for a while. Suppose you know the maximum element of
+<code>remainder</code>, which is, say, <code>y</code>. What&#39;s the maximum element of
+<code>x :: remainder</code>? It depends on whether <code>x &gt; y</code> or <code>x &lt;= y</code>. If <code>x</code> is
+bigger than <code>y</code>, then the overall maximum is <code>x</code>, whereas conversely if
+<code>x</code> is less than <code>y</code>, then the overall maximum is <code>y</code>.</p>
+<p>Does this really work? Consider <code>[1; 2; 3; 4; 1]</code> again. This is
+<code>1 :: [2; 3; 4; 1]</code>. Now the maximum element of the remainder,
+<code>[2; 3; 4; 1]</code>, is <code>4</code>. So now we&#39;re interested in <code>x = 1</code> and <code>y = 4</code>.
+That head element <code>x = 1</code> doesn&#39;t matter because <code>y = 4</code> is bigger, so
+the overall maximum of the whole list is <code>y = 4</code>.</p>
+<p>Let&#39;s now code those rules above up, to get a working function:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">list_max</span> <span class="ocaml-variable">xs </span>=
+      <span class="keyword">match</span> xs <span class="keyword">with</span>
+      | [] -&gt;   <span class="comment">(* empty list: fail *)</span>
+         <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>list_max called on empty list'
+      | [x] -&gt; <span class="comment">(* single element list: return the element *)</span>
+         x
+      | x :: remainder -&gt; <span class="comment">(* multiple element list: recursive case *)</span>
+         max x (list_max remainder)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>I&#39;ve added comments so you can see how the rules / special cases we
+decided upon above really correspond to lines of code.</p>
+<p>Does it work?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [1; 2; 3; 4; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1; 100]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+</span></code></pre>
+
+<p>Notice how the solution proposed is both (a) very different from the
+imperative for-loop solution, and (b) much more closely tied to the
+problem specification. Functional programmers will tell you that this is
+because the functional style is much higher level than the imperative
+style, and therefore better and simpler. Whether you believe them is up
+to you. It&#39;s certainly true that it&#39;s much simpler to reason logically
+about the functional version, which is useful if you wanted to formally
+prove that <code>list_max</code> is correct (&#39;correct&#39; being the mathematical way
+to say that a program is provably bug-free, useful for space shuttles,
+nuclear power plants and higher quality software in general).</p>
+<h3 id="Tail-recursion">Tail recursion</h3>
+
+<p>Let&#39;s look at the <code>range</code> function again for about the twentieth time:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range (a+1) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>I&#39;m going to rewrite it slightly to make something about the structure
+of the program clearer (still the same function however):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span>
+      <span class="governing">let </span><span class="ocaml-variable">result</span> = range (a+1) b <span class="governing">in</span>
+      a :: result</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Let&#39;s call it:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.length (range 1 10)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 10
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.length (range 1 1000000)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Stack overflow during evaluation (looping recursion?).
+</span></code></pre>
+
+<p>Hmmm ... at first sight this looks like a problem with recursive
+programming, and hence with the whole of functional programming! If you
+write your code recursively instead of iteratively then you necessarily
+run out of stack space on large inputs, right?</p>
+<p>In fact, wrong. Compilers can perform a simple optimisation on certain
+types of recursive functions to turn them into while loops. These
+certain types of recursive functions therefore run in constant stack
+space, and with the equivalent efficiency of imperative while loops.
+These functions are called <strong>tail-recursive functions</strong>.</p>
+<p>In tail-recursive functions, the recursive call happens last of all.
+Remember our <code>loop ()</code> functions above? They all had the form:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  <span class="comment">(* <span class="keyword">do</span> something *)</span>
+  loop ()</code></pre>
+
+<p>Because the recursive call to <code>loop ()</code> happens as the very last thing,
+<code>loop</code> is tail-recursive and the compiler will turn the whole thing into
+a while loop.</p>
+<p>Unfortunately <code>range</code> is not tail-recursive, and the longer version
+above shows why. The recursive call to <code>range</code> doesn&#39;t happen as the
+very last thing. In fact the last thing to happen is the <code>::</code> (cons)
+operation. As a result, the compiler doesn&#39;t turn the recursion into a
+while loop, and the function is not efficient in its use of stack space.</p>
+<p>Now recall we discussed in the addendum above Eric Cooper&#39;s
+&#39;accumulator&#39; technique, and I said that this technique was widely used
+in functional programming. We will now see why this is the case. It&#39;s
+because it allows you to write functions such as <code>range</code> above in a
+tail-recursive manner, which means they will be efficient and work
+properly on large inputs.</p>
+<p>Let&#39;s plan our rewritten <code>range</code> function which will use an accumulator
+argument to store the &#39;result so far&#39;:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+  <span class="comment">(* ... *)</span>
+  
+<span class="governing">let</span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+  range2 a b []</code></pre>
+
+<p>(I could and probably should have used a nested function here.)</p>
+<p>The <code>accum</code> argument is going to accumulate the result. It&#39;s the &#39;result
+so far&#39;. We pass in the empty list (&#39;no result so far&#39;). The easy case
+is when <code>a &gt; b</code>:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+  <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> accum
+  <span class="keyword">else</span>
+    <span class="comment">(* ... *)</span></code></pre>
+
+<p>If <code>a &gt; b</code> (ie. if we&#39;ve reached the end of the recursion), then stop
+and return the result (<code>accum</code>).</p>
+<p>Now the trick is to write the <code>else</code>-clause and make sure that the call
+to <code>range2</code> is the very last thing that we do, so the function is
+tail-recursive:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> accum
+    <span class="keyword">else</span> range2 (a+1) b (a :: accum)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range2 : int -&gt; int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>There&#39;s only one slight problem with this function: it constructs the
+list backwards! However, this is easy to rectify by redefining range as:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>= <span class="ocaml-module">List</span>.rev (range2 a b [])</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>It works this time, although it&#39;s a bit slow to run because it really
+does have to construct a list with a million elements in it:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.length (range 1 1000000)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 1000000
+</span></code></pre>
+
+<p>The following implementation is twice as fast as the previous one,
+because it does not need to reverse a list:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
+    <span class="keyword">if</span> b &lt; a <span class="keyword">then</span> accum
+    <span class="keyword">else</span> range2 a (b-1) (b :: accum)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range2 : int -&gt; int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">range</span> <span class="ocaml-variable">a b </span>=
+    range2 a b []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>That was a brief overview of tail recursion, but in real world
+situations determining if a function is tail recursive can be quite
+hard. What did we really learn here? One thing is that recursive
+functions have a dangerous trap for inexperienced programmers. Your
+function can appear to work for small inputs (during testing), but fail
+catastrophically in the field when exposed to large inputs. This is one
+argument <em>against</em> using recursive functions, and for using explicit
+while loops when possible.</p>
+</blockquote>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.it.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/if_statements_loops_and_recursion.it.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

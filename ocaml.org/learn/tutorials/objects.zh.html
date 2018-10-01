@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="objects.html" rel="alternate" hreflang="en"/>
+<link href="objects.ja.html" rel="alternate" hreflang="ja"/>
+<link href="objects.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Objects &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/objects.zh.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.zh.html">OCaml教程</a><span class="divider"></span></li>
+<li class="active">Objects</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="objects.html">en</a></li>
+<li><a href="objects.ja.html">日本語</a></li>
+<li class="active">中文</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">对象和类</a>
+<ul><li><a href="#">多态类</a>
+</li><li><a href="#">继承，虚类，初始器</a>
+</li><li><a href="#self">关于 <code>self</code></a>
+</li><li><a href="#">继承和强制多态</a>
+</li><li><a href="#Oo"><code>Oo</code> 模块和比较对象</a>
+</li></ul>
+</li><li><a href="#">没有类的对象</a>
+<ul><li><a href="#">立即对象和立即类型</a>
+</li><li><a href="#">类类型和类型</a>
+</li></ul>
+</li><li><a href="#">更多对象</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Objects">Objects</h1>
+
+<h2 id="">对象和类</h2><p>OCaml是一个面向对象的，命令式的，函数式的语言。它混合了多种编程范式，允许你用最恰当的
+（或者最熟悉的）编程范式来解决问题。在这一章我们将 看一下OCaml的面向对象的编程，但是
+我也将讲一下你什么时候该用什么时候不该用面向对象。</p>
+<p>一个在课堂里典型的OO编程例子是堆栈类。这是一个很糟糕的例子，但是我还是要用这个例子
+来展示一下OCaml的OO编程。</p>
+<p>下面是一个整数堆栈的例子。这是用链表来实现的：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">stack_of_ints</span> <span class="ocaml-variable"></span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">val</span> <span class="keyword">mutable</span> the_list = ( [] : int list ) <span class="comment">(* instance variable *)</span>
+      <span class="governing">method</span> <span class="ocaml-function">push</span> <span class="ocaml-variable">x </span>=                        <span class="comment">(* push method *)</span>
+        the_list &lt;- x :: the_list
+      <span class="governing">method</span> <span class="ocaml-function">pop</span><span class="type"></span> =                           <span class="comment">(* pop method *)</span>
+        <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">List</span>.hd the_list <span class="governing">in</span>
+        the_list &lt;- <span class="ocaml-module">List</span>.tl the_list;
+        result
+      <span class="governing">method</span> <span class="ocaml-function">peek</span><span class="type"></span> =                          <span class="comment">(* peek method *)</span>
+        <span class="ocaml-module">List</span>.hd the_list
+      <span class="governing">method</span> <span class="ocaml-function">size</span><span class="type"></span> =                          <span class="comment">(* size method *)</span>
+        <span class="ocaml-module">List</span>.length the_list
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class stack_of_ints :
+  object
+    val mutable the_list : int list
+    method peek : int
+    method pop : int
+    method push : int -&gt; unit
+    method size : int
+  end
+</span></code></pre>
+
+<p><code>class name = object (self) ... end</code> 是定义<code>name</code>类的基本模式。</p>
+<p>这个类有一个变量 <code>the_list</code>， 它是可变的。我们先用一个新鲜的关键字实例化这个变量（每次在<code>stack_of_ints</code>
+被实例化的时候）。<code>( [] : int list )</code> 的意思是 “一个空的<code>int</code>链表”。记得一个空
+链表<code>[]</code>的类型是 <code>&#39;a list</code>，是多态的，但是我们想要一个<code>int</code>栈，因此我们要在这里清楚地
+告诉类型推导引擎这实在是一个整数链表。这个语法是 <code>( expression : type )</code>， 意思是<code>type</code>
+类型的<code>expression</code>。这不是一个类型转换，因为你不能用这个语法来跳出类型推导，只是用来
+限制多态类型让类型更加明确。因此如果你 <code>( 1 : float )</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="ocaml-error-loc">1</span> : float)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>类型安全还是存在的。让我们回到例子。</p>
+<p>这个类有四个方法， <code>push</code> 把一个整数推进栈， <code>pop</code> 则弹出一个整数， <code>&lt;-</code> 是用来赋值
+可变实例的变量。这和用<code>&lt;-</code>赋值record的可变域是一样的。</p>
+<p><code>peek</code>返回栈的第一个元素，但不弹出它，而 <code>size</code> 返回栈的长度。</p>
+<p>让我们写一些代码来测试这个类。首先我们要先实例化一个对象，我们用<code>new</code>操作符：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack_of_ints</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : stack_of_ints = &lt;obj&gt;
+</span></code></pre>
+
+<p>首先我们先推入和弹出一些整数：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> 10 <span class="keyword">do</span>
+    s#push i
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>Popped %d off the stack.\n' s#pop
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>注意这个语法。 <code>object#method</code> 的意思是在 <code>object</code> 上调用 <code>method</code>。这和
+一般语言的 <code>object.method</code> 或者 <code>object-&gt;method</code> 是一样的。</p>
+<p>在OCaml toplevel我们可以更清楚地查看对象和方法的类型：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack_of_ints</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : stack_of_ints = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>s</code> 是不透明的，实现是对调用者隐藏的。</p>
+<h3 id="">多态类</h3><p>虽然整数堆栈很好，但是如果栈是多态的话自然是更好的，正如<code>&#39;a list</code>，我们要定义一个 <code>&#39;a stack</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">class ['a] stack =
+    <span class="governing">object</span> (self)
+      <span class="governing">val</span> <span class="keyword">mutable</span> list = ( [] : 'a list )  <span class="comment">(* instance variable *)</span>
+      <span class="governing">method</span> <span class="ocaml-function">push</span> <span class="ocaml-variable">x </span>=                      <span class="comment">(* push method *)</span>
+        list &lt;- x :: list
+      <span class="governing">method</span> <span class="ocaml-function">pop</span><span class="type"></span> =                         <span class="comment">(* pop method *)</span>
+        <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">List</span>.hd list <span class="governing">in</span>
+        list &lt;- <span class="ocaml-module">List</span>.tl list;
+        result
+      <span class="governing">method</span> <span class="ocaml-function">peek</span><span class="type"></span> =                        <span class="comment">(* peek method *)</span>
+        <span class="ocaml-module">List</span>.hd list
+      <span class="governing">method</span> <span class="ocaml-function">size</span><span class="type"></span> =                        <span class="comment">(* size method *)</span>
+        <span class="ocaml-module">List</span>.length list
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class ['a] stack :
+  object
+    val mutable list : 'a list
+    method peek : 'a
+    method pop : 'a
+    method push : 'a -&gt; unit
+    method size : int
+  end
+</span></code></pre>
+
+<p><code>class [&#39;a] stack</code> 并不只定义一个类，而是定义一族类的类，每个类定义一种类型（也就是无穷多个类）。
+让我们试一下用 <code>&#39;a stack</code> 类。在这里我们创建一个栈并推入一个浮点数。注意看这个栈的类型：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : '_weak1 stack = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 1.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float stack = &lt;obj&gt;
+</span></code></pre>
+
+<p>现在这个栈是一个 <code>float stack</code>，并且只允许浮点数推入和弹出这个堆栈（对 <code>&#39;_a</code> 的解释请看 <a href="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html" title="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html">OCaml expert
+FAQ</a>).
+让我们来看看这个 <code>float stack</code> 的类型安全:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 3.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 1.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="ocaml-error-loc">'</span>a string'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>我们可以定义一个多态函数来操作所有类型的堆栈。首先我们先试试下面的代码：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">drain_stack</span> <span class="ocaml-variable">s </span>=
+    <span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+      ignore (s#pop)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drain_stack : &lt; pop : 'a; size : int; .. &gt; -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p>注意 <code>drain_stack</code> 的类型，OCaml的类型推导引擎相当聪明，可以推导出 <code>drain_stack</code> 可以操作在
+所有有 <code>pop</code> 和 <code>size</code> 方法的对象上！所以如果我们定义另一个有<code>pop</code>和<code>size</code>方法的类，
+那么我们可以把 <code>drain_stack</code> 应用到相应的对象上。</p>
+<p>我们可以强制OCaml接收更加特定的类型，只允许 <code>drain_stack</code> 接收 <code>&#39;a stack</code>：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">drain_stack</span> <span class="ocaml-variable">(s : 'a stack) </span>=
+    <span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+      ignore (s#pop)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drain_stack : 'a stack -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<h3 id="">继承，虚类，初始器</h3><p>我注意到Java程序员往往滥用继承，可能是因为这是语言允许的唯一方式来扩展代码。一个更好
+的方式是用钩子(cf. 如Apache模块的 API)。注意在一些情况下继承是很有用的，尤其是在写
+GUI部件库上。</p>
+<p>让我们来考虑一个空造的和Swing类似的OCaml部件库。我们想用下面的类等级结构定义按钮和标签：</p>
+<pre><code>widget  (所有部件的超级类)
+  |
+  +----&gt; container  (装部件的部件)
+  |        |
+  |        +----&gt; button
+  |
+  +-------------&gt; label</code></pre><p>(注意到一个 <code>button</code> 是 <code>container</code> 因为它可以根据情况，装图片或者标签)。</p>
+<p><code>widget</code>是一个虚超级类，我希望每个部件又有一个名字，下面是我第一段代码：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="ocaml-error-loc">class virtual</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-function"><span class="ocaml-error-loc">widget</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-variable"><span class="ocaml-error-loc">name </span></span><span class="ocaml-error-loc">=
+    </span><span class="governing"><span class="ocaml-error-loc">object</span></span><span class="ocaml-error-loc"> (self)
+      </span><span class="governing"><span class="ocaml-error-loc">method</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-function"><span class="ocaml-error-loc">get_name</span></span><span class="type"></span><span class="ocaml-error-loc"> =
+        name
+      method virtual repaint : unit
+    </span><span class="governing"><span class="ocaml-error-loc">end</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some type variables are unbound in this type:
+         class virtual widget :
+           'a -&gt;
+           object method get_name : 'a method virtual repaint : unit end
+       The method get_name has type 'a where 'a is unbound
+</span></code></pre>
+
+<p>噢！我忘了OCaml不能推导出 <code>name</code> 的类型，所以会是 <code>&#39;a</code>。但是这定义了一个多态类型，并且
+我没有定义是如此 (<code>class [&#39;a] widget</code>)。因此我要把<code>name</code>限制成字符串：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class virtual</span> <span class="ocaml-function">widget</span> <span class="ocaml-variable">(name : string) </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">method</span> <span class="ocaml-function">get_name</span><span class="type"></span> =
+        name
+      method virtual repaint : unit
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class virtual widget :
+  string -&gt; object method get_name : string method virtual repaint : unit end
+</span></code></pre>
+
+<p>这段代码里有几个新东西，首先这里有一个 <strong>初始器</strong>。<code>name</code> 是类的参数，你可以认为它
+是如同Java构造器的参数（译注：这里的没啥区别，但是初始器有点像是默认的构造器）：</p>
+<pre class="java"><code class="java">public class Widget
+{
+  public Widget (String name)
+  {
+    ...
+  }
+}</code></pre><p>在OCaml，一个构造器构造整个类的实体，而不仅仅是某个方法，因此我们把这些参数写成是
+类的参数的形式：</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">foo</span> <span class="ocaml-variable">arg1 arg2 ... </span>=</code></pre>
+
+<p>然后，这个类里包含了一个虚方法，因此整个类都是虚的。这个虚方法是 <code>repaint</code>。
+我需要告诉OCaml这个方法是虚的 (<code>method virtual</code>)，并且我们要告诉OCaml这个
+方法的类型。因为这个方法没有实体，因此不可能推导出方法的类型。这里这个方法返回<code>unit</code>。
+如果你的类包含任何虚方法（包括继承来的），你需要把类定义成虚的 <code>class virtual ...</code>。</p>
+<p>如同C++和Java，虚类不能被直接实例化：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword">new</span> widget <span class="ocaml-error-loc">'</span>my widget'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>现在 <code>container</code> 类的实现更加有趣。它要继承 <code>widget</code> 并且还要储存一系列的子部件。
+下面是 <code>container</code> 的一个简单的实现：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class virtual</span> <span class="ocaml-function">container</span> <span class="ocaml-variable">name </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> widget name
+      <span class="governing">val</span> <span class="keyword">mutable</span> widgets = ( [] : widget list )
+      <span class="governing">method</span> <span class="ocaml-function">add</span> <span class="ocaml-variable">w </span>=
+        widgets &lt;- w :: widgets
+      <span class="governing">method</span> <span class="ocaml-function">get_widgets</span><span class="type"></span> =
+        widgets
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> w -&gt; w#repaint) widgets
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class virtual container :
+  string -&gt;
+  object
+    val mutable widgets : widget list
+    method add : widget -&gt; unit
+    method get_name : string
+    method get_widgets : widget list
+    method repaint : unit
+  end
+</span></code></pre>
+
+<p>注意：</p>
+<ol><li><p><code>container</code> 类是虚的，但是它没有任何虚方法，但是我不想这个类被实例化。</p>
+</li><li><p><code>container</code> 类有一个 <code>name</code> 参数，会直接用来传入 <code>widget</code> 的参数。</p>
+</li><li><p><code>inherit widget name</code> 的意思是 <code>container</code> 继承了 <code>widget</code>，
+并且把它的参数 <code>name</code> 传入了 <code>widget</code> 的构造器。</p>
+</li><li><p><code>container</code> 包含一个可变链表来包含部件；方法 <code>add</code> 会把一个部件加入
+链表， <code>get_widgets</code> 会返回所有的子部件。</p>
+</li><li><p><code>get_widgets</code> 返回的链表不能被类外部代码修改。这个理由主要是因为OCaml
+的链表是不可变的，比方说：</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="lower">list</span> <span class="keywordsign">=</span> <span class="lower">container</span><span class="keywordsign">#</span><span class="lower">get_widgets</span> <span class="governing">in</span>
+<span class="lower">x</span> <span class="keywordsign">::</span> <span class="lower">list</span></code></pre></li></ol>
+
+<p>这段代码会把<code>x</code>加到实例<code>container</code>内部的<code>widgets</code>成员里吗？显然是不会的。 <code>widgets</code>
+成员是不会内任何外部方法改变的。也就是说，你可以随后修改这个域具体的容器，比方说数组，
+而不用修改类外的任何代码。</p>
+<p>最后，我们已经实现了<code>repaint</code> 虚方法，因此 <code>container#repaint</code> 会重画所有的子部件。
+注意到我们用到了 <code>List.iter</code> 来迭代整个链表，并且我还用到了诸位不太熟悉的lambda表达式：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="keyword">fun</span> w -&gt; w#repaint)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : &lt; repaint : 'a; .. &gt; -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>这定义了一个匿名函数，它有一个参数 <code>w</code> 而函数体只是简单的 <code>w#repaint</code>。</p>
+<p>下面是 <code>button</code> 类的简单实现（只不过过度简单化了）：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">button_state</span> = Released | Pressed</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type button_state = Released | Pressed
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">button</span> <span class="ocaml-variable">?callback name </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> container name <span class="keyword">as</span> super
+      <span class="governing">val</span> <span class="keyword">mutable</span> state = Released
+      <span class="governing">method</span> <span class="ocaml-function">press</span><span class="type"></span> =
+        state &lt;- Pressed;
+        <span class="keyword">match</span> callback <span class="keyword">with</span>
+        | None -&gt; ()
+        | Some f -&gt; f ()
+      <span class="governing">method</span> <span class="ocaml-function">release</span><span class="type"></span> =
+        state &lt;- Released
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        super#repaint;
+        print_endline (<span class="ocaml-error-loc">'</span>Button being repainted, state is ' ^
+                       (<span class="keyword">match</span> state <span class="keyword">with</span>
+                        | Pressed -&gt; 'Pressed'
+                        | Released -&gt; 'Released'))
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>注意：</p>
+<ol><li><p>这个类有一个可选参数（参看前章），用来传入可选回调函数的，这个回调函数会在按钮按下的时候
+被调用。</p>
+</li><li><p>表达式 <code>inherit container name as super</code>把超级类命名成 <code>super</code>。
+我们在 <code>super#repaint</code> 用到了<code>super</code>。这个调用了超级类的方法。</p>
+</li><li><p>按下按钮 (调用<code>button#press</code>) 会把状态设成 <code>Pressed</code> 并且调用回调函数。注意到 <code>callback</code>
+是一个<code>Option</code>，可能值是 <code>None</code> 或者<code>Some f</code>，也就是说类型是 <code>(unit -&gt; unit) option</code>。
+如果你不太理解这一段，请重新阅读前一章。</p>
+</li><li><p>注意到 <code>callback</code> 变量一个奇怪的地方是，它是作为类参数定义的，但所有方法都能看见并调用它。
+也就是说这个变量在对象实例化的时候就传入了，并随对象存在。</p>
+</li><li><p><code>repaint</code> 方法已经被实现，它调用了超级类的<code>repaint</code>的方法，然后重新画按钮，然后显示按钮的当前状态。</p>
+</li></ol>
+
+<p>在我们定义 <code>label</code> 类之前，让我们在OCaml toplevel中先试一下 <code>button</code> 类：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="ocaml-error-loc">'</span>Ouch!') 'button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>下面是 <code>label</code> 类的实现，相对无聊：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">label</span> <span class="ocaml-variable">name text </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> widget name
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        print_endline (<span class="ocaml-error-loc">'</span>Label: ' ^ text)
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>让我们创建一个 &#39;Press me!&#39; 的标签并将其加入按钮中：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<h3 id="self">关于 <code>self</code></h3><p>在所有的例子中，我们用到了定义类的通用模式：</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">name</span> <span class="ocaml-variable"></span>=
+  <span class="governing">object</span> (self)
+    <span class="comment">(* ... *)</span>
+  <span class="governing">end</span></code></pre>
+
+<p>我还没有解释 <code>self</code> 引用。实际上它是对象的名字，允许你调用同一个类的其他方法，
+或者把对象传到类外面的方法。也就是说它完全就和 C++/Java 中的 <code>this</code> 和 Perl
+中的<code>$self</code>是同一回事。如果你不用引用实例本身，你可以完全忽略 <code>(self)</code>，而实际上
+在所有的例子中，我们完全可以忽略它。但是我回建议你加上这一行，因为你不可能知道
+你在未来会不会需要它。加上它只有百利而无一害。</p>
+<h3 id="">继承和强制多态</h3>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="ocaml-error-loc">'</span>button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[<span class="ocaml-error-loc">b</span>; l]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>我创造了一个按钮<code>b</code>和一个标签<code>l</code>，然后我要创造一个链表来装入两个实例，但是我却得到
+一个错误。但是 <code>b</code> 和 <code>l</code> 确实是 <code>widget</code>，那为什么我们不能把它们装到一个容器里呢？
+是因为OCaml不能猜到我想要一个 <code>widget list</code>? 那让我们来告诉它：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = ([] : widget list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = []
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = <span class="ocaml-error-loc">b</span> :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>OCaml一般不会把子类转型到超级类，但是你可以用<code>:&gt;</code>操作符来使其“不一般”：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">b</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">l</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value l
+</span></code></pre>
+
+<p> <code>(b :&gt; widget)</code> 的意思是把 <code>b</code> 转型成 <code>widget</code>。类型安全同样存在，因为转型的结果
+成功与否是可以在编译时就知道的。</p>
+<p>实际上转型比上面所说的更麻烦，所以我劝告你认真好好地读一读手册。</p>
+<p>上面的<code>container#add</code> 的定义实际上是错误的除非你对参数进行转型。</p>
+<p>那能否从超级类转型到子类呢？答案是，做好心理准备，绝对不能。这个方向的转型是不安全的，
+因为你可能把一个 <code>label</code> 转型成 <code>button</code>。（译注：也就是说OCaml没有运行时的类型检查，
+所以运行地很快）</p>
+<p>Java程序员应该对从超级类到子类的转型的问题很熟悉。Java的容器装有<code>Object</code>，并当你想从
+容器里获取一个元素的时候，你必须将这个元素转型回原来的类型（译注：这在Java引入泛型之前
+是真的，但就算引入了泛型，Java的类型系统还不是完全的，欢迎参考相关书籍）。这有可能会引起
+ <code>ClassCastException</code> 异常。OCaml是强类型的，并且消除运行时类型检查是目标之一，这就是
+为什么这个操作是不允许的。</p>
+<p>多态和函数式变成应该可能移除很多从超级类到子类的转型。Java的容器只能存贮<code>Object</code>是因为
+Java没有泛型（译注：这个教程有点太老了）。这是Java的一个错误，并且有望在Java 1.5被修复。
+在OCaml中，定义一个如<code>&#39;a list</code> 或 <code>&#39;a stack</code>多态类是很简单的。但如果你在OCaml中做
+扩展性强的OO编程，那么终有一天你可能会需要这样的转型。或许这就是你应该尝试以函数式
+的方式先实现你的解决方案，只有在一些特殊的情况下才用OO来解决一些问题。</p>
+<p>[Yamagata Yoriyuki 说类型安全的下转型是可能的，高级读者请看：
+<a href="http://caml.inria.fr/pub/ml-archives/caml-list/2002/05/a6520926c4eac029206a31d6aa22f967.fr.html">http://caml.inria.fr/pub/ml-archives/caml-list/2002/05/a6520926c4eac029206a31d6aa22f967.fr.html</a>
+且有
+<a href="http://remi.vanicat.free.fr/ocaml/hweak/" title="http://remi.vanicat.free.fr/ocaml/hweak/">hweak</a>]</p>
+<h3 id="Oo"><code>Oo</code> 模块和比较对象</h3><p><code>Oo</code> 模块包含了一些OO编程中的一些有用的函数。</p>
+<p><code>Oo.copy</code> 可以浅拷贝一个对象。 <code>Oo.id object</code> 可以返回全局唯一的对象标签。</p>
+<p><code>=</code> 和 <code>&lt;&gt;</code> 可以用来比较对象的物理等同（一个拷贝和对象本身不是物理等同的）。你可以
+用 <code>&lt;</code> 等来用ID来比较大小。</p>
+<h2 id="">没有类的对象</h2><p>下面是一些不定义类就使用对象的例子。</p>
+<h3 id="">立即对象和立即类型</h3><p>对象可以当作record来使用，并且有一些特性让他们在某些情况下比record更好使。我们知道
+标准创立对象的方式是先定义类，然后用这个类来创建对象。这可能在某些情况下会比较麻烦，
+因为类定义往往有很多类型定义且不能递归地和类型一起定义。但是对象可以和record很相象，
+并可以用到类型定义上。并且，对象可以不用类定义就实例化。他们叫做 <em>立即对象</em>。下面是一些例子：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">o</span> =
+    <span class="governing">object</span>
+      <span class="governing">val</span> <span class="keyword">mutable</span> n = 0
+      <span class="governing">method</span> <span class="ocaml-function">incr</span><span class="type"></span> = n &lt;- n + 1
+      <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = n
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val o : &lt; get : int; incr : unit &gt; = &lt;obj&gt;
+</span></code></pre>
+
+<p>这个对象有一个类型，这个类型是被公共方法定义的。值和私有方法是不可见的。和record不一样的，
+是这个类型不用预先定义。这样做还可以让事情变的更清楚些：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">counter</span> = &lt; get : int;  incr : unit &gt;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type counter = &lt; get : int; incr : unit &gt;
+</span></code></pre>
+
+<p>比较一下record等价的定义：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">counter_r</span> = { get : unit -&gt; int;
+                     incr : unit -&gt; unit }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type counter_r = { get : unit -&gt; int; incr : unit -&gt; unit; }
+</span></code></pre>
+
+<p>record值的定义如下：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">r</span> =
+    <span class="governing">let </span><span class="ocaml-variable">n</span> = <span class="keyword">ref</span> 0 <span class="governing">in</span>
+    { get = (<span class="keyword">fun</span> () -&gt; !n);
+      incr = (<span class="keyword">fun</span> () -&gt; incr n) }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val r : counter_r = {get = &lt;fun&gt;; incr = &lt;fun&gt;}
+</span></code></pre>
+
+<p>在功能上来讲，两者差不多，但是这种方法有其优点：</p>
+<ul><li><p><strong>速度</strong>: 访问要稍微快一些</p>
+</li><li><p><strong>域名</strong>: 有时候一些record有域名相同的时候很难处理好它们，但是当使用对象
+的时候就很好解决。</p>
+</li><li><p><strong>子类型</strong>: 把record转型到更少域的record是不可能的，但这对于对象确是可能的，
+所以只要对象有一些共同签名的方法，你就可以在一些数据结构混着用它们</p>
+</li><li><p><strong>类型定义</strong>: 没有必要预先定义一个对象的类型，所以这轻量化模块之间依赖的限制</p>
+</li></ul>
+
+<h3 id="">类类型和类型</h3><p>注意不要混淆<em>类类型</em>和对象<em>类型</em>。一个<em>类类型</em>不是一个数据类型，后者是在OCaml中一般被指代
+为类型。一个对象类型是一种数据结构，和record类型和tuple是类似的。</p>
+<p>当一个类型定义的时候，两个同名的<em>类类型</em>和对象<em>类型</em>被创建：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">t</span> <span class="ocaml-variable"></span>=
+    <span class="governing">object</span>
+      <span class="governing"><span class="governing">val</span></span> <span class="ocaml-variable">x</span> = 0
+      <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = x
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class t : object val x : int method get : int end
+</span></code></pre>
+
+<p><code>object val x : int method get : int end</code> 是一个类类型。</p>
+<p>在这个例子里，<code>t</code>也是实例对象的类型。它的实例也可以和其他类的实例或者立即对象混在一起，只要
+它们的类型（公共方法）是一样就可以了。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ <span class="keyword">new</span> t; x ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : t list = [&lt;obj&gt;; &lt;obj&gt;]
+</span></code></pre>
+
+<p>和有共同子类的实例混在一起也是可以的，这时候需要 <code>:&gt;</code> 操作符：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="ocaml-error-loc">'</span>hello' <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (<span class="ocaml-error-loc">y</span> :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span></code></pre>
+
+<h2 id="">更多对象</h2><p>OCaml手册，第三章，包含对象和类的规范。在里面还有我没有提到的内容，比方说：</p>
+<ul><li><p>私有方法</p>
+</li><li><p>复杂构造器</p>
+</li><li><p>接口</p>
+</li><li><p>多继承</p>
+</li><li><p>多态方法</p>
+</li><li><p>更多转型的细节</p>
+</li><li><p>函数式的对象</p>
+</li><li><p>克隆对象的细节</p>
+</li><li><p>互递归类型</p>
+</li><li><p>二叉方法</p>
+</li><li><p>朋友方法，类</p>
+</li></ul>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.zh.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/objects.zh.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

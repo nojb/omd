@@ -1,0 +1,781 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="objects.html" rel="alternate" hreflang="en"/>
+<link href="objects.ja.html" rel="alternate" hreflang="ja"/>
+<link href="objects.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>オブジェクト &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/objects.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">オブジェクト</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="objects.html">en</a></li>
+<li class="active">日本語</li>
+<li><a href="objects.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">オブジェクトとクラス</a>
+<ul><li><a href="#">多相クラス</a>
+</li><li><a href="#">継承、仮想クラス、初期化子</a>
+</li><li><a href="#self"><code>self</code> に関する註</a>
+</li><li><a href="#">継承と型変換</a>
+</li><li><a href="#Oo"><code>Oo</code> モジュールとオブジェクトの比較</a>
+</li></ul>
+</li><li><a href="#">クラスを使わないオブジェクト</a>
+<ul><li><a href="#">直接オブジェクトとオブジェクトの型</a>
+</li><li><a href="#vs">クラス型 vs. 単なる型</a>
+</li></ul>
+</li><li><a href="#">もっとオブジェクト</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">オブジェクト</h1>
+
+<h2 id="">オブジェクトとクラス</h2>
+
+<p>OCamlはオブジェクト指向、命令型、関数型言語だ :-)。
+これらのパラダイムを混ぜて、
+手元の仕事にもっともふさわしい(あるいは慣れた)
+プログラミングパラダイムが使える。 本章では OCaml
+でのオブジェクト指向プログラミングに注目するが、
+何故オブジェクト指向のプログラムを書きたいか、
+あるいは書きたくないかについても話題にする。</p>
+<p>オブジェクト指向プログラミングを示すのに、
+教科書で用いられる古典的でばかげた例として、 スタッククラスがある。
+これはいろんな意味でとてもひどい例だが、 オブジェクト指向 OCaml
+を書く基本をこれで紹介する。</p>
+<p>整数のスタックを提供する基本コードがこれだ。
+このクラスは線形リストで実装してある。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">stack_of_ints</span> <span class="ocaml-variable"></span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">val</span> <span class="keyword">mutable</span> the_list = ( [] : int list ) <span class="comment">(* &#12452;&#12531;&#12473;&#12479;&#12531;&#12473;&#22793;&#25968; *)</span>
+      <span class="governing">method</span> <span class="ocaml-function">push</span> <span class="ocaml-variable">x </span>=                        <span class="comment">(* push &#12513;&#12477;&#12483;&#12489; *)</span>
+        the_list &lt;- x :: the_list
+      <span class="governing">method</span> <span class="ocaml-function">pop</span><span class="type"></span> =                           <span class="comment">(* pop &#12513;&#12477;&#12483;&#12489; *)</span>
+        <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">List</span>.hd the_list <span class="governing">in</span>
+        the_list &lt;- <span class="ocaml-module">List</span>.tl the_list;
+        result
+      <span class="governing">method</span> <span class="ocaml-function">peek</span><span class="type"></span> =                          <span class="comment">(* peek &#12513;&#12477;&#12483;&#12489; *)</span>
+        <span class="ocaml-module">List</span>.hd the_list
+      <span class="governing">method</span> <span class="ocaml-function">size</span><span class="type"></span> =                          <span class="comment">(* size &#12513;&#12477;&#12483;&#12489; *)</span>
+        <span class="ocaml-module">List</span>.length the_list
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class stack_of_ints :
+  object
+    val mutable the_list : int list
+    method peek : int
+    method pop : int
+    method push : int -&gt; unit
+    method size : int
+  end
+</span></code></pre>
+
+<p><code>class name = object (self) ... end</code> が <code>name</code> という
+名前のクラスを定義する基本パターンだ。</p>
+<p>クラスには <code>the_list</code>
+という名前の変更可能なインスタンス変数(定数ではない)
+がひとつある。これは基礎的な線形リストだ。
+ちょっと分かりにくいかもしれないがちょっとしたコードを使って、
+この変数を初期化(<code>stack_of_ints</code> のオブジェクトが生成されるたびに)する。
+この <code>( [] : int list )</code> 式は「<code>int list</code> 型の空リスト」という意味だ。
+単純な空リスト <code>[]</code> は <code>&#39;a list</code> 型、
+つまり任意型のリストであったことを思いだそう。 欲しいのは <code>int</code>
+のスタックであって他の何者でもないのだから、
+ここでは、型推論エンジンに対して一般的な「任意のリスト」ではなく
+実際にはもっと狭い「<code>int</code> のリスト」ということを伝えている。
+<code>( 式 : 型 )</code> という文法は、 その<code>式</code>がその<code>型</code>であることを意味する。
+これは一般的な型キャスト<em>ではない</em>。というのも、
+型推論エンジンを無効にするのではなく、
+汎用の型をもっと特定のものに狭めるだけだからだ。 だから例えば
+<code>( 1 : float )</code> とは書けない。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="ocaml-error-loc">1</span> : float)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>型安全は保存される。じゃあ例に戻ろうか...</p>
+<p>このクラスには４つの単純なメソッドがある。 <code>push</code>
+は整数をスタックにプッシュする(積む)。 <code>pop</code>
+はスタックの先頭の整数をポップ(取り出し)してそれを返す。 <code>&lt;-</code>
+(割り当て演算子)は変更可能なインスタンス変数の更新があるときに用いる。
+同じく <code>&lt;-</code>
+割り当て演算子でレコード内の破壊可能フィールドの更新にも用いる。</p>
+<p><code>peek</code> はスタックに影響を及ぼさずに先頭(つまりリストの先頭)を返し、
+<code>size</code> はスタックの要素数(つまりリストの長さ)を返す。</p>
+<p>この整数スタックをテストするコードを書いてみよう。
+まず新しいオブジェクトを生成しよう。 <code>new</code>
+演算子というお馴染のものが使える。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack_of_ints</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : stack_of_ints = &lt;obj&gt;
+</span></code></pre>
+
+<p>ではいくつかの要素をスタックにプッシュしてポップしよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> 10 <span class="keyword">do</span>
+    s#push i
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>Popped %d off the stack.\n' s#pop
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>文法に注意しよう。 <code>object#method</code> は <code>object</code> の <code>method</code>
+を呼び出すという意味だ。 これは他の命令型言語でいうところの
+<code>object.method</code> やら <code>object-&gt;method</code> と同じことだ。</p>
+<p>OCaml のトップレベルだとオブジェクトやメソッドの型が詳細に分かる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack_of_ints</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : stack_of_ints = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>s</code> は不明確なオブジェクトだ。
+実装(つまりリスト)は呼び出し側から隠されている。</p>
+<h3 id="">多相クラス</h3>
+
+<p>整数のスタックはこれでいいが、どんな型でも格納できるスタックはどうだろう?
+(混合型を格納できる１つのスタックでなく、任意の一つの型のオブジェクトを
+格納できる複数のスタックだ)。 <code>&#39;a list</code> という感じで <code>&#39;a stack</code>
+を定義しよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">class ['a] stack =
+    <span class="governing">object</span> (self)
+      <span class="governing">val</span> <span class="keyword">mutable</span> list = ( [] : 'a list )  <span class="comment">(* instance variable *)</span>
+      <span class="governing">method</span> <span class="ocaml-function">push</span> <span class="ocaml-variable">x </span>=                      <span class="comment">(* push method *)</span>
+        list &lt;- x :: list
+      <span class="governing">method</span> <span class="ocaml-function">pop</span><span class="type"></span> =                         <span class="comment">(* pop method *)</span>
+        <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">List</span>.hd list <span class="governing">in</span>
+        list &lt;- <span class="ocaml-module">List</span>.tl list;
+        result
+      <span class="governing">method</span> <span class="ocaml-function">peek</span><span class="type"></span> =                        <span class="comment">(* peek method *)</span>
+        <span class="ocaml-module">List</span>.hd list
+      <span class="governing">method</span> <span class="ocaml-function">size</span><span class="type"></span> =                        <span class="comment">(* size method *)</span>
+        <span class="ocaml-module">List</span>.length list
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class ['a] stack :
+  object
+    val mutable list : 'a list
+    method peek : 'a
+    method pop : 'a
+    method push : 'a -&gt; unit
+    method size : int
+  end
+</span></code></pre>
+
+<p><code>class [&#39;a] stack</code> は実際には一つのクラスを定義しているのではなく、
+可能な型について全部の「クラスのクラス」を定義している
+(つまり無限に多くのクラスだ!)。 じゃぁ <code>&#39;a stack</code> クラスを使ってみよう。
+この例ではスタックを生成して浮動小数点数をこのスタックにプッシュする。
+スタックの型に注意しよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : '_weak1 stack = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 1.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float stack = &lt;obj&gt;
+</span></code></pre>
+
+<p>このスタックは今 <code>float stack</code> になっており、
+このスタックでは浮動小数点数しかプッシュ、ポップできないようだ ( <code>&#39;_a</code>
+記法の説明に付いては <a href="http://mirror.ocamlcore.org/caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html" title="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html">OCaml expert
+FAQ</a>
+を見よ)。 この新しい <code>float stack</code> の型安全を実証しよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 3.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 1.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="ocaml-error-loc">'</span>a string'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>どんな型のスタックも操作できる多相関数を定義できる。
+最初にこれを試してみよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">drain_stack</span> <span class="ocaml-variable">s </span>=
+    <span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+      ignore (s#pop)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drain_stack : &lt; pop : 'a; size : int; .. &gt; -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>drain_stack</code> の型に注意だ。 賢いことに、たぶん賢すぎることに、 OCaml
+の型推論エンジンは <code>pop</code>, <code>size</code> メソッドを持つ
+<em>任意の</em>オブジェクトで動作する <code>drain_stack</code> を推論した! だから、もし、
+適切な型署名のある <code>pop</code>, <code>size</code>
+メソッドを含んでいる全く別のクラスを定義していたら、
+それとは異なる型のオブジェクトで偶然 <code>drain_stack</code>
+を呼び出してしまうかもしれない。</p>
+<p>OCaml にもっと特定させるよう強制でき、 以下のように <code>drain_stack</code> が
+引数 <code>s</code> の型を制約し <code>&#39;a stack</code> (訳注 <code>stack</code> クラスに属する任意型)
+で呼び出すことのみ許容するようにできる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">drain_stack</span> <span class="ocaml-variable">(s : 'a stack) </span>=
+    <span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+      ignore (s#pop)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drain_stack : 'a stack -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<h3 id="">継承、仮想クラス、初期化子</h3>
+
+<p>私は Java プログラマが継承を過剰に使う傾向にあることに気づいた。
+おそらく Java では継承がコードを拡張する唯一の合理的な方法だからだ。
+コードを拡張するより良い、より一般的な方法は、普通はフックを使うことだ
+(cf. Apache のモジュール API)。
+にもかかわらず、特定の狭い領域では継承は役に立つし、 GUI
+ウィジェットライブラリを書くときはもっとも重要だ。</p>
+<p>架空の OCaml のウィジェットライブラリを Java の Swing と
+同じようなものと考えよう。 ボタンとラベルを次のクラス階層で定義する:</p>
+<pre><code>widget  (superclass for all widgets)
+  |
+  +----&gt; container  (any widget that can contain other widgets)
+  |        |
+  |        +----&gt; button
+  |
+  +-------------&gt; label</code></pre>
+
+<p>(<code>button</code> は <code>container</code> であることに注意。
+なぜならラベルかイメージのいずれかを含むことが出来て、
+それはボタンに何が表示されるかに依存するからだ。)</p>
+<p><code>widget</code> はウィジェット全てに対する仮想スーパークラスである。
+ウィジェットそれぞれに、生存期間中一定した名前(文字列)が欲しい。
+最初の試みはこれだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="ocaml-error-loc">class virtual</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-function"><span class="ocaml-error-loc">widget</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-variable"><span class="ocaml-error-loc">name </span></span><span class="ocaml-error-loc">=
+    </span><span class="governing"><span class="ocaml-error-loc">object</span></span><span class="ocaml-error-loc"> (self)
+      </span><span class="governing"><span class="ocaml-error-loc">method</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-function"><span class="ocaml-error-loc">get_name</span></span><span class="type"></span><span class="ocaml-error-loc"> =
+        name
+      method virtual repaint : unit
+    </span><span class="governing"><span class="ocaml-error-loc">end</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some type variables are unbound in this type:
+         class virtual widget :
+           'a -&gt;
+           object method get_name : 'a method virtual repaint : unit end
+       The method get_name has type 'a where 'a is unbound
+</span></code></pre>
+
+<p>おぉっと! OCaml は <code>name</code> の型を推論できずに <code>&#39;a</code>
+と推定することを忘れていたよ。 しかしこれは多相クラスを定義しており、
+クラスを多相として宣言(<code>class [&#39;a] widget</code>)しなかった。 <code>name</code>
+の型を狭める必要がある。このように:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class virtual</span> <span class="ocaml-function">widget</span> <span class="ocaml-variable">(name : string) </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">method</span> <span class="ocaml-function">get_name</span><span class="type"></span> =
+        name
+      method virtual repaint : unit
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class virtual widget :
+  string -&gt; object method get_name : string method virtual repaint : unit end
+</span></code></pre>
+
+<p>このコードには幾つかあたらしいことがある。
+まず、このクラスには<strong>初期化子</strong>が含まれている。
+ちょうど例えばJavaでのコンストラクタの引数と同じものと考えられる
+クラス(<code>name</code>)への引数だ。</p>
+<pre class="java"><code class="java">public class Widget
+{
+  public Widget (String name)
+  {
+    ...
+  }
+}</code></pre>
+
+<p>OCaml ではコンストラクタはクラス全体を構築し、
+単なる特定の名前つき関数ではないから、
+クラスに引数があるかのように引数を書く。</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">foo</span> <span class="ocaml-variable">arg1 arg2 ... </span>=</code></pre>
+
+<p>二つ目に、このクラスは仮想メソッドを含んでおり、
+その結果クラス全体も仮想とマークされている。 仮想メソッドはここでは
+<code>repaint</code> である。 OCaml にそれが仮想(<code>method virtual</code>)
+であることを教える必要があり、 <em>さらに</em> OCaml
+にこのメソッドの型を教える必要がある。
+なぜならこのメソッドにはコードが全く含まれず、 OCaml
+は自動で型推論をして型をあたえることは出来ないので、
+型を教えてやらないといけない。 この場合、メソッドは単に <code>unit</code> を返す。
+もしクラスに仮想メソッド(単に継承されただけのものでも)を含む場合、
+クラス全体を仮想として <code>class virtual ...</code> と指定しなければならない。</p>
+<p>C++ や Java 同様、仮想クラスは直接 <code>new</code> でインスタンス化出来ない:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword">new</span> widget <span class="ocaml-error-loc">'</span>my widget'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>この <code>container</code> クラスはもっと面白くなる。 <code>widget</code>
+から継承されなければならず、
+ウィジェットを含むリストを格納する仕掛けを持たなければならない。
+次に単純な <code>container</code> の実装を示す;</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class virtual</span> <span class="ocaml-function">container</span> <span class="ocaml-variable">name </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> widget name
+      <span class="governing">val</span> <span class="keyword">mutable</span> widgets = ( [] : widget list )
+      <span class="governing">method</span> <span class="ocaml-function">add</span> <span class="ocaml-variable">w </span>=
+        widgets &lt;- w :: widgets
+      <span class="governing">method</span> <span class="ocaml-function">get_widgets</span><span class="type"></span> =
+        widgets
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> w -&gt; w#repaint) widgets
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class virtual container :
+  string -&gt;
+  object
+    val mutable widgets : widget list
+    method add : widget -&gt; unit
+    method get_name : string
+    method get_widgets : widget list
+    method repaint : unit
+  end
+</span></code></pre>
+
+<p>注意:</p>
+<ol><li><p><code>container</code>
+ クラスは仮想とマークされている。仮想メソッドを全く含んでいないが、この場合、誰かが直接コンテナを生成するのを防ぎたいからだ。</p>
+</li><li><p><code>container</code> クラスは <code>widget</code> を構築するときに直接渡す <code>name</code>
+ 引数がある。</p>
+</li><li><p><code>inherit widget name</code> は <code>container</code> が <code>widget</code>
+ から継承されており、<code>name</code> 引数が <code>widget</code>
+ のコンストラクタに渡されることを意味する。</p>
+</li><li><p><code>container</code>
+ にはウィジェットの変更可能リストと、ウィジェットをリストに加える
+ <code>add</code> メソッド、ウィジェットのリストを返す <code>get_widgets</code>
+ メソッドが含まれる。</p>
+</li><li><p><code>get_widget</code>
+ で返されるウィジェットのリストはクラスの外部のコードでは変更できない。理由はちょっと微妙だが、基本的に
+ OCaml
+ の線形リストは変更不能であるという事実に落ち着く。誰かが書いた次のコードを想像しよう:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="lower">list</span> <span class="keywordsign">=</span> <span class="lower">container</span><span class="keywordsign">#</span><span class="lower">get_widgets</span> <span class="governing">in</span>
+<span class="lower">x</span> <span class="keywordsign">::</span> <span class="lower">list</span></code></pre>
+
+<p>これで、<code>x</code> がウィジェットのリストに追加されることによって、 <code>container</code>
+クラスのプライベートな内部表現が変更されるだろうか? そうはならない。
+プライベート変数である <code>widgets</code> は、
+これや他のいかなる外部コードによる変更の試みによっても影響されない。
+これは例えば、
+後日内部表現に配列を使うように変えても外部コードからクラスを変更する必要もないことを意味する。</p>
+</li></ol>
+
+<p>最後に、ちょっとじゃないけど、 以前の仮想 <code>repaint</code> 関数、すなわち
+<code>container#repaint</code>
+でウィジェットに含まれる全てを再描画するよう実装する。 <code>List.iter</code>
+を用いてリストを全部繰り返すことと、
+馴染の薄いであろう匿名関数式も使うことに注意しよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="keyword">fun</span> w -&gt; w#repaint)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : &lt; repaint : 'a; .. &gt; -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>一つの引数 <code>w</code> を伴う匿名関数を定義して <code>w#repaint</code> (ウィジェット <code>w</code> の
+<code>repaint</code> メソッド) を呼び出している。</p>
+<p>この例では <code>button</code> クラスは単純である
+(むしろ実際には非現実的な程単純だが気にしない):</p>
+<p>type button_state = Released | Pressed;;</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">button_state</span> = Released | Pressed</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type button_state = Released | Pressed
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">button</span> <span class="ocaml-variable">?callback name </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> container name <span class="keyword">as</span> super
+      <span class="governing">val</span> <span class="keyword">mutable</span> state = Released
+      <span class="governing">method</span> <span class="ocaml-function">press</span><span class="type"></span> =
+        state &lt;- Pressed;
+        <span class="keyword">match</span> callback <span class="keyword">with</span>
+        | None -&gt; ()
+        | Some f -&gt; f ()
+      <span class="governing">method</span> <span class="ocaml-function">release</span><span class="type"></span> =
+        state &lt;- Released
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        super#repaint;
+        print_endline (<span class="ocaml-error-loc">'</span>Button being repainted, state is ' ^
+                       (<span class="keyword">match</span> state <span class="keyword">with</span>
+                        | Pressed -&gt; 'Pressed'
+                        | Released -&gt; 'Released'))
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>注意:</p>
+<ol><li><p>この関数はオプション引数(前の章を参照)があり、オプションのコールバック関数を渡している。コールバックはボタンが押されたときに呼ばれる。</p>
+</li><li><p><code>inherit container name as super</code> 式の意味は、スーパークラスに
+ <code>super</code> と命名している。ここで <code>repaint</code> メソッドを <code>super#repaint</code>
+ と用いている。これはスーパークラスのメソッド呼び出しを明示している。</p>
+</li><li><p>ボタンの押下 (このかなり安直なコードでの <code>button#press</code> の呼び出し)
+ によってボタンの状態が <code>Pressed</code>
+ に設定され、もし定義されていればコールバック関数が呼び出される。<code>callback</code>
+ 変数は <code>None</code> か <code>Some f</code> のいずれか、言い替えると
+ <code>(unit -&gt; unit) option</code>
+ 型であることに注意。これについて自信がなければ前の章を読み直そう。</p>
+</li><li><p>コールバック変数について奇妙なことに注意。これはクラスへの引数として定義されているが、どのメソッドからも見えるし使うことが出来る。言い替えれば、この変数はオブジェクトが生成されたときに供給されるが、オブジェクトの生存期間中ずっと生きつづける。</p>
+</li><li><p><code>repaint</code>
+ メソッドが実装された。これはスーパークラス(コンテナの再描画)を呼び出してからボタンを再描画し、ボタンの現在の状態を表示する。</p>
+</li></ol>
+
+<p><code>label</code> を定義する前に、 OCaml トップレベル環境で <code>button</code>
+クラスで遊んでみよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="ocaml-error-loc">'</span>Ouch!') 'button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>ここに比較的平凡な <code>label</code> のクラスがある:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">label</span> <span class="ocaml-variable">name text </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> widget name
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        print_endline (<span class="ocaml-error-loc">'</span>Label: ' ^ text)
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>「Press me!」というラベルを作ってボタンに加えよう。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<h3 id="self"><code>self</code> に関する註</h3>
+
+<p>上の例は全て汎用パターンを使ってクラスを定義した。</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">name</span> <span class="ocaml-variable"></span>=
+  <span class="governing">object</span> (self)
+    <span class="comment">(* ... *)</span>
+  <span class="governing">end</span></code></pre>
+
+<p><code>self</code> への参照について説明していない。
+実際にはこれはオブジェクトに命名し、 同一クラス内のメソッド呼び出しや
+オブジェクトからクラスの外の関数への受渡しを許可する。 言い替えれば
+C++/Java の <code>this</code> や Perl の <code>$self</code> と全く同じである。
+もし自分自身を参照する必要がいないのであれば、 <code>(self)</code>
+部分を完全に省略できる -- 実際上の例は全て省略可能であろう。
+だが私はこれを書いておくようアドバイスする。 いつクラスを変更して <code>self</code>
+を参照する必要が出るかは分からないのだから。
+書いておくペナルティはまったくない。</p>
+<h3 id="">継承と型変換</h3>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="ocaml-error-loc">'</span>button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[<span class="ocaml-error-loc">b</span>; l]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>ボタン <code>b</code> とラベル <code>l</code> を作り、
+両方を含むリストを作ろうとした、がエラーになった。 <code>b</code> も <code>l</code> も
+<code>widget</code> なのだが、 何故同じリストに入れられなかったのだろう?
+たぶん、OCaml は <code>widget list</code> が欲しいことを推論してくれないのだろう。
+では教えてみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = ([] : widget list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = []
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = <span class="ocaml-error-loc">b</span> :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>OCaml
+はデフォルトではサブクラスをスーパークラスの型に変換しないことがわかる。
+かわりに <code>:&gt;</code> (型変換) 演算子を使うと教えてやることができる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">b</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">l</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value l
+</span></code></pre>
+
+<p>式 <code>(b :&gt; widget)</code> は 「ボタン <code>b</code> は <code>widget</code>
+型を持つように変換せよ」という意味だ。
+コンパイル時にこの型変換が成功するかが完全に判断可能なので、
+型安全は保存される。</p>
+<p>実際、型変換は上で記述したよりは幾分微妙だから、
+詳細を全部を探すにはマニュアルを読むように。</p>
+<p>上で定義される <code>container#add</code> メソッドは実際誤っており、 <code>container</code>
+に別の型のウィジェットを加えようとしても失敗する。
+型変換によって修正される。</p>
+<p>スーパークラス(例えば<code>widget</code>) からサブクラス(例えば<code>button</code>)への
+型変換は可能だろうか? 答えは、たぶん驚くことに NO だ!
+この向きの型変換は<em>安全ではない</em>。 <code>widget</code> を <code>button</code>
+じゃなくて実際には <code>label</code> に型変換しようとしてしまうかもしれない。</p>
+<p>スーパークラスからサブクラスへの型変換の問題は、Javaプログラマには馴染だ。
+Java のコンテナ型は <code>Object</code> を含んでおり、
+オブジェクトをコンテナから抽出するときには元の型でキャストしないといけない。
+これは <code>ClassCastException</code> を実行時に引き起こし得る。 OCaml
+の強い型システムは実行時の型エラーを除去する明確なゴールがあるので、
+この種の型変換は許容されない。</p>
+<p>多相と関数プログラミングによってスーパークラスから
+サブクラスへの型変換の必要性をほとんどなくしている。 Java
+のコンテナクラスで <code>Object</code> を格納するのは、 Java が (コーディング時に)
+ジェネリック (C++ の「テンプレート」や OCaml の多相) がないからである。
+これは Java 言語の欠点 -- 実際とても基本的な欠点 --- であり、
+うまくいけば Java 1.5 で修正されるだろう。 OCaml では <code>&#39;a list</code> や
+<code>&#39;a stack</code> のような多相型の定義がとても簡単なので、 Java
+のようなプログラミングは全然要求されない。
+こう言ったように、もしあなたがOCaml で大規模な OOP をするなら、
+この変換型が実際にとても役立つケースを思いつくことを確信している。
+たぶんこの理由から、本当にこれを理解したらまずはじめに関数型で
+実装解決しようとして、また OO スタイルは限られた問題領域だけにする
+といっていいだろう。</p>
+<p>[山形頼之氏が型安全なダウンキャストが可能であると書いている。
+上級ユーザは見よ:
+<a href="http://caml.inria.fr/pub/ml-archives/caml-list/2002/05/a6520926c4eac029206a31d6aa22f967.fr.html">http://caml.inria.fr/pub/ml-archives/caml-list/2002/05/a6520926c4eac029206a31d6aa22f967.fr.html</a>
+。ここから <a href="http://remi.vanicat.free.fr/ocaml/hweak/">hweak</a> ライブラリが出来た]</p>
+<h3 id="Oo"><code>Oo</code> モジュールとオブジェクトの比較</h3>
+
+<p><code>Oo</code> モジュールには OOP のための役に立つ関数がある。 <code>Oo.copy</code>
+でオブジェクトの浅いコピーを作る。 <code>Oo.id object</code>
+はオブジェクトそれぞれに固有のID値を返す (固有値はクラス全体で)。</p>
+<p><code>=</code> と <code>&lt;&gt;</code> はオブジェクトの<em>物理的な</em>等価比較に使う
+(オブジェクトとそのコピーは物理的には同一ではない)。 <code>&lt;</code>
+などもオブジェクトの固有IDに基づいたオブジェクトの順列決定に使える。</p>
+<h2 id="">クラスを使わないオブジェクト</h2>
+
+<p>ここではほとんどレコードのような、必ずしもクラスを使わない
+オブジェクトの使いかたを調べる。</p>
+<h3 id="">直接オブジェクトとオブジェクトの型</h3>
+
+<p>オブジェクトはレコードのかわりに使え、
+いくつかのケースでレコードよりも選択したくなるような良い特性がある。
+オブジェクトを生成する正規の方法が、
+まずクラスを定義してからそのクラスを用いて個別のオブジェクトを生成する
+ことであると見てきた。 これは場合によっては扱いづらことがある。
+クラス定義は型定義よりも多く、また型による再帰定義が出来ないからだ。
+だが、オブジェクトは型を持っており、
+つまりレコード型にとても類似しており、型定義として使うことができる。
+さらにオブジェクトはクラス無しで生成できる。
+これは<em>直接オブジェクト</em>と呼ばれる。 次に直接オブジェクトの定義を示す:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">o</span> =
+    <span class="governing">object</span>
+      <span class="governing">val</span> <span class="keyword">mutable</span> n = 0
+      <span class="governing">method</span> <span class="ocaml-function">incr</span><span class="type"></span> = n &lt;- n + 1
+      <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = n
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val o : &lt; get : int; incr : unit &gt; = &lt;obj&gt;
+</span></code></pre>
+
+<p>このオブジェクトには、パブリックメソッドだけが定義された型がある。
+値およびプライベートメソッドは不可視である。
+レコードとは異なり、このような型は事前に明示的に定義される必要はないが、
+そうすることでより明確になる。 次のようにできる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">counter</span> = &lt; get : int;  incr : unit &gt;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type counter = &lt; get : int; incr : unit &gt;
+</span></code></pre>
+
+<p>等価なレコード型の定義と比較せよ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">counter_r</span> = { get : unit -&gt; int;
+                     incr : unit -&gt; unit }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type counter_r = { get : unit -&gt; int; incr : unit -&gt; unit; }
+</span></code></pre>
+
+<p>このオブジェクトと同様に動作するレコードの実装は以下の通りだろう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">r</span> =
+    <span class="governing">let </span><span class="ocaml-variable">n</span> = <span class="keyword">ref</span> 0 <span class="governing">in</span>
+    { get = (<span class="keyword">fun</span> () -&gt; !n);
+      incr = (<span class="keyword">fun</span> () -&gt; incr n) }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val r : counter_r = {get = &lt;fun&gt;; incr = &lt;fun&gt;}
+</span></code></pre>
+
+<p>関数型の点においてはオブジェクトもレコードも似ているが、
+これらの方法にはそれぞれ利点がある:</p>
+<ul><li><p><strong>スピード</strong>: レコードのフィールドアクセスが若干速い</p>
+</li><li><p><strong>フィールド名</strong>:
+ 異なる型のレコード操作はフィールドが同一の名前だと不便であるが、オブジェクトにはそのような問題はない。</p>
+</li><li><p><strong>サブタイプ</strong>:フィールドがより少ない型へのレコードの型強制は不可能であるが、オブジェクトでは可能だ。なので、メソッドを幾つか共有する異なる種類のオブジェクトにおいて、共通のメソッドだけが可視であるようデータ構造を混在できる。(次の節を見よ)</p>
+</li><li><p><strong>型定義</strong>:
+ あらかじめオブジェクト型を定義する必要はないので、モジュール間の依存性を軽くできる。</p>
+</li></ul>
+
+<h3 id="vs">クラス型 vs. 単なる型</h3>
+
+<p><em>クラス型</em>と<em>オブジェクトの型</em>の混同に注意せよ。
+<em>クラス型</em>はデータ<em>型</em>ではなく、 <em>型</em>として通常参照される OCaml
+用語である。 オブジェクトの<em>型</em>はデータ&lt;/em&gt;型の一種であり、
+レコード型やタプルと同じようなものである。</p>
+<p>クラスが定義されると、<em>クラス型</em>とオブジェクトの<em>型</em>の両方が
+同じ名前で定義される。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">t</span> <span class="ocaml-variable"></span>=
+    <span class="governing">object</span>
+      <span class="governing"><span class="governing">val</span></span> <span class="ocaml-variable">x</span> = 0
+      <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = x
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class t : object val x : int method get : int end
+</span></code></pre>
+
+<p>この例では、<code>t</code> はこのクラスが生成するオブジェクトの型でもある。
+異なるクラスから派生した、あるいはクラスでないオブジェクトでも
+同じ型である限りいっしょに混ぜることができる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ <span class="keyword">new</span> t; x ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : t list = [&lt;obj&gt;; &lt;obj&gt;]
+</span></code></pre>
+
+<p>共通のサブタイプを共有する混在オブジェクトもできるが、 <code>:&gt;</code>
+演算子で型変換を明示する必要がある。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="ocaml-error-loc">'</span>hello' <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (<span class="ocaml-error-loc">y</span> :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span></code></pre>
+
+<h2 id="">もっとオブジェクト</h2>
+
+<p>OCaml のマニュアルの3章には、
+正規のオブジェクトやクラスの参照について書いてある。
+ここでカバーしなかったがマニュアルでカバーされる内容として:</p>
+<ul><li><p>プライベートメソッド</p>
+</li><li><p>複雑なコンストラクタ</p>
+</li><li><p>インタフェース</p>
+</li><li><p>多重継承</p>
+</li><li><p>多相メソッド</p>
+</li><li><p>型変換についての詳細</p>
+</li><li><p>関数オブジェクト</p>
+</li><li><p>オブジェクトの複製についての詳細</p>
+</li><li><p>相互再帰なクラス</p>
+</li><li><p>バイナリメソッド</p>
+</li><li><p>フレンド</p>
+</li></ul>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/objects.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

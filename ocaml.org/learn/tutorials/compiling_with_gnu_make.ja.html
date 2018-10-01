@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="compiling_with_gnu_make.html" rel="alternate" hreflang="en"/>
+<link href="compiling_with_gnu_make.ja.html" rel="alternate" hreflang="ja"/>
+
+    
+    <title>GNU make でのコンパイル &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/compiling_with_gnu_make.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">GNU make でのコンパイル</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="compiling_with_gnu_make.html">en</a></li>
+<li class="active">日本語</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#OCamlMakefile-GNU-make">OCamlMakefile と組み合わせて GNU make を使う</a>
+</li><li><a href="#OCamlMakefile-Camlp4">OCamlMakefile + ライブラリ + Camlp4 の構文解析</a>
+</li><li><a href="#">まとめ</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="GNU-make">GNU make でのコンパイル</h1>
+
+<h2 id="OCamlMakefile-GNU-make">OCamlMakefile と組み合わせて GNU make を使う</h2>
+
+<p><a href="http://mmottl.github.io/ocaml-makefile/">OCamlMakefile</a>
+は、 複雑なOCamlプロジェクトのコンパイル作業をとても楽にする生成的な
+Makefile だ。</p>
+<p>標準のライブラリのみを使う基本的なOCamlプログラムやライブラリについては、
+単にカレントディレクトリにOCamlMakefileをコピーし、 以下の Makefile
+を作成する：</p>
+<pre class="makefile"><code class="makefile">RESULT = myprogram
+SOURCES = \
+  mymodule1.mli mymodule1.ml \
+  myparser.mli myparser.mly mylexer.mll mymodule2.ml \
+  mymainprogram.ml
+  
+OCAMLMAKEFILE = OCamlMakefile
+include $(OCAMLMAKEFILE)</code></pre>
+
+<p>これは5つのコンパイル対象がある上に ocamlyacc と ocamllex
+をも使う、かなり複雑なプログラムだ。 ocamlyacc が生成する .mli
+ファイル(この例では myparser.mli) 以外の
+ソースファイルだけ書く必要がある。</p>
+<p>(上記例の最後で include される) OCamlmakefile
+はいろんなターゲットを提供する。 詳細は OCamlMakefile
+のドキュメントを参照してもらうとして、ここでは主なものを 紹介する：</p>
+<pre class="text"><code class="text">nc           ネィティブコードの実行ファイル作成
+bc           バイトコードの実行ファイル作成
+ncl          ネィティブコードのライブラリ作成
+bcl          バイトコードのライブラリ作成
+libinstall   ocamlfindを用いたライブラリのインストール
+libuninstall ocamlfindを用いたライブラリのアンインストール
+top          あなたのモジュールでカスタマイズされたトップレベルの生成
+clean        OCamlMakefile で自動生成されたファイルの削除</code></pre>
+
+<h2 id="OCamlMakefile-Camlp4">OCamlMakefile + ライブラリ + Camlp4 の構文解析</h2>
+
+<p>OCaml ライブラリのインストールの推奨ツールが
+<a href="http://www.camlcity.org/archive/programming/findlib.html" title="Findlib">Findlib</a>
+(コマンド名は ocamlfind) だ。
+パッケージのインストール先を把握し、依存性に応じてロードし、
+あたえられた状況下でどのファイルを使うべきかを知っている。</p>
+<p>もし Findlib を<strong>使わない</strong>場合、
+標準ランタイムライブラリをロードするには LIBS と INCDIRS
+変数を設定しておけばよい。 LIBS は .cma や .cmxa
+拡張子をのぞいたライブラリファイル名 (xxx.cma や xxx.cma の xxx 部分)
+を羅列する:</p>
+<pre class="makefile"><code class="makefile">LIBS = str unix</code></pre>
+
+<p>もし非標準のライブラリを標準ライブラリと同じディレクトリに
+インストールしてない場合、 INCDIRS
+変数にそのディレクトリを羅列する必要がある。</p>
+<pre class="makefile"><code class="makefile">INCDIRS = /path/to/somelibdirectory/</code></pre>
+
+<p>これは普通、一つの方法でいろんな環境にインストールする、 慣習的には
+configure スクリプトで行う類の前準備段階で必要になる。
+他にも、デフォルトサーチパスに含まれていない標準ディレクトリ (たとえば
+/path/to/stdlib/camlp4) でも同じだ。
+この場合は以下のように書けば十分で、この方が可搬性がある:</p>
+<pre class="makefile"><code class="makefile">INCDIRS = +camlp4</code></pre>
+
+<p>よし。だがライブラリは ocamlfind を使ってインストールする方が好ましい。
+OCamlMakefile を使う場合、PACKS 変数を設定する必要がある:</p>
+<pre class="makefile"><code class="makefile">PACKS = netstring num</code></pre>
+
+<p>標準ライブラリの一部ではないが、 OCaml の標準インストールに添付される
+unix, str, bigarray のような ライブラリは、Findlib
+が自動認識してくれる。 つまりこれらのパッケージを要求されるとき (例えば
+netstring は unix と pcre を要求する)は自動でロードされる。</p>
+<p>camlp4 による構文拡張はどうだろうか。
+プリプロセッサでロードされるバイトコードユニットみたいに
+構文拡張を定義しているパッケージがあるかもしれない。 OCamlMakefile
+を使う場合、
+プリプロセッサを使いたいときにはファイルの1行目に以下の定義をする:</p>
+<pre><code class="ocaml">(*pp ...</code></pre>
+
+<p>つまりこのように書く:</p>
+<pre><code class="ocaml"><span class="comment">(*pp camlp4o -I /path/<span class="keyword">to</span>/pa_infix pa_infix.cmo *)</span></code></pre>
+
+<p>うーん、このやりかたはちょっと不便だ。
+だから各ファイルで同じプリプロセッサを使うことにして、 Makefile の PP
+変数にこの共通の方法を代入する:</p>
+<pre class="makefile"><code class="makefile">PP = camlp4o -I /path/to/pa_infix pa_infix.cmo
+export PP</code></pre>
+
+<p>そうすれば、OCaml ファイルはこう始められる:</p>
+<pre><code class="ocaml"><span class="comment">(*pp $PP *)</span></code></pre>
+
+<p>このプリプロセッサ定義でもまだ満足できない。 ocamlfind
+の特長と同じようにして構文拡張ファイルを取り込みたい。
+そのためには、<a href="http://martin.jambon.free.fr/ocaml.html">camlp4find</a>
+スクリプトが使える。 普通、PACKS 変数に使うパッケージを羅列しておくと、
+camlp4 が ocamlfind と同じように構文拡張をロードしてくれる:</p>
+<pre class="makefile"><code class="makefile">PACKS = unix micmatch_pcre \
+   pa_tryfinally pa_lettry pa_forin pa_forstep pa_repeat pa_arg
+PP = camlp4find $(PACKS)
+export PP</code></pre>
+
+<h2 id="">まとめ</h2>
+
+<p>必要なもの:</p>
+<ul><li><p>GNU make</p>
+</li><li><p>OCamlMakefile (プロジェクトのメインディレクトリにコピーする)</p>
+</li><li><p>Findlib (ocamlfind)</p>
+</li><li><p>camlp4find (プロジェクトのメインディレクトリにコピーする)</p>
+</li><li><p>ocamlfind でインストールした Camlp4 パッケージ</p>
+</li><li><p>以下の雛型を元に小さい Makefile を書く</p>
+</li><li><p>ソースファイルの先頭行におまじないを書いておく</p>
+</li></ul>
+
+<p>ocamllex と unix, micmatch_pcre ライブラリを使う例を全部示す。 Makefile
+はこんな感じだ:</p>
+<pre class="makefile"><code class="makefile">RESULT = myprogram
+SOURCES = mymodule1.mll mymodule2.mli mymodule2.ml mymainmodule.ml
+PACKS = unix micmatch_pcre
+PP = camlp4find $(PACKS)
+export PP
+CREATE_LIB = yes # ???
+OCAMLMAKEFILE = OCamlMakefile
+include $(OCAMLMAKEFILE)</code></pre>
+
+<p>.ml や .mli ファイルは以下の行で始める:</p>
+<pre><code class="ocaml"><span class="comment">(*pp $PP *)</span></code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/compiling_with_gnu_make.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

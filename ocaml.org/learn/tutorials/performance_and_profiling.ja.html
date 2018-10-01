@@ -1,0 +1,1015 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="performance_and_profiling.html" rel="alternate" hreflang="en"/>
+<link href="performance_and_profiling.ja.html" rel="alternate" hreflang="ja"/>
+
+    
+    <title>性能とプロファイル &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/performance_and_profiling.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">性能とプロファイル</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="performance_and_profiling.html">en</a></li>
+<li class="active">日本語</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">罪な引用...</a>
+</li><li><a href="#">速度</a>
+<ul><li><a href="#">アセンブリ言語の基礎</a>
+</li><li><a href="#39-hello-world-39">&#39;hello, world&#39; プログラム</a>
+</li><li><a href="#">末尾再帰</a>
+</li><li><a href="#">脱線:型はいずこに?</a>
+</li><li><a href="#">多相型</a>
+</li><li><a href="#">整数の内部表現、タグビット、ヒープに割り当てられた値</a>
+</li><li><a href="#">浮動小数点数</a>
+</li><li><a href="#">配列</a>
+</li><li><a href="#">部分適用された関数とクロージャ</a>
+</li></ul>
+</li><li><a href="#">プロファイルの採取</a>
+<ul><li><a href="#">バイトコードの場合</a>
+</li><li><a href="#">ネイティブコードの場合</a>
+</li></ul>
+</li><li><a href="#">まとめ</a>
+<ul><li><a href="#">もっと読む</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">性能とプロファイル</h1>
+
+<p><a href="performance_and_profiling_discussion.html">このページの論議(英語)</a></p>
+<p>訳注:本章は編集の都合と読みやすさの観点から、原文の中身を一部別パートに分割しています。</p>
+<h2 id="">罪な引用...</h2>
+
+<p>*「よい言語を採用するにあたって一つ深刻な障害がある。
+速度のためにはなにもかも犠牲にするという考え方だ。
+実生活と同じくコンピュータ言語でもスピードは人殺しだ。」 — Mike Vanier*</p>
+<p>(訳注:全文はおそらく<a href="http://www.cs.caltech.edu/%7Emvanier/hacking/rants/scalable_computer_programming_languages.html">こちら</a>)</p>
+<h2 id="">速度</h2>
+
+
+
+<p>OCamlはなぜ速いのか? まぁ、もう一歩引いて聞こうか。<em>OCaml は速いのか</em>?
+どうしたらプログラムを高速化できるのか? この章では、OCaml
+プログラムがコンパイルされて機械語に落ちる際、
+実際に何が起こっているのかを見ていこうと思う。 ここから、OCaml
+が単に素晴らしいプログラミング言語というだけでなく、
+実に高速な言語であることもわかることと思う。
+さらに、コンパイラによりよい機械語を吐かせられるようになるだろう。
+また、<code>ocamlopt</code> と打ってから実行バイナリを得るまでに行っていることの
+考え方を知っておくのもプログラマにとっていいことだ(とわたしは信じてる)。</p>
+<p>ただし、このセクションを最大限に活用するためには、
+アセンブラを知っておく必要がある。恐がることはない!
+アセンブリ言語をCライクな擬似コードに翻訳してわかりやすくするつもりだ。
+(だって、Cは可搬性のあるアセンブリ言語だろう?)</p>
+<h3 id="">アセンブリ言語の基礎</h3>
+
+<p>この章で示す例は全て x86-Linux マシンでのコンパイル結果である。 もちろん
+x86(IA-32) は 32bit マシンなので x86 の「ワード(語)」は
+4byte(=32bit)長だ。 機械語レベルにおいては、OCaml
+は大抵ワードサイズのオブジェクトを扱うので、
+バイト単位のサイズが必要な時には4倍することを忘れないように。</p>
+<p>さて頭を切り替えて。 汎用レジスタはそれぞれ1ワード分を記憶できるのだが、
+x86 には汎用レジスタが少ない。 Linux のアセンブラ(GNU as)
+はレジスタ名の前に <code>%</code> を付ける。 つまりレジスタは <code>%eax</code>, <code>%ebx</code>,
+<code>%ecx</code>, <code>%edx</code>, <code>%esi</code>, <code>%edi</code>,
+<code>%ebp</code>(スタックフレーム用レジスタ),セクションで用いる。
+<code>%esp</code>(スタックポインタ) だ。</p>
+<p>Linux のアセンブラではレジスタやメモリの転送の元/先は以下のように書く
+(他の Unix のアセンブラも同じだが、MS系アセンブラは逆)。</p>
+<pre class="assembly"><code class="assembly">movl from, to</code></pre>
+
+<p>(訳注: この点について、実際にはMS系というわけではなく Intel
+のアセンブラ表記 そのものが Linux を含む Unix
+系アセンブラ表記(これらはAT&amp;T表記と呼ぶ)と逆。 Microsoft は
+Intel表記に忠実に従っているだけなので念のため。
+Intel表記だと以下の通りで、MASM
+等ではサイズ表記のサフィックス(<code>l</code>)を省略できて</p>
+<pre class="assembly"><code class="assembly">movl to, from</code></pre>
+
+<p>となる。他にも MASM と GAS(GNU as) でのアセンブラディレクティブの違い
+(コードセグメントとテキストセクションというように呼びかたが違うなど)
+があったりするので、Windows/MS-DOS 系の知識がある人は適宜推測して
+読みかえてほしい。)</p>
+<p>つまり、<code>movl %ebx, %eax</code> (Intel表記なら <code>mov eax,ebx</code>) というのは、
+「レジスタ <code>ebx</code> の中身をレジスタ <code>eax</code> にコピーする」
+という意味だ(逆じゃないよ)。</p>
+<p>アセンブリ言語は <code>movl</code> のような機械語命令だけでなく、
+<em>アセンブラディレクティブ</em>というものからも構成されていること
+を見ておく必要がある。 これらのディレクティブは(訳注:AT&amp;T系の場合) <code>.</code>
+(ピリオド) で始まり、 文字どおり<em>直接</em>アセンブラに対して指示する。
+ここで Linux アセンブラの主要なディレクティブを紹介する:</p>
+<h4 id="text">.text</h4>
+
+<p><strong>text</strong> というのは「プログラムコード」の Unix 流の呼びかただ。
+<strong>テキストセグメント</strong>(テキスト領域)
+というのは単にプログラムコードが置かれている実行可能領域のことだ。
+<code>.text</code> ディレクティブによってアセンブラはセグメントを切り替え、
+ここからテキストセグメントが始まる。 (訳注:ただし、アセンブリ言語で
+.text の部分はテキストセクションと呼ぶ。
+テキストセクションにあるものが割り付けられる先のメモリ領域
+をテキストセグメントと呼ぶのが一般的か。以下の訳はこれをベースに使い分けてみた)</p>
+<h4 id="data">.data</h4>
+
+<p>同様に、<code>.data</code> ディレクティブによって
+実行可能なデータセグメント(領域)が始まるように切り替えられる。</p>
+<h4 id="globl">.globl とラベル</h4>
+
+<pre class="assembly"><code class="assembly">  .globl foo
+foo:</code></pre>
+
+<p>これは <code>foo</code> という大域シンボルを宣言している。 宣言の次に <code>foo</code>
+という名前で登場するやつのアドレスを意味する。 <code>.globl</code>
+ディレクティブを伴わず単に <code>foo:</code> と書いた場合は、
+局所シンボルの宣言(そのファイルに閉じた宣言)となる。</p>
+<h4 id="">定数指示など</h4>
+
+<pre class="assembly"><code class="assembly">.long 12345
+.byte 9
+.ascii &#39;hello&#39;
+.space 4</code></pre>
+
+<p><code>.long</code> はそこにワード(4バイト)を書く。 <code>.byte</code> は1バイトを書く。
+<code>.ascii</code> はバイト列(nul文字による終端はない)を書く。 <code>.space</code>
+はゼロで指定バイト数を埋める。 普通、これらはデータセクションで用いる。</p>
+<h3 id="39-hello-world-39">&#39;hello, world&#39; プログラム</h3>
+
+<p>もうアセンブラについては十分だろう。 以下のプログラムを <code>smallest.ml</code>
+というファイルに書こう。</p>
+<pre><code class="ocaml">print_string 'hello, world\n'</code></pre>
+
+<p>で、以下のようにネイティブコードにコンパイルする:</p>
+<pre class="shell"><code class="shell">ocamlopt -S smallest.ml -o smallest</code></pre>
+
+<p><code>-S</code> (大文字のS) でコンパイラにアセンブリ言語ファイル (<code>smallest.s</code> -
+こっちは小文字) を消さずに残すよう指示している。</p>
+<p><code>smallest.s</code> ファイルにコメントを付け加えたり強調したりして手を加えた
+のがここにある。まずはデータセクションだ:</p>
+<pre class="assembly"><code class="assembly">    .data
+    .long   4348                     ; 文字列ヘッダ
+    .globl  Smallest__1
+lest__1:
+    .ascii  &#39;hello, world\12&#39;        ; 文字列
+    .space  2                        ; 文字列の後ろ
+    .byte   2                        ; のパディング</code></pre>
+
+<p>次はテキストセクション(プログラムコード):</p>
+<pre class="assembly"><code class="assembly">    .text
+    .globl  Smallest__entry          ; プログラムの入口
+lest__entry:
+
+    ; 以下は擬似Cコードの以下と同じ
+    ; Pervasives.output_string (stdout, &amp;Smallest__1)
+
+    movl    $Smallest__1, %ebx
+    movl    Pervasives + 92, %eax    ; Pervasives + 92 == stdout
+    call    Pervasives__output_string_212
+
+    ; return 1
+
+    movl    $1, %eax
+    ret</code></pre>
+
+<p>C では全てが関数の中にないといけない。 C では単に
+<code>printf (&#39;hello, world\n&#39;);</code> とは書けず、 <code>main() { ... }</code>
+の中に書かないといけないことを思い起こそう。 OCaml
+では関数の中じゃなくトップレベルに命令を書くことができる。
+しかし、これをアセンブリ言語に翻訳するとき、
+これらの命令はどこに置けばいいのだろう?
+外部からこれらの命令を呼び出すなんらかの方法が必要だ。
+だからまず何らかのラベルをつける。 上のコード片を見るとわかるだろうが、
+OCaml ではファイル名(<code>smallest.ml</code>)の 先頭を大文字にして <code>__entry</code>
+を付け加えたシンボル、 つまり <code>Smallest__entry</code> というシンボルで
+ファイル中のトップレベルコマンドを参照できるようにしている。</p>
+<p>次は OCaml が生成したコードを見てみよう。 元のコードは
+<code>print_string &#39;hello, world\n&#39;</code> だったが、OCaml はそれと等価な
+<code>Pervasives.output_string stdout &#39;hello, world\n&#39;</code> でコンパイルした。
+なーんでだ? <code>pervasives.ml</code> を調べるとその理由がわかる。</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">print_string</span> <span class="ocaml-variable">s </span>= output_string stdout s</code></pre>
+
+<p>OCaml はこの関数を<em>インライン展開</em>した。 <strong>インライン化</strong>
+(関数定義を展開して突っ込む) は
+余計な関数呼び出しのオーバーヘッドを避けて
+オプティマイザにやれることを増やす方向に働くので、
+性能上有利なことがある。 逆にインライン展開が良くないこともある。
+コードが脹れあがる方向に働くので、 その結果 CPUキャッシュ
+上で順調に動いていたものが 溢れてメタメタに遅くなってしまう
+(そのうえ、関数呼び出しは今時の CPU では全然高コストじゃない)。 OCaml
+はこれみたいな単純な呼び出しの場合は、
+本質的に危険性がないのでインライン化する。
+ほとんどの場合、ちょっとだけ性能向上するだろう。</p>
+<p>これについて他に気づいたことは?
+呼び出し規約は、どうやら最初のふたつの引数を <code>%eax</code> と <code>%ebx</code>
+レジスタそれぞれに 渡しているように見える。
+他に引数があればスタック渡しされるのだろうが、
+それについては後で見ていこう。</p>
+<p>Cプログラムには <strong>ASCIIZ</strong>
+として知られる文字列を格納する単純な規約がある。 これは単に文字列を
+ASCII 列で格納して末尾に NUL文字(<code>\0</code>) を付けるというものだ。 OCaml
+では文字列はこれとは違った方法で格納しており、それは
+上のデータセクションを見ればわかると思う。
+文字列はこのように格納されている:</p>
+<pre><code>4バイトのヘッダ: 4348
+文字列本体:     h e l l o、SP w o r l d\n
+パディング:     \0 \0 \002</code></pre><p>この形式は普通じゃない。 これについては <a href="http://mirror.ocamlcore.org/caml.inria.fr/pub/ml-archives/caml-list/2002/08/e109df224ff0150b302033e2002dbf87.en.html">OCaml
+メーリングリストに投稿されたもの</a>
+に書かれている。
+</p>
+<p>一つめには、パディングは文字列のワード長(例では4ワード、16バイト)に
+ぴったりになるようにしている。
+このパディングは良く考えて設計されており、
+その文字列に割り当てられている<em>ワード</em>数を知っていれば
+その実際のバイト数での長さがわかるようになっている。
+これを求めるコードは自明だ(自分で証明できるはずだ)。</p>
+<p>この長さが自明な文字列には、 C ではくっつけるのが煩わしかった ASCII
+NUL(<code>\0</code>)文字もその文字列表現にくっついている、 という特長がある。
+だが反対に、OCaml 文字列を Cネイティブコードに渡すときに
+意識する必要がある: ASCII NUL を含んでいると C の <code>str*</code>
+関数で失敗することだ。</p>
+<p>(訳注:本当?　NUL があるから C でのハンドリングは楽なはずで、 C から
+OCaml に持ち帰るときに気にする必要があるだけでは?)</p>
+<p>ふたつめは、ヘッダ部分があることだ。 OCaml では全ての boxed
+(アロケートされた) オブジェクトには ヘッダがあり、
+ガベージコレクタ(GC)に、
+オブジェクトがワード換算でどれくらいの大きさがあるのか、
+オブジェクトに含まれるものはなんなのか、等を伝える役目がある。
+ヘッダに数値4348 (=0x10fc) が書かれているというのは:</p>
+<pre><code>ワード換算のオブジェクト長: 0000 0000 0000 0000 0001 00 (4ワード)
+カラー(GCが使う):        00
+タグ:                  1111 1100 (String_tag)</code></pre><p>OCaml
+におけるヒープに割り当てられたオブジェクトの形式についての詳しい情報は
+<code>/usr/include/caml/mlvalues.h</code> あたりを見よ。</p>
+<p>一つ変わっているのは、コードは <code>Pervasives.output_string</code> に
+文字列の開始位置(つまりヘッダの直後のワード)のポインタを渡していることだ。
+つまり、<code>output_string</code> はポインタから4を引かないことには、
+ヘッダを得て文字列長を判別できないということだ。</p>
+<p>この簡単な例で何か忘れてることはないですかね?
+うーん、上のテキストセクションでは全部ではないな。 OCaml が単純な hello
+world プログラムを上のたった5行のアセンブリに
+翻訳したのなら本当にいいことだが、 実際のプログラムで <code>Smallest__entry</code>
+を呼び出してるのは何かが疑問だ。 この点について、 OCaml では
+ガベージコレクタやメモリの初期化とアロケート、ライブラリの初期化呼び出し
+などを行うブートストラップコード全部を含んでいる。 OCaml
+は最終実行ファイルにこれらコードを静的にリンクしており、
+このプログラムが結局 95,442
+バイトもの大きさ(Linuxの場合)にもなる理由です。 にもかかわらず、Java
+のまともなプログラムの起動時間は数秒、 Perl
+スクリプトで約1秒などに比べると、
+まだまだこのプログラムの起動時間は測定不能な程度に小さい(ミリ秒以下)。</p>
+<h3 id="">末尾再帰</h3>
+
+<p>第6章(訳注:7章(<a href="if_statements_loops_and_recursion.ja.html">If文、ループと再帰</a>)では?)で、
+OCaml は末尾再帰関数を単純ループに変換できると述べた。
+これは本当に正しいのだろうか?
+単純な末尾再帰のコンパイル結果を見てみよう。</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+  print_string 'I go on forever ...';
+  loop ()
+  
+<span class="governing">let</span> () = loop ()</code></pre>
+
+<p>これのファイル名を <code>tail.ml</code> とすると、 関数名は OCaml
+の標準的な手続きに則って付けられて、 この関数は <code>Tail__loop_nnn</code> となる
+(<code>nnn</code> は他の名前つき関数と区別するために OCaml が付け足す
+ユニークな数値)</p>
+<p>これが上で定義した <code>loop</code> 関数のアセンブリだ。</p>
+<pre class="assembly"><code class="assembly">        .text
+        .globl  Tail__loop_56
+Tail__loop_56:
+.L100:
+        ; 文字列の表示
+        movl    $Tail__2, %ebx
+        movl    Pervasives + 92, %eax
+        call    Pervasives__output_string_212
+.L101:
+        ; この movl は実際には使われない
+        movl    $1, %eax
+        ; 上のラベル .L100 に戻る (i.e. 永久ループ)
+        jmp     .L100</code></pre>
+
+<p>たしかにそうなっている。 <code>Tail__loop_56</code>
+を呼び出すとまず文字列を表示して、 そのあと先頭に戻る。
+そして文字列を表示して戻り、それが永遠に続く。
+これは単純ループであって再帰的な関数呼び出しになって<em>いない</em>から、
+スタック領域を全く消費しない。</p>
+<h3 id="">脱線:型はいずこに?</h3>
+
+<p>ことあるごとに言ってきた通り、OCaml は静的型だ。
+だから、コンパイル時には OCaml は <code>loop</code> の型が <code>unit -&gt; unit</code>
+であることを知っている。 <code>&#39;hello, world\n&#39;</code> が <code>string</code>
+型であることも知っている。 この事実を何ら <code>output_string</code>
+関数に伝えようとしていない。 <code>output_string</code> は <code>channel</code> と <code>string</code> を
+引数にとることが期待値であり、実際にそれが引き渡されている。 例えば
+<code>string</code> のかわりに <code>int</code> を渡してしまったら 何が起こるのだろう?</p>
+<p>これは本質的には不可能な状況だ。 OCaml
+はコンパイル時に型を知っているので、
+実行時に型の対処や型チェックをする必要がない。
+コンパイラを<em>騙して</em><code>Pervasives.output_string stdout 1</code>という
+呼び出しを生成される方法は、純粋な OCaml には存在しない。
+コンパイル時に型推論によってエラーが通知されるから
+決してコンパイルできないだろう。</p>
+<p>その結果、OCaml コードがコンパイルされてアセンブラに渡るときにはもう、
+型情報がほとんどの場合不要ということだ。
+確かに上で見たケースではコンパイル時に型が全部わかっており、
+多相型がない。</p>
+<p>コンパイル時に型を全部知っているということは、
+実行時の動的型チェックを完全回避できるから性能で勝る主要因だ。 Java
+のメソッド実行、たとえば <code>obj.method()</code> と比べてみよ。 インスタンス
+<code>obj</code> の具体的なクラスを知る必要があって、
+そこからメソッドを探さないといけないのだから、 これは高価な操作だ。
+そしておそらく<em>いつ</em>、どんなメソッドであってもこうしなければならない。
+オブジェクトのキャストもまたJava
+では実行時にかなりの仕事をする必要がある ケースだ。OCaml
+は静的型だからこれは許されていない。</p>
+<h3 id="">多相型</h3>
+
+<p>上の議論から推測しているかもしれないが、
+多相型(コンパイラがコンパイル時には関数の型が完全にはわからない)
+は性能に影響があるかもしれない。
+ふたつの整数の最大値を返す関数が欲しいとしよう。 最初の例はこれだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val max : 'a -&gt; 'a -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>とても単純だ、だがしかし、&gt; (より大きい) 演算子は OCaml
+では多相型であることを思いだそう。 つまりこの型は <code>&#39;a -&gt; &#39;a -&gt; bool</code>
+で、 ここで定義した関数 <code>max</code> は多相型になっているということだ。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val max : 'a -&gt; 'a -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>実際OCamlがこの関数から生成したコードに反映されているが、 かなり複雑だ。</p>
+<pre class="assembly"><code class="assembly">        .text
+        .globl  Max__max_56
+Max__max_56:
+        ; スタック領域を2ワード予約
+        subl    $8, %esp
+        ; ふたつの引数(aとb)をスタックに保存
+        movl    %eax, 4(%esp)
+        movl    %ebx, 0(%esp)
+        ; C の greaterthan 関数(OCamlライブラリにある)を呼ぶ
+        pushl   %ebx
+        pushl   %eax
+        movl    $greaterthan, %eax
+        call    caml_c_call
+.L102:
+        addl    $8, %esp        
+        ; greaterthan が1を返したら .L100 に分岐
+        cmpl    $1, %eax
+        je      .L100
+        ; 返値が0なら、スタックに保存しておいた引数 a を取得し
+        ; 戻る
+        movl    4(%esp), %eax
+        addl    $8, %esp
+        ret
+        ; 返値が1なら、スタックに保存しておいた引数 a を取得し
+        ; 戻る
+
+.L100:
+        movl    0(%esp), %eax
+        addl    $8, %esp
+        ret</code></pre>
+
+<p>基本的に &gt; 演算は OCaml ライブラリから C
+関数を呼び出すことで処理される。 これは　&gt;
+の動作をする高速なインラインのアセンブリ言語を生成する類の
+効果的なものには見えず、あまり効果的ではなさそうだ。</p>
+<p>このことは、どうやっても損になるというわけじゃない。 やるべきことは
+OCaml コンパイラに、
+引数が実際には整数であるというヒントをあたえることだ。 次に引数が <code>int</code>
+の時のみ動作するよう特化したバージョンの <code>max</code> を作ってみる。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">(a : int) (b : int) </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val max : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>この関数から生成されたアセンブリコードがこれ:</p>
+<pre class="assembly"><code class="assembly">        .text
+        .globl  Max_int__max_56
+Max_int__max_56:
+        ; &gt; 演算子の動作は cmpl 命令1個になった
+        cmpl    %ebx, %eax
+        ; %ebx &gt; %eax なら .L100 に分岐
+        jle     .L100
+        ; 単に a を返す
+        ret
+        ; b を返す
+
+.L100:
+        movl    %ebx, %eax
+        ret</code></pre>
+
+<p>たった5行のアセンブリになった。 これは大体思った通りの単純さだろう。</p>
+<p>こんなコードはどうだろうか:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b
+    
+  <span class="governing">let</span> () = print_int (max 2 3)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">3</span><span class="ocaml-stderr"></span>val max : 'a -&gt; 'a -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>OCaml は賢く <code>max</code> 関数をインライン化して整数に特化するだろうか。
+残念ながら答えはノーだ。 OCaml は外部に <code>Max.max</code>
+シンボルを生成する必要がある
+(これはモジュールだからモジュールの外からこの関数が呼ばれるかもしれない)。</p>
+<p>別のパターンはどうか:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">max</span> <span class="ocaml-variable">a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> a <span class="keyword">else</span> b <span class="governing">in</span>
+  print_int (max 2 3)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">3</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>残念ながら、 このコードの <code>max</code> はローカル定義
+(モジュール外から呼び出せない)にもかかわらず、 まだ OCaml
+はこの関数を特化してくれない。</p>
+<p>教訓: 意図しないところで多相型になっている関数があったら、
+引数の型を特定してあげるとコンパイラが助かる。</p>
+<h3 id="">整数の内部表現、タグビット、ヒープに割り当てられた値</h3>
+
+<p>OCaml の整数にはいっぱい変わったところがある。 一つは、整数の実体が
+32ビットではなく 31ビットというところだ。
+この&#39;失われた&#39;ビットで何が起きているのだろう?</p>
+<p><code>int.ml</code> にこう書こう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_int 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">3</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>で、<code>ocamlopt -S int.ml -o int </code>とコンパイルして <code>int.s</code>
+にアセンブリ言語ファイルをつくる。 上の論議を思い出すと、OCamlは
+<code>print_int</code> 関数を <code>output_string (string_of_int 3)</code>
+とインライン展開することが期待されるから、 OCaml
+が本当にそうしたかどうかをアセンブリ言語出力で 検証しよう。</p>
+<pre class="assembly"><code class="assembly">        .text
+        .globl  Int__entry
+Int__entry:
+        ; Call Pervasives.string_of_int (3)
+        movl    $7, %eax                          &lt;----重要!!
+        call    Pervasives__string_of_int_152
+        ; Call Pervasives.output_string (stdout, result_of_previous)
+        movl    %eax, %ebx
+        movl    Pervasives + 92, %eax
+        call    Pervasives__output_string_212</code></pre>
+
+<p>重要なコードを赤で示した(訳注:されてないので別途示した)。
+ここについて2点指摘する: 一つは整数が unbox
+である(ヒープに割り当てられていない) かわりに、この関数内で直接レジスタ
+<code>%eax</code> に渡されている。 これは高速だ。
+だが、2点め、ここで渡されている数値は3じゃなく7だということがわかる。</p>
+<p>OCaml における整数表現の結果こうなっている。
+整数の最下位ビットはタグ(これがなんなのかは次で述べる)
+として使われており、上位31ビットが実際の整数だ。
+7は2進表現で111だから最下位ビットが1で上位31ビットが二進数の11
+つまり3だ。 OCaml表現から整数を得るには2で割って切り捨てれば良い。</p>
+<p>何故タグビットがあるのか?
+このビットは、整数とヒープ上の構造体へのポインタとを
+区別するために使っており、
+多相関数を呼び出すときのみこの区別が必要になる。 上のケースでは、
+<code>string_of_int</code> を呼ぶところは、タグビットは調べられていないが
+引数は常に <code>int</code> でなければならないわけだ。
+整数が二つの内部表現をもたないようにするために、 OCaml
+では整数は全てタグビットを持ち回っている。</p>
+<p>何故タグビットが本当に必要で、何故そこにあるのかを理解するために、
+ポインタに関するちょっとした背景が必要だろう。 SPARC, MIPS, Alpha
+のような RISC チップの世界では、
+ポインタはワード境界に揃えないといけない。 だから例えば昔の 32bit SPARC
+では、 4(バイト)の倍数境界に揃っていない
+ポインタは作ることも使うこともできない。 もし使おうとすれば、CPU
+は例外を発生して プログラムは基本的にはセグメント例外
+(訳注:実際にはバスエラーになるはずだ)になる。
+こうしている理由は、メモりアクセスを単純にするためだ。
+ワード境界に揃ったアクセスだけ気にすればいいのであれば CPU
+のメモリサブシステムの設計はずいぶんと簡単になる。</p>
+<p>歴史的な理由(x86は8ビットチップに由来する)から x86
+は境界に揃っていないメモリアクセスをサポートしているが、
+4の倍数にメモリアクセスを揃えておけばより高速に動く</p>
+<p>OCaml では全てのポインタはアラインされている、 つまり32bit CPU
+なら4の倍数、64bit CPU なら8の倍数になっている。 OCaml
+のポイントはどれも最下位ビットが常に0 ということだ。</p>
+<p>ゆえにレジスタの最下位ビットを見れば、即、
+そこにポインタが格納されている(タグビットが0)か
+整数が格納されている(タグビットが1)かがわかる。</p>
+<p>前のセクションで、多相の &gt; 関数が
+いろいろ面倒だったことを覚えているだろうか。 アセンブル結果を見たら
+OCaml は多相の &gt; をいつでも C 関数の <code>greaterthan</code>
+呼び出しにしていることがわかったはずだ。 この関数 <code>greaterthan</code>
+は二つの引数を レジスタ <code>%eax</code>, <code>%ebx</code> にとるが、
+整数、浮動小数、文字列、よくわからないオブジェクトでも呼び出せる。
+どうやって <code>%eax</code> と <code>%ebx</code> が指している ものが何なのかを知るのだろう?</p>
+<p>以下の判断ツリーをたどる:</p>
+<ul><li><p><strong>タグビットが 1 :</strong> 二つの整数を比較して戻る。</p>
+</li><li><p><strong>タグビットが 0 :</strong>
+ <code>%eax</code>と<code>%ebx</code>は2つのヒープから割り当てられたメモリブロックを指すポインタだ。そのメモリブロックのヘッダから、そのブロックの中身を示すタグであるヘッダワードの下位8ビットを見る。</p>
+<ul><li><p><strong>String_tag :</strong> 二つの文字列を比較する</p>
+</li><li><p><strong>Double_tag :</strong> 二つの浮動小数点数を比較する。</p>
+</li><li><p>その他</p>
+</li></ul></li></ul>
+
+<p>&gt; が <code>&#39;a -&gt; &#39;a -&gt; bool</code> という型であり、
+引数が両方とも同じ型でないといけないことに注意。
+コンパイラはコンパイル時にこれを強制するが、 たぶん <code>greaterthan</code>
+には実行時にも正常かどうかチェックするコードがあると思う。</p>
+<h3 id="">浮動小数点数</h3>
+
+<p>浮動小数点数はデフォルトでは boxed (ヒープに割り当てられる)だ。 以下を
+<code>float.ml</code> でセーブして <code>ocamlopt -S float.ml -o float</code>
+とコンパイルしよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_float 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">3.</span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>数値は、前述整数型のように直接 <code>%eax</code> レジスタにセットされて
+<code>string_of_float</code> に渡されることはない。
+かわりにデータセクションに静的に生成される。</p>
+<pre class="assembly"><code class="assembly">        .data
+        .long   2301
+        .globl  Float__1
+Float__1:
+        .double 3.0</code></pre>
+
+<p>そしてこの浮動小数点数へのポインタが <code>%eax</code> 経由で渡される。</p>
+<pre class="assembly"><code class="assembly">        movl    $Float__1, %eax
+        call    Pervasives__string_of_float_157</code></pre>
+
+<p>浮動小数点数の構造に注意: ヘッダ(2301=0x8fd)があって、
+その後ろに8バイト(2ワード)の数値自身がある。
+ヘッダは二進数で書き下すと解読できる:</p>
+<pre><code>オブジェクトのワード単位の長さ:  0000 0000 0000 0000 0000 10 (8 バイト)
+カラー:                     00
+タグ:                       1111 1101 (Double_tag)</code></pre><p><code>string_of_float</code> は多相型ではないが、 多相型の引数を一つとる多相関数
+<code>foo : &#39;a -&gt; unit </code> があると仮定しよう。 <code>%eax</code> に 7 を代入して <code>foo</code>
+を呼び出すことは <code>foo 3</code> と同じなのに対し、 <code>%eax</code> に上記 <code>Float__1</code>
+へのポインタを代入して <code>foo</code>を呼び出すのが <code>foo 3.0</code>
+と同じということだ。</p>
+<h3 id="">配列</h3>
+
+<p>以前、OCaml の目標の一つに数値計算があると述べた。
+数値計算ではベクトルや配列 (本質的には浮動小数点数の配列)
+の計算を大量に行う。 これをより高速に行うための特別なハックとして、OCaml
+では 「<strong>unboxed な浮動小数点数の配列</strong>」を実装している。 これは
+<code>float array</code> 型(浮動小数点数の配列)
+のオブジェクトが特殊ケースであることを意味し、
+ヒープ上に10個の浮動小数点数を別々にアロケートして
+そこへのポインタの配列を持つのではなく、 OCaml でも以下の C
+コードと同じように格納している。</p>
+<pre class="C"><code class="C">double array[10];</code></pre>
+
+<p>実際にこれを見てみよう:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a</span> = <span class="ocaml-module">Array</span>.create 10 0.0<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 0 <span class="keyword">to</span> 9 <span class="keyword">do</span>
+  a.(i) &lt;- float_of_int i
+<span class="keyword">done</span></code></pre>
+
+<p>このコードを範囲チェックを外す <code>-unsafe</code> オプションを積んで
+コンパイルする(説明のためにコードを簡単にするためだ)。
+最初の行で配列を作っているがコンパイル結果は単純な C
+関数コールになっている:</p>
+<pre class="assembly"><code class="assembly">        pushl   $Arrayfloats__1     ; Boxed の浮動小数点数 0.0
+        pushl   $21                 ; 整数の 10
+        movl    $make_vect, %eax    ; C の関数呼び出しのアドレス
+        call    caml_c_call
+
+; ...
+
+        movl    %eax, Arrayfloats   ; この結果の配列へのポインタを
+                                    ; ヒープに格納</code></pre>
+
+<p>ループはコンパイルされて比較的単純なアセンブリ言語になっている:</p>
+<pre class="assembly"><code class="assembly">        movl    $1, %eax            ; %eax に 0を代入。以降 %eax に i が入る
+        cmpl    $19, %eax           ; %eax &gt; 9 ならループを抜ける
+        jg      .L100               ;   (最後のラベル .L100 に行く)
+
+.L101:                              ; ここからループ本体の開始
+        movl    Arrayfloats, %ecx   ; 配列のアドレスを %ecx へ
+
+        movl    %eax, %ebx          ; i を %ebx にコピー
+        sarl    $1, %ebx            ; ebx からタグビットを削除
+                                    ;  (右1ビットシフト)
+                                    ;  これで整数 i そのものになった
+
+        pushl   %ebx                ; %ebx を浮動小数点に変換
+        fildl   (%esp)
+        addl    $4, %esp
+
+        fstpl   -4(%ecx, %eax, 4)   ; 配列の i 番目に浮動小数点を格納
+
+        addl    $2, %eax            ; i に 1 を足す
+        cmpl    $19, %eax           ; i &lt;= 9 ならまたループ
+        jle     .L101
+.L100:</code></pre>
+
+<p>浮動小数点数を配列に格納している文が重要だ:</p>
+<pre class="assembly"><code class="assembly">fstpl-4(%ecx、%eax、4)</code></pre>
+
+<p>アセンブリ構文はかなり複雑だが、 括弧で括られた式 <code>-4(%ecx, %eax, 4)</code>
+は「<code>%ecx + 4*%eax - 4</code> のアドレス」という意味だ。 <code>%eax</code> は <code>i</code> の
+OCaml 表現だったから、 タグビットつきの完全な状態だ。 なので中身は
+<code>i*2+1</code> に等しい。 代入して掛けてみよう:</p>
+<pre class="assembly"><code class="assembly">%ecx + 4*%eax - 4
+= %ecx + 4*(i*2+1) - 4
+= %ecx + 4*i*2 + 4 - 4
+= %ecx + 8*i</code></pre>
+
+<p>(配列の各浮動小数点数は8バイト長だ)</p>
+<p>ゆえに期待どおり浮動小数点数の配列は unboxed だ。</p>
+<h3 id="">部分適用された関数とクロージャ</h3>
+
+<p>OCamlはどうやって部分適用されただけの関数をコンパイルするのだろうか?
+このコードをコンパイルしよう:</p>
+<pre><code class="ocaml"><span class="ocaml-module">Array</span>.map ((+) 2) [| 1; 2; 3; 4; 5 |]</code></pre>
+
+<p>文法を思い出してみると、<code>[| ... |]</code>
+で配列(ここでは<code>int array</code>だ)を宣言していて、 <code>((+) 2)</code>
+が「2と何かを足す関数」というクロージャだ。</p>
+<p>このコードをコンパイルすると面白い新機構が姿をあらわす。
+最初に配列をアロケートするコード:</p>
+<pre class="assembly"><code class="assembly">        movl    $24, %eax           ; 5*4+4 = 24バイトのメモリをアロケート
+        call    caml_alloc
+
+        leal    4(%eax), %eax       ; %eax は確保したメモリの
+                                    ; 4バイト先を指すポインタになる</code></pre>
+
+<p>ヒープからの割り付けは全部同じ形式だ:4バイトのヘッダ+データ。
+この場合データは5つの整数だから、ヘッダの4バイトとデータの 5*4 バイト
+を足したぶんだけ確保する。 ポインタは最初のデータワード(i.e.
+確保されたメモリブロックの4バイト先) を指すように更新される。</p>
+<p>次に OCaml は配列の初期化コードを生成している:</p>
+<pre class="assembly"><code class="assembly">        movl    $5120, -4(%eax)
+        movl    $3, (%eax)
+        movl    $5, 4(%eax)
+        movl    $7, 8(%eax)
+        movl    $9, 12(%eax)
+        movl    $11, 16(%eax)</code></pre>
+
+<p>ヘッダワードは5120(=0x1400)で、これは二進数で書くと
+5ワードあってタグが0であるこことがわかる。
+0のタグというのは配列など「構造化したブロック」を意味する。 また
+1,2,3,4,5の数を配列の適切な場所にコピーしている。 ここで OCaml
+の整数表現が使われていることに注意。 構造化されたブロックなので
+ガベージコレクタ(GC)はブロック内の各ワードをスキャンするのだが、 GC
+は整数か他のヒープ上のブロックへのポインタなのかを
+区別できる必要があるのだ (GC
+には配列から型情報をアクセスする手段がない)。</p>
+<p>次にクロージャ <code>((+) 2)</code> が作られる。
+このクロージャはデータセクション上に割り当てられたブロックにある。</p>
+<pre class="assembly"><code class="assembly">        .data
+        .long   3319
+        .globl  Closure__1
+Closure__1:
+        .long   caml_curry2
+        .long   5
+        .long   Closure__fun_58</code></pre>
+
+<p>ヘッダは3319(=0xcf7)で、3ワード長の <code>Closure_tag</code>
+であることを示している。 ブロック内の3ワードは <code>caml_curry2</code>
+のアドレス、整数値2、 この関数自身のアドレスとなっている。</p>
+<pre class="assembly"><code class="assembly">        .text
+        .globl  Closure__fun_58
+Closure__fun_58:
+
+        ; この関数は二つの引数 %eax、%ebx をとる。
+        ; この行では %eax + %ebx - 1 を返している。
+
+        lea     -1(%eax, %ebx), %eax
+        ret</code></pre>
+
+<p>この関数は何をしているのだろうか。</p>
+<p>表面上は二つの引数を足して1を引いている。だが、 <code>%eax</code> と <code>%ebx</code> は
+OCaml の整数表現であることを思いだそう。 こういうことだ:</p>
+<ul><li><p><code>%eax = 2 * a + 1</code></p>
+</li><li><p><code>%ebx = 2 * b + 1</code></p>
+</li></ul>
+
+<p>ここでいう <code>a</code> と <code>b</code> は実際の整数引数だ。 だからこの関数の返値は</p>
+<pre><code>%eax + %ebx - 1
+= 2 * a + 1 + 2 * b + 1 - 1
+= 2 * a + 2 * b + 1
+= 2 * (a + b) + 1</code></pre><p>言い替えると、この関数は OCaml の整数表現での和 <code>a+b</code> を返している。
+この関数は <code>(+)</code> だ!</p>
+<p>(実際にはこう言うにはちょっと微妙だ。 計算を高速に実行するために OCaml
+は x86設計者が意図してないだろう方法、
+x86のアドレッシングハードを用いている)</p>
+<p>(訳注: ここは一見わかりやすい <code>add</code> 命令(普通の整数演算)でなく <code>lea</code>
+命令(メモリ操作のためのアドレス計算を転用して演算する)
+使っていることを指している。が、 もっと古い CISC マシンである
+メインフレームでも <code>lea</code> 相当の命令(<code>LA</code>)で 加算をするのは普通なので、
+x86 設計チームもこういう使いかたは知っているだろう。 実際に <code>add</code> も
+<code>lea</code> も Pentium 以降は1サイクルで動作する最速動作の命令であり、
+一命令で加算と定数減算をやっている <code>lea</code> 命令を使わない場合、 <code>add</code>
+した後に別途1を引かないといけない (<code>sub</code>命令も必要)分遅くなるのだ)</p>
+<p>それでクロージャに戻ると、 <code>caml_curry2</code> の詳細には立ち入らないが、
+このクロージャは関数<code>(+)</code>に引数<code>2</code>を適用したもので
+二つ目の引数待ちであるといっている。予想ではあるが。</p>
+<p><code>Array.map</code> 関数の実際の呼び出しを理解するのはかなり困難だが、 上の
+OCaml のテストコードから、コードの要点は:</p>
+<ul><li><p><code>Array.map</code> はクロージャを明示して呼び出す。</p>
+</li><li><p>関数呼び出しをインラインに展開したりループに変換したりしない。</p>
+</li></ul>
+
+<p>この通り、確かに <code>Array.map</code>
+の呼び出しは手で配列のループ処理を書くよりも遅い。 主なオーバーヘッドは
+配列の要素ごとにクロージャを評価しているところであり、
+クロージャーを関数のようにインライン展開するほど速くない
+(この最適化が可能だったとして)。 だが、
+<code>((+) 2)</code>より大きいクロージャならこのオーバーヘッドは小さくなるだろう。
+関数型プログラミング版はまた、
+命令型のループを書くより、高価な<em>プログラマ</em>の時間を節約できる。</p>
+<h2 id="">プロファイルの採取</h2>
+
+<p>OCaml プログラムに対して2種類のプロファイルのとりかたがある:</p>
+<ol><li><p>バイトコードの場合、実行回数を取得する</p>
+</li><li><p>ネイティブコードの場合、本物のプロファイルを取得する</p>
+</li></ol>
+
+<h3 id="">バイトコードの場合</h3>
+
+<p><code>ocamlcp</code> と <code>ocamlprof</code> でバイトコードのプロファイルを計測する。
+例を示す:</p>
+<pre><code class="ocaml"><span class="comment">(* $ ocamlcp -p a graphics.cma graphtest.ml -o graphtest
+   $ ./graphtest
+   $ ocamlprof graphtest.ml *)</span>
+  
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Random</span>.self_init ();
+  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480'
+  
+<span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+  <span class="comment">(* 12820000 *)</span> <span class="keyword">if</span> i == 1 <span class="keyword">then</span> <span class="comment">(* 25640 *)</span> x_init
+  <span class="keyword">else</span>
+    <span class="comment">(* 12794360 *)</span> <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+    r *. x *. (1.0 -. x)<span class="ocaml-prompt">;;</span><br/>  
+<span class="governing">let</span> () =
+  <span class="keyword">for</span> x = 0 <span class="keyword">to</span> 640 <span class="keyword">do</span>
+    <span class="comment">(* 641 *)</span> <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
+    <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+      <span class="comment">(* 25640 *)</span> <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+      <span class="ocaml-module">Graphics</span>.plot x y
+    <span class="keyword">done</span>
+  <span class="keyword">done</span></code></pre>
+
+<p><code>(* nnn *)</code> というコメントが <code>ocamlprof</code> が付け加えたもので、
+そのコード部分が何回呼ばれたかを示している。</p>
+<h3 id="">ネイティブコードの場合</h3>
+
+<p>ネイティブコードのプロファイルについては、 使っている OS
+のプロファイラにネイティブ対応している。 Linux の場合 <code>gprof</code> を使う。</p>
+<p>ネイティブコードのプロファイルの実例を示すにあたり、
+エラトステネスの篩(<a href="https://web.archive.org/web/20020611073618/http://www.bagley.org/~doug/ocaml/Notes/lazy.shtml" title="http://www.bagley.org/~doug/ocaml/Notes/lazy.shtml">元コード</a>)
+で最初の3000個の素数を求める。
+このプログラムはチュートリアルの範囲外のテクニックである stream と
+camlp4 を使っている。</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">filter</span> <span class="ocaml-variable">p </span>= parser
+  [&lt; 'n; s &gt;] -&gt; <span class="keyword">if</span> p n <span class="keyword">then</span> [&lt; 'n; filter p s &gt;] <span class="keyword">else</span> [&lt; filter p s &gt;]
+  
+<span class="governing">let </span><span class="ocaml-variable">naturals</span> =
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">gen</span> <span class="ocaml-variable">n </span>= [&lt; 'n; gen (succ n) &gt;] <span class="governing">in</span> gen 2
+  
+<span class="governing">let </span><span class="ocaml-variable">primes</span> =
+  <span class="governing">let</span> <span class="ocaml-function">rec</span> <span class="ocaml-variable">sieve </span>= parser
+    [&lt; 'n; s &gt;] -&gt; [&lt; 'n; sieve (filter (<span class="keyword">fun</span> m -&gt; m mod n &lt;&gt; 0) s) &gt;] <span class="governing">in</span>
+  sieve naturals
+  
+<span class="governing">let</span> () =
+  <span class="keyword">for</span> i = 1 <span class="keyword">to</span> 3000 <span class="keyword">do</span>
+    ignore (<span class="ocaml-module">Stream</span>.next primes)
+  <span class="keyword">done</span></code></pre>
+
+<p>コンパイラに対して <code>gprof</code> のプロファイル情報を含めるよう、
+コンパイル時に <code>ocamlopt</code> に <code>-p</code> オプションを積む。</p>
+<pre class="shell"><code class="shell">ocamlopt -p -pp &#39;camlp4o pa_extend.cmo&#39; -I +camlp4 sieve.ml -o sieve</code></pre>
+
+<p>普通にプログラムを走らせると、 プロファイル情報が <code>gmon.out</code> という
+<code>gprof</code> 用のファイルに出力される。</p>
+<pre><code>$ gprof ./sieve
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls   s/call   s/call  name
+ 10.86      0.57     0.57     2109     0.00     0.00  sweep_slice
+  9.71      1.08     0.51     1113     0.00     0.00  mark_slice
+  7.24      1.46     0.38  4569034     0.00     0.00  Sieve__code_begin
+  6.86      1.82     0.36  9171515     0.00     0.00  Stream__set_data_140
+  6.57      2.17     0.34 12741964     0.00     0.00  fl_merge_block
+  6.29      2.50     0.33  4575034     0.00     0.00  Stream__peek_154
+  5.81      2.80     0.30 12561656     0.00     0.00  alloc_shr
+  5.71      3.10     0.30     3222     0.00     0.00  oldify_mopup
+  4.57      3.34     0.24 12561656     0.00     0.00  allocate_block
+  4.57      3.58     0.24  9171515     0.00     0.00  modify
+  4.38      3.81     0.23  8387342     0.00     0.00  oldify_one
+  3.81      4.01     0.20 12561658     0.00     0.00  fl_allocate
+  3.81      4.21     0.20  4569034     0.00     0.00  Sieve__filter_56
+  3.62      4.40     0.19     6444     0.00     0.00  empty_minor_heap
+  3.24      4.57     0.17     3222     0.00     0.00  oldify_local_roots
+  2.29      4.69     0.12  4599482     0.00     0.00  Stream__slazy_221
+  2.10      4.80     0.11  4597215     0.00     0.00  darken
+  1.90      4.90     0.10  4596481     0.00     0.00  Stream__fun_345
+  1.52      4.98     0.08  4575034     0.00     0.00  Stream__icons_207
+  1.52      5.06     0.08  4575034     0.00     0.00  Stream__junk_165
+  1.14      5.12     0.06     1112     0.00     0.00  do_local_roots
+
+[ etc. ]</code></pre><p>このプログラムではガベージコレクタが時間を多く消費していることがわかる。
+(驚くなかれ、このプログラムはエレガントだが最適化はしていない。
+配列やループを使った方がはるかに速く動作するだろう)</p>
+<h2 id="">まとめ</h2>
+
+<p>あなたの書くプログラムから最高の性能を引き出すための秘訣をここでまとめる。</p>
+<ol><li><p>できるだけ単純にプログラムを書く。実行時間が長すぎる場合はプロファイルを取って時間のかかっているところを見つけ、その部分の最適化に注力すること。</p>
+</li><li><p>意図していない多相型がないかチェックして、コンパイラに型情報のヒントをあたえる。</p>
+</li><li><p>クロージャは単純な関数呼び出しよりも遅いが、メンテナンス性と可読性は上がる。</p>
+</li><li><p>最後の手段としてプログラムのホットスポットを C
+ で書き直す(ただし、まず OCaml
+ コンパイラが吐いたアセンブリ言語をチェックして、これ以上よくならないかどうか見直すこと)</p>
+</li><li><p>性能は外的要因に依存しているかもしれない(データベースのクエリやネットワークの速度だったりしないか?)。もしそうならどんな最適化を施しても無駄だ。</p>
+</li></ol>
+
+<h3 id="">もっと読む</h3>
+
+<p>OCaml の内部表現の違いについては マニュアルの18章(「Objective Caml と C
+言語のインタフェース」
+(<a href="http://ocaml.jp/archive/ocaml-manual-3.06-ja/manual032.html" title="http://ocaml.jp/archive/ocaml-manual-3.06-ja/manual032.html">OCaml.JPにある日本語訳</a>))や
+ヘッダファイル <code>mlvalues.h</code> を見るとわかるだろう。</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/performance_and_profiling.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

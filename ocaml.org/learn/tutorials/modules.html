@@ -1,0 +1,645 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="modules.html" rel="alternate" hreflang="en"/>
+<link href="modules.fr.html" rel="alternate" hreflang="fr"/>
+<link href="modules.ja.html" rel="alternate" hreflang="ja"/>
+<link href="modules.ko.html" rel="alternate" hreflang="ko"/>
+<link href="modules.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Modules &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/modules.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Modules</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+<li><a href="modules.fr.html">fr</a></li>
+<li><a href="modules.ja.html">日本語</a></li>
+<li><a href="modules.ko.html">한국어</a></li>
+<li><a href="modules.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Basic-usage">Basic usage</a>
+</li><li><a href="#Interfaces-and-signatures">Interfaces and signatures</a>
+</li><li><a href="#Abstract-types">Abstract types</a>
+</li><li><a href="#Submodules">Submodules</a>
+<ul><li><a href="#Submodule-implementation">Submodule implementation</a>
+</li><li><a href="#Submodule-interface">Submodule interface</a>
+</li></ul>
+</li><li><a href="#Functors">Functors</a>
+<ul><li><a href="#What-is-a-functor-and-why-do-we-need-them">What is a functor and why do we need them?</a>
+</li><li><a href="#How-to-use-an-existing-functor">How to use an existing functor?</a>
+</li><li><a href="#How-to-define-a-functor">How to define a functor?</a>
+</li></ul>
+</li><li><a href="#Practical-manipulation-of-modules">Practical manipulation of modules</a>
+<ul><li><a href="#Displaying-the-interface-of-a-module">Displaying the interface of a module</a>
+</li><li><a href="#Module-inclusion">Module inclusion</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Modules">Modules</h1>
+
+<h2 id="Basic-usage">Basic usage</h2><p>In OCaml, every piece of code is wrapped into a module. Optionally, a
+module itself can be a submodule of another module, pretty much like
+directories in a file system-but we don&#39;t do this very often.</p>
+<p>When you write a program let&#39;s say using two files <code>amodule.ml</code> and
+<code>bmodule.ml</code>, each of these files automatically defines a module named
+<code>Amodule</code> and a module named <code>Bmodule</code> that provide whatever you put
+into the files.</p>
+<p>Here is the code that we have in our file <code>amodule.ml</code>:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline 'Hello'</code></pre>
+
+<p>And here is what we have in <code>bmodule.ml</code>:</p>
+<pre><code class="ocaml"><span class="ocaml-module">Amodule</span>.hello ()</code></pre>
+
+<p>Usually files are compiled one by one, let&#39;s do it:</p>
+<pre class="shell"><code class="shell">ocamlopt -c amodule.ml
+ocamlopt -c bmodule.ml
+ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre><p>Now we have a wonderful executable that prints &#39;Hello&#39;. As you can see,
+if you want to access anything from a given module, use the name of the
+module (always starting with a capital) followed by a dot and the thing
+that you want to use. It may be a value, a type constructor, or anything
+else that a given module can provide.</p>
+<p>Libraries, starting with the standard library, provide collections of
+modules. for example,
+<a href="https://github.com/ocaml/ocaml/blob/trunk/stdlib/list.mli#L75"><code>List.iter</code></a>
+designates the <code>iter</code> function from
+the <code>List</code> module.</p>
+<p>OK, if you are using a given module heavily, you may want to make its
+contents directly accessible. For this, we use the <code>open</code> directive. In
+our example, <code>bmodule.ml</code> could have been written:</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span><span class="ocaml-prompt">;;</span><br/>hello ();;</code></pre>
+
+<p>As a side note, people tend to avoid the ugly &#39;;;&#39;, so it more common to
+write it like:</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span>
+<span class="governing">let</span> () =
+  hello ()</code></pre>
+
+<p>Anyway, using <code>open</code> or not is a matter of personal taste. Some modules
+provide names that are used in many other modules. This is the case of
+the <code>List</code> module for instance. Usually we don&#39;t do <code>open List</code>. Other
+modules like
+<a href="https://github.com/ocaml/ocaml/blob/trunk/stdlib/printf.mli#L14"><code>Printf</code></a>
+provide names that are normally not subject to
+conflicts, such as <code>printf</code>. In order to avoid writing <code>Printf.printf</code>
+all over the place, it often makes sense to place one <code>open Printf</code> at
+the beginning of the file.</p>
+<p>There is a short example illustrating (in
+the <a href="basics.html">interactive toplevel</a>) what we just
+mentioned:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
+  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">'a'</span>; <span class="ocaml-error-loc">'</span>beautiful'; 'day' ]
+  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf '%s\n' s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h2 id="Interfaces-and-signatures">Interfaces and signatures</h2><p>A module can provide a certain number of things (functions, types,
+submodules, ...) to the rest of the program that is using it. If nothing
+special is done, everything which is defined in a module will be
+accessible from outside. That&#39;s often fine in small personal programs,
+but there are many situations where it is better that a module only
+provides what it is meant to provide, not any of the auxilliary
+functions and types that are used internally.</p>
+<p>For this we have to define a module interface, which will act as a mask
+over the module&#39;s implementation. Just like a module derives from a .ml
+file, the corresponding module interface or signature derives from a
+.mli file. It contains a list of values with their type, and more. Let&#39;s
+rewrite our <code>amodule.ml</code> file:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="ocaml-error-loc">'</span>Hello'
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>As it is, <code>Amodule</code> has the following interface:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">message</span> : string
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit</code></pre>
+
+<p>Let&#39;s assume that accessing the <code>message</code> value directly is none of the
+others modules&#39; business. We want to hide it by defining a restricted
+interface. This is our <code>amodule.mli</code> file:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
+<span class="comment">(** Displays a greeting message. *)</span></code></pre>
+
+<p>(note that it is a good habit to document .mli files, using the format
+supported by
+<a href="http://caml.inria.fr/pub/docs/manual-ocaml/ocamldoc.html">ocamldoc</a>)</p>
+<p>.mli files must be compiled just before the matching .ml files. They are
+compiled using <code>ocamlc</code>, even if .ml files are compiled to native code
+using <code>ocamlopt</code>:</p>
+<pre class="shell"><code class="shell">ocamlc -c amodule.mli
+ocamlopt -c amodule.ml
+...</code></pre><h2 id="Abstract-types">Abstract types</h2><p>What about type definitions? We saw that values such as functions can be
+exported by placing their name and their type in a .mli file, e.g.</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit</code></pre>
+
+<p>But modules often define new types. Let&#39;s define a simple record type
+that would represent a date:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">date</span> = { day : int;  month : int;  year : int }</code></pre>
+
+<p>There are not two, but four options when it comes to writing the .mli
+file:</p>
+<ol><li><p>The type is completely omitted from the signature.</p>
+</li><li><p>The type definition is copy-pasted into the signature.</p>
+</li><li><p>The type is made abstract: only its name is given.</p>
+</li><li><p>The record fields are made read-only: <code>type date = private { ... }</code></p>
+</li></ol>
+
+<p>In case 3, it would be the following code:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">date</span></code></pre>
+
+<p>Now, users of the module can manipulate objects of type <code>date</code>, but they
+can&#39;t access the record fields directly. They must use the functions
+that the module provides. Let&#39;s assume the module provides three
+functions, one for creating a date, one for computing the difference
+between two dates, and one that returns the date in years:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">date</span>
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">create</span> : ?days:int -&gt; ?months:int -&gt; ?years:int -&gt; unit -&gt; date
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">sub</span> : date -&gt; date -&gt; date
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">years</span> : date -&gt; float</code></pre>
+
+<p>The point is that only <code>create</code> and <code>sub</code> can be used to create <code>date</code>
+records. Therefore, it is not possible for the user of the module to
+create ill-formed records. Actually, our implementation uses a record,
+but we could change it and be sure that it will not break any code that
+relies on this module! This makes a lot of sense in a library since
+subsequent versions of the same library can continue to expose the same
+interface, while internally changing the implementation, including data
+structures.</p>
+<h2 id="Submodules">Submodules</h2>
+
+<h3 id="Submodule-implementation">Submodule implementation</h3>
+
+<p>We saw that one <code>example.ml</code> file results automatically in one module
+implementation named <code>Example</code>. Its module signature is automatically
+derived and is the broadest possible, or can be restricted by writing an
+<code>example.mli</code> file.</p>
+<p>That said, a given module can also be defined explicitly from within a
+file. That makes it a submodule of the current module. Let&#39;s consider
+this <code>example.ml</code> file:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
+<span class="governing">end</span>
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">Hello</span>.hello ();
+  goodbye ()</code></pre>
+
+<p>From another file, it is clear that we now have two levels of modules.
+We can write:</p>
+<pre><code class="ocaml"><span class="governing">let</span> () =
+  <span class="ocaml-module">Example</span>.<span class="ocaml-module">Hello</span>.hello ();
+  <span class="ocaml-module">Example</span>.goodbye ()</code></pre>
+
+<h3 id="Submodule-interface">Submodule interface</h3><p>We can also restrict the interface of a given submodule. It is called a
+module type. Let&#39;s do it in our <code>example.ml</code> file:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>: <span class="governing">sig</span>
+ <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
+<span class="governing">end</span> = 
+<span class="governing">struct</span>
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
+<span class="governing">end</span>
+  
+<span class="comment">(* At this point, <span class="ocaml-module">Hello</span>.message is not accessible anymore. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">Hello</span>.hello ();
+  goodbye ()</code></pre>
+
+<p>The definition of the <code>Hello</code> module above is the equivalent of a
+<code>hello.mli</code>/<code>hello.ml</code> pair of files. Writing all of that in one block
+of code is not elegant, so in general we prefer to define the module
+signature separately:</p>
+<pre><code class="ocaml"><span class="governing">module <span class="governing">type</span></span> <span class="ocaml-module">Hello_type</span> <span class="ocaml-variable"></span>= <span class="governing">sig</span>
+ <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
+<span class="governing">end</span>
+  
+<span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>: <span class="ocaml-module">Hello_type</span> = <span class="governing">struct</span>
+  ...
+<span class="governing">end</span></code></pre>
+
+<p><code>Hello_type</code> is a named module type, and can be reused to define other
+module interfaces.</p>
+<p>Although having submodules may be useful in some cases, their real
+utility becomes apparent with functors. This is the next section.</p>
+<h2 id="Functors">Functors</h2><p>Functors are probably one of the most complex features of OCaml, but you
+don&#39;t have to use them extensively to be a successful OCaml programmer.
+Actually, you may never have to define a functor yourself, but you will
+surely encounter them in the standard library. They are the only way of
+using the Set and Map modules, but using them is not so difficult.</p>
+<h3 id="What-is-a-functor-and-why-do-we-need-them">What is a functor and why do we need them?</h3><p>A functor is a module that is parametrized by another module, just like
+a function is a value which is parametrized by other values, the
+arguments.</p>
+<p>Basically, it allows to parametrize a type by a value, which is not
+possible directly in OCaml. For example, we can define a functor that
+takes an int n and returns a collection of array operations that work
+exclusively on arrays of length n. If by mistake the programmer passes a
+regular array to one of those functions, it will result in a compilation
+error. If we were not using this functor but the standard array type,
+the compiler would not be able to detect the error, and we would get a
+runtime error at some undetermined date in the future, which is much
+worse.</p>
+<h3 id="How-to-use-an-existing-functor">How to use an existing functor?</h3><p>The standard library defines a <code>Set</code> module, which provides a <code>Make</code>
+functor. This functor takes one argument, which is a module that
+provides (at least) two things: the type of elements, given as <code>t</code> and
+the comparison function given as <code>compare</code>. The point of the functor is
+to ensure that the same comparison function will always be used, even if
+the programmer makes a mistake.</p>
+<p>For example, if we want to use sets of ints, we would do this:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">module</span> <span class="ocaml-module">Int_set</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Set</span>.Make (<span class="governing">struct</span>
+                               <span class="governing">type</span> <span class="type">t</span> = int
+                               <span class="governing">let </span><span class="ocaml-variable">compare</span> = compare
+                             <span class="governing">end</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module Int_set :
+  sig
+    type elt = int
+    type t
+    val empty : t
+    val is_empty : t -&gt; bool
+    val mem : elt -&gt; t -&gt; bool
+    val add : elt -&gt; t -&gt; t
+    val singleton : elt -&gt; t
+    val remove : elt -&gt; t -&gt; t
+    val union : t -&gt; t -&gt; t
+    val inter : t -&gt; t -&gt; t
+    val diff : t -&gt; t -&gt; t
+    val compare : t -&gt; t -&gt; int
+    val equal : t -&gt; t -&gt; bool
+    val subset : t -&gt; t -&gt; bool
+    val iter : (elt -&gt; unit) -&gt; t -&gt; unit
+    val map : (elt -&gt; elt) -&gt; t -&gt; t
+    val fold : (elt -&gt; 'a -&gt; 'a) -&gt; t -&gt; 'a -&gt; 'a
+    val for_all : (elt -&gt; bool) -&gt; t -&gt; bool
+    val exists : (elt -&gt; bool) -&gt; t -&gt; bool
+    val filter : (elt -&gt; bool) -&gt; t -&gt; t
+    val partition : (elt -&gt; bool) -&gt; t -&gt; t * t
+    val cardinal : t -&gt; int
+    val elements : t -&gt; elt list
+    val min_elt : t -&gt; elt
+    val min_elt_opt : t -&gt; elt option
+    val max_elt : t -&gt; elt
+    val max_elt_opt : t -&gt; elt option
+    val choose : t -&gt; elt
+    val choose_opt : t -&gt; elt option
+    val split : elt -&gt; t -&gt; t * bool * t
+    val find : elt -&gt; t -&gt; elt
+    val find_opt : elt -&gt; t -&gt; elt option
+    val find_first : (elt -&gt; bool) -&gt; t -&gt; elt
+    val find_first_opt : (elt -&gt; bool) -&gt; t -&gt; elt option
+    val find_last : (elt -&gt; bool) -&gt; t -&gt; elt
+    val find_last_opt : (elt -&gt; bool) -&gt; t -&gt; elt option
+    val of_list : elt list -&gt; t
+  end
+</span></code></pre>
+
+<p>For sets of strings, it is even easier because the standard library
+provides a <code>String</code> module with a type <code>t</code> and a function <code>compare</code>. If
+you were following carefully, by now you must have guessed how to create
+a module for the manipulation of sets of strings:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">module</span> <span class="ocaml-module">String_set</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Set</span>.Make (String)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module String_set :
+  sig
+    type elt = String.t
+    type t = Set.Make(String).t
+    val empty : t
+    val is_empty : t -&gt; bool
+    val mem : elt -&gt; t -&gt; bool
+    val add : elt -&gt; t -&gt; t
+    val singleton : elt -&gt; t
+    val remove : elt -&gt; t -&gt; t
+    val union : t -&gt; t -&gt; t
+    val inter : t -&gt; t -&gt; t
+    val diff : t -&gt; t -&gt; t
+    val compare : t -&gt; t -&gt; int
+    val equal : t -&gt; t -&gt; bool
+    val subset : t -&gt; t -&gt; bool
+    val iter : (elt -&gt; unit) -&gt; t -&gt; unit
+    val map : (elt -&gt; elt) -&gt; t -&gt; t
+    val fold : (elt -&gt; 'a -&gt; 'a) -&gt; t -&gt; 'a -&gt; 'a
+    val for_all : (elt -&gt; bool) -&gt; t -&gt; bool
+    val exists : (elt -&gt; bool) -&gt; t -&gt; bool
+    val filter : (elt -&gt; bool) -&gt; t -&gt; t
+    val partition : (elt -&gt; bool) -&gt; t -&gt; t * t
+    val cardinal : t -&gt; int
+    val elements : t -&gt; elt list
+    val min_elt : t -&gt; elt
+    val min_elt_opt : t -&gt; elt option
+    val max_elt : t -&gt; elt
+    val max_elt_opt : t -&gt; elt option
+    val choose : t -&gt; elt
+    val choose_opt : t -&gt; elt option
+    val split : elt -&gt; t -&gt; t * bool * t
+    val find : elt -&gt; t -&gt; elt
+    val find_opt : elt -&gt; t -&gt; elt option
+    val find_first : (elt -&gt; bool) -&gt; t -&gt; elt
+    val find_first_opt : (elt -&gt; bool) -&gt; t -&gt; elt option
+    val find_last : (elt -&gt; bool) -&gt; t -&gt; elt
+    val find_last_opt : (elt -&gt; bool) -&gt; t -&gt; elt option
+    val of_list : elt list -&gt; t
+  end
+</span></code></pre>
+
+<p>(the parentheses are necessary)</p>
+<h3 id="How-to-define-a-functor">How to define a functor?</h3><p>A functor with one argument can be defined like this:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">F</span> <span class="ocaml-variable">(X : X_type) </span>= <span class="governing">struct</span>
+  ...
+<span class="governing">end</span></code></pre>
+
+<p>where <code>X</code> is the module that will be passed as argument, and <code>X_type</code> is
+its signature, which is mandatory.</p>
+<p>The signature of the returned module itself can be constrained, using
+this syntax:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">F</span> <span class="ocaml-variable">(X : X_type) </span>: <span class="ocaml-module">Y_type</span> =
+<span class="governing">struct</span>
+  ...
+<span class="governing">end</span></code></pre>
+
+<p>or by specifying this in the .mli file:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">F</span> <span class="ocaml-variable">(X : X_type) </span>: Y_type</code></pre>
+
+<p>Overall, the syntax of functors is hard to grasp. The best may be to
+look at the source files
+<a href="https://github.com/ocaml/ocaml/blob/trunk/stdlib/set.ml"><code>set.ml</code></a> or
+<a href="https://github.com/ocaml/ocaml/blob/trunk/stdlib/map.ml"><code>map.ml</code></a>
+of the standard library.</p>
+<p>Final remark: functors are made to help programmers write correct
+programs, not to improve performance. There is even a runtime penalty,
+unless you use a defunctorizer such as ocamldefun, which requires access
+to the source code of the functor.</p>
+<h2 id="Practical-manipulation-of-modules">Practical manipulation of modules</h2>
+
+<h3 id="Displaying-the-interface-of-a-module">Displaying the interface of a module</h3><p>In the <code>ocaml</code> toplevel, the following trick allows to visualize the
+contents of an existing module, such as <code>List</code>:
+</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">module</span> <span class="ocaml-module">M</span> = <span class="ocaml-module">List</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module M = List
+</span></code></pre>
+
+<p>Otherwise, there is online documentation for most libraries or you can
+use <code>ocamlbrowser</code> which comes with labltk (Tk graphical user interface
+for OCaml).</p>
+<h3 id="Module-inclusion">Module inclusion</h3><p>Let&#39;s say we feel that a function is missing from the standard <code>List</code>
+module, but we really want it as if it were part of it. In an
+<code>extensions.ml</code> file, we can achieve this effect by using the <code>include</code>
+directive:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">module</span> <span class="ocaml-module">List</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
+    <span class="governing">include</span> List
+    <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">optmap</span> <span class="ocaml-variable">f </span>= <span class="keyword">function</span>
+      | [] -&gt; []
+      | hd :: tl -&gt;
+         <span class="keyword">match</span> f hd <span class="keyword">with</span>
+         | None -&gt; optmap f tl
+         | Some x -&gt; x :: optmap f tl
+  <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module List :
+  sig
+    val length : 'a list -&gt; int
+    val compare_lengths : 'a list -&gt; 'b list -&gt; int
+    val compare_length_with : 'a list -&gt; int -&gt; int
+    val cons : 'a -&gt; 'a list -&gt; 'a list
+    val hd : 'a list -&gt; 'a
+    val tl : 'a list -&gt; 'a list
+    val nth : 'a list -&gt; int -&gt; 'a
+    val nth_opt : 'a list -&gt; int -&gt; 'a option
+    val rev : 'a list -&gt; 'a list
+    val init : int -&gt; (int -&gt; 'a) -&gt; 'a list
+    val append : 'a list -&gt; 'a list -&gt; 'a list
+    val rev_append : 'a list -&gt; 'a list -&gt; 'a list
+    val concat : 'a list list -&gt; 'a list
+    val flatten : 'a list list -&gt; 'a list
+    val iter : ('a -&gt; unit) -&gt; 'a list -&gt; unit
+    val iteri : (int -&gt; 'a -&gt; unit) -&gt; 'a list -&gt; unit
+    val map : ('a -&gt; 'b) -&gt; 'a list -&gt; 'b list
+    val mapi : (int -&gt; 'a -&gt; 'b) -&gt; 'a list -&gt; 'b list
+    val rev_map : ('a -&gt; 'b) -&gt; 'a list -&gt; 'b list
+    val fold_left : ('a -&gt; 'b -&gt; 'a) -&gt; 'a -&gt; 'b list -&gt; 'a
+    val fold_right : ('a -&gt; 'b -&gt; 'b) -&gt; 'a list -&gt; 'b -&gt; 'b
+    val iter2 : ('a -&gt; 'b -&gt; unit) -&gt; 'a list -&gt; 'b list -&gt; unit
+    val map2 : ('a -&gt; 'b -&gt; 'c) -&gt; 'a list -&gt; 'b list -&gt; 'c list
+    val rev_map2 : ('a -&gt; 'b -&gt; 'c) -&gt; 'a list -&gt; 'b list -&gt; 'c list
+    val fold_left2 : ('a -&gt; 'b -&gt; 'c -&gt; 'a) -&gt; 'a -&gt; 'b list -&gt; 'c list -&gt; 'a
+    val fold_right2 :
+      ('a -&gt; 'b -&gt; 'c -&gt; 'c) -&gt; 'a list -&gt; 'b list -&gt; 'c -&gt; 'c
+    val for_all : ('a -&gt; bool) -&gt; 'a list -&gt; bool
+    val exists : ('a -&gt; bool) -&gt; 'a list -&gt; bool
+    val for_all2 : ('a -&gt; 'b -&gt; bool) -&gt; 'a list -&gt; 'b list -&gt; bool
+    val exists2 : ('a -&gt; 'b -&gt; bool) -&gt; 'a list -&gt; 'b list -&gt; bool
+    val mem : 'a -&gt; 'a list -&gt; bool
+    val memq : 'a -&gt; 'a list -&gt; bool
+    val find : ('a -&gt; bool) -&gt; 'a list -&gt; 'a
+    val find_opt : ('a -&gt; bool) -&gt; 'a list -&gt; 'a option
+    val filter : ('a -&gt; bool) -&gt; 'a list -&gt; 'a list
+    val find_all : ('a -&gt; bool) -&gt; 'a list -&gt; 'a list
+    val partition : ('a -&gt; bool) -&gt; 'a list -&gt; 'a list * 'a list
+    val assoc : 'a -&gt; ('a * 'b) list -&gt; 'b
+    val assoc_opt : 'a -&gt; ('a * 'b) list -&gt; 'b option
+    val assq : 'a -&gt; ('a * 'b) list -&gt; 'b
+    val assq_opt : 'a -&gt; ('a * 'b) list -&gt; 'b option
+    val mem_assoc : 'a -&gt; ('a * 'b) list -&gt; bool
+    val mem_assq : 'a -&gt; ('a * 'b) list -&gt; bool
+    val remove_assoc : 'a -&gt; ('a * 'b) list -&gt; ('a * 'b) list
+    val remove_assq : 'a -&gt; ('a * 'b) list -&gt; ('a * 'b) list
+    val split : ('a * 'b) list -&gt; 'a list * 'b list
+    val combine : 'a list -&gt; 'b list -&gt; ('a * 'b) list
+    val sort : ('a -&gt; 'a -&gt; int) -&gt; 'a list -&gt; 'a list
+    val stable_sort : ('a -&gt; 'a -&gt; int) -&gt; 'a list -&gt; 'a list
+    val fast_sort : ('a -&gt; 'a -&gt; int) -&gt; 'a list -&gt; 'a list
+    val sort_uniq : ('a -&gt; 'a -&gt; int) -&gt; 'a list -&gt; 'a list
+    val merge : ('a -&gt; 'a -&gt; int) -&gt; 'a list -&gt; 'a list -&gt; 'a list
+    val optmap : ('a -&gt; 'b option) -&gt; 'a list -&gt; 'b list
+  end
+</span></code></pre>
+
+<p>It creates a module <code>Extensions.List</code> that has everything the standard
+<code>List</code> module has, plus a new <code>optmap</code> function. From another file, all
+we have to do to override the default <code>List</code> module is <code>open Extensions</code>
+at the beginning of the .ml file:</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Extensions</span>
+...
+<span class="ocaml-module">List</span>.optmap ...</code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/modules.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

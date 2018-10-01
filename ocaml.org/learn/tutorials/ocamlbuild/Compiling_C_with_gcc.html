@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="Compiling_C_with_gcc.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>A gcc plugin example &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Compiling_C_with_gcc.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/ocamlbuild/">Ocamlbuild</a><span class="divider"></span></li>
+<li class="active">A gcc plugin example</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Compiling-C-with-gcc">Compiling C with gcc</h1><p>The following is a plugin that tries to handle simple C projects with
+<code>gcc</code> in the same way <code>ocamlbuild</code> handles your caml projects, i.e. you
+don&#39;t need to specify anything particular to build simple executables.
+Another approach is to use the
+<a href="http://dvide.com/labs/ocamlbuild-ctools">ocamlbuild-ctools</a> plugin
+which provides support for both <code>gcc</code> and the MSVC tool chain, but
+you&#39;ll have to explicitly list object files to link your executables.</p>
+<p>The example uses <code>avr-gcc</code> to produce <code>%.elf</code> executables for
+microcontrollers, but it&#39;s just a matter of substituting <code>avr-gcc</code> with
+<code>gcc</code> to get the same result for regular C projects. For now the plugin
+doesn&#39;t handle multiple directories.</p>
+<p>Object dependencies linked into a <code>%.elf</code> executable are automatically
+computed as follows.</p>
+<ol><li><p>Each file <code>%.{c,h}</code> has a corresponding file <code>%.{c,h}.depends</code> that
+ lists (locally) included files (this file is generated via
+ <code>avr-gcc -MM -MF -MG %.{c,h}.depends %.{c,h}</code>). Note that
+ unfortunately the result in <code>%.{c,h}.depend</code> is different if
+ included files are already in the build dir or not (very
+ helpful...), see the <code>correct</code> function in <code>parse_deps</code> (this
+ &#39;feature&#39; may make it a hard to support multiple directories, but I
+ didn&#39;t research that extensively). Another problem is that these
+ <code>make</code> oriented <code>.depends</code> files have <code>\</code> when lines becomes too
+ long thus we need to filter out these.</p>
+</li><li><p>To build a <code>%.o</code> from <code>%.c</code>, every file mentioned in <code>%.c.depends</code>
+ and recursively is built (in the function <code>parse_deps</code> the first two
+ items of <code>%.c.depends</code> are ignored : they are <code>%.o</code> and <code>%.c</code>). To
+ sum up, this step copies files included in <code>%.c</code> (and recursively)
+ to the <code>_build</code> directory and produces the object file <code>%.o</code>.</p>
+</li><li><p>To build (link) a <code>%.elf</code>, we take <code>%.o</code> and for each <code>$.h</code>
+ mentioned in <code>%.c.depends</code> (and recursively) we try to build a
+ corresponding <code>$.c</code>, if it succeeds the corresponding <code>$.o</code> is built
+ and added at the link phase.</p>
+</li></ol>
+
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span>
+
+<span class="governing">let</span> <span class="ocaml-function">avr_gcc_rules</span> <span class="ocaml-variable">avr_gcc avr_objcopy </span>=
+  <span class="governing">let</span> <span class="ocaml-function">parallel</span> <span class="ocaml-variable">files </span>= <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> f -&gt; [f]) files <span class="governing">in</span>
+  <span class="governing">let</span> <span class="ocaml-function">err_circular</span> <span class="ocaml-variable">file path </span>= 
+    <span class="ocaml-module">Printf</span>.sprintf 'Circular build detected (%s already seen <span class="governing">in</span> [%s])'
+      file (<span class="ocaml-module">String</span>.concat '; ' path)
+  <span class="governing">in</span>
+  <span class="governing">let</span> <span class="ocaml-function">parse_deps</span> <span class="ocaml-variable">file </span>= 
+    <span class="governing">let </span><span class="ocaml-variable">dir</span> = <span class="ocaml-module">Pathname</span>.dirname file <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">deps</span> = <span class="ocaml-module">List</span>.tl (<span class="ocaml-module">List</span>.tl (string_list_of_file file)) <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">deps</span> = <span class="ocaml-module">List</span>.filter (<span class="keyword">fun</span> d -&gt; d &lt;&gt; '\\') deps <span class="governing">in</span> <span class="comment">(* remove \ *)</span>
+    <span class="governing">let</span> <span class="ocaml-function">correct</span> <span class="ocaml-variable">d </span>= <span class="keyword">if</span> <span class="ocaml-module">Pathname</span>.dirname d = dir <span class="keyword">then</span> d <span class="keyword">else</span> dir / d <span class="governing">in</span>
+    <span class="ocaml-module">List</span>.map correct deps
+  <span class="governing">in</span>
+  <span class="governing">let</span> <span class="ocaml-function">deps_action</span> <span class="ocaml-variable">dep prod env build </span>= 
+    <span class="governing">let </span><span class="ocaml-variable">c</span> = env dep <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">tags</span> = tags_of_pathname c <span class="governing">in</span>
+    Cmd (S [A avr_gcc; T tags; 
+        A '-MM'; A '-MG'; A '-MF'; Px (env prod); P c])
+  <span class="governing">in</span>
+
+  rule 'avr-gcc: c -&gt; c.depends' 
+    ~dep:'%.c' 
+    ~prod: '%.c.depends' (deps_action '%.c<span class="string">' '</span>%.c.depends');
+
+  rule 'avr-gcc: h -&gt; h.depends'
+    ~dep:'%.h'
+    ~prod:'%.h.depends' (deps_action '%.h<span class="string">' '</span>%.h.depends');
+
+  rule 'avr-gcc: c &amp; c.depends -&gt; o'
+    ~deps:['%.c'; '%.c.depends']
+    ~prod: '%.o'
+    <span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt;
+      <span class="governing">let </span><span class="ocaml-variable">c</span> = env '%.c' <span class="governing">in</span>
+      <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">build_transitive_deps</span> = <span class="keyword">function</span>
+    | [] -&gt; ()
+    | (_, []) :: todo -&gt; build_transitive_deps todo
+    | (path, f :: rest) :: todo -&gt;
+        <span class="keyword">if</span> <span class="ocaml-module">List</span>.mem f path <span class="keyword">then</span> <span class="keyword">failwith</span> (err_circular f path) <span class="keyword">else</span>
+        <span class="governing">let </span><span class="ocaml-variable">deps</span> = parse_deps (f ^ '.depends') <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">dep_files</span> = <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> d -&gt; d ^ '.depends') deps <span class="governing">in</span>
+        <span class="ocaml-module">List</span>.iter <span class="ocaml-module">Outcome</span>.ignore_good (build (parallel deps));
+        <span class="ocaml-module">List</span>.iter <span class="ocaml-module">Outcome</span>.ignore_good (build (parallel dep_files));
+        build_transitive_deps (((f :: path), deps) :: (path, rest) :: todo)
+      <span class="governing">in</span>
+      build_transitive_deps [([],[c])];
+      Cmd (S [A avr_gcc;
+          A '-Wall'; A '-Os'; A '-std=c99';
+          T (tags_of_pathname c ++ 'compile' ++ 'avr-gcc');
+          A '-c'; P c;
+          A '-o'; Px (env '%.o');])
+    <span class="governing">end</span>;
+
+    rule 'avr-gcc: o &amp; c.depends -&gt; .elf' 
+      ~dep:'%.o'
+      ~prod: '%.elf'
+      <span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt; 
+        <span class="governing">let </span><span class="ocaml-variable">o</span> = env '%.o' <span class="governing">in</span>
+        <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">build_transitive_objs</span> <span class="ocaml-variable">acc </span>= <span class="keyword">function</span> 
+      | [] -&gt; <span class="ocaml-module">StringSet</span>.fold (<span class="keyword">fun</span> v l -&gt; v :: l) acc []
+      | [] :: todo -&gt; build_transitive_objs acc todo
+      | (f :: rest) :: todo  -&gt; 
+          <span class="comment">(* builds a .o <span class="keyword">for</span> each .h which has a .c *)</span>
+          <span class="governing">let </span><span class="ocaml-variable">deps</span> =
+            <span class="governing">let</span> <span class="ocaml-function">is_hfile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.check_extension f <span class="string">'h'</span> <span class="governing">in</span>
+            <span class="ocaml-module">List</span>.filter is_hfile (parse_deps (f ^ '.depends')) 
+          <span class="governing">in</span>
+          <span class="governing">let </span><span class="ocaml-variable">cfiles</span> = 
+            <span class="governing">let </span><span class="ocaml-variable">remove_f</span> = <span class="ocaml-module">List</span>.filter (<span class="keyword">fun</span> f' -&gt; f &lt;&gt; f') <span class="governing">in</span>
+            <span class="governing">let</span> <span class="ocaml-function">to_cfile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.update_extension <span class="string">'c'</span> f <span class="governing">in</span>
+            <span class="governing">let</span> <span class="ocaml-function">keep_good</span> <span class="ocaml-variable">acc </span>= <span class="keyword">function</span>
+          | <span class="ocaml-module">Outcome</span>.Good o -&gt; o :: acc | <span class="ocaml-module">Outcome</span>.Bad _ -&gt; acc 
+            <span class="governing">in</span>
+            <span class="ocaml-module">List</span>.fold_left keep_good [] 
+          (build (parallel (remove_f (<span class="ocaml-module">List</span>.map to_cfile deps)))) 
+          <span class="governing">in</span>
+          <span class="governing">let </span><span class="ocaml-variable">objs</span> = 
+            <span class="governing">let</span> <span class="ocaml-function">to_ofile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.update_extension <span class="string">'o'</span> f <span class="governing">in</span>
+            <span class="ocaml-module">List</span>.map <span class="ocaml-module">Outcome</span>.good 
+          (build (parallel (<span class="ocaml-module">List</span>.map to_ofile cfiles)))
+          <span class="governing">in</span>
+          <span class="governing">let</span> <span class="ocaml-function">add_obj</span> <span class="ocaml-variable">acc o </span>= <span class="ocaml-module">StringSet</span>.add o acc <span class="governing">in</span>
+          build_transitive_objs 
+            (<span class="ocaml-module">List</span>.fold_left add_obj acc objs) (cfiles :: deps :: rest :: todo)
+        <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">objs</span> = build_transitive_objs (<span class="ocaml-module">StringSet</span>.empty) [[env '%.c']] <span class="governing">in</span>
+        Cmd (S [A avr_gcc;
+            T (tags_of_pathname o ++ 'link' ++ 'avr-gcc');
+            A '-o'; Px (env '%.elf');
+            <span class="ocaml-module">Command</span>.atomize_paths (o :: objs) ])
+      <span class="governing">end</span>;
+
+  rule 'avr-objcopy: elf -&gt; hex'
+    ~dep:'%.elf'
+    ~prod:'%.hex'
+    <span class="governing">begin</span> <span class="keyword">fun</span> env _ -&gt;
+      <span class="governing">let </span><span class="ocaml-variable">elf</span> = env '%.elf' <span class="governing">in</span>
+      Cmd (S [A avr_objcopy;
+          A '-j'; A '.text';
+          A '-j'; A '.data';
+          A '-O'; A 'ihex';
+          T (tags_of_pathname elf ++ 'compile' ++ 'avr-objcopy');
+          P elf;
+          Px (env '%.hex')])
+    <span class="governing">end</span>
+
+<span class="governing">let</span> () =
+  dispatch <span class="governing">begin</span> function
+  | Before_rules -&gt;                            <span class="comment">(* override ocaml's C rules. *)</span>
+      avr_gcc_rules 'avr-gcc<span class="string">' '</span>avr-objcopy';
+      flag ['compile'; 'avr-gcc'; 'mcu_atmega168'] (A '-mmcu=atmega168');
+      flag ['link'; 'avr-gcc'; 'mcu_atmega168'] (A '-mmcu=atmega168');
+      flag ['compile'; 'avr-gcc'; 'mcu_freq_16Mhz'] (A '-DF_CPU=16000000');
+  | _ -&gt; ()
+  <span class="governing">end</span></code></pre>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Compiling_C_with_gcc.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

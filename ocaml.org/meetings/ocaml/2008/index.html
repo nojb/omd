@@ -1,0 +1,530 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="." rel="alternate" hreflang="en"/>
+
+    
+    <title>2008 &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2008/index.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../meetings/">OCaml Meetings</a><span class="divider"></span></li>
+<li><a href="../../../meetings/ocaml/">User &amp; Developers Meetings</a><span class="divider"></span></li>
+<li class="active">2008</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Program">Program</a>
+</li><li><a href="#Talks-Workshop">Talks/Workshop</a>
+<ul><li><a href="#The-core-Caml-system-status-report-and-challenges-by-Xavier-Leroy">The core Caml system: status report and challenges, by Xavier Leroy</a>
+</li><li><a href="#Ocsigen-Exploiting-the-full-power-of-OCaml-in-Web-Programming-by-Vincent-Balat">Ocsigen: Exploiting the full power of OCaml in Web Programming, by Vincent Balat</a>
+</li><li><a href="#GODI-by-Gerd-Stolpmann">GODI, by Gerd Stolpmann</a>
+</li><li><a href="#ocamlbuild-by-Nicolas-Pouillard">ocamlbuild, by Nicolas Pouillard</a>
+</li><li><a href="#OCaml-in-Debian-by-Sylvain-Le-Gall">OCaml in Debian, by Sylvain Le Gall</a>
+</li><li><a href="#OCaml-on-a-JVM-using-OCaml-Java-by-Xavier-Clerc">OCaml on a JVM using OCaml-Java, by Xavier Clerc</a>
+</li></ul>
+</li><li><a href="#Ideas-discussed-in-the-workshop">Ideas discussed in the workshop</a>
+</li><li><a href="#Location-Date">Location/Date</a>
+</li><li><a href="#Lunch-Dinner">Lunch/Dinner</a>
+</li><li><a href="#Payment">Payment</a>
+</li><li><a href="#Hotels">Hotels</a>
+</li><li><a href="#Network-Laptop">Network/Laptop</a>
+</li><li><a href="#Participants">Participants</a>
+</li><li><a href="#Organization-team">Organization team</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="OCaml-Users-Meeting-2008">OCaml Users Meeting 2008</h1>
+
+<p>Location: <strong>Paris, France</strong><br/>Date: Saturday 26th January 2008</p>
+<p>This event takes place in Paris at ENST (Ecole Nationale Supérieure
+des Télécommunications or Telecom ParisTech).</p>
+<p>For some years now, there has been an increasing number of OCaml
+developers, but no developers conference in Europe. This first meeting
+should be considered as a way to meet other OCaml developers
+face-to-face. It should be also a way to share and discuss
+distribution, building, packaging and other issues.</p>
+<p>This meeting should be divided in two parts: short talks and a
+workshop.</p>
+
+
+
+
+
+
+
+
+<h2 id="Program">Program</h2>
+
+<ul><li><p>09:30–10:00: Coffee and arrival of participants.</p>
+</li><li><p>10:00–10:10: Word of welcome by organization team (S. Le Gall)</p>
+</li><li><p>10:10–10:30: Introduction by X. Leroy</p>
+</li><li><p>10:30–11:00: Ocsigen and Web programming with OCaml by V. Balat</p>
+</li><li><p>11:00–11:30: GODI by G. Stolpmann</p>
+</li><li><p>11:30–12:00: ocamlbuild by N. Pouillard</p>
+</li><li><p>12:00–13:15: Lunch (outside)</p>
+</li><li><p>13:15–13:30: Coffee</p>
+</li><li><p>13:30–14:00: OCaml in Debian by S. Le Gall</p>
+</li><li><p>14:00–14:30: OCaml on a JVM using OCaml-Java by X. Clerc</p>
+</li><li><p>14:30–16:00: Workshop part 1</p>
+</li><li><p>16:00–16:15: Coffee</p>
+</li><li><p>16:15–18:00: Workshop part 2</p>
+</li><li><p>18:00–20:00: free time (maybe it will be possible to stay longer at ENST)</p>
+</li><li><p>20:00: Dinner</p>
+</li></ul>
+
+<p>During the free time between 18:00 and 20:00, it should be possible to
+find some place to have a beer...</p>
+<h2 id="Talks-Workshop">Talks/Workshop</h2>
+
+<p><a href="http://le-gall.net/sylvain+violaine/download/OCaml%20Meeting%20Introduction.odp">Slides of the introduction</a>
+</p>
+<h3 id="The-core-Caml-system-status-report-and-challenges-by-Xavier-Leroy">The core Caml system: status report and challenges, by Xavier Leroy</h3>
+
+<p>Xavier Leroy, senior research scientist at INRIA Paris-Rocquencourt,
+leads the development team for the core Caml system.</p>
+<p>This talk will briefly review ongoing work on the core Caml system and
+discuss some medium to long-term challenges, both technical and
+organizational.</p>
+<p><a href="http://gallium.inria.fr/~xleroy/talks/cug2008.pdf">Slides</a>
+</p>
+<h3 id="Ocsigen-Exploiting-the-full-power-of-OCaml-in-Web-Programming-by-Vincent-Balat">Ocsigen: Exploiting the full power of OCaml in Web Programming, by Vincent Balat</h3>
+
+<p>Vincent Balat is &#39;maître de conférences&#39; (lecturer/assistant
+professor) in Computer Science at Paris Diderot university (Paris 7).</p>
+<p>Ocsigen is a research project of the PPS lab (Université Paris
+Diderot) aiming at developing new programming techniques for the
+Web. It concretized through the implementation of a full featured Web
+server in Objective Caml, and a Web programming library called Eliom
+introducing very new concepts for building dynamic Web sites. Ocsigen
+is now very close to version 1. In this talk I will try to give an
+overview of the project and to give an idea about what programming
+with Eliom looks like.</p>
+<p><a href="http://www.pps.jussieu.fr/~balat/ocsigen-ocamlmeeting.pdf">Slides</a> | <a href="http://www.pps.jussieu.fr/~balat/ocsigen-ocamlmeeting.tar.gz">Full source code of the example</a> | <a href="http://www.ocsigen.org">Ocsigen</a>
+</p>
+<h3 id="GODI-by-Gerd-Stolpmann">GODI, by Gerd Stolpmann</h3>
+
+<p>Gerd Stolpmann is an OCaml enthusiast since 1997, and works now as
+consultant for various companies.</p>
+<p>This talk gives an overview over the GODI project. The basic
+mechanisms of GODI are explained, especially how to create new
+packages, and what&#39;s generally happening behind the user interface.</p>
+<p><a href="http://le-gall.net/sylvain+violaine/download/godi-paris2008.odp">Slides</a>
+</p>
+<h3 id="ocamlbuild-by-Nicolas-Pouillard">ocamlbuild, by Nicolas Pouillard</h3>
+
+<p>Nicolas Pouillard is an OCaml developper, working for Gallium since
+two years, he has made a renovation of Camlp4 and also developped
+ocamlbuild with Berke Durak.</p>
+<p>This talk presents ocamlbuild, a compilation manager that was added to
+the OCaml distribution in the 3.10.0 release. It automates the
+(re)compilation and dependency analysis for OCaml projects. It
+implements the so-called &#39;cut-off&#39; strategy, reducing the amount of
+recompilation performed. For simple projects, ocamlbuild&#39;s built-in
+compilation rules entirely automate the build process: no &#39;Makefile&#39;
+is needed. Variations on the built-in rules can be specified compactly
+through a &#39;tag&#39; mechanism. For more advanced projects, ocamlbuild can
+be extended through plug-ins written in OCaml itself.</p>
+<p><a href="http://gallium.inria.fr/~pouillar/ocamlbuild/ocamlbuild-ocamlmeeting08.pdf">Slides</a>
+</p>
+<h3 id="OCaml-in-Debian-by-Sylvain-Le-Gall">OCaml in Debian, by Sylvain Le Gall</h3>
+
+<p>Sylvain Le Gall is a Debian Developper working on OCaml packages since
+2003 and OCaml programmer since 2000.</p>
+<p>This talk is about how OCaml is integrated into the Debian GNU/Linux
+distribution. Through an historical point of view, we will see how the
+packaging has evolve during years. It will also explain the challenge
+that the OCaml packaging team still need to overcome to have a better
+support of this programming language.</p>
+<p><a href="http://le-gall.net/sylvain+violaine/download/OCaml%20In%20Debian.odp">Slides</a>
+</p>
+<h3 id="OCaml-on-a-JVM-using-OCaml-Java-by-Xavier-Clerc">OCaml on a JVM using OCaml-Java, by Xavier Clerc</h3>
+
+<p>Xavier Clerc is an OCaml enthusiast trying to enhance OCaml with Java
+libraries.</p>
+<p>This talk is about the OCaml-Java project and its subprojects. It will
+show how it is possible to run OCaml programs on a Java platform (as
+applications, applets, or servlets) and how Java libraries can then be
+used from OCaml. It will discuss the present state of the project
+(features, compatibility), as well as its future (enhancements,
+roadmap).</p>
+<p><a href="http://le-gall.net/sylvain+violaine/download/ocamljave-OCamlMeetingParis2008.pdf">Slides</a>
+</p>
+<h2 id="Ideas-discussed-in-the-workshop">Ideas discussed in the workshop</h2>
+
+<ul><li><p>sorting out the Unicode situation (vote: 7)</p>
+</li><li><p>the lack of sufficient documentation for the new Camlp4. Is this something where the community at large could help the devs? (vote: 5)</p>
+</li><li><p>integration of ocamlfind in ocamlbuild (vote: 5)</p>
+</li><li><p>making things easier to use ocamlbuild and produce GODI packages (vote: 4)</p>
+</li><li><p>improve the feedback from the Gallium group to the community, particularly in what concerns future language developments (vote: 3)</p>
+</li><li><p>some companies (well, one in fact) have run their own Summer of Code programmes for Ocaml. Perhaps the community should get itself organised to provide mentors for students who wish to hack in Ocaml for Google&#39;s Summer of Code. There could be a discussion concerning suitable SoC projects to implement bits and pieces needed by the Ocaml community (vote: 3)</p>
+</li><li><p>common lexer interface, making it easier to just plug in a lexer of choice (or at least the possibility to use ulex+Ocamlyacc/Menhir) (vote: 2)</p>
+</li><li><p>do we need common interfaces, so that a program can easily choose between several implementations of a library (e.g. XML parsing, HTTP client, character set converter, database connectivity etc.)? Can the OCaml users implement a process for developing such interfaces and porting existing libraries so they support the interfaces? (vote: 1)</p>
+</li><li><p>organization of the next year European OCaml Meeting (vote: 1)</p>
+</li></ul>
+
+<p>If you wish to add some ideas for the workshop, edit this page. Feel
+free to vote for ideas to be discussed during the workshop by adding 1
+to the vote field. Only the most popular ideas will be discussed (due
+to limited time).</p>
+<p>The list of ideas will be sorted using the vote and presented in this
+order during the meeting. If there is enough time, every ideas could
+be discussed.</p>
+<p>Speakers should provide a short description of the talks, slides and
+notes that they will use during the talk. This data will be made
+available after/during the meeting. This data should have an OSS
+compliant licence (such as GPL) and be in an open format
+(OpenDocument, PDF, PS... everything which is not Word/Powerpoint).</p>
+<p>A computer connected to a video projector will be available for the
+talks session. This computer will run Debian Etch 4.0. Speakers are
+invited to send a draft of their slides/demonstration the day before
+their talk to test it on this computer (contact Sylvain Le
+Gall). Speaker are also invited to explain what software do they need
+to be able to run their presentation. Speaker will be allowed to plug
+their own laptop to do the presentation, but should be sure that they
+can connect to a video projector.</p>
+<h2 id="Location-Date">Location/Date</h2>
+
+<p>The meeting will take place 2008/01/26 from 10am to 6pm at ENST Paris
+site Barrault.</p>
+<p>To go to ENST, you can consult the
+<a href="http://www.enst.fr/outils/adresse/">access</a> page or
+<a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;time=&amp;date=&amp;ttype=&amp;q=rue+vergniaud,+75013+Paris&amp;sll=48.830893,2.336706&amp;sspn=0.102832,0.2314&amp;num=10&amp;iwloc=addr&amp;iwstate1=saveplace">Google maps</a>.</p>
+<p>The main entrance (rue Barrault) is closed on Saturday. The entrance for the meeting will be at 49 rue Vergniaud, Paris 13. You will need to take a badge at this entrance and follow the direction to the amphitheatre Emeraude, where the meeting will take place.</p>
+<p>You must have an identity document (French ID card, passport). You will have to let it at the entrance and will get it back when you leave.</p>
+<h2 id="Lunch-Dinner">Lunch/Dinner</h2>
+
+<p>There are several places around ENST where people can have
+lunch. There will be a break from 12:00 to 13:15.</p>
+<p>Unfortunately, participants will have to pay for dinner and lunch.</p>
+<p>Lunch at &#39;Café les funambules&#39;, next to ENST. It will cost 17€ for the
+menu of the day and everyone will have to take the same menu (except
+for dessert). We need to arrive before 12:15 and give the precise
+number of people before thursday. Menu:</p>
+<ul><li><p>Entrée du jour</p>
+</li><li><p>Plat du jour</p>
+</li><li><p>Dessert au choix</p>
+</li></ul>
+
+<p>Between the end of the workshop and the beginning of the dinner, we
+could meet at Frog and british library for a beer and to end the
+different lengthy discussions that the workshop won&#39;t have dig
+enough. This pub is near the restaurant of the dinner.</p>
+<p>Dinner at Café Mk2. It will cost 35€ for a complete menu. We need to
+be there at 20:00, it 3 subway station away from ENST. We also need to
+have the precise number of guest. Menu:</p>
+<ul><li><p>Tartare de tomate et guacamole, queues d’écrevisses</p>
+</li><li><p>Pavé de saumon à la plancha, Courgettes sautées</p>
+</li><li><p>Tiramisu</p>
+</li><li><p>Wine, water and coffee included</p>
+</li></ul>
+
+<h2 id="Payment">Payment</h2>
+
+<p>Organization team will collect money during the coffee and before the
+lunch for the whole day (dinner and lunch). You must come with either
+cash or bank check. This way is easier, since we will be able to pay
+for all participants at once for dinner and lunch.</p>
+<p>Participants will have to pay for transportation between ENST and
+restaurant/pub (located at station Line 6 - Quai de la Gare) and for
+the beer they wish to have at the pub.</p>
+<h2 id="Hotels">Hotels</h2>
+
+<p>ENST has a list of some place where you can book a room:</p>
+<ul><li><p>Ibis (**), 177 rue de Tolbiac 75013 Paris, tel. +33(0)1.45.80.16.60, ~89€</p>
+</li><li><p>Verlaine (**), 51 rue Bobillot 75013 Paris, tel. +33(0)1.45.89.56.14, ~51-75€ — no room left</p>
+</li><li><p>Timhôtel (**), 22 rue Barrault 75013 Paris, tel. +33(0)1.45.80.67.67, ~95€</p>
+</li><li><p>Saint-Charles (***), 6 rue de l&#39;Espérance 75013 Paris, tel. +33(0)1.43.59.12.12, ~98€</p>
+</li><li><p>Hotel de la Manufacture (***), 8 rue Philippe de Champagne 75013 Paris, ~145€</p>
+</li></ul>
+
+<p>Prices are from 2006, so they should have changed. It doesn&#39;t include
+breakfast.</p>
+
+
+<h2 id="Network-Laptop">Network/Laptop</h2>
+
+<p>During the conference, you can use your laptop and internet through
+ENST network. In order to do this, you will have two ways to connect:</p>
+<ul><li><p>ethernet cable</p>
+</li><li><p>WIFI</p>
+</li></ul>
+
+<p>The wifi configuration is quite tricky and will need to install some
+additional tools to connect using Linux.</p>
+<ul><li><p>Package needed to use WIFI at ENST: pptp (install it before the meeting !).</p>
+</li><li><p>HOWTO: <code>http://www.pps.jussieu.fr/~kerneis/pptp-enst.tar.gz</code>
+ (download it before the meeting!).</p>
+</li></ul>
+
+<p>Connecting through ethernet cable will be possible and will give you a
+better connectivity. Since the number of ethernet plug is limited
+people are invited to come with some ethernet switches to be able to
+offer more plugs.</p>
+<p>Type E (French) Power plug will also be available, if your laptop
+doesn&#39;t have enough power to stay on battery a whole day. Just as for
+ethernet plug, people are invited to come with their national adapter
+for type E power plug and with power strip to be able to offer more
+plugs.</p>
+<h2 id="Participants">Participants</h2>
+
+<p>This is a list of participants. To be able to contact you, you must write down your email address replacing &#39;@&#39; by &#39;on-the-server&#39; (anti spam measure):</p>
+<p>The format of entry is:</p>
+<ul><li><p>name</p>
+</li><li><p>email (with @ replace by on-the-server)</p>
+</li><li><p>if you want to come to the lunch (yes or no, see common lunch in the section Lunch/Dinner)</p>
+</li><li><p>if you want to come to the dinner (yes or no)</p>
+</li></ul>
+
+<p>Participants:</p>
+<ul><li><p>Sylvain Le Gall, sylvain on-the-server le-gall.net, yes, yes</p>
+</li><li><p>Berke Durak, obdurak on-the-server free.fr, no, yes</p>
+</li><li><p>Richard W.M. Jones, rich on-the-server annexia.org, no, no (arriving 2pm)</p>
+</li><li><p>Nicolas Pouillard, nicolas.pouillard on-the-server inria.fr, yes, no</p>
+</li><li><p>Vincent Balat, balat on-the-server pps.jussieu.fr, yes, yes</p>
+</li><li><p>Olivier Grisel, olivier.grisel on-the-server ensta.org, yes, yes (probably)</p>
+</li><li><p>Mehdi Dogguy, dogguy on-the-server pps.jussieu.fr, yes, no</p>
+</li><li><p>Gerd Stolpmann, gerd on-the-server gerd-stolpmann.de, yes, yes</p>
+</li><li><p>Martin Jambon, martin_jambon on-the-server emailuser.net, yes, no</p>
+</li><li><p>Jaap Boender, boender on-the-server pps.jussieu.fr, yes, yes</p>
+</li><li><p>Xavier Clerc, forum on-the-server x9c.fr, yes, no</p>
+</li><li><p>Stéphane Glondu, glondu on-the-server pps.jussieu.fr, yes, no</p>
+</li><li><p>Ralf Treinen, treinen on-the-server pps.jussieu.fr, yes, yes</p>
+</li><li><p>Gabriel Kerneis, kerneis on-the-server enst.fr, yes, no</p>
+</li><li><p>David Teller, David.Teller on-the-server univ-orleans.fr, yes, yes</p>
+</li><li><p>Pierre Letouzey, letouzey on-the-server pps.jussieu.fr, yes, no</p>
+</li><li><p>Cecile Stentzel, cecile.stentzel on-the-server inria.fr, no, no</p>
+</li><li><p>Olivier Andrieu, oandrieu on-the-server gmail.com, yes, no</p>
+</li><li><p>Pierre Chambart, chambart on-the-server crans.org, no, yes</p>
+</li><li><p>Jérémie Dimino, dimino on-the-server crans.org, no, yes</p>
+</li><li><p>Keiko Nakata, keiko on-the-server kurims.kyoto-u.ac.jp, yes, no</p>
+</li><li><p>Pietro Abate, abate on-the-server pps.jussieu.fr, yes, yes (probably)</p>
+</li><li><p>Benjamin Canou, benjamin.canou on-the-server lip6.fr, yes, no</p>
+</li><li><p>Christophe Troestler, Christophe.Troestler on-the-server umh.ac.be, yes, yes</p>
+</li><li><p>Philippe Wang, philippe.wang on-the-server lip6.fr, yes, no</p>
+</li><li><p>Jean-Christophe Filliâtre, filliatr on-the-server lri.fr, no, no (probably)</p>
+</li><li><p>Wolfgang Beck, wolfgang.beck01 on-the-server gmail.com, yes, yes</p>
+</li><li><p>Luca Saiu, saiu on-the-server lipn.univ-paris13.fr, no, no</p>
+</li><li><p>Raja Boujbel, boujbel.raja on-the-server gmail.com, no, no</p>
+</li><li><p>Guillaume Bau, guillaume.bau on-the-server gmail.com, no, no</p>
+</li><li><p>Alain Frisch, alain on-the-server frisch.fr, yes, no</p>
+</li><li><p>Pierre Magistry, pmagistry on-the-server gmail.com, no, no</p>
+</li><li><p>Tahina Ramananandro, Tahina.Ramananandro on-the-server normalesup.org, no, no</p>
+</li><li><p>Romain Bardou, bardou on-the-server lri.fr, no, no</p>
+</li><li><p>Arnaud Spiwack, Arnaud.Spiwack on-the-server lix.polytechnique.fr, yes, yes</p>
+</li><li><p>Vincent Gross, vincent.gross on-the-server etudiant.univ-rennes1.fr, yes, no</p>
+</li><li><p>Virgile Prevosto, virgile.prevosto on-the-server m4x.org, yes, no (probably)</p>
+</li><li><p>Damien Doligez, damien.doligez on-the-server inria.fr, yes, no</p>
+</li><li><p>Louis Mandel, louis.mandel on-the-server lri.fr, yes, no</p>
+</li><li><p>Xavier Leroy, xavier.leroy on-the-server inria.fr, yes, no</p>
+</li><li><p>Gabriel Scherer, bluestorm.dylc on-the-server gmail.com, no, no (probably)</p>
+</li><li><p>Jean-Vincent Loddo, loddo on-the-server lipn.univ-paris13.fr, no, no</p>
+</li><li><p>Jonathan Derque, jderque on-the-server libertysurf.fr, yes, no</p>
+</li><li><p>Vivien Ravet, vivien.ravet on-the-server lip6.fr, no, no</p>
+</li><li><p>Zheng Li, li on-the-server pps.jussieu.fr, no, no</p>
+</li><li><p>Pierre Clairambault, pierre.clairambault on-the-server pps.jussieu.fr, no, no</p>
+</li><li><p>Mattias Engdegård, mattias on-the-server virtutech.se, yes, yes</p>
+</li><li><p>Mathias Kende, mathias.kende on-the-server ens.fr, yes, no</p>
+</li><li><p>Johannes Kanig, johannes.kanig on-the-server lri.fr, no, no</p>
+</li><li><p>Aurelien Gilles, aurelien.gilles on-the-server gmail.com, yes, no</p>
+</li><li><p>Alexandre Poirot, poirot.alex on-the-server gmail.com, yes, no</p>
+</li><li><p>Loïc Boisseau, boisseaul on-the-server yahoo.fr, no, no</p>
+</li><li><p>Glenn Rolland, glenn.rolland on-the-server bewan.com, yes, no</p>
+</li></ul>
+
+<h2 id="Organization-team">Organization team</h2>
+
+<p>Team list:</p>
+<ul><li><p>Sylvain Le Gall, main contact</p>
+</li><li><p>Vincent Balat</p>
+</li><li><p>Gabriel Kerneis</p>
+</li></ul>
+
+<p>If you wish to help add your name to the list.</p>
+<p><a href="http://mirror.ocamlcore.org/wiki.cocan.org/events/europe/ocamlmeetingparis2008/organization.html">Organization details</a></p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2008/index.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="Using_ocamlfind_with_ocamlbuild.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Using ocamlfind with ocamlbuild &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Using_ocamlfind_with_ocamlbuild.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/ocamlbuild/">Ocamlbuild</a><span class="divider"></span></li>
+<li class="active">Using ocamlfind with ocamlbuild</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Simple-tag-from-3-12">Simple tag (from 3.12)</a>
+</li><li><a href="#Generic-plugin">Generic plugin</a>
+<ul><li><a href="#Source">Source</a>
+</li><li><a href="#Usage">Usage</a>
+</li><li><a href="#Summary">Summary</a>
+</li></ul>
+</li><li><a href="#Using-ocamlfind-only-for-querying-package-installation-directories">Using ocamlfind only for querying package installation directories</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Using-ocamlfind-with-ocamlbuild">Using ocamlfind with ocamlbuild</h1>
+
+<p>There are many ways to make ocamlbuild use ocamlfind. The first section
+gives the simplest one, starting from ocamlfind 3.12. The second section
+gives a generic <a href="Making_plugins.html">plugin</a> which replaces the
+&#39;ocamlc&#39;, &#39;ocamldep&#39;... commands with ocamlfind equivalents. The third
+shows how to call &#39;ocamlfind query&#39; from a
+<a href="Making_plugins.html">plugin</a>.</p>
+<h2 id="Simple-tag-from-3-12">Simple tag (from 3.12)</h2><p>Starting with version 3.12, the support of <em>ocamlfind</em> is native in
+<em>ocamlbuild</em>. To activate it, you need to pass the command line option
+<code>-use-ocamlfind</code>. Then you can add packages in the <code>_tags</code> file with the
+<code>package(...)</code> tag. Syntax extensions are enabled by requiring the
+related package and using the <code>syntax(camlp4o)</code> tag. Finally ocamlfind
+predicates can be activated with the <code>predicate(...)</code> tag.</p>
+<pre class="shell"><code class="shell"># Suppose that prog.ml is the main module and
+# that your project use num and str libraries.
+$ cat _tags
+&lt;*.ml&gt; or &#39;prog.byte&#39;: package(num), package(str)
+$ ocamlbuild -use-ocamlfind prog.byte --
+Hello World!</code></pre>
+
+<p>To include sub-packages, use the doted notation</p>
+<pre><code>&lt;*.ml&gt;: package(lwt.unix), package(lwt.syntax), syntax(camlp4o)
+&#39;prog.byte&#39;: package(lwt.unix)</code></pre>
+
+<h2 id="Generic-plugin">Generic plugin</h2><p>Here is presented a rather generic <a href="Making_plugins.html">plugin</a>
+to access packages using ocamlfind.</p>
+<h3 id="Source">Source</h3>
+
+<p>The following code should be in a file named <code>myocamlbuild.ml</code>, at the
+root of your project.</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span>
+<span class="comment">(* <span class="governing">open</span> <span class="ocaml-module">Command</span> -- no longer needed <span class="keyword">for</span> OCaml &gt;= 3.10.2 *)</span>`
+
+<span class="comment">(* these functions are not really officially exported *)</span>
+<span class="governing">let </span><span class="ocaml-variable">run_and_read</span> = <span class="ocaml-module">Ocamlbuild_pack</span>.<span class="ocaml-module">My_unix</span>.run_and_read
+<span class="governing">let </span><span class="ocaml-variable">blank_sep_strings</span> = <span class="ocaml-module">Ocamlbuild_pack</span>.<span class="ocaml-module">Lexers</span>.blank_sep_strings
+
+<span class="governing">let</span> <span class="ocaml-function">split</span> <span class="ocaml-variable">s ch </span>=
+  <span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="keyword">ref</span> [] <span class="governing">in</span>
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">go</span> <span class="ocaml-variable">s </span>=
+    <span class="governing">let </span><span class="ocaml-variable">pos</span> = <span class="ocaml-module">String</span>.index s ch <span class="governing">in</span>
+    x := (<span class="ocaml-module">String</span>.before s pos)::!x;
+    go (<span class="ocaml-module">String</span>.after s (pos + 1))
+  <span class="governing">in</span>
+  <span class="keyword">try</span> go s
+  <span class="keyword">with</span> Not_found -&gt; !x
+
+<span class="governing">let</span> <span class="ocaml-function">split_nl</span> <span class="ocaml-variable">s </span>= split s '\n'
+
+<span class="governing">let</span> <span class="ocaml-function">before_space</span> <span class="ocaml-variable">s </span>=
+  <span class="keyword">try</span> <span class="ocaml-module">String</span>.before s (<span class="ocaml-module">String</span>.index s <span class="string">' '</span>)
+  <span class="keyword">with</span> Not_found -&gt; s`
+
+<span class="comment">(* this lists all supported packages *)</span>
+<span class="governing">let</span> <span class="ocaml-function">find_packages</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">List</span>.map before_space (split_nl &amp; run_and_read 'ocamlfind list')
+
+<span class="comment">(* this is supposed <span class="keyword">to</span> list available syntaxes,
+   but I don't know how <span class="keyword">to</span> <span class="keyword">do</span> it. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">find_syntaxes</span> <span class="ocaml-variable">() </span>= ['camlp4o'; 'camlp4r']
+
+<span class="comment">(* ocamlfind command *)</span>
+<span class="governing">let</span> <span class="ocaml-function">ocamlfind</span> <span class="ocaml-variable">x </span>= S[A'ocamlfind'; x]
+
+<span class="governing">let </span><span class="ocaml-variable">_</span> = dispatch <span class="governing">begin</span> function
+  | Before_options -&gt;
+     <span class="comment">(* by using Before_options one <span class="governing">let </span>command line options
+        have an higher priority on the contrary using After_options
+        will guarantee <span class="keyword">to</span> have the higher priority *)</span>
+     <span class="comment">(* override default commands by ocamlfind ones *)</span>
+     <span class="ocaml-module">Options</span>.ocamlc     := ocamlfind &amp; A'ocamlc';
+     <span class="ocaml-module">Options</span>.ocamlopt   := ocamlfind &amp; A'ocamlopt';
+     <span class="ocaml-module">Options</span>.ocamldep   := ocamlfind &amp; A'ocamldep';
+     <span class="ocaml-module">Options</span>.ocamldoc   := ocamlfind &amp; A'ocamldoc';
+     <span class="ocaml-module">Options</span>.ocamlmktop := ocamlfind &amp; A'ocamlmktop'
+
+  | After_rules -&gt;
+     <span class="comment">(* When one link an OCaml library/binary/package, one should
+        use -linkpkg *)</span>
+     flag ['ocaml'; 'link'; 'program'] &amp; A'-linkpkg';
+
+     <span class="comment">(* For each ocamlfind package one inject the -package option when
+        compiling, computing dependencies, generating documentation <span class="governing">and</span>
+        linking. *)</span>
+     <span class="ocaml-module">List</span>.iter <span class="governing">begin</span> <span class="keyword">fun</span> pkg -&gt;
+         flag ['ocaml'; 'compile';  'pkg_'^pkg] &amp; S[A'-package'; A pkg];
+         flag ['ocaml'; 'ocamldep'; 'pkg_'^pkg] &amp; S[A'-package'; A pkg];
+         flag ['ocaml'; 'doc';      'pkg_'^pkg] &amp; S[A'-package'; A pkg];
+         flag ['ocaml'; 'link';     'pkg_'^pkg] &amp; S[A'-package'; A pkg];
+         flag ['ocaml'; 'infer_interface'; 'pkg_'^pkg] &amp; S[A'-package'; A pkg];
+       <span class="governing">end</span> (find_packages ());
+
+     <span class="comment">(* Like -package but <span class="keyword">for</span> extensions syntax. Morover -syntax is
+        useless when linking. *)</span>
+     <span class="ocaml-module">List</span>.iter <span class="governing">begin</span> <span class="keyword">fun</span> syntax -&gt;
+         flag ['ocaml'; 'compile';  'syntax_' ^ syntax]
+         &amp; S[A'-syntax'; A syntax];
+         flag ['ocaml'; 'ocamldep'; 'syntax_' ^ syntax]
+         &amp; S[A'-syntax'; A syntax];
+         flag ['ocaml'; 'doc';      'syntax_' ^ syntax]
+         &amp; S[A'-syntax'; A syntax];
+         flag ['ocaml'; 'infer_interface'; 'syntax_' ^ syntax]
+         &amp; S[A'-syntax'; A syntax];
+       <span class="governing">end</span> (find_syntaxes ());
+       
+     <span class="comment">(* The default 'thread' tag is not compatible <span class="keyword">with</span> ocamlfind.
+         Indeed, the default rules add the 'threads.cma' or
+         'threads.cmxa' options when using this tag. When using the
+         '-linkpkg' option <span class="keyword">with</span> ocamlfind, this module will <span class="keyword">then</span> be
+         added twice on the command line.
+       
+        To solve this, one approach is <span class="keyword">to</span> add the '-thread' option
+        when using the 'threads' package using the previous plugin.
+      *)</span>
+     flag ['ocaml'; 'pkg_threads'; 'compile'] (S[A '-thread']);
+     flag ['ocaml'; 'pkg_threads'; 'link'] (S[A '-thread']);
+     flag ['ocaml'; 'pkg_threads'; 'infer_interface'] (S[A '-thread'])
+  | _ -&gt; ()
+<span class="governing">end</span></code></pre>
+
+<h3 id="Usage">Usage</h3><p>Packages to be used are supplied using the tagging system.</p>
+<p>This plugin declares a tag <code>pkg_&lt;thepackagename&gt;</code> per package (for
+instance <code>pkg_nums</code>, <code>pkg_str</code>, <code>pkg_unix</code>,...).</p>
+<p>Tag your source files with them if you want the package to be used a
+compile-time, and your .byte or .native files if you want the package to
+be used at link-time (usually you&#39;ll want both).</p>
+<p>Example:</p>
+<pre class="shell"><code class="shell"># Suppose that prog.ml is the main module and
+# that your project use nums and str libraries.
+$ cat _tags
+&lt;*.ml&gt; or &#39;prog.byte&#39;: pkg_nums, pkg_str
+$ ocamlbuild prog.byte --
+Hello World!</code></pre>
+
+<p>This plugin also provide a little support for the <code>-syntax</code> flag of
+ocamlfind. However the list of syntaxes are hard listed in the
+<code>myocamlbuild.ml</code>.  Generally if you use packages that provide a syntax
+extension (like <code>json-static</code>), using <code>camlp4o</code> will suffice to trigger the
+extension.</p>
+<p>Example:</p>
+<pre class="shell"><code class="shell">$ wget http://martin.jambon.free.fr/yahoo.ml
+$ cat _tags
+&lt;yahoo.\*\&gt;`: pkg_json-static, pkg_netclient, syntax_camlp4o
+$ ocamlbuild yahoo.byte -- ocaml
+...</code></pre>
+
+<h3 id="Summary">Summary</h3><ul><li><p>Tag the files that need the &#39;foo&#39; package with <code>pkg_foo</code> (sources
+ and binaries)</p>
+</li><li><p>Don&#39;t use the &#39;thread&#39; tag, use <code>pkg_threads</code> instead.</p>
+</li></ul>
+
+<h2 id="Using-ocamlfind-only-for-querying-package-installation-directories">Using ocamlfind only for querying package installation directories</h2><p>Maybe you do not want to invoke ocamllfind as a wrapper around the
+toolchain commands (ocamlc, etc.). In that case, you can still invoke
+ocamlfind to locate the directories in which registered packages are
+installed. The &#39;ocamlfind query pkgname&#39; command yields the installation
+directory of the command. Here is the ocamlbuild equivalent of
+<code>$(ocamlfind query pkgname)</code>:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">ocamlfind_query</span> <span class="ocaml-variable">pkg </span>=
+  <span class="governing">let </span><span class="ocaml-variable">cmd</span> = <span class="ocaml-module">Printf</span>.sprintf 'ocamlfind query %s' (<span class="ocaml-module">Filename</span>.quote pkg) <span class="governing">in</span>
+  <span class="ocaml-module">Ocamlbuild_pack</span>.<span class="ocaml-module">My_unix</span>.run_and_open cmd (<span class="keyword">fun</span> ic -&gt;
+      <span class="ocaml-module">Log</span>.dprintf 5 'Getting Ocaml directory from command %s' cmd;
+      input_line ic
+    )</code></pre>
+
+<p>You can use it as follows in the After_rules section:</p>
+<pre><code>ocaml_lib ~extern:true ~dir:(ocamlfind_query &#39;sexplib&#39;) &#39;sexplib&#39;;</code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/Using_ocamlfind_with_ocamlbuild.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="labels.html" rel="alternate" hreflang="en"/>
+<link href="labels.ja.html" rel="alternate" hreflang="ja"/>
+<link href="labels.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>ラベル &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/labels.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">ラベル</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="labels.html">en</a></li>
+<li class="active">日本語</li>
+<li><a href="labels.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">例外とハッシュテーブル</a>
+</li><li><a href="#">相互再帰関数</a>
+</li><li><a href="#">関数名や引数に別名をつける</a>
+</li><li><a href="#">関数の、ラベル付き引数、オプショナル引数</a>
+<ul><li><a href="#">ラベル付き引数</a>
+</li><li><a href="#">オプショナル引数</a>
+</li><li><a href="#39-39">&#39;警告: このオプショナル引数は、削除できません&#39;</a>
+</li><li><a href="#"><code>~</code> でもっと短く</a>
+</li><li><a href="#foo"><code>?foo</code> を関数呼出しで使う</a>
+</li><li><a href="#"><code>~</code> と <code>?</code> の使いどころ</a>
+</li><li><a href="#">補遺</a>
+</li></ul>
+</li><li><a href="#39-39_1">ヴァリアント 再考 (&#39;多相ヴァリアント&#39;)</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">ラベル</h1>
+
+<h2 id="">例外とハッシュテーブル</h2>
+
+<p><em>(未完)</em></p>
+<h2 id="">相互再帰関数</h2>
+
+<p>互いに互いを呼出しあうような2つの関数を、定義したいと思う。これは、あまりよく使うわけではないが、
+知っておくと役に立つことがある。ポピュラーな例( Ryan Tarpine
+に感謝)はこうだ: 数 0 は 偶数である。その他の 0
+より大きい数は、その1つ前がもし奇数なら、偶数である。よって:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; true
+    | x -&gt; <span class="ocaml-error-loc">odd</span> (x-1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value odd
+</span></code></pre>
+
+<p>上のコードは、まだ<code>odd</code> 関数を定義していないので、コンパイルできない!
+しかし簡単なことだ。 ゼロは奇数ではない、 そして、その他の 0
+より大きい数は、その1つ前がもし偶数なら、奇数である。そんな関数を補ってやれば、完成だ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; true
+    | x -&gt; <span class="ocaml-error-loc">odd</span> (x-1)
+    
+  <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">odd</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; false
+    | x -&gt; even (x-1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value odd
+</span></code></pre>
+
+<p>惜しい ...
+このプログラムはコンパイルできない。<code>even</code>関数をコンパイルするには、前もって<code>odd</code>が定義されていなければならず、<code>odd</code>関数をコンパイルするには、前もって<code>even</code>が定義されていなければならない。お互いの定義の順をひっくり返したって、だめなものはだめだ。</p>
+<p>OCamlでは、&#39;プロトタイプを前においておく&#39;
+はないが、2つやそれ以上の相互再帰関数たちを定義するための、特別な構文がある。すると<code>odd</code>と<code>even</code>はこうなる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">even</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; true
+    | x -&gt; odd (x-1)
+  <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">odd</span> <span class="ocaml-variable">n </span>=
+    <span class="keyword">match</span> n <span class="keyword">with</span>
+    | 0 -&gt; false
+    | x -&gt; even (x-1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val even : int -&gt; bool = &lt;fun&gt;
+val odd : int -&gt; bool = &lt;fun&gt;
+</span></code></pre>
+
+<p>これが果たして役に立つかどうか、私にはわからない。というのも、私は相互再帰関数なんてものを書くはめに
+はなったことがないし、あっと驚くような例も思いつかないからだ。一応、こんなものもある、でいいだろう。相互再帰の、クラス定義やモジュールを書くのに
+も、同じような構文が使われる。</p>
+<h2 id="">関数名や引数に別名をつける</h2>
+
+<p>第5章で、関数の部分適用について説明した。これを巧みに使うことで、タイプ量を省くことができる:
+関数名や引数に別名をつけるのだ。</p>
+<p>まだオブジェクト指向プログラミングにはふれていないが(それは次の章のテーマである)、ここで、
+OCamlNet での、 関数を別名で呼び出している様子を見てみよう。
+ここで知っておかねばならないのは、<code>cgi # output # output_string &#39;string&#39;</code>
+は メソッド呼出しだということだ。 Java
+でいう、<code>cgi.output().output_string (&#39;string&#39;)</code>と似たようなものだ。</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">begin_page</span> <span class="ocaml-variable">cgi title </span>=
+  <span class="governing">let </span><span class="ocaml-variable">out</span> = cgi # output # output_string <span class="governing">in</span>
+  out '&lt;html&gt;\n';
+  out '&lt;head&gt;\n';
+  out ('&lt;title&gt;' ^ text title ^ '&lt;/title&gt;\n');
+  out ('&lt;style <span class="governing">type</span>=\'text/css\'&gt;\n');
+  out 'body { background: white; color: black; }\n';
+  out '&lt;/style&gt;\n';
+  out '&lt;/head&gt;\n';
+  out '&lt;body&gt;\n';
+  out ('&lt;h1&gt;' ^ text title ^ '&lt;/h1&gt;\n')</code></pre>
+
+<p><code>let out = ...</code>
+は、メソッド呼出しに、関数の部分適用をやっている(部分というのは、 string
+引数をまだ渡していないからだ)。<code>out</code>は従って関数であり、 string
+引数を1つとる。</p>
+<pre><code class="ocaml">out '&lt;html&gt;\n';</code></pre>
+
+<p>は</p>
+<pre><code class="ocaml">cgi # output # output_string '&lt;html&gt;\n';</code></pre>
+
+<p>に等しい。これで大幅にタイプ量を省けた。</p>
+<p>引数を加えることもできる。この<code>print_string</code>のもうひとつの定義はある意味、
+関数名 &amp; 引数に、別名をつけているとも考えることができる:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">print_string</span> = output_string stdout</code></pre>
+
+<p><code>output_string</code> は
+2つの引数をとる(チャンネルと文字列)が、ここで渡したのは1つだけなので、部分適用になっている。よって、
+<code>print_string</code> は関数で、 string 引数をひとつ、とろうとしている。</p>
+<h2 id="">関数の、ラベル付き引数、オプショナル引数</h2>
+
+<h3 id="">ラベル付き引数</h3>
+
+<p>Python には、関数への引数を書くのに最良の構文がある。これが例だ( Python
+チュートリアルからそのままとった。 私は Python プログラマではないので):</p>
+<pre class="python"><code class="python">def ask_ok(prompt, retries=4, complaint=&#39;Yes or no, please!&#39;):
+  # function definition omitted</code></pre>
+
+<p>この Python の関数は、こんな風に呼ぶことができる:</p>
+<pre class="python"><code class="python">ask_ok (&#39;Do you really want to quit?&#39;)
+ask_ok (&#39;Overwrite the file?&#39;, 2)
+ask_ok (prompt=&#39;Are you sure?&#39;)
+ask_ok (complaint=&#39;Please answer yes or no!&#39;, prompt=&#39;Are you sure?&#39;)</code></pre>
+
+<p>Python
+では、呼び出すときに、引数に名前をつけることができる。普通に関数を呼ぶ構文もあるし、オプショナル引数をデフォルトの値とともに使うこともできる。</p>
+<p>Perlでも似たようなことができる。</p>
+<pre class="perl"><code class="perl">sub ask_ok
+{
+  my %params = @_;
+  
+  my $prompt = $params{prompt};
+  my $retries = exists $params{retries} ? $params{retries} : 4;
+  
+  # ... etc.
+}
+  
+ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre>
+
+<p>OCaml にも、
+ラベル付き引数と、オプショナル引数(デフォルトの値もある)が、用意されている。</p>
+<p>基本の構文は:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">~first:a ~last:b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range ~first:(a+1) ~last:b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : first:int -&gt; last:int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>(<code>to</code> と <code>end</code> はどちらも、 OCaml
+では予約語なので、ラベルに使えないのに注意。なので、 <code>~from/~to</code> や
+<code>~start/~end</code> は使えない。)</p>
+<p>前の <code>range</code> 関数の型は:</p>
+<pre><code class="ocaml">range : int -&gt; int -&gt; int list</code></pre>
+
+<p>そして、ラベル付き引数を使った、新しい <code>range</code> 関数の型は:</p>
+<pre><code class="ocaml">range : first:int -&gt; last:int -&gt; int list</code></pre>
+
+<p>(紛らわしいことに、<code>~</code>(チルダ)は型定義には<em>でてこない</em>。ここ以外では必ず付ける)。</p>
+<p>ラベル付き引数なら、どのような順で引数をあたえても構わない:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">range ~first:1 ~last:10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">range ~last:10 ~first:1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span></code></pre>
+
+<p>引数に名前をつけて、ラベルを関数定義内で変数と同じように使えるようにするための、短い書きかたもある。これは、
+<code>lablgtk/gaux.ml</code> (lablgtk で使われている、便利で変なもののライブラリ)
+で定義されている関数だ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">may</span> <span class="ocaml-variable">~f x </span>=
+    <span class="keyword">match</span> x <span class="keyword">with</span>
+    | None -&gt; ()
+    | Some x -&gt; ignore(f x)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val may : f:('a -&gt; 'b) -&gt; 'a option -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p>ここでじっくり、この関数が何なのかを考え、型シグネチャを手で書き下すなどすると、後で理解がはかどる。やることがたくさんある。最初に、引数
+<code>~f</code> は、単なる <code>~f:f</code> の略だ(すなわち、ラベルは <code>~f</code>
+で、関数内で使われる変数は、 <code>f</code> である)。
+次に気づくのは、関数がふたつの引数をとることだ。2番目の引数 (<code>x</code>)
+にはラベルがない - ラベル有り無しが混ざった関数もいいわけだ。</p>
+<p>ラベル付き引数 <code>f</code> の型はなんだろう? 明らかに、なにかの関数だ。</p>
+<p>ラベルなしの引数 <code>x</code> の型はなんだろう? <code>match</code>
+節がてがかりになる。よって、 <code>&#39;a option</code> だ。</p>
+<p>ここから、 <code>f</code> が <code>&#39;a</code> の引数をとることがわかる。それから、 <code>f</code>
+の返り値は、無視されているので、なんにでもなることがわかる。よって、 <code>f</code>
+の型は <code>&#39;a -&gt; &#39;b</code> だ。</p>
+<p><code>may</code> 関数は全体として <code>unit</code> を返す。 <code>match</code> のどちらの場合も、結果が
+<code>()</code> だからだ。</p>
+<p>こうして、<code>may</code> 関数の型は(なんなら、 OCaml
+のトップレベルでこれを確かめられる):</p>
+<pre><code class="ocaml">may : f:('a -&gt; 'b) -&gt; 'a option -&gt; unit</code></pre>
+
+<p>この関数は何なのだろう? 関数を OCaml
+のトップレベルで実行すると、てがかりが見つかる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline (Some <span class="ocaml-error-loc">'</span>hello')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>ラベルなし引数が、もし &#39;null ポインタ&#39; なら、 may
+はなにもしない。そうでないときは、その引数で 関数 f
+を呼ぶ。なぜこれが役に立つのか? このあと、明らかになる。</p>
+<h3 id="">オプショナル引数</h3>
+
+<p>オプショナル引数は、見るとラベル付き引数みたいだが、 <code>~</code> のかわりに <code>?</code>
+を前に付ける。例はこうだ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">?(step=1) a b </span>=
+    <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
+    <span class="keyword">else</span> a :: range ~step (a+step) b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : ?step:int -&gt; int -&gt; int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>~</code> と <code>?</code>
+とが入れ替わって、なんだか紛らわしい構文だ。それについては次の節で説明する。この関数はこう呼ぶ:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">range 1 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">range 1 10 ~step:2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 3; 5; 7; 9]
+</span></code></pre>
+
+<p>この場合、 <code>?(step=1)</code> で、 <code>~step</code> がオプショナル引数、デフォルトが 1
+なのは、言うまでもない。デフォルトなしのオプショナル引数も使える。これは
+lablgtk からの例(変更あり)である:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">window</span> = { <span class="keyword">mutable</span> title: string;
+                  <span class="keyword">mutable</span> width: int;
+                  <span class="keyword">mutable</span> height: int }
+    
+  <span class="governing">let</span> <span class="ocaml-function">create_window</span> <span class="ocaml-variable">() </span>=
+    { title = <span class="ocaml-error-loc">'</span>none'; width = 640; height = 480; }
+    
+  <span class="governing">let</span> <span class="ocaml-function">set_title</span> <span class="ocaml-variable">window title </span>=
+    window.title &lt;- title
+    
+  <span class="governing">let</span> <span class="ocaml-function">set_width</span> <span class="ocaml-variable">window width </span>=
+    window.width &lt;- width
+    
+  <span class="governing">let</span> <span class="ocaml-function">set_height</span> <span class="ocaml-variable">window height </span>=
+    window.height &lt;- height
+    
+  <span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height () </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = create_window () <span class="governing">in</span>
+    may ~f:(set_title window) title;
+    may ~f:(set_width window) width;
+    may ~f:(set_height window) height;
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>この例は、かなり複雑かつ巧妙だが、このパターンは、lablgtk
+のソースコード中で一貫してよく使われている。まずは、単純な
+<code>create_window</code> 関数に集中しよう。この関数は <code>unit</code> をとって <code>window</code>
+を返す。title, width, height のデフォルト設定で <code>window</code>
+の初期化が行われる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">create_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+</span></code></pre>
+
+<p><code>set_title</code>, <code>set_width</code>, <code>set_height</code> 関数は、<code>window</code>
+構造体を更新するので純粋でない。使いかたは明らかである、例えば:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = create_window () <span class="governing">in</span>
+  set_title w <span class="ocaml-error-loc">'</span>My Application';
+  w</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>ここまでは、 前章で説明した、手続き型の &#39;更新可能なレコード&#39;
+の話にすぎない。ここからの、 <code>open_window</code> 関数が、難しい。この関数は
+<em>4つ</em>の引数をとり、3つはオプショナルで、その後のラベルなしの <code>unit</code>
+は必須である。この関数をまずは動かしてみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>Clock' ~width:128 ~height:128 ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>思ったとおりの動きだが、一体どうやってるんだ?! 秘密は、 <code>may</code>
+関数(上ででてきた)と、オプショナル引数がデフォルトを <em>持たない</em>
+ことにある。</p>
+<p>オプショナル引数にデフォルトがないときは、その型は <code>&#39;a option</code> になる。
+<code>&#39;a</code> は普通は、型推論によって導かれるので、 上の <code>?title</code> の場合は、型は
+<code>string option</code> になる。</p>
+<p><code>may</code> 関数は覚えている? それは、関数と引数をとり、その引数が <code>None</code>
+でなかったら、その引数で関数を呼ぶ。よって:</p>
+<pre><code class="ocaml">may ~f:(set_title window) title;</code></pre>
+
+<p>もしオプショナル引数の <code>title</code> が呼出し時に指定されなければ、 <code>title</code> =
+<code>None</code> であり、 <code>may</code> は何もしない。しかし、もし関数を、例えば、</p>
+<pre><code class="ocaml">open_window ~title:'My Application' ()</code></pre>
+
+<p>と呼んだら、 <code>title</code> =
+<code>Some &#39;My Application&#39;</code> となり、よって <code>may</code> は
+<code>set_title window &#39;My Application&#39;</code> を呼ぶ。</p>
+<p>次の節に進む前に、この例をよく吟味して、完全に理解しておいてほしい。</p>
+<h3 id="39-39">&#39;警告: このオプショナル引数は、削除できません&#39;</h3>
+
+<p>ラベルやオプショナルの引数にふれたが、このまとめを通じて、いくつか疑問が浮かんだはずだ。まずは、なぜ、余分な
+<code>unit</code> 引数が、 <code>open_window</code> についているのだろうか? この関数を 余分の
+<code>unit</code> なしで、定義してみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+    may ~f:(set_title window) title;
+    may ~f:(set_width window) width;
+    may ~f:(set_height window) height;
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+</span></code></pre>
+
+<p>OCamlで関数をコンパイルできたが、なにか見慣れない警告をだしてきた:
+&#39;警告: このオプショナル引数は、削除できません&#39; 最後の引数 <code>?height</code>
+のことをいっているようだ。 なにがここで起きているのかを示すため、
+この変更した <code>open_window</code> を呼び出してみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>うまくいったかどうか? いや、だめだ。それどころか、 <code>open_window</code>
+関数は、実行すらされていない。かわりに、なにか変な型の情報が出力されている。いったいなにがあった?</p>
+<p>カリー化とアンカリー化や、関数の部分適用について思い出してほしい。<code>plus</code>
+関数をこう定義したとして:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">plus</span> <span class="ocaml-variable">x y </span>=
+    x + y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val plus : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>これを部分適用すると、例えば <code>plus 2</code> として、&#39;何かに 2 を足す関数&#39;
+が得られる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">f</span> = plus 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 7
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 102
+</span></code></pre>
+
+<p><code>plus</code> の例では、 OCaml のコンパイラは簡単に、 <code>plus 2</code>
+にまだ充分なだけの引数があたえられていないということを、理解できた。
+<code>plus</code> 関数が実行されるには、引数がさらにもうひとつ必要なのだ。よって、
+<code>plus 2</code> は、もうひとつの引数が来るのを待っている関数である。</p>
+<p>オプショナル引数がはいると、話がややこしくなってくる。上の
+<code>open_window;;</code> を呼出す場合がまさにそうだ。ユーザは、 &#39;<code>open_window</code>
+をいま実行しろ&#39; と言っているのか?
+それとも、ユーザは、後でオプショナル引数を(いくつか、あるいは全部)与えようとしているのか?
+<code>open_window;;</code> は、残りの引数が来るのを、 <code>plus 2</code>
+のように待っているのか?</p>
+<p>OCaml は安全なほうを優先するので、 <code>open_window</code>
+を実行しない。そのかわりに、部分適用としてそれを扱う。 すなわち、
+<code>open_window</code> 式は、関数値として、評価される。</p>
+<p>元に戻って、ラベルなし引数 <code>unit</code> が最後についている <code>open_window</code>
+の定義をみてみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height () </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+    may ~f:(set_title window) title;
+    may ~f:(set_width window) width;
+    may ~f:(set_height window) height;
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+</span></code></pre>
+
+<p>もしもオプショナル引数を <code>open_window</code> に与えたければ、最後の <code>unit</code>
+の前につけなければならない。もしこう打ったら:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+</span></code></pre>
+
+<p>これは &#39;<code>open_window</code>
+をいま実行せよ、オプショナル引数はすべて指定しない&#39;ということであり、一方、もしこう打ったら:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+</span></code></pre>
+
+<p>これは &#39;関数値がほしい&#39; あるいは (トップレベルでよくある) &#39;<code>open_window</code>
+の型を出力してほしい&#39;ということである。</p>
+<h3 id=""><code>~</code> でもっと短く</h3>
+
+<p><code>range</code>
+関数をまた書き直してみよう。今度は、ラベルを使いつつ、できるだけ短く書いてみる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">~first ~last </span>=
+    <span class="keyword">if</span> first &gt; last <span class="keyword">then</span> []
+    <span class="keyword">else</span> first :: range ~first:(first+1) ~last</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val range : first:int -&gt; last:int -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>~foo</code> は、 <code>~foo:foo</code>
+の略である。これは、関数を呼ぶときにもあてはまり、関数の引数を宣言するときと同じである。よって、上で赤く示した
+<code>~last</code> も、 <code>~last:last</code> の略というわけだ。</p>
+<h3 id="foo"><code>?foo</code> を関数呼出しで使う</h3>
+
+<p>オプショナル引数には、まだちょっとコブがある。アプリケーションを開く関数を書きたいとしよう。中に
+<code>open_window</code> 関数を含めて、こう書こう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
+    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ~width ~height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p><code>~width</code> は、 <code>~width:width</code> の略である。 <code>width</code> の型は <code>&#39;a option</code>
+だが、 <code>open_window ~width:</code> は <code>int</code> を待っている。</p>
+<p>OCaml にはさらなる構文糖が用意されている。関数呼出しに <code>?width</code>
+と書くと、 <code>~width:(unwrap width)</code> の略になる。ここで、 <code>unwrap</code> は
+&#39;<code>option</code> の包み&#39; を <code>width</code> のまわりから取りさる関数とする(実際には、
+<code>unwrap</code>
+のような関数を書くのは不可能なのだが、概念としてはわかる)。よって、この関数は正しくはこう書く:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
+    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<h3 id=""><code>~</code> と <code>?</code> の使いどころ</h3>
+
+<p>ラベルやオプショナル引数の構文はややこしいので、 <code>~foo</code> を使うのか、
+<code>?foo</code> を使うのか、 ただの <code>foo</code>
+を使うのか、わからなくなってしまうかもしれない。いささか黒魔術じみていて、なかなか実用には至らないだろう。</p>
+<p><code>?foo</code> を使うのは、関数の引数を宣言するとき、つまり:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">?arg1 ... </span>=</code></pre>
+
+<p>か、関数の呼出しのときに&#39;<code>option</code>の包みを取りさる&#39;ための特別な形のとき:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
+    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>だけである。<code>?foo</code> を宣言すると、 <code>foo</code>
+という変数が作られるので、値が必要なら、<code>foo</code> をそのまま使えばよい。</p>
+<p>同じことがラベルにもいえる。 <code>~foo</code>
+の形を使うのは、関数の引数を宣言するときだけである、つまり:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">~foo:foo ... </span>=</code></pre>
+
+<p><code>~foo:foo</code> と宣言すると、 そのとおり <code>foo</code>
+という変数が作られるので、値が必要なら、 <code>foo</code> をそのまま使えばよい。</p>
+<p>ややこしいのには、2つの理由がある:第一に、 <code>~foo</code> の略の形 ( <code>~foo:foo</code>
+に等しい)のせい、第二に、ラベルやオプショナルの引数をとる関数を呼び出すときに、その略の形が使われるせいだ。</p>
+<p>この lablgtk のコードは、これらのすべてをやっていて、
+かなり手が込んでいる:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">html</span> <span class="ocaml-variable">?border_width ?width ?height ?packing ?show () </span>=  <span class="comment">(* line 1 *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">w</span> = create () <span class="governing">in</span>
+  load_empty w;
+  <span class="ocaml-module">Container</span>.set w ?border_width ?width ?height;            <span class="comment">(* line 4 *)</span>
+  pack_return (<span class="keyword">new</span> html w) ~packing ~show                  <span class="comment">(* line 5 *)</span></code></pre>
+
+<p>一行目で、関数定義をやっている。5つのオプショナル引数があり、6つ目はお約束の
+<code>unit</code> 引数である。オプショナル引数のそれぞれが、変数を定義する、例えば
+<code>border_width</code> などで、 型は <code>&#39;a option</code> だ。</p>
+<p>4行目で、<code>?foo</code>
+特別の形を使って、オプショナル引数をとる関数に、オプショナル引数を渡している。
+<code>Container.set</code> はこのような型をもつ:</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Container</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
+  <span class="governing">let</span> <span class="ocaml-function">set</span> <span class="ocaml-variable">?border_width ?(width = -2) ?(height = -2) w </span>=
+    <span class="comment">(* ... *)</span></code></pre>
+
+<p>5行目は、 <code>~</code> の略記を使っている。 長い形で書くと:</p>
+<pre><code class="ocaml">pack_return (<span class="keyword">new</span> html w) ~packing:packing ~show:show</code></pre>
+
+<p><code>pack_return</code> 関数は、例のごとくラベル付き引数をとり、その <code>~packing</code> と
+<code>~show</code> の型は両方とも <code>&#39;a option</code> である。つまり、 <code>pack_return</code>
+は明示的に <code>option</code> の包みを取りさっている。</p>
+<h3 id="">補遺</h3>
+
+<p>ラベル付き引数やオプショナル引数はややこしいと思われるのも無理はない、実際、そのとおりなのだ!
+幸いにも、これは OCaml
+の比較的新しい機能なので、まだそれほど幅広くは使われていない。実のところ、
+lablgtk
+をハックするのでなければ、ラベル付き引数やオプショナル引数を見ることなど、そうはあるまい(現時点では)</p>
+<h2 id="39-39_1">ヴァリアント 再考 (&#39;多相ヴァリアント&#39;)</h2>
+
+<p>以下の C コードをコンパイルしてみよう:</p>
+<pre class="C"><code class="C">#include &lt;stdio.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+
+enum lock { open, close };
+
+main ()
+{
+  int fd, n;
+  char buffer[256];
+
+  fd = open (&#39;/etc/motd&#39;, O_RDONLY);                     // line 12
+  while ((n = read (fd, buffer, sizeof buffer)) &gt; 0)
+    write (1, buffer, n);
+  close (fd);                                            // line 15
+}</code></pre>
+
+<p>このコードをコンパイルすると、エラーがでて、その中にこんなものがある:</p>
+<pre class="text"><code class="text">test.c: In function `main&#39;:
+test.c:12: error: called object is not a function
+test.c:15: error: called object is not a function</code></pre>
+
+<p>これは、Cの 列挙型 (enum)にまつわる問題である。上の例で、 enum 文は
+<em>3つ</em>のシンボル、つまり、<code>lock</code>, <code>open</code>, <code>close</code>
+を予約している。また違う例では:</p>
+<pre class="C"><code class="C">enum lock { open, close };
+enum door { open, close };</code></pre>
+
+<p>をコンパイルすると:</p>
+<pre class="text"><code class="text">test.c:2: error: conflicting types for `open&#39;
+test.c:1: error: previous declaration of `open&#39;
+test.c:2: error: conflicting types for `close&#39;
+test.c:1: error: previous declaration of `close&#39;</code></pre>
+
+<p>最初の enum はシンボル <code>open </code> を <code>enum lock </code> 型
+の何かとして定義している。そのシンボルは、もう他の enum で使えない。</p>
+<p>このことは、C/C++
+プログラマには常識なので、そんな下手なコードは書かないだろう。同じような問題が、
+OCaml のヴァリアントにもあるのだが、 OCaml
+にはそれをやりすごすための方法が用意されている。</p>
+<p>この OCaml コードは、なんと、コンパイル<em>できる</em>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = Open | Close
+  <span class="governing">type</span> <span class="type">door</span> = Open | Close</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = Open | Close
+type door = Open | Close
+</span></code></pre>
+
+<p>この2つの文が実行されたら、<code>Open</code> の型は何になる?
+トップレベルで、簡単に調べられる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = Open | Close</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = Open | Close
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">door</span> = Open | Close</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type door = Open | Close
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : door = Open
+</span></code></pre>
+
+<p>OCaml は <code>Open</code> について、直前にあった定義を使うので、型は <code>door</code>
+になっている。実のところ、これはたいした問題にはならない。というのも、もし誤って
+<code>Open</code> を <code>lock</code> の型の文脈で使おうとしても、OCaml
+のすばらしい型推論が、エラーを即座に発見するので、コードをコンパイルできないからだ。</p>
+<p>と、ここまではほとんど C みたいだ。さて、<code>Open</code>
+がひとつだけしか型を持てないというこの制約を、やりすごすための方法が、OCaml
+にはあると私は言った。つまり、 <code>Open</code> を &#39;型 <code>lock</code> の <code>Open</code> &#39; と &#39;型
+<code>door</code> の <code>Open</code> &#39;の両方の意味で使いたいというとき、 OCaml
+にその通りの動きをさせるための方法があるのだ。</p>
+<p>それには、構文をちょっと変えて、こうすればよい:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = [ `Open | `Close ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = [ `Close | `Open ]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">door</span> = [ `Open | `Close ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type door = [ `Close | `Open ]
+</span></code></pre>
+
+<p>構文の違いに注意:</p>
+<ol><li><p>それぞれのヴァリアント名の前に、 <code>`</code> (バッククォート)
+ が付いている。</p>
+</li><li><p>それらの組を角括弧(<code>[]</code>)で囲ってやらなければならない。</p>
+</li></ol>
+
+<p>当然、こんな疑問が浮かぶ: <code>`Open</code> の型は何だ?</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">`Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : [&gt; `Open ] = `Open
+</span></code></pre>
+
+<p><code>[&gt; `Open]</code> というのは、
+<code>[ `Open | と、その他、我々が知らない何かがある可能性]</code>
+と読むとよい。 &gt; (より大きい)
+記号は、中のリストにない可能性がある、ということを示している(開かれている)。</p>
+<p><code>`Open</code>
+に特別なことはない。<em>どんな</em>単語でも、バッククォートをつければ型として使えるし、さっきはふれなかったがこんなこともできる:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">`Foo</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : [&gt; `Foo ] = `Foo
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">`Foo 42</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : [&gt; `Foo of int ] = `Foo 42
+</span></code></pre>
+
+<p>さあ、 <code>lock</code> の状態を出力する関数を書いてみよう:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_lock</span> <span class="ocaml-variable">st </span>=
+    <span class="keyword">match</span> st <span class="keyword">with</span>
+    | `Open -&gt; print_endline <span class="ocaml-error-loc">'</span>The lock is open'
+    | `Close -&gt; print_endline 'The lock is closed'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>関数の型を注意して見てみよう。型推論によって、引数 <code>st</code> の型は
+<code>[&lt; `Close | `Open]</code> になっている。 &lt; (より小さい)記号は、これが
+<strong>閉じたクラス</strong>という意味だ。つまり、この関数が動くのは
+<code>`Close</code> か <code>`Open</code> についてだけで、他ではだめだということだ。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_lock</span> `Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_lock
+Hint: Did you mean print_float?
+</span></code></pre>
+
+<p><code>print_lock</code> が <code>door</code> にも <code>lock</code>
+にも、まったく同じようにちゃんと動いている!
+型安全性が多少損なわれるが、それはわかっていたことであるし、これによって、型推論が、我々の意図したとおりに推論してくれるようになったことを考えれば、几帳面なコードに執着せずともよいだろう。</p>
+<p>これは、多相ヴァリアントのほんのさわりにすぎない。安全な型の推論のため、これらは、滅多なことではコード中で使わないほうがよいだろう。それよ
+りも、高等な OCaml
+のコードの中でこれらを見ることのほうが、ずっと多いだろう。高等プログラマには、高等テクニックを書くのに型システムを弱めたいということが、ときどき
+あるからだ。</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/labels.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

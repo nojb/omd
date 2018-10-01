@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="file_manipulation.html" rel="alternate" hreflang="en"/>
+<link href="file_manipulation.ja.html" rel="alternate" hreflang="ja"/>
+<link href="file_manipulation.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>文件操作 &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/file_manipulation.zh.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.zh.html">OCaml教程</a><span class="divider"></span></li>
+<li class="active">文件操作</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="file_manipulation.html">en</a></li>
+<li><a href="file_manipulation.ja.html">日本語</a></li>
+<li class="active">中文</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">缓冲通道</a>
+<ul><li><a href="#">写</a>
+</li><li><a href="#">读</a>
+</li><li><a href="#">查找</a>
+</li><li><a href="#">注意事项</a>
+</li><li><a href="#">示例</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">文件操作</h1>
+
+<p>这是一篇讲解只用OCaml标准库中提供的操作来实现基本文件操作的指南。</p>
+<p>请看官方模块文档:<a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/Pervasives.html">Pervasives</a>,
+<a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/Printf.html">Printf</a>.</p>
+<p>标准库不提供可以直接读取文件成字符串或保存字符串到文件中的函数。这样的函数可以在第三方类如<a href="http://ocaml-lib.sourceforge.net/" title="http://ocaml-lib.sourceforge.net/">Extlib</a>找到.
+请见 <a href="http://ocaml-lib.sourceforge.net/doc/Std.html" title="http://ocaml-lib.sourceforge.net/doc/Std.html">Std.input_file与
+Std.output_file</a>.</p>
+<h2 id="">缓冲通道</h2>
+
+<p>The normal way of opening a file in OCaml returns a <strong>channel</strong>. There
+are two kinds of channels:</p>
+<ul><li><p>channels that write to a file: type <code>out_channel</code></p>
+</li><li><p>channels that read from a file: type <code>in_channel</code></p>
+</li></ul>
+
+<h3 id="">写</h3>
+
+<p>For writing into a file, you would do this:</p>
+<ol><li><p>Open the file to obtain an <code>out_channel</code></p>
+</li><li><p>Write stuff to the channel</p>
+</li><li><p>If you want to force writing to the physical device, you must flush
+ the channel, otherwise writing will not take place immediately.</p>
+</li><li><p>When you are done, you can close the channel. This flushes the
+ channel automatically.</p>
+</li></ol>
+
+<p>Commonly used functions: <code>open_out</code>, <code>open_out_bin</code>, <code>flush</code>,
+<code>close_out</code>, <code>close_out_noerr</code></p>
+<p>Standard <code>out_channel</code>s: <code>stdout</code>, <code>stderr</code></p>
+<h3 id="">读</h3>
+
+<p>For reading data from a file you would do this:</p>
+<ol><li><p>Open the file to obtain an <code>in_channel</code></p>
+</li><li><p>Read characters from the channel. Reading consumes the channel, so
+ if you read a character, the channel will point to the next
+ character in the file.</p>
+</li><li><p>When there are no more characters to read, the <code>End_of_file</code>
+ exception is raised. Often, this is where you want to close the
+ channel.</p>
+</li></ol>
+
+<p>Commonly used functions: <code>open_in</code>, <code>open_in_bin</code>, <code>close_in</code>,
+<code>close_in_noerr</code></p>
+<p>Standard <code>in_channel</code>: <code>stdin</code></p>
+<h3 id="">查找</h3>
+
+<p>Whenever you write or read something to or from a channel, the current
+position changes to the next character after what you just wrote or
+read. Occasionally, you may want to skip to a particular position in the
+file, or restart reading from the beginning. This is possible for
+channels that point to regular files, use <code>seek_in</code> or <code>seek_out</code>.</p>
+<h3 id="">注意事项</h3>
+
+<ul><li><p>Don&#39;t forget to flush your <code>out_channel</code>s if you want to actually
+ write something. This is particularly important if you are writing
+ to non-files such as the standard output (<code>stdout</code>) or a socket.</p>
+</li><li><p>Don&#39;t forget to close any unused channel, because operating systems
+ have a limit on the number of files that can be opened
+ simultaneously. You must catch any exception that would occur during
+ the file manipulation, close the corresponding channel, and re-raise
+ the exception.</p>
+</li><li><p>The <code>Unix</code> module provides access to non-buffered file descriptors
+ among other things. It provides standard file descriptors that have
+ the same name as the corresponding standard channels: <code>stdin</code>,
+ <code>stdout</code> and <code>stderr</code>. Therefore if you do <code>open Unix</code>, you may get
+ type errors. If you want to be sure that you are using the <code>stdout</code>
+ channel and not the <code>stdout</code> file descriptor, you can prepend it
+ with the module name where it comes from: <code>Pervasives.stdout</code>. *Note
+ that most things that don&#39;t seem to belong to any module actually
+ belong to the <code>Pervasives</code> module, which is automatically opened.*</p>
+</li><li><p><code>open_out</code> and <code>open_out_bin</code> truncate the given file if it already
+ exists! Use <code>open_out_gen</code> if you want an alternate behavior.</p>
+</li></ul>
+
+<h3 id="">示例</h3>
+
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
+  
+<span class="governing">let </span><span class="ocaml-variable">file</span> = 'example.dat'
+<span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello!'
+  
+<span class="governing">let</span> () =
+  <span class="comment">(* &#21521;&#25991;&#20214;&#20889;&#20449;&#24687; *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">oc</span> = open_out file <span class="governing">in</span>    <span class="comment">(* &#26032;&#24314;&#25110;&#20462;&#25913;&#25991;&#20214;,&#36820;&#22238;&#36890;&#36947; *)</span>
+  fprintf oc '%s\n' message;   <span class="comment">(* &#20889;&#19968;&#20123;&#19996;&#35199; *)</span>
+  close_out oc;                <span class="comment">(* &#20889;&#20837;&#24182;&#20851;&#38381;&#36890;&#36947; *)</span>
+  
+  <span class="comment">(* &#35835;&#21462;&#25991;&#20214;&#24182;&#26174;&#31034;&#31532;&#19968;&#34892; *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">ic</span> = open_in file <span class="governing">in</span>
+  <span class="keyword">try</span> 
+    <span class="governing">let </span><span class="ocaml-variable">line</span> = input_line ic <span class="governing">in</span>  <span class="comment">(* &#20174;&#36755;&#20837;&#36890;&#36947;&#35835;&#20837;&#19968;&#34892;&#24182;&#20002;&#24323;'\n'&#23383;&#31526; *)</span>
+    print_endline line;          <span class="comment">(* &#36755;&#20986;&#32467;&#26524;&#21040;&#26631;&#20934;&#36755;&#20986;&#31471; *)</span>
+    flush stdout;                <span class="comment">(* &#29616;&#22312;&#20889;&#20837;&#40664;&#35748;&#35774;&#22791; *)</span>
+    close_in ic                  <span class="comment">(* &#20851;&#38381;&#36755;&#20837;&#36890;&#36947; *)</span> 
+  
+  <span class="keyword">with</span> e -&gt;                      <span class="comment">(* &#19968;&#20123;&#19981;&#21487;&#39044;&#35265;&#30340;&#24322;&#24120;&#21457;&#29983; *)</span>
+    close_in_noerr ic;           <span class="comment">(* &#32039;&#24613;&#20851;&#38381; *)</span>
+    <span class="keyword">raise</span> e                      <span class="comment">(* &#20197;&#20986;&#38169;&#30340;&#24418;&#24335;&#36864;&#20986;: &#25991;&#20214;&#24050;&#20851;&#38381;,&#20294;&#36890;&#36947;&#27809;&#26377;&#20889;&#20837;&#19996;&#35199; *)</span>
+  
+  <span class="comment">(* &#27491;&#24120;&#36864;&#20986;: &#25152;&#26377;&#30340;&#36890;&#36947;&#37117;&#24050;&#20889;&#20837;&#19988;&#20851;&#38381; *)</span></code></pre>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.zh.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/file_manipulation.zh.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

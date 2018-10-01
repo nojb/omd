@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="governance.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Governance of the OCaml.org domain &#8211; OCaml</title>
+    <link href="img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="" class="brand"><img src="img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="learn/">Learn</a></li>
+              <li><a href="docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="community/">Community</a></li>
+              <li><a href="community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/governance.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="">Home</a><span class="divider"></span></li>
+<li class="active">Governance of the OCaml.org domain</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Overview-and-Scope">Overview and Scope</a>
+<ul><li><a href="#Purpose-a-document-that-represents-reality">Purpose - a document that represents reality</a>
+</li><li><a href="#Disambiguation-the-meaning-of-OCaml-org">Disambiguation - the meaning of OCaml.org</a>
+</li><li><a href="#Guiding-principles-of-OCaml-org">Guiding principles of OCaml.org</a>
+</li></ul>
+</li><li><a href="#Roles">Roles</a>
+<ul><li><a href="#Owner-and-Delegates">Owner and Delegates</a>
+</li><li><a href="#Maintainers">Maintainers</a>
+</li><li><a href="#Contributors">Contributors</a>
+</li><li><a href="#Users">Users</a>
+</li></ul>
+</li><li><a href="#Projects">Projects</a>
+<ul><li><a href="#Initiating-a-Project">Initiating a Project</a>
+</li><li><a href="#Closing-a-Project">Closing a Project</a>
+</li></ul>
+</li><li><a href="#Processes">Processes</a>
+<ul><li><a href="#Decision-Making-and-Communication">Decision Making and Communication</a>
+</li><li><a href="#Contribution-Process-and-Licensing">Contribution Process and Licensing</a>
+</li><li><a href="#Dispute-resolution">Dispute resolution</a>
+</li></ul>
+</li><li><a href="#Existing-Projects">Existing Projects</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Governance-of-the-OCaml-org-domain">Governance of the OCaml.org domain</h1>
+
+<h2 id="Overview-and-Scope">Overview and Scope</h2>
+
+<p>As the OCaml community continues to grow, more collaborative work is being
+undertaken to support and extend the needs of the language and
+its users. This document focuses specifically on the
+OCaml.org <em>domain name</em> and the Projects that make use of that domain name.
+It describes the reporting structure, roles involved and the responsibilities.
+The aim is to avoid introducing cumbersome processes while still providing a
+high degree of transparency.</p>
+<h3 id="Purpose-a-document-that-represents-reality">Purpose - a document that represents reality</h3>
+
+<p>At any given time, this document must reflect the <em>current reality</em>.
+It is <em>not</em> intended to be aspirational nor reflect the kind of structures
+that people may expect to see. This is an important point because the utility
+of this document is limited to the extent that it represents how things
+<em>really</em> are, as opposed to how people may <em>desire</em> them to be in the future.
+As the environment changes, this document should also be updated such that it
+consistently reflects how things are.</p>
+<h3 id="Disambiguation-the-meaning-of-OCaml-org">Disambiguation - the meaning of OCaml.org</h3>
+
+<p>When using the term &#39;OCaml.org&#39;, there is the potential for a number of
+different interpretations.  To reduce confusion, these are described below and
+the meaning of the term <em>for this document</em> is explained.</p>
+<p><em>Second-level domain name</em> - This is the domain name we are familiar with,
+&#39;OCaml.org&#39;, which has associated sub-domains and records (NB: Just for
+clarity and edification, the top-level domain here is &#39;.org&#39;).</p>
+<p><em>Community website</em> - This is the community facing website, which can be found
+at <a href="http://ocaml.org">http://ocaml.org</a> and is often referred to as simply &#39;OCaml.org&#39;.</p>
+<p><em>Infrastructure</em> - This may refer to the virtual machines (VMs), services or
+other things that are somehow routed via the second-level domain name itself.
+An obvious example is the VM that hosts the community website but another would
+be the VMs and systems that host the tarballs and files used by the OPAM
+package manager tool.</p>
+<p>For the purposes of this document, we take the first meaning — that
+this document relates to the governance of the second-level domain,
+&#39;OCaml.org&#39;. Therefore, anything that involves use of the domain name in some
+form is affected by the governance of the domain name itself. That includes
+any public facing webpages, URLs and other resources.
+This is important because, in a way, OCaml.org is the sum of the Projects
+it hosts.</p>
+<p>To avoid confusion between the domain name itself and the community website
+Project, the term &#39;OCaml.org&#39; in this document refers <em>only</em> to
+the second-level domain name itself. Any references to the domain of the
+community website project will include the sub-domain &#39;www.ocaml.org&#39;,
+even though this is set to redirect to http://ocaml.org.</p>
+<h3 id="Guiding-principles-of-OCaml-org">Guiding principles of OCaml.org</h3>
+
+<p>There are certain guiding principles for OCaml.org, which include openness and
+a community-focus, that Projects need to be compatible with. These principles
+extend to all of the Projects that use the domain OCaml.org.</p>
+<h2 id="Roles">Roles</h2>
+
+<h3 id="Owner-and-Delegates">Owner and Delegates</h3>
+
+<p>The Owner of OCaml.org is Xavier Leroy, the lead developer of the OCaml
+language. Projects under OCaml.org sub-domains are managed by the
+community, meaning that it is the community that actively contributes to the
+day-to-day maintenance of any OCaml.org Project, but the general strategic
+direction is drawn by the Owner.</p>
+<p>It is the role of the Owner to resolve disputes that may arise
+in relation to OCaml.org itself, specifically to ensure that the Projects under
+OCaml.org are able to progress in a coordinated way.
+It is the community&#39;s role to guide the decisions of the Owner
+through active engagement, contributions and discussions.  To foster a healthy
+and growing community, the Owner will make the
+goals and decisions clear and public.</p>
+<p>It is anticipated that the Projects themselves will be self-managing and will
+resolve issues within their communities, without recourse to the Owner.
+Where the Owner needs to become involved, he/she will act as arbitrator.</p>
+<h4 id="Delegates">Delegates</h4>
+
+<p>The Owner may choose to delegate authority to others to manage the domain and
+act in the Owner&#39;s name, though ownership remains with the Owner.
+Those Delegates are free to choose how they arrange themselves, in agreement
+with the Owner. In the specific case of disputes, the Delegate(s) will consult
+with the Owner, who will act as arbitrator if required.</p>
+<p>*Currently, Xavier Leroy has delegated responsibility for OCaml.org to
+Anil Madhavapeddy, who has accepted this Role.*</p>
+<h3 id="Maintainers">Maintainers</h3>
+
+<p>Projects under OCaml.org will have their own Maintainers, who have commit
+access to relevant repositories and are responsible for:</p>
+<ul><li><p>Managing the specific project.</p>
+</li><li><p>Writing code directly to repositories.</p>
+</li><li><p>Eliciting and screening the contributions of others.</p>
+</li><li><p>Ensuring that the Owners/Delegates are aware of community needs.</p>
+</li></ul>
+
+<p>Generally, Maintainers only have authority over the specific Projects they are
+responsible for though it is expected that Maintainers of different Projects
+will collaborate frequently, especially in the case of major changes or
+announcements.  Typically, individuals who have made substantive contributions
+to a Project will be invited to become Maintainers.</p>
+<h3 id="Contributors">Contributors</h3>
+
+<p>Contributors are wider members of the OCaml community who make valuable
+contributions, but generally do not have authority to make direct changes to a
+Project&#39;s code-base or documentation. Anyone can become a Contributor and there
+is no expectation of commitment, no specific skill requirement and no
+selection process. The only necessary step is to make or suggest some
+improvement or change to the Project.</p>
+<p>Contributors can interact with a Project via tools such as email lists, issue
+trackers and wiki pages, for example.  The main email list for OCaml.org is
+infrastructure@lists.ocaml.org and is open to all. Maintainers are
+free to direct discussion to their own dedicated mailing lists, as they feel
+appropriate. Those whose contributions become part of a public git repository
+will be recognised in some form on a public website as thanks.</p>
+<p>It is expected that regular Contributors to specific Projects may be asked if
+they wish to become Maintainers, as described above. There is no obligation to
+accept such an offer.</p>
+<h3 id="Users">Users</h3>
+
+<p>Users are the most important group and it includes the much wider community of
+anyone who interacts with OCaml.org in any way.  This covers all web-visitors,
+package users, and members of mailing lists. Without Users, the Projects serve
+no purpose so the impact of any major decisions on this group should be
+assessed.</p>
+<p>Wherever practicable, Users should be encouraged to provide feedback and
+participate in the Projects as much as possible. Users who engage a lot with a
+Project will likely go on to become Contributors.</p>
+<p>It should be noted that these Roles are not mutually exclusive, for example
+Maintainers and Contributors are necessarily also Users.</p>
+<h2 id="Projects">Projects</h2>
+
+<p><strong>Definition</strong> - A Project within OCaml.org is characterised by its sub-domain.
+It is expected that the majority of new work will fall under an existing
+sub-domain and will therefore already have a set of Maintainers and
+Contributors (as described above).</p>
+<p><strong>Communication</strong> - All Maintainers of Projects must join the Infrastructure
+mailing list (infrastructure@lists.ocaml.org). This list is the primary way
+that information and decisions surrounding OCaml.org will be discussed and
+disseminated. If Projects wish to set up their own lists, they may do so on
+lists.ocaml.org (see below).</p>
+<p><strong>Governance</strong> - Projects are free to choose their mode of governance provided
+it is compatible with the governance and guiding principles of OCaml.org.</p>
+<h3 id="Initiating-a-Project">Initiating a Project</h3>
+
+<p>Any proposal for new work should be raised and discussed on the Infrastructure
+mailing list. If there is consensus among Maintainers that the work fits
+within an existing Project, then the Maintainers of that Project can take it
+forward.</p>
+<p>If a new sub-domain is required, then a brief proposal
+should be made on the Infrastructure list that covers:</p>
+<ul><li><p>The aims and purpose of the Project (inc name of the sub-domain required).</p>
+</li><li><p>Specific resources required and for how long (e.g VMs).</p>
+</li><li><p>Any impact on or relation to existing Projects.</p>
+</li><li><p>Information about the initial Maintainers.</p>
+</li><li><p>Details of proposed licensing arrangements for code/content.</p>
+</li></ul>
+
+<p>The above information is intended to stimulate discussion so brevity is
+preferred. Following discussion, and if the Owner/Delegate agrees, the
+resources can be provisioned. There is no obligation for the Owner/Delegate to
+provide any resources beyond the sub-domain.</p>
+<h3 id="Closing-a-Project">Closing a Project</h3>
+
+<p>A Project can be closed:</p>
+<ul><li><p>If it has completed its aims and the Maintainers request it be closed down.</p>
+</li><li><p>If there are no Maintainers left to continue supporting it and no-one willing
+to take on the role.</p>
+</li><li><p>By the Owner/Delegate for any reason.</p>
+</li></ul>
+
+<p>In all cases, prior notice must be sent to the Infrastructure list including a
+reasonable time-frame and reasons for closure.
+Closure simply implies revocation or redirection of the sub-domain and/or
+shutting down or reclaiming any resources provided (e.g VMs).</p>
+<h2 id="Processes">Processes</h2>
+
+<h3 id="Decision-Making-and-Communication">Decision Making and Communication</h3>
+
+<p>The preferred approach for most discussions is through
+<a href="http://en.wikipedia.org/wiki/Rough_consensus">rough consensus and running code</a>.
+Discussions should be public and take place on either the Infrastructure
+mailing list, the relevant Project mailing-list or on relevant issue trackers.
+Users and Contributors are encouraged to take part and voice their opinions.
+Typically, the Maintainers of a Project will make the final decision, having
+accounted for wider views.</p>
+<p>All Projects under OCaml.org are to be documented such that Users can find out
+about them and understand both the purpose and how they can contribute.</p>
+<h3 id="Contribution-Process-and-Licensing">Contribution Process and Licensing</h3>
+
+<p>Contributions to OCaml.org will primarily be to one or more of its Projects.
+Each Project under OCaml.org needs to define a clear contribution process and
+licensing agreement so
+that Contributors understand how to engage with the Maintainers. Typically,
+this will cover where communication occurs and the process for submitting
+patches. Contributions from the community are encouraged and can take many
+forms including, bug fixes, new features, content or documentation.</p>
+<p>All Projects under OCaml.org are expected to be open-source and the licensing
+arrangements should reflect this.</p>
+<p>Contributions to OCaml.org itself may be in the form of resources that can be
+shared by Projects and can be discussed with Owner/Delegate and Project
+Maintainers on the Infrastructure mailing list.</p>
+<h3 id="Dispute-resolution">Dispute resolution</h3>
+
+<p>Maintainers are expected to make decisions regarding their Projects.
+The intent is for any Maintainers to resolve disagreements, through
+a consensus process within each Project.</p>
+<p>On the rare occasions, where Maintainers of a Project cannot agree
+on a way forward the following approach is suggested:</p>
+<ul><li><p>The specific issue(s) will need to be articulated so it is clear what needs
+to be discussed.</p>
+</li><li><p>Other Maintainers of OCaml.org projects will be asked for their views.</p>
+</li><li><p>If the discussion still cannot be resolved, the Owner (or their Delegate)
+will act as arbitrator.</p>
+</li></ul>
+
+<p>During the above, it is expected that all people will be reasonable and be
+respectful of each other&#39;s efforts and viewpoints.  In general, we expect to
+generate consensus among the community to resolve conflicts.</p>
+<h2 id="Existing-Projects">Existing Projects</h2>
+
+<p>Projects are referred to by their <strong>sub-domain</strong> and summaries of the
+current Projects are maintained on the Infrastructure
+wiki page: <a href="https://github.com/ocaml/infrastructure/wiki">https://github.com/ocaml/infrastructure/wiki</a></p>
+<p></p><hr/><strong>Adoption of this document</strong>
+<p>This version of the document was agreed upon by the incumbent set
+of Maintainers in September 2015. You can look back at the
+<a href="http://lists.ocaml.org/pipermail/infrastructure/2015-August/000518.html">discussion</a>
+or see the <a href="https://github.com/ocaml/ocaml.org/issues/700">related issue</a>.</p>
+<p><em><strong>Version 1.0.0 — September 2015</strong></em>
+</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="learn/">Learn</a></h1>
+    <ul>
+      <li><a href="learn/taste.html">Code Examples</a></li>
+      <li><a href="learn/tutorials/">Tutorials</a></li>
+      <li><a href="learn/books.html">Books</a></li>
+      <li><a href="learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="releases/index.html">Compiler Releases</a></li>
+      <li><a href="docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="community/">Community</a></h1>
+    <ul>
+      <li><a href="community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="meetings/">Meetings</a></li>
+      <li><a href="community/planet/">News</a></li>
+      <li><a href="community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/governance.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

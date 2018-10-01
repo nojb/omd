@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="call.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Call for Presentations &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2013/call.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../meetings/">OCaml Meetings</a><span class="divider"></span></li>
+<li><a href="../../../meetings/ocaml/">User &amp; Developers Meetings</a><span class="divider"></span></li>
+<li><a href="../../../meetings/ocaml/2013/">2013</a><span class="divider"></span></li>
+<li class="active">Call for Presentations</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<pre><code>==============================================================================
+
+                           OCAML 2013
+                The  OCaml Users and Developers Workshop
+                http://ocaml.org/meetings/ocaml/2013/
+                       Boston, Massachusetts, USA
+                           September 24, 2013
+
+                        CALL FOR PRESENTATIONS
+
+                      Co-located with ICFP 2013
+                        Sponsored by SIGPLAN
+
+            Talk Proposal Submission Extended Deadline:
+                  June 18, 2013 (anywhere on earth)
+                                   
+==============================================================================
+
+The first occurrence of the OCaml Users and Developers Workshop was
+colocated with ICFP 2012, in Copenhagen, following the OCaml Meetings
+in Paris in 2010 and 2011. OCaml 2013 will be held on September 24,
+2013, in Boston, colocated with ICFP 2013.
+
+The OCaml Users and Developers Workshop brings together industrial
+users of OCaml with academics and hackers who are working on extending
+the language, type system and tools. Discussions will focus on the
+practical aspects of OCaml programming and the nitty gritty of the
+tool-chain and upcoming improvements and changes.  Thus, we aim to
+solicit talks on all aspects related to improving the use or
+development of the language and of its programming environment,
+including, for example:
+
+- compiler developments, new backends, runtime and architectures
+
+- practical type system improvements, such as (but not exhaustively) 
+  GADTs, first-class modules, generic programming, or dependent types
+
+- new library or application releases, and their design rationales
+
+- tool enhancements by commercial consultants
+
+- prominent industrial uses of OCaml, or deployments in unusual
+  situations.
+
+It will be an informal meeting, with an online scribe report of the
+meeting, but no formal proceedings. Slides of presentations will be
+available online from the workshop homepage.
+
+To submit a talk, please register a description of the talk (about 2
+pages long) at http://ocaml.org/meetings/ocaml/2013/talks/ providing a
+clear statement of what will be brought by the talk: the problems that
+are addressed, the technical solutions or methods that are
+proposed. If you wish to perform a demo or require any special setup,
+we will do our best to accommodate you.
+
+Schedule
+========
+
+Abstract Submission (extended) Deadline: June 18, 2013 (anywhere on earth)
+Notification to Speakers: Friday, July 7, 2013
+Workshop: Tuesday, September 24, 2013
+
+Program Committee 
+=================
+
+* Damien Doligez, INRIA Paris-Rocquencourt, France
+* Jun Furuse, Standard Chartered Bank, Singapore
+* Jacques Le Normand, Google, USA
+* Michel Mauny, ENSTA-ParisTech, France (chair)
+* Mark Shinwell, Jane Street Europe, UK
+* David Walker, Princeton University, USA
+* Jeremy Yallop, University of Cambridge, UK
+* Sarah Zennou, EADS IW, France
+
+If you have any questions, please e-mail:
+Michel Mauny &lt;michel.mauny AT ensta-paristech DOT fr&gt;
+
+</code></pre>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/meetings/ocaml/2013/call.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="CrossCompiler.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Cross-compiling &#8211; OCaml</title>
+    <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../../learn/">Learn</a></li>
+              <li><a href="../../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../../community/">Community</a></li>
+              <li><a href="../../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/CrossCompiler.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../../">Home</a><span class="divider"></span></li>
+<li><a href="../../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li><a href="../../../learn/tutorials/ocamlbuild/">Ocamlbuild</a><span class="divider"></span></li>
+<li class="active">Cross-compiling</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="CrossCompiler">CrossCompiler</h1><h2 id="Overview">Overview</h2><p>Cross-compiling is compiling on a <em>host</em> machine a binary executable to
+be executed on a <em>target</em> machine, where <em>host</em> and <em>target</em> are of
+different architectures and/or OSes. A short introduction on the subject
+can be found on
+<a href="http://en.wikipedia.org/wiki/Cross_compiler">Wikipedia</a>.</p>
+<p>As of today, cross-compilation is not supported by OCaml *out of the
+box*. However, it possible to build OCaml cross-compilers fairly easy.
+This page aims at explaining how to do so.</p>
+<h4 id="What-you-will-need">What you will need</h4><p>To engage in the build of an OCaml cross-compiler, you will need:</p>
+<ul><li><p>a working <code>ocamlrun</code> executable for the <em>host</em> machine in your path;</p>
+</li><li><p>a full-blown C cross-toolchain;</p>
+</li><li><p>a full-blown shell;</p>
+</li><li><p>all the dependencies you would need to build OCaml in a <em>classical</em>
+ way;</p>
+</li><li><p>some time;</p>
+</li><li><p>a peaceful mind.</p>
+</li></ul>
+
+<h4 id="What-you-will-get">What you will get</h4><p>Upon successful build and installation, the following directories are
+created:</p>
+<ul><li><p><em>BINDIR</em> with two executables:</p>
+<ul><li><p>the newly-created <code>ocamlopt</code>, producing on the <em>host</em> executable
+to be run on the <em>target</em>;</p>
+</li><li><p>a copy of the <code>ocamlrun</code> used to execute OCaml bytecode
+executables on the <em>host</em> machine.</p>
+</li></ul></li><li><p><em>LIBDIR</em> with:</p>
+<ul><li><p>the <code>mli</code>, and <code>ml</code> files corresponding to the sources of the
+libraries;</p>
+</li><li><p>the <code>cmi</code>, <code>cmx</code>, <code>cmxa</code>, and <code>a</code> files corresponding to the
+libraries compiled for the <em>target</em> machine;</p>
+</li><li><p>the <code>o</code> files needed to produce the executables for the <em>target</em>
+machine;</p>
+</li></ul></li></ul>
+
+<p>where <em>BINDIR</em> and <em>LIBDIR</em> are chosen at the configuration step.</p>
+<h2 id="Building-a-C-cross-compiler-and-related-tools">Building a C cross-compiler and related tools</h2><p>Building a C cross-compiler is not an easy task. First, one will need to
+build some cross-assembler, cross-linker and other <em>base</em> tools. Then,
+the C cross-compiler can be built but this often implies some more or
+less complicated bootstrap. Finally, it is also necessary to cross-build
+the standard library (<em>e. g.</em> libc) needed to run executables on the
+target architecture.</p>
+<p>To overcome this tedious process, one is advised to resort to either a
+prepackaged C cross-compiler (from binaries, from a packaging system,
+whatever). If this option is not available, another great time saver is
+the excellent <a href="http://www.kegel.com/crosstool/">crosstool</a>.</p>
+<p>Before building the corresponding OCaml cross-compiler, one is strongly
+advised to check that its C cross-compiler is actually operating as
+expected.</p>
+<h2 id="Building-an-OCaml-cross-compiler">Building an OCaml cross-compiler</h2><p>Building an OCaml cross-compiler is fairly easy (at least compared to
+the burden of getting a C one up and running). However, the sources and
+Makefiles of the standard distribution need to be slightly patched. Such
+a patch is provided here and is based on the sources of the release
+numbered <em>3.11.0</em>.</p>
+<h3 id="First-step-getting-the-sources">First step: getting the sources</h3><p>In order to get the sources of the cross-compiler, it is necessaty to:</p>
+<ol><li><p>get the sources of the release numbered <strong>3.11.0</strong><br/> the tarball of this release can be downloaded by following <a href="http://caml.inria.fr/pub/distrib/ocaml-3.11/ocaml-3.11.0.tar.gz">this
+ link</a>;</p>
+</li><li><p>get the cross-compiler patch from &lt;CrossCompilerPatch&gt;;</p>
+</li><li><p>apply the aforementioned patch<br/> this is usually done by copying the patch to the top directory
+ where sources are unarchived and running
+ <code>patch -p1 &lt; cross-caml.patch</code>.</p>
+</li></ol>
+
+<h3 id="Second-step-configuring">Second step: configuring</h3><p>For the configuration part, as one cannot rely upon the <code>./configure</code>
+magic, it is necessary generate its output by hand. Hopefully, this is
+easier than it may sound. The <code>./configure</code> produces three files:</p>
+<ul><li><p><code>config/m.h</code> (information about the target machine);</p>
+</li><li><p><code>config/s.h</code> (information about the target system);</p>
+</li><li><p><code>config/Makefile</code> (information about the toolchain to use).</p>
+</li></ul>
+
+<p>To create <code>config/m.h</code> and <code>config/s.h</code>, just start by copying
+respectively <code>config/m-templ.h</code> and <code>config/s-templ.h</code> and use the C
+<code>#define</code> and <code>#undef</code> directives to describe the target architecture.</p>
+<p>Alternatively, if a working shell, C compiler and libraries are already
+installed on your target system, you could copy the <code>./configure</code> script
+and the <code>config</code> directory to the target system, run <code>./configure</code> on
+it, and copy the generated <code>config/m.h</code> and <code>config/s.h</code> back to the
+host system.</p>
+<p>To create <code>config/Makefile</code>, just start by copying
+<code>config/Makefile-templ</code> (<strong>alert:</strong> be sure to use the <em>patched</em>
+<code>config/Makefile-templ</code>). Then, by reading the comments, one should be
+able to set the values of the various variables. Most notably, one
+should carefully set the following:</p>
+<ul><li><p><em>BINDIR</em> and <em>LIBDIR</em> that should be distinct from those of any
+ existing OCaml install;</p>
+</li><li><p><em>ARCH</em>, <em>MODEL</em>, and <em>SYSTEM</em> that should describe the target
+ machine;</p>
+</li><li><p><em>TARGETRANLIB</em>, <em>TARGETAR</em>, <em>ASM</em>, <em>ASPP</em>, <em>NATIVECC</em>, and
+ <em>PARTIALLD</em> that should point to the various tools of the C
+ cross-toolchain;</p>
+</li><li><p><em>MKEXE</em> (respectively <em>TARGETMKEXE</em>), <em>MKDLL</em> (respectively
+ <em>TARGETMKDLL</em>), and <em>MKMAINDLL</em> (respectively <em>TARGETMKMAINDLL</em>)
+ that should point to the C compilers used to build executable and
+ dynamic libraries for the host machine (respectively for the target
+ machine).</p>
+</li></ul>
+
+<p>Finally, a bit of black magic is needed to complete the Makefile. The
+following lines should be added: MKLIB=\$(TARGETAR) rc \$(1) \$(2);
+\$(TARGETRANLIB) \$(1) #ml let syslib x = &#39;-l&#39;\^x;; #ml let mklib
+out files opts = Printf.sprintf &#39;targetar rc %s %s %s; targetranlib %s&#39;
+out opts files out;; The first line indicates how a static library
+should be built.<br/>The second line defines an OCaml function that maps a library identifier
+to the command-line flag that should be passed to the compiler to link
+with that library.<br/>The third line defines an OCaml function indicating how a static library
+should be built.<br/><strong>alert:</strong> on this last line, <em>targetar</em> and <em>targetranlib</em> should be
+replaced respectively by the values of \$(TARGETAR) and
+\$(TARGETRANLIB). It is not possible to use the Makefile variables there
+because we are inside a comment.</p>
+<h3 id="Third-step-building">Third step: building</h3><p>If everything has been accurately set up, building the cross-compiler
+should be as smooth as:</p>
+<ol><li><p><code>make cross</code>;</p>
+</li><li><p><code>make installcross</code> (possibly requiring <em>root</em> privileges).</p>
+</li></ol>
+
+<h3 id="Fourth-step-testing">Fourth step: testing</h3><p>To test the newly-created toolchain, one is advised to compile on the
+host machine a program that links to some library (besides the standard
+library). As an example, the following one allows to test that the
+<em>Unix</em> library has been flawlessly compiled:</p>
+<p><code>let () =</code><br/><code>  print_string &#39;Hello, the path is &#39;;</code><br/><code>  print_endline (try Unix.getenv &#39;PATH&#39; with Not_found -&gt; &#39;</code>&lt;unset&gt;<code>&#39;)</code></p>
+<p>Checking that the correct assembler, linker and the like are actually
+called can be made by compiling in verbose mode: <em>BINDIR</em>/ocamlopt -o
+./cross-compiled -verbose unix.cmxa source.ml It should show that the C
+cross-toolchain is used. The <em>file</em> utility can be run to examine the
+actual architecture of the produced executable.</p>
+<p>When this is done, the final test is of course to copy the resulting
+executable to the target machine and to launch it.</p>
+<h2 id="Reporting-success-or-failure">Reporting success or failure</h2><p>To date, this process has been used to successfully build a MacOS X to
+Linux cross-compiler, based on a C cross-toolchain obtained from
+crosstool.</p>
+<p>In order to improve the patch, as well as this page, I would like to
+hear about both sucessful and unsucessful uses of them. Please send a
+mail to <a href="mailto:xavier.clerc@inria.fr">xavier.clerc@inria.fr</a> to report.</p>
+<h2 id="Related-resources">Related resources</h2><p>This section is probably not exhaustive. Feel free to add links to
+resources.</p>
+<ul><li><p>cross-compiling from Fedora to MinGW
+ <a href="http://camltastic.blogspot.com/2008/10/mingw-compile-software-for-windows.html">1</a>
+ <a href="http://camltastic.blogspot.com/2008/10/mingw-inkscape-cross-compiled-from.html">2</a>
+ <a href="http://camltastic.blogspot.com/2008/11/common-mistakes-cross-compiling-mingw.html">3</a>
+ [&lt;http://hg.et.redhat.com/misc/fedora-mingw&gt;--devel/]</p>
+</li><li><p>cross-compiling to (jailbroken) iPhone
+ <a href="http://yl.is.s.u-tokyo.ac.jp/~tosh/ocaml-on-iphone/">4</a></p>
+</li><li><p>wish on the bugtracker
+ <a href="http://caml.inria.fr/mantis/view.php?id=4303">5</a></p>
+</li></ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../../learn/books.html">Books</a></li>
+      <li><a href="../../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../../meetings/">Meetings</a></li>
+      <li><a href="../../../community/planet/">News</a></li>
+      <li><a href="../../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/ocamlbuild/CrossCompiler.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

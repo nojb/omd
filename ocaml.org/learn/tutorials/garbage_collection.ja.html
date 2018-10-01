@@ -1,0 +1,545 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="garbage_collection.html" rel="alternate" hreflang="en"/>
+<link href="garbage_collection.ja.html" rel="alternate" hreflang="ja"/>
+<link href="garbage_collection.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>ガベージコレクション &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/garbage_collection.ja.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ja.html">OCamlチュートリアル</a><span class="divider"></span></li>
+<li class="active">ガベージコレクション</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="garbage_collection.html">en</a></li>
+<li class="active">日本語</li>
+<li><a href="garbage_collection.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#">ガベージコレクション、参照カウント、明示的確保</a>
+<ul><li><a href="#GC-vs">GC vs. 参照カウント</a>
+</li></ul>
+</li><li><a href="#Gc">Gcモジュール</a>
+</li><li><a href="#Weak">ファイナライズと Weak モジュール</a>
+</li><li><a href="#">練習問題</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">ガベージコレクション</h1>
+
+<h2 id="">ガベージコレクション、参照カウント、明示的確保</h2>
+
+<p>現代的言語がすべてそうであるように、 OCaml
+にはガベージコレクタ(GC)があるので、 C/C++
+のようにメモリの確保と開放を明示する必要はない。</p>
+<p>JWZ が <a href="http://www.jwz.org/doc/java.html" title="http://www.jwz.org/doc/java.html">&#39;Java
+sucks&#39;</a>
+で吐き捨てているのだが:</p>
+<blockquote><p>最初に、良い点: Javaには、<code>free()</code> がない。
+これだけはきちんと認めなければならない、だが他は全部あぶく銭だ。
+この一点があるおかげで、他の全てがどんなにひどくても
+許してしまえるのです。
+この一点さえあれば、このドキュメントの他の全てのことは
+色褪せてしまう。<strong>だが...</strong></p>
+</blockquote>
+
+<p>OCaml のガベージコレクタは、現代的なハイブリッドの
+世代別/インクリメンタル コレクタであり、
+大抵の場合、手作業のアロケートよりも優れている。 Java GC (GC
+に悪名をあたえてしまった)とは違い、 OCaml GC
+は実行開始時に巨大なメモリを確保しないし、
+手で書き換えないといけないような勝手な固定限界があったりもしない。</p>
+<p>ガベージコレクションはなぜCのような明示的メモリ確保より速いのか?
+しばしば、<code>free</code> の呼び出しコストはないものと思われている。 実際には <code>free</code>
+は、
+メモリアロケータが複雑なデータ構造を操るのを含んだ高価な操作である。
+断続的に <code>free</code> を呼び出すプログラムだと、 メモリ領域を <code>free</code>
+するたびにコードとデータが追い出されてしまうので、
+コードとデータ全部をキャッシュに載せ直す必要がある。
+(プールアロケータまたはGCのような)複数のメモり領域を解放する
+回収戦略においては、複数のメモリ確保で1度だけペナルティを払う
+(確保あたりのコストはとても少なくなっている)。</p>
+<p>GC はまた、周辺メモリ領域を動かしヒープをコンパクトにする。
+これによってメモリ確保が簡単になり、従ってより高速になり、 L1, L2
+キャッシュに乗っかりやすい賢い GC が書ける。</p>
+<p>もちろん、手で超高速なメモリアロケータを書くことを拒絶するつもりは
+まったくないが、
+それはほとんどのプログラマが考えるより相当困難な仕事であろう。</p>
+<p>OCaml のガベージコレクタは二つのヒープ、
+<strong>マイナーヒープ</strong>と<strong>メジャーヒープ</strong>が ある。
+これは一般原則を認識している:
+ほとんどのオブジェクトは、小さく、頻繁に確保され、かつ即座に解放される。
+これらのオブジェクトはまずマイナーヒープに入り、
+頻繁にガベージコレクトされる。
+ほんのわずかのオブジェクトだけ長く生き残る。
+これらのオブジェクトはしばらくしたらマイナーヒープからメジャーヒープに
+昇格し、メジャーヒープはまれにしかコレクトされない。</p>
+<p>OCaml GC は同期的である。別々のスレッドでは走らず、
+アロケート要求のときにのみ呼び出されることがある。</p>
+<h3 id="GC-vs">GC vs. 参照カウント</h3>
+
+<p>Perlにはガベージコレクションがあるが、
+それは<strong>参照カウント</strong>と呼ばれる単純な方式である。 簡単に言えば、Perl
+におけるオブジェクトはそれぞれ、
+自身を指す(参照する)他のオブジェクトの数を数えて覚えている。
+カウントが0になればそのオブジェクトを指すものが何もないので、
+オブジェクトは解放される。</p>
+<p>参照カウントは、コンピュータ科学者にとっては本気の
+ガベージコレクトとは考えられていない。だがこれには
+完全なガベージコレクタより実用的には大きな利点がある。
+参照カウントを用いると、 コード中の <code>close</code> / <code>closedir</code>
+の明示的な呼び出しをなくすことができる。例えば:</p>
+<pre class="perl"><code class="perl">foreach (@files)
+{
+  my $io = new IO::File &#39;&lt; $_&#39; or die;
+  # read from $io
+}</code></pre>
+
+<p>このPerlコードでは <code>@files</code> というリスト内のそれぞれの要素を open
+して読み出すことを一通り繰り返す。 ループの最後でファイルハンドル <code>$io</code>
+を close する必要はない。 なぜなら Perl は参照カウントを使っており、
+ループ終端に到達すると変数 <code>$io</code> はスコープから外れ、
+このファイルオブジェクトの参照カウントが0になる。
+そうすれば即座に解放(つまり close)される。</p>
+<p>等価な OCaml コードを考えてみよう:</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">read_file</span> <span class="ocaml-variable">filename </span>=
+  <span class="governing">let </span><span class="ocaml-variable">chan</span> = open_in filename <span class="governing">in</span>
+  <span class="comment">(* read from chan *)</span> <span class="governing">in</span>
+<span class="ocaml-module">List</span>.iter read_file files</code></pre>
+
+<p><code>read_file</code> の呼び出しではファイルを open するが close しない。 なぜなら
+OCaml は完全なガベージコレクタを採用しており、 <code>chan</code>
+はしばらく後、マイナーヒープがいっぱいになるまで回収されない。
+さらに、**OCaml ではファイルハンドルのメモリを回収するときに
+チャネルを閉じない**。
+したがってこのプログラムは最終的にファイルデスクリプタを使い果たすだろう。</p>
+<p>ファイルやディレクトリその他の複雑なファイナライズを伴う重いオブジェクト
+を使う OCaml コードを書くときにはこのことを意識する必要がある。</p>
+<p>完全なガベージコレクトに公平になるように、
+参照カウント方式の不利な点を言及する:</p>
+<ul><li><p>オブジェクトそれぞれに参照カウントを格納する必要がある。言い替えれば、オブジェクトにオーバーヘッドがあるということだ。プログラムはメモリを余計に使うので、キャッシュやスワップ溢れがおきたりして、その結果、遅くなる。</p>
+</li><li><p>参照カウントは高価である -
+ ポインタを操作するときは常にオブジェクトの参照カウントをチェックして更新する必要がある。ポインタ操作は頻繁なので、プログラム低速化とコンパイルされたコードの肥大化の原因となる。</p>
+</li><li><p>いわゆる循環参照、自己参照構造を回収できない。いろんな言語でずいぶん長いことプログラミングしてきたが、これらを作ったことを思い出せない。</p>
+</li><li><p>グラフアルゴリズムはもちろん前項の仮定から外れる。Perlで
+ TSP(巡回セールスマン問題) を実装しないこと！</p>
+</li></ul>
+
+<h2 id="Gc">Gcモジュール</h2>
+
+<p><code>Gc</code>モジュールには
+OCamlプログラムからガベージコレクタへ問い合わせたり呼び出したりするための
+有用な関数がある。</p>
+<p>以下は、プログラムを走らせて走行終了直前の GC の統計を表示する
+プログラムである:</p>
+<pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+  <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
+  <span class="keyword">else</span>
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+    r *. x *. (1.0 -. x)
+  
+<span class="governing">let</span> () =
+  <span class="ocaml-module">Random</span>.self_init ();
+  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480';
+  <span class="keyword">for</span> x = 0 <span class="keyword">to</span> 640 <span class="keyword">do</span>
+    <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
+    <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+      <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+      <span class="ocaml-module">Graphics</span>.plot x y
+    <span class="keyword">done</span>
+  <span class="keyword">done</span>;
+  <span class="ocaml-module">Gc</span>.print_stat stdout</code></pre>
+
+<p>これが出力結果:</p>
+<pre><code>minor_words: 115926165          # 確保されたワード数合計
+promoted_words: 31217           # マイナーからメジャーへの昇格
+major_words: 31902              # 直接メジャーに確保された大きなオブジェクト
+minor_collections: 3538         # マイナーヒープの回収回数
+major_collections: 39           # メジャーヒープの回収回数
+heap_words: 63488               # ヒープの大きさ(ワード単位) = およそ 256K
+heap_chunks: 1
+top_heap_words: 63488
+live_words: 2694
+live_blocks: 733
+free_words: 60794
+free_blocks: 4
+largest_free: 31586
+fragments: 0
+compactions: 0</code></pre><p>この結果から、マイナーヒープの回収はおよそメジャーヒープの回収の100倍の頻度で
+あることが分かる (この例は必ずしも一般的ではない)。
+プログラムの実行期間全体で驚くことに440MBものメモリが確保されている。とはいえ、
+もちろんその大部分はすぐにマイナーコレクトで即座に解放されただろうが。
+約128KBだけがメジャーヒープの長期貯蔵庫に昇格して、
+また大きなオブジェクトと思われる別の128KBは直接メジャーヒープに確保された。</p>
+<p>イベントのうちのどれかが発生するときに(例えばメジャーコレクトごと)、
+デバッグメッセージを表示させるよう GC に指示できる。
+以下のコードを上の例の最初の方にに付け加える:</p>
+<pre><code class="ocaml"><span class="ocaml-module">Gc</span>.set { (<span class="ocaml-module">Gc</span>.get ()) <span class="keyword">with</span> <span class="ocaml-module">Gc</span>.verbose = 0x01 }</code></pre>
+
+<p>(これまで <code>{ 式 with フィールド = 値 }</code>
+形式を扱っていないが、何をしているのかはほぼ自明であろう)。
+上のコードでは、GCはメジャーコレクトが始まるたびに
+とにかくメッセージを表示するようになる。</p>
+<h2 id="Weak">ファイナライズと Weak モジュール</h2>
+
+<p>オブジェクトが GC によって解放されようとしているときに呼び出される
+<strong>ファイナライザ</strong>という関数を書くことができる。</p>
+<p><code>Weak</code>モジュールを使うと、いわゆる「弱いポインタ」を作成できる。
+この<strong>弱いポインタ</strong>を「普通のポインタ」と比較して
+定義するのがもっとも良いだろう。 通常の OCaml
+のオブジェクトを扱うときは、 オブジェクトは名前でもって参照する (例:
+<code>let name = ... in</code>)　か、 他のオブジェクトを経由して参照する。
+ガベージコレクタはオブジェクトに参照があることがわかれば回収しない。
+これが「普通のポインタ」と呼べるものだ。</p>
+<p>しかし、もしオブジェクトに弱いポインタあるいは弱参照があるときには、
+ガベージコレクタに対して、いつでも回収してよいというヒントを
+あたえることになる (オブジェクトを回収<em>する</em>のは必須ではない)。
+しばらく後、そのオブジェクトを調べるときに、
+弱いポインタを普通のポインタに変更することができ、 そうでなければ GC
+から実際にオブジェクトを回収したと通知されるだろう。</p>
+<p>ファイナライズと弱いポインタは、
+メモリ内オブジェクトのデータベースキャッシュを実装するのに使うことができる。
+ディスク上のファイル内に大量のユーザーレコードがある状態を想像しよう。
+これは一度にメモリにロードするには余りにもデータ量が多すぎ、また、
+ディスク上のデータは他のプログラムがアクセスするかもしれないので、
+メモリ上にレコードのコピーを持つときには、それらレコードを個々に
+ロックする必要がある。</p>
+<p>この「メモリ内オブジェクトのデータベースキャッシュ」の
+<em>公開</em>インタフェースは、ちょうど2つの関数になる:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">record</span> = { <span class="keyword">mutable</span> name : string; <span class="keyword">mutable</span> address : string }
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">get_record</span> : int -&gt; record
+<span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">sync_records</span> : unit -&gt; unit</code></pre>
+
+<p><code>get_record</code> 呼び出しが唯一ほとんどのプログラムで必要なものであり、
+キャッシュの外部またはディスクからの n番目のレコードの取得と返却を行う。
+するとプログラムは <code>record.name</code>、 <code>record.address</code>
+フィールドを読んだり更新したりできる。
+そしてプログラムはその後文字通りこのレコードについて忘れてしまう!
+この事象の裏で、どこかのタイミングで
+ディスクにレコードを書き戻すファイナライズが行われる。</p>
+<p><code>sync_record</code> 関数もまたユーザープログラムから呼び出される。
+この関数はレコード全部について、ディスク上とメモリのコピーとを同期化する。</p>
+<p>OCaml は現在、終了時にファイナライザを走行しないが、
+コードに以下の命令を追加するだけで簡単にこれを強制できる。
+以下の命令では完全なメジャーGC を終了時に発生させる。</p>
+<pre><code class="ocaml">at_exit <span class="ocaml-module">Gc</span>.full_major</code></pre>
+
+<p>またこのコードでは、 <code>Weak</code>
+モジュールを使って最近アクセスしたレコードのキャッシュを実装する。
+手コードに比べて <code>Weak</code> モジュールを使う利点は二つ:
+一つ目は、ガベージコレクタがプログラム全体のメモリ要求を観測しており、
+キャッシュの縮小を判断するのにより良い位置にいる。
+二つ目は、コードがより単純になる。</p>
+<p>我々の例ではユーザーレコードファイルはとても単純なフォーマットである。
+ファイルはユーザーレコードのリストそのものであり、
+ユーザーレコードはそれぞれ256バイトの固定長であって、
+二つのフィールドがあり(必要に応じてスペースでパディングされる)、
+名前フィールド(64バイト)と住所フィールド(192バイト)からなる。
+レコードがメモリに読み込まれる前に、
+プログラムはレコードの排他ロックを取得しなければならない。
+メモリ内コピーがファイルに書き戻された後、プログラムは
+そのロックを解放しなければならない。
+以下に、ディスク上フォーマット定義、
+レコードの読み書き、ロック、アンロックの低レベル関数のコードを示す:</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">record</span> = { <span class="keyword">mutable</span> name : string; <span class="keyword">mutable</span> address : string }
+  
+<span class="comment">(* On-disk format. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">record_size</span> = 256
+<span class="governing">let </span><span class="ocaml-variable">name_size</span> = 64
+<span class="governing">let </span><span class="ocaml-variable">addr_size</span> = 192
+  
+<span class="comment">(* Low-level load/save records <span class="keyword">to</span> file. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">seek_record</span> <span class="ocaml-variable">n fd </span>=
+  ignore(<span class="ocaml-module">Unix</span>.lseek fd (n * record_size) <span class="ocaml-module">Unix</span>.SEEK_SET)
+  
+<span class="governing">let</span> <span class="ocaml-function">write_record</span> <span class="ocaml-variable">record n fd </span>=
+  seek_record n fd;
+  ignore(<span class="ocaml-module">Unix</span>.write fd record.name 0 name_size);
+  ignore(<span class="ocaml-module">Unix</span>.write fd record.address 0 addr_size)
+  
+<span class="governing">let</span> <span class="ocaml-function">read_record</span> <span class="ocaml-variable">record n fd </span>=
+  seek_record n fd;
+  ignore(<span class="ocaml-module">Unix</span>.read fd record.name 0 name_size);
+  ignore(<span class="ocaml-module">Unix</span>.read fd record.address 0 addr_size)
+  
+<span class="comment">(* Lock/unlock the nth record <span class="governing">in</span> a file. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">lock_record</span> <span class="ocaml-variable">n fd </span>=
+  seek_record n fd;
+  <span class="ocaml-module">Unix</span>.lockf fd <span class="ocaml-module">Unix</span>.F_LOCK record_size
+  
+<span class="governing">let</span> <span class="ocaml-function">unlock_record</span> <span class="ocaml-variable">n fd </span>=
+  seek_record n fd;
+  <span class="ocaml-module">Unix</span>.lockf fd <span class="ocaml-module">Unix</span>.F_ULOCK record_size</code></pre>
+
+<p>また、空のメモリ内 <code>record</code> オブジェクトの新規作成関数が必要だ。</p>
+<pre><code class="ocaml"><span class="comment">(* Create a <span class="keyword">new</span>, empty record. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">new_record</span> <span class="ocaml-variable">() </span>=
+  { name = <span class="ocaml-module">String</span>.make name_size <span class="string">' '</span>;
+    address = <span class="ocaml-module">String</span>.make addr_size <span class="string">' '</span> }</code></pre>
+
+<p>これは本当に単純なプログラムだから、レコードの数を固定してしまう。</p>
+<pre><code class="ocaml"><span class="comment">(* Total number <span class="keyword">of</span> records. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">nr_records</span> = 10000
+  
+<span class="comment">(* On-disk file. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">diskfile</span> =
+  <span class="ocaml-module">Unix</span>.openfile 'users.bin' [ <span class="ocaml-module">Unix</span>.O_RDWR; <span class="ocaml-module">Unix</span>.O_CREAT ] 0o666</code></pre>
+
+<p><a href="../../img/users.bin.gz">users.bin.gz</a>
+をダウンロードして、プログラムを走らせる前に 復元しよう。</p>
+<p>レコードのキャッシュはとても単純だ:</p>
+<pre><code class="ocaml"><span class="comment">(* Cache <span class="keyword">of</span> records. *)</span>
+<span class="governing">let </span><span class="ocaml-variable">cache</span> = <span class="ocaml-module">Weak</span>.create nr_records</code></pre>
+
+<p><code>get_record</code> 関数はとても短く、基本的に二つの部分から構成される。
+キャッシュからレコードを掴んでくる。 もしキャッシュが <code>None</code>
+を返してきたら、これは レコードがキャッシュにまだ存在しないか、既に
+キャッシュから落ちてディスクに書き戻されている(ファイナライズ)か
+を意味している。 キャッシュが <code>Some record</code> を返した場合は、 そのまま
+<code>record</code> を返す
+(ここでレコードへの弱いポインタは普通のポインタに昇格する)。</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
+  
+<span class="comment">(* The finaliser function. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">finaliser</span> <span class="ocaml-variable">n record </span>=
+  printf '*** objcache: finalising record %d\n%!' n;
+  write_record record n diskfile;
+  unlock_record n diskfile
+  
+<span class="comment">(* Get a record from the cache or off disk. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">get_record</span> <span class="ocaml-variable">n </span>=
+  <span class="keyword">match</span> <span class="ocaml-module">Weak</span>.get cache n <span class="keyword">with</span>
+  | Some record -&gt;
+      printf '*** objcache: fetching record %d from memory cache\n%!' n;
+      record
+  | None -&gt;
+      printf '*** objcache: loading record %d from disk\n%!' n;
+      <span class="governing">let </span><span class="ocaml-variable">record</span> = new_record () <span class="governing">in</span>
+      <span class="ocaml-module">Gc</span>.finalise (finaliser n) record;
+      lock_record n diskfile;
+      read_record record n diskfile;
+      <span class="ocaml-module">Weak</span>.set cache n (Some record);
+      record</code></pre>
+
+<p><code>sync_records</code> 関数はもっと簡単だ。 まず、弱いポインタを全部 <code>None</code>
+に置き換えることでキャッシュを空にする。
+つまりこれでガベージコレクタがそこのレコードを全部回収してファイナライズ
+出来るようになったということだ。 だが、これは GC
+がすぐにレコードを回収<em>する</em>というわけではないので
+(事実そうなることはあまりない)、 GC
+に対してすぐにレコードを回収させるために、 メジャーサイクルも呼び出す:</p>
+<pre><code class="ocaml"><span class="comment">(* Synchronise all records. *)</span>
+<span class="governing">let</span> <span class="ocaml-function">sync_records</span> <span class="ocaml-variable">() </span>=
+  <span class="ocaml-module">Weak</span>.fill cache 0 nr_records None;
+  <span class="ocaml-module">Gc</span>.full_major ()</code></pre>
+
+<p>これでようやくテストコードが出来た。 テストコードを再度は示さないが、
+完全なプログラムとテストコード
+<a href="objcache.ml">objcache.ml</a>
+をダウンロードして 次のようにコンパイルできる:</p>
+<pre class="shell"><code class="shell">ocamlc unix.cma objcache.ml -o objcache</code></pre>
+
+<h2 id="">練習問題</h2>
+
+<p>ここに上記例を拡張する方法がある。 およそ並んでいる順に難しくなる。</p>
+<ol><li><p>レコードを<strong>オブジェクト</strong>として実装し、透過的に文字列を詰めたり取り出したりできるようにせよ。名前と住所のフィールドを取得、設定するメソッド(全部で4つの公開メソッド)が必要になるはずだ。出来る限りクラス内にコードの実装(ファイルアクセスやロック獲得)を隠蔽せよ。</p>
+</li><li><p>レコードを取得するのに <strong>read lock(読み込みロック)</strong>
+ を必要とするよう。ただしユーザーがフィールドを更新する前にこれを更新する
+ <strong>write lock(書き込みロック)</strong>
+ でこれを更新するように、プログラムを拡張せよ。</p>
+</li><li><p><strong>レコードの数を可変に</strong>出来るよう対応し、(ファイルに)新しいレコードを作成する関数を加えよ。[ヒント:
+    OCaml は弱いハッシュテーブルをサポートしている]</p>
+</li><li><p><strong>可変長レコード</strong>に対応せよ。</p>
+</li><li><p><strong>DBM形式ハッシュ</strong>のファイル形式で動作するようにせよ。</p>
+</li><li><p><strong>リレーショナルデータベース</strong>(ロックのある)を一つ選択して、「ユーザ」テーブルの汎用キャッシュを提供せよ。</p>
+</li></ol>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ja.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/garbage_collection.ja.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

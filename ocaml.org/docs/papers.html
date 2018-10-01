@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="papers.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>Papers &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../learn/">Learn</a></li>
+              <li class="active"><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/docs/papers.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../docs/">Docs</a><span class="divider"></span></li>
+<li class="active">Papers</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Language-Features">Language Features</a>
+<ul><li><a href="#Core-Language">Core Language</a>
+</li><li><a href="#Modules">Modules</a>
+</li><li><a href="#Objects">Objects</a>
+</li><li><a href="#Polymorphic-Variants">Polymorphic Variants</a>
+</li><li><a href="#Labeled-and-Optional-Parameters">Labeled and Optional Parameters</a>
+</li><li><a href="#Meta-Programming">Meta-Programming</a>
+</li></ul>
+</li><li><a href="#Compilers-and-Runtime-System">Compilers and Runtime System</a>
+<ul><li><a href="#Bytecode-Compiler-and-Bytecode-Interpreter">Bytecode Compiler and Bytecode Interpreter</a>
+</li><li><a href="#Native-Code-Compiler">Native-Code Compiler</a>
+</li><li><a href="#Garbage-Collector">Garbage Collector</a>
+</li><li><a href="#Pattern-Matching">Pattern Matching</a>
+</li></ul>
+</li><li><a href="#Industrial-Uses">Industrial Uses</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Papers-and-Talks">Papers and Talks</h1>
+
+<h2 id="Language-Features">Language Features</h2><h3 id="Core-Language">Core Language</h3>
+
+<ul><li><p>Andrew K. Wright and Matthias Felleisen. A Syntactic Approach to Type
+Soundness. In Information &amp; Computation, 115(1):38−94, 1994.
+[ <a href="http://www.cs.rice.edu/CS/PLT/Publications/Scheme/ic94-wf.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This paper describes the semantics and the type system of Core ML, and
+uses a simple syntactic technique to prove that well-typed programs
+cannot go wrong.</p>
+</li><li><p>François Pottier and Didier Rémy. The Essence of ML Type Inference. In
+Benjamin C. Pierce, editor, Advanced Topics in Types and Programming
+Languages, MIT Press, 2005.</p>
+<p>This book chapter gives an in-depth description of the Core ML type
+system, with an emphasis on type inference. The type inference algorithm
+is described as the composition of a constraint generator, which
+produces a system of type equations, and a constraint solver, which is
+presented as a set of rewrite rules.
+[
+<a href="http://cristal.inria.fr/attapl/preversion.ps.gz">Gzipped PostScript</a>
+]</p>
+</li><li><p>Jacques Garrigue. Relaxing the value restriction. In International
+Symposium on Functional and Logic Programming, 2004.
+[
+<a href="http://caml.inria.fr/pub/papers/garrigue-value_restriction-fiwflp04.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/garrigue-value_restriction-fiwflp04.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This paper explains why it is sound to generalize certain type variables
+at a <code>let</code> binding, even when the expression that is being <code>let</code>-bound
+is not a value. This relaxed version of Wright&#39;s classic “value
+restriction” was introduced in OCaml 3.07.</p>
+</li></ul>
+
+<h3 id="Modules">Modules</h3>
+
+<ul><li><p>Xavier Leroy. Manifest types, modules, and separate compilation. In
+Principles of Programming Languages, 1994.
+[
+<a href="http://caml.inria.fr/pub/papers/xleroy-manifest_types-popl94.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-manifest_types-popl94.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-manifest_types-popl94.dvi.gz">Gzipped
+DVI</a>
+]</p>
+<p>This paper presents a variant of the Standard ML module system that
+introduces a strict distinction between abstract and <em>manifest</em> types.
+The latter are types whose definitions explicitly appear as part of a
+module interface. This proposal is meant to retain most of the
+expressive power of the Standard ML module system, while providing much
+better support for separate compilation. This work sets the formal bases
+for OCaml&#39;s module system.</p>
+</li><li><p>Xavier Leroy. Applicative functors and fully transparent higher-order
+modules. In Principles of Programming Languages, 1995.
+[
+<a href="http://caml.inria.fr/pub/papers/xleroy-applicative_functors-popl95.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-applicative_functors-popl95.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-applicative_functors-popl95.dvi.gz">Gzipped
+DVI</a>
+]</p>
+<p>This work extends the above paper by introducing so-called <em>applicative</em>
+functors, that is, functors that produce compatible abstract types when
+applied to provably equal arguments. Applicative functors are also a
+feature of OCaml.</p>
+</li><li><p>Xavier Leroy. A Modular Module System. In Journal of Functional
+Programming, 10(3):269-303, 2000.
+[ <a href="http://caml.inria.fr/pub/papers/xleroy-modular_modules-jfp.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-modular_modules-jfp.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-modular_modules-jfp.dvi.gz">Gzipped
+DVI</a>
+]</p>
+<p>This accessible paper describes a simplified implementation of the OCaml
+module system, emphasizing the fact that the module system is largely
+independent of the underlying core language. This is a good tutorial to
+learn both how modules can be used and how they are typechecked.</p>
+</li><li><p>Xavier Leroy. A proposal for recursive modules in Objective Caml.
+Unpublished.
+[ <a href="http://caml.inria.fr/pub/papers/xleroy-recursive_modules-03.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-recursive_modules-03.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This note describes the experimental recursive modules introduced in
+OCaml 3.07.</p>
+</li></ul>
+
+<h3 id="Objects">Objects</h3>
+
+<ul><li><p>Didier Rémy and Jérôme Vouillon. Objective ML: An effective
+object-oriented extension to ML. In Theory And Practice of Objects
+Systems, 4(1):27−50, 1998.
+[
+<a href="http://caml.inria.fr/pub/papers/remy_vouillon-objective_ml-tapos98.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/remy_vouillon-objective_ml-tapos98.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/remy_vouillon-objective_ml-tapos98.dvi.gz">Gzipped
+DVI</a>
+]</p>
+<p>This paper provides theoretical foundations for OCaml&#39;s object-oriented
+layer, including dynamic and static semantics.</p>
+</li><li><p>Jacques Garrigue and Didier Rémy. Extending ML with Semi-Explicit
+Higher-Order Polymorphism. In Information &amp; Computation,
+155(1/2):134−169, 1999.
+[ <a href="http://caml.inria.fr/pub/papers/garrigue_remy-poly-ic99.pdf">PDF</a> |
+<a href="http://caml.inria.fr/pub/papers/garrigue_remy-poly-ic99.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/garrigue_remy-poly-ic99.dvi.gz">Gzipped
+DVI</a> ]</p>
+<p>This paper proposes a device for re-introducing first-class polymorphic
+values into ML while preserving its type inference mechanism. This
+technology underlies OCaml&#39;s polymorphic methods.</p>
+</li></ul>
+
+<h3 id="Polymorphic-Variants">Polymorphic Variants</h3>
+
+<ul><li><p>Jacques Garrigue. Programming with polymorphic variants. In ML Workshop,
+1998.
+[
+<a href="http://caml.inria.fr/pub/papers/garrigue-polymorphic_variants-ml98.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/garrigue-polymorphic_variants-ml98.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This paper briefly explains what polymorphic variants are about and how
+they are compiled.</p>
+</li><li><p>Jacques Garrigue. Code reuse through polymorphic variants. In Workshop
+on Foundations of Software Engineering, 2000.
+[ <a href="http://caml.inria.fr/pub/papers/garrigue-variant-reuse-2000.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This short paper explains how to design a modular, extensible
+interpreter using polymorphic variants.</p>
+</li><li><p>Jacques Garrigue. Simple Type Inference for Structural Polymorphism. In
+Workshop on Foundations of Object-Oriented Languages, 2002.
+[
+<a href="http://caml.inria.fr/pub/papers/garrigue-structural_poly-fool02.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/garrigue-structural_poly-fool02.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This paper explains most of the typechecking machinery behind
+polymorphic variants. At its heart is an extension of Core ML&#39;s type
+discipline with so-called <em>local</em> constraints.</p>
+</li><li><p>Jacques Garrigue. Typing deep pattern-matching in presence of
+polymorphic variants. In JSSST Workshop on Programming and Programming
+Languages, 2004.
+[ <a href="http://caml.inria.fr/pub/papers/garrigue-deep-variants-2004.pdf">PDF</a>
+| <a href="http://caml.inria.fr/pub/papers/garrigue-deep-variants-2004.ps.gz">Gzipped
+PostScript</a>
+]</p>
+<p>This paper provides more details about the technical machinery behind
+polymorphic variants, focusing on the rules for typechecking <em>deep</em>
+pattern matching constructs.</p>
+</li></ul>
+
+<h3 id="Labeled-and-Optional-Parameters">Labeled and Optional Parameters</h3>
+
+<ul><li><p>Jacques Garrigue. Labeled and optional arguments for Objective Caml. In
+JSSST Workshop on Programming and Programming Languages, 2001.
+[ <a href="http://caml.inria.fr/pub/papers/garrigue-labels-ppl01.pdf">PDF</a> |
+<a href="http://caml.inria.fr/pub/papers/garrigue-labels-ppl01.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/garrigue-labels-ppl01.dvi.gz">Gzipped
+DVI</a> ]</p>
+<p>This paper offers a dynamic semantics, a static semantics, and a
+compilation scheme for OCaml&#39;s labeled and optional function parameters.</p>
+</li></ul>
+
+<h3 id="Meta-Programming">Meta-Programming</h3>
+
+<ul><li>Jake Donham. Meta-programming tutorial with CamlP4. Commercial Users of Functional Programming, 2010.<br/><a href="https://github.com/jaked/cufp-metaprogramming-tutorial">GitHub</a></li></ul>
+
+<h2 id="Compilers-and-Runtime-System">Compilers and Runtime System</h2><h3 id="Bytecode-Compiler-and-Bytecode-Interpreter">Bytecode Compiler and Bytecode Interpreter</h3>
+
+<ul><li><p>Xavier Leroy. The ZINC experiment, an economical implementation of the
+ML language. Technical report 117, INRIA, 1990.
+[ <a href="http://caml.inria.fr/pub/papers/xleroy-zinc.ps.gz">Gzipped
+PostScript</a> |
+<a href="http://caml.inria.fr/pub/papers/xleroy-zinc.pdf">PDF</a> ]</p>
+<p>This report contains a description of the ZINC compiler, which later
+evolved into Caml Light, then into OCaml. Large parts of this report are
+out of date, but it is still valuable as a description of the abstract
+machine used in Caml Light and (with some further simplifications and
+speed improvements) in OCaml.</p>
+</li></ul>
+
+<h3 id="Native-Code-Compiler">Native-Code Compiler</h3>
+
+<ul><li><p>Xavier Leroy. The effectiveness of type-based unboxing. In Workshop on
+Types in Compilation, 1997.
+[ <a href="http://caml.inria.fr/pub/papers/xleroy-unboxing-tic97.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/xleroy-unboxing-tic97.pdf">PDF</a> ]</p>
+<p>This paper surveys and compares several data representation strategies,
+including the one used in the OCaml native-code compiler.</p>
+</li></ul>
+
+<h3 id="Garbage-Collector">Garbage Collector</h3>
+
+<ul><li><p>Damien Doligez and Xavier Leroy. A concurrent, generational garbage
+collector for a multithreaded implementation of ML. In Principles of
+Programming Languages, 1993.
+[ <a href="http://caml.inria.fr/pub/papers/doligez_xleroy-concurrent_gc-popl93.ps.gz">Gzipped
+PostScript</a>
+|
+<a href="http://caml.inria.fr/pub/papers/doligez_xleroy-concurrent_gc-popl93.pdf">PDF</a>
+]</p>
+<p>Superseded by the next paper.</p>
+</li><li><p>Damien Doligez and Georges Gonthier. Portable, Unobtrusive Garbage
+Collection for Multiprocessor Systems. In Principles of Programming
+Languages, 1994.
+[ <a href="http://caml.inria.fr/pub/papers/doligez_gonthier-gc-popl94.ps.gz">Gzipped
+PostScript</a>
+| <a href="http://caml.inria.fr/pub/papers/doligez_gonthier-gc-popl94.pdf">PDF</a>
+]</p>
+<p>This paper describes a concurrent version of the garbage collector found
+in Caml Light and OCaml&#39;s runtime system.</p>
+</li><li><p>Damien Doligez. Conception, réalisation et certification d&#39;un glaneur de
+cellules concurrent. Ph.D. thesis, Université Paris 7, 1995.
+[ <a href="http://caml.inria.fr/pub/papers/doligez-these.ps.gz">Gzipped
+PostScript</a> |
+<a href="http://caml.inria.fr/pub/papers/doligez-these.pdf">PDF</a> ]</p>
+<p>All you ever wanted to know about the garbage collector found in Caml
+Light and OCaml&#39;s runtime system.</p>
+</li></ul>
+
+<h3 id="Pattern-Matching">Pattern Matching</h3>
+
+<ul><li><p>Fabrice Le Fessant and Luc Maranget. Optimizing Pattern Matching. In
+ Proceedings of the sixth ACM SIGPLAN International Conference on
+ Functional Programming (ICFP), pp 26-37.<br/><a href="http://dl.acm.org/citation.cfm?id=507641">Online</a></p>
+</li></ul>
+
+<h2 id="Industrial-Uses">Industrial Uses</h2>
+
+<ul><li><p>Yaron Minsky. OCaml for the Masses. ACM Queue, Sep 27, 2011.<br/><a href="http://queue.acm.org/detail.cfm?id=2038036">Online</a> |
+<a href="http://portal.acm.org/ft_gateway.cfm?id=2038036&amp;type=pdf">PDF</a></p>
+</li><li><p>Anil Madhavapeddy. Xen and the Art of OCaml. Commercial Users of Functional Programming (CUFP), 2008.<br/><a href="http://cufp.org/archive/2008/abstracts.html#MadhavapeddyAnil">Abstract</a> |
+<a href="http://cufp.org/archive/2008/slides/MadhavapeddyAnil.pdf">PDF</a></p>
+</li><li><p>David Scott, Richard Mortier, Anil Madhavapeddy. Programming the Xen cloud using OCaml. OCaml Users and Developers Workshop, 2012.<br/><a href="http://oud.ocaml.org/2012/abstracts/oud2012-paper14.pdf">PDF</a> |
+<a href="http://www.youtube.com/watch?v=dJlHBS7sP_c&amp;feature=plcp">Video</a></p>
+</li><li><p>Pascal Cuoq, Julien Signoles, Patrick Baudin, Richard Bonichon, Géraud Canet, Loïc Correnson, Benjamin Monate, Virgile Prevosto, Armand Puccetti. Experience report: OCaml for an industrial-strength static analysis framework. Proceedings of the 14th ACM SIGPLAN International Conference on Functional Programming, 2009.<br/><a href="http://dl.acm.org/citation.cfm?id=1596591">Online</a></p>
+</li><li><p>Yaron Minsky, Stephen Weeks. Caml trading – experiences with functional programming on Wall Street. Journal of Functional Programming.<br/><a href="http://journals.cambridge.org/action/displayAbstract?fromPage=online&amp;aid=1899164">Online</a></p>
+</li><li><p>Xavier Leroy. Industrial uses of Caml: examples and lessons learned from the smart card industry. Proceedings of the 4th ACM SIGPLAN Workshop on Commercial Users of Functional Programming, 2007.<br/><a href="http://dl.acm.org/citation.cfm?id=1362704">Online</a></p>
+</li><li><p>Jake Donham. From OCaml to Javascript at Skydeck.<br/><a href="http://cufp.org/archive/2008/slides/DonhamJake.pdf">Slides</a></p>
+</li><li><p>Tom Wilkie. Acunu &amp; OCaml: Experience Report.<br/><a href="http://www.slideshare.net/acunu/acunu-ocaml-experience-report-cufp">Slides</a></p>
+</li><li><p>Xavier Leroy. Some uses of Caml in industry. Commercial Users of Functional Programming, 2007.<br/><a href="http://cufp.org/archive/2007/slides/XavierLeroy.pdf">Slides</a></p>
+</li><li><p>Warren Harris. Functional Programming at Freebase. Commercial Users of Functional Programming, 2010.<br/><a href="http://cufp.org/videos/functional-programming-freebase-warren-harris-metaweb">Abstract</a> |
+<a href="http://cufp.org/videos/functional-programming-freebase-warren-harris-metaweb">Video</a></p>
+</li></ul>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/docs/papers.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

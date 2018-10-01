@@ -1,0 +1,540 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="functional_programming.html" rel="alternate" hreflang="en"/>
+<link href="functional_programming.fr.html" rel="alternate" hreflang="fr"/>
+<link href="functional_programming.it.html" rel="alternate" hreflang="it"/>
+<link href="functional_programming.ja.html" rel="alternate" hreflang="ja"/>
+<link href="functional_programming.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Programmation Fonctionnelle &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../index.fr.html" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/index.fr.html">Apprendre</a></li>
+              <li><a href="../../docs/index.fr.html">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Contributions</a></li>
+              <li><a href="../../community/index.fr.html">Communauté</a></li>
+              <li><a href="../../community/planet/">Nouvelles</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/functional_programming.fr.md" title="Éditer cette page" class="edit-this-page pull-right"><span>Éditer cette page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Rechercher" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/index.fr.html">Apprendre</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.fr.html">Tutoriel OCaml</a><span class="divider"></span></li>
+<li class="active">Programmation Fonctionnelle</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="functional_programming.html">en</a></li>
+<li class="active">fr</li>
+<li><a href="functional_programming.it.html">it</a></li>
+<li><a href="functional_programming.ja.html">日本語</a></li>
+<li><a href="functional_programming.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contenu</a></li>
+          <ul><li><a href="#Qu-39-est-ce-que-la-programmation-fonctionnelle">Qu&#39;est-ce que la programmation fonctionnelle ?</a>
+</li><li><a href="#Application-partielle-et-curryfication">Application partielle et curryfication</a>
+</li><li><a href="#En-quoi-la-programmation-fonctionnelle-est-elle-utile">En quoi la programmation fonctionnelle est-elle utile ?</a>
+</li><li><a href="#Programmation-fonctionnelle-pure-et-impure">Programmation fonctionnelle pure et impure</a>
+</li><li><a href="#Evaluation-stricte-paresseuse-strictness-vs-laziness">Evaluation stricte / paresseuse (strictness vs laziness)</a>
+</li><li><a href="#Boxed-vs-unboxed-types">Boxed vs. unboxed types</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Programmation-fonctionnelle">Programmation fonctionnelle</h1>
+
+<h2 id="Qu-39-est-ce-que-la-programmation-fonctionnelle">Qu&#39;est-ce que la programmation fonctionnelle ?</h2><p>Nous sommes arrivés relativement loin dans ce tutoriel et nous n&#39;avons
+pas encore abordé la <strong>programmation fonctionnelle</strong>. Il serait
+imaginable de voir toutes les fonctionnalités données jusqu&#39;à présent -
+rich data types, pattern matching, inférence de types, fonctions
+imbriquées - dans une espèce de « Super langage C ». Ce sont certainement
+des fonctionnalités « cools » qui rendent le code concis, facile à lire et
+qui permettent d&#39;avoir moins de bugs, mais elles n&#39;ont que très peu à
+voir avec la programmation fonctionnelle.</p>
+<p>En fait, la raison pour laquelle les langages fonctionnels sont si bien
+n&#39;est <em>pas</em> grâce à la programmation fonctionnelle, mais parce que nous
+sommes restés avec des langages de type C pendant des années et pendant
+ce temps la pointe de la programmation a avancé considérablement.</p>
+<p>Ainsi pendant que nous écrivions <code>struct { int type; union { ... } }</code>
+pour la n-ième fois, les programmeurs ML et Haskell avaient déjà les
+safe variants et le pattern matching sur les types de données. Pendant
+qu&#39;on faisait attention à bien faire des <code>free()</code> pour chaque
+<code>malloc()</code>, les langages à garbage collectors avaient implémenté une
+façon de gérer automatiquement la mémoire depuis les années 80.</p>
+<p>Maintenant, arrêtons de tourner autour du pot, et abordons ce qu&#39;est la
+programmation fonctionnelle.</p>
+<p>La définition de base, bien que pas forcément claire est : « Dans un
+langage fonctionnel, les fonctions sont des citoyens de première classe ».</p>
+<p>Que de mots qui n&#39;ont pas vraiment de sens. Voyons plutôt un exemple :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">double</span> <span class="ocaml-variable">x </span>= x *2 <span class="governing">in</span>
+  <span class="ocaml-module">List</span>.map double [ 1; 2; 3 ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6]
+</span></code></pre>
+
+<p>Dans cet exemple, j&#39;ai d&#39;abord défini une fonction imbriquée appelée
+<code>double</code> qui prend un argument <code>x</code> et qui retourne <code>x * 2</code>. Puis <code>map</code>
+appelle <code>double</code> sur chaque élément de la liste donnée <code>([1; 2; 3])</code>
+pour produire le résultat : une liste avec chaque nombre doublé.</p>
+<p><code>map</code> est appelé une <strong>fonction d&#39;ordre supérieur</strong> (<strong>higher-order function</strong>, HOF).
+Les HOF sont juste une jolie manière de dire que la fonction prend une 
+fonction parmi ses arguments.</p>
+<p>Si vous êtes familiers avec le C/C++, alors cela ressemble au passage
+d&#39;un pointeur de fonction. Java a une espèce d&#39;abomination qu&#39;on appelle
+une classe anonyme qui est une clôture stupide, lente et peu pratique.
+Si vous connaissez Perl alors vous devez déjà avoir utilisé les clôtures
+de Perl et sa fonction <code>map</code>, qui est exactement ce dont nous parlons.
+En fait, perl est un plutôt bon langage fonctionnel.</p>
+<p>Les <strong>clôtures</strong> sont des fonctions qui portent une partie de
+l&#39;« environnement » dans lequel elles ont été définies. En particulier,
+une clôture peut référencer des variables qui sont disponibles au moment
+de la définition. Généralisons la fonction précédente de façon à
+prendre n&#39;importe quelle liste d&#39;entiers et multiplier chaque élément
+par une valeur <code>n</code> arbitraire :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">multiply</span> <span class="ocaml-variable">n list </span>=
+    <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x </span>=
+      n * x <span class="governing">in</span>
+    <span class="ocaml-module">List</span>.map f list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val multiply : int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Ainsi :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">multiply 2 [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">multiply 5 [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [5; 10; 15]
+</span></code></pre>
+
+<p>Le point important à noter à propos de la fonction <code>multiply</code> est la
+fonction imbriquée <code>f</code>. C&#39;est une clôture. Regardez comment <code>f</code> utilise
+la valeur de <code>n</code> qui n&#39;est pas passé en tant qu&#39;argument explicite à
+<code>f</code>. A la place, <code>f</code> est pris de l&#39;environnement - c&#39;est un argument de
+la fonction <code>multiply</code>, ainsi disponible au sein de cette fonction.</p>
+<p>Ceci peut paraître un peu trop raccourci, mais regardons de plus près
+cet appel à <code>map</code> : <code>List.map f list</code></p>
+<p><code>map</code> est défini dans le module <code>List</code>, très loin du code courant. En
+d&#39;autres mots, nous passons <code>f</code> dans un module défini « Il y a bien
+longtemps, dans une galaxie lointaine, très lointaine ».
+Tout ce que nous pouvons savoir c&#39;est que ce
+code peut passer f à d&#39;autres modules ou en garder une référence quelque
+part et l&#39;appeler ultérieurement. Que ce soit le cas ou non, cette
+clôture va assurer que <code>f</code> ait toujours accès à l&#39;environnement hérité,
+donc à <code>n</code>.</p>
+<p>Voici un exemple concret de lablgtk. Ceci est une méthode d&#39;une classe
+(nous n&#39;avons pas encore abordé les classes et les objets pour
+l&#39;instant, mais considérons juste cela comme une définition de fonction
+pour l&#39;instant).</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">html_skel</span> <span class="ocaml-variable">obj </span>= <span class="governing">object</span> (self)
+  ...
+  ...
+  <span class="governing">method</span> <span class="ocaml-function">save_to_channel</span> <span class="ocaml-variable">chan </span>=
+    <span class="governing">let</span> <span class="ocaml-function">receiver_fn</span> <span class="ocaml-variable">content </span>=
+      output_string chan content;
+      true <span class="governing">in</span>
+    save obj receiver_fn
+<span class="governing">end</span></code></pre>
+
+<p>Tout d&#39;abord, il faut savoir que la fonction <code>save</code> appelée à la fin de
+la méthode prend en second argument une fonction, en l&#39;occurence
+<code>receiver_fn</code>. Elle l&#39;appelle à répétition avec des morceaux de textes que
+du widget qu&#39;elle essaye d&#39;enregistrer.</p>
+<p>Maintenant, jettons un oeil à <code>receiver_fn</code>. Cette fonction est une
+clôture correcte parce qu&#39;elle garde une référence à <code>chan</code> venant de
+son environnement.</p>
+<h2 id="Application-partielle-et-curryfication">Application partielle et curryfication</h2><p>Définissons une fonction plus qui ne fait qu&#39;ajouter deux entiers :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">plus</span> <span class="ocaml-variable">a b </span>= a + b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val plus : int -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>Quelques questions pour les endormis du fond de la classe :</p>
+<ol><li><p>Qu&#39;est-ce que <code>plus</code> ?</p>
+</li><li><p>Qu&#39;est-ce que <code>plus 2 3</code> ?</p>
+</li><li><p>Qu&#39;est-ce que <code>plus 2</code> ?</p>
+</li></ol>
+
+<p>La première réponse est facile. <code>plus</code> est une fonction qui prend deux
+arguments qui sont entiers et qui retourne un entier. Son type s&#39;écrit
+ainsi :</p>
+<pre><code class="ocaml">plus : int -&gt; int -&gt; int</code></pre>
+
+<p>La deuxième réponse est encore plus évidente. <code>plus 2 3</code> est un nombre,
+l&#39;entier <code>5</code>. Sa valeur et son type s&#39;écrivent :</p>
+<pre><code class="ocaml">5 : int</code></pre>
+
+<p>Mais quid de la question 3 ? Il semblerait que <code>plus 2</code> soit une erreur,
+un bug. Alors qu&#39;en fait, il n&#39;en est point. Si nous typons cela dans le
+toplevel d&#39;OCaml, nous obtenons :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">plus 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>Ceci n&#39;est pas une erreur. Il nous dit que <code>plus 2</code> est en fait une
+<em>fonction</em>, qui prend un <code>int</code> et qui retourne un <code>int</code>. Quelle genre de
+fonction cela est-il ? Essayons d&#39;abord de lui donner un nom, puis de
+lui donner quelques entiers en argument, pour voir ce que ça donne :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">f</span> = plus 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 12
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 15</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 17
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 99</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 101
+</span></code></pre>
+
+<p>Ceci est une <a href="humor_proof.html">preuve par l&#39;exemple</a>
+suffisante pour nous dire que <code>plus 2</code> est la fonction qui ajoute 2 à des
+choses.</p>
+<p>Revenons à la définition originelle et remplaçons le premier argument,
+soit <code>a</code>, par la valeur <code>2</code> pour obtenir :</p>
+<pre><code class="ocaml"><span class="governing">let </span>plus 2 b = 2 + b <span class="ocaml-prompt">;;</span><br/><span class="comment">(* /!\ Ce n'est pas du code OCaml valide *)</span></code></pre>
+
+<p>On peut maintenant mieux voir pourquoi <code>plus 2</code> est la fonction qui
+ajoute <code>2</code> à quelque chose.</p>
+<p>En regardant le type de ces expressions, on peut démystifier la notation
+flèchée bizarre utilisée pour les types de fonctions :</p>
+<pre><code class="ocaml">     plus : int -&gt; int -&gt; int
+   plus 2 : int -&gt; int
+ plus 2 3 : int</code></pre>
+
+<p>Ce processus est appelé
+<strong><a href="http://fr.wikipedia.org/wiki/Curryfication" title="http://fr.wikipedia.org/wiki/Curryfication">curryfication</a></strong>.
+Le nom vient de Haskell Curry qui a été à l&#39;origine de choses
+importantes sur le lambda calcul. Comme j&#39;essaye d&#39;éviter d&#39;entrer dans
+les mathématiques derrière OCaml, parce que ça rendrait le tutorial très
+ennuyeux et inutile, je n&#39;irai pas plus loin sur le sujet. Pour trouver
+plus d&#39;informations sur le sujet, une simple <a href="http://www.google.com/search?q=currying" title="http://www.google.com/search?q=currying">recherche
+google</a>
+suffit.</p>
+<p>Vous rappelez-vous des fonctions <code>double</code> et <code>multiply</code> vues
+précédemment ? <code>multiply</code> était défini ainsi :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">multiply</span> <span class="ocaml-variable">n list </span>=
+    <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x </span>= n * x <span class="governing">in</span>
+    <span class="ocaml-module">List</span>.map f list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val multiply : int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Nous pouvons maintenant définir <code>double</code>, <code>triple</code>, etc, très facilement
+comme suit :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">double</span> = multiply 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val double : int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">triple</span> = multiply 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val triple : int list -&gt; int list = &lt;fun&gt;
+</span></code></pre>
+
+<p>Ce sont de réelles fonctions, la preuve :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">double [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">triple [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [3; 6; 9]
+</span></code></pre>
+
+<p>On peut aussi utiliser l&#39;application partielle (sans la fonction
+intermédiaire <code>f</code>) de cette façon :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">multiply</span> <span class="ocaml-variable">n </span>= <span class="ocaml-module">List</span>.map (( * ) n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val multiply : int -&gt; int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">double</span> = multiply 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val double : int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">triple</span> = multiply 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val triple : int list -&gt; int list = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">double [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">triple [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [3; 6; 9]
+</span></code></pre>
+
+<p>Dans l&#39;exemple ci-dessus,
+<code>((*) n) est l&#39;application partielle de la fonction (*)</code>, c&#39;est-à-dire,
+multiplier. À noter les espaces ajoutés pour qu&#39;OCaml ne croit pas que
+c&#39;est un début de commentaire.</p>
+<p>On peut mettre des opérateurs infixes entre parenthèses pour faire des
+fonction. Voici une définition identique à la précédente avec la
+fonction <code>plus</code> :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">plus</span> = (+)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val plus : int -&gt; int -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">plus 2 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
+</span></code></pre>
+
+<p>Voici encore plus de curryfication :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.map (plus 2) [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [3; 4; 5]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">list_of_functions</span> = <span class="ocaml-module">List</span>.map plus [1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val list_of_functions : (int -&gt; int) list = [&lt;fun&gt;; &lt;fun&gt;; &lt;fun&gt;]
+</span></code></pre>
+
+<h2 id="En-quoi-la-programmation-fonctionnelle-est-elle-utile">En quoi la programmation fonctionnelle est-elle utile ?</h2><p>La programmation fonctionnelle, comme n&#39;importe quelle technique de
+programmation, est un outil utile dans votre boite à outils pour
+résoudre certaines classes de problèmes. Très utile pour les callbacks,
+qui sont utilisés dans les IHMs pour les boucles d&#39;évènements. C&#39;est
+excellent pour exprimer des algorithmes génériques. <code>List.map</code> est une
+fonction générique pour appliquer des fonctions sur n&#39;importe quel type
+de liste. De la même manière, on peut définir des fonctions génériques
+sur les arbres. Certains types de problèmes d&#39;arithmétiques peuvent être
+résolus plus rapidement avec la programmation fonctionnelle (par exemple
+calculer la dérivé d&#39;une fonction mathématique).</p>
+<h2 id="Programmation-fonctionnelle-pure-et-impure">Programmation fonctionnelle pure et impure</h2><p>Une <strong>fonction pure</strong> est une fonction sans aucun <strong>effet de bord</strong>. Un
+effet de bord signifie que la fonction garde une sorte d&#39;état caché en
+son sein. <code>strlen()</code> est un exemple de fonction pure en C. Si on appelle
+<code>strlen()</code> avec la même chaîne, elle retournera toujours la même taille.
+La sortie de <code>strlen()</code> (la taille) ne dépend que des entrées (la
+chaîne) et de rien d&#39;autre. Plein de fonctions en C sont, malheureusement,
+impures. Par exemple, <code>malloc()</code>, évidemment, repose sur beaucoup
+d&#39;éléments d&#39;états internes (les objets alloués sur le tas, le type
+d&#39;allocation utilisé, la façon de prendre des pages de l&#39;OS, etc..).</p>
+<p>Les langages dérivés de ML tel que OCaml sont « presque purs ». Ils
+autorisent des effets de bord au travers des références et des tableaux,
+mais la plupart des codes que vous écrirez seront fonctionnels purs
+parce qu&#39;ils encouragent cette pensée. Haskell, un autre langage
+fonctionnel, est pur fonctionnel. OCaml est donc plus pratique parce
+qu&#39;écrire des fonctions impures est parfois utile.</p>
+<p>Voici les avantages théoriques d&#39;avoir des fonctions pures. Un avantage
+est que si une fonction est pure, alors elle peut être appelée plusieurs
+fois avec les même arguments, le compilateur n&#39;aura qu&#39;a appeler la
+fonction qu&#39;une seule fois. Un bon exemple en C est :</p>
+<pre class="C"><code class="C">for (i = 0; i &lt; strlen(s); ++i) {
+    // Du code qui n&#39;affecte pas s
+}</code></pre><p>Si nativement compilé, la boucle est en O(n²) sur la taille de s parce
+que <code>strlen(s)</code> est appelé à chaque fois et <code>strlen()</code> doit itérer sur
+tout <code>s</code>. Si le compilateur est assez intelligent pour se rendre compte
+que <code>strlen()</code> est purement fonctionnel <em>et</em> que <code>s</code> n&#39;est pas modifié
+dans la boucle, alors il peut retirer les appels redondants à <code>strlen()</code>
+et passer la boucle en O(n). Les compilateurs font-ils vraiment cela ?
+Dans le cas de <code>strlen</code> très certainement, mais dans d&#39;autres,
+probablement pas.</p>
+<p>Se concentrer en écrivant des fonctions fonctionnelles pures permettent
+d&#39;écrire du code réutilisable en utilisant l&#39;approche bottom-up, testant
+chaque petite fonction au fur et à mesure de l&#39;avancement. La mode
+actuelle est de projeter les programmes en utilisant une approche
+top-bottom, mais dans l&#39;opinion de l&#39;auteur, cela résulte souvent à des
+échecs de projets.</p>
+<h2 id="Evaluation-stricte-paresseuse-strictness-vs-laziness">Evaluation stricte / paresseuse (strictness vs laziness)</h2><p>Les langages dérivés de C et de ML sont stricts. Haskell et Miranda ne
+sont pas stricts, c&#39;est-à-dire que ce sont des langages à évaluation
+paresseuse. OCaml est strict par défaut mais autorise l&#39;évaluation
+paresseuse lorsque nécessaire.</p>
+<p>Dans un langage à évaluation stricte, les arguments des fonctions sont
+toujours évalués en premier, puis le résultat est alors passé à la
+fonction. Par exemple dans un langage à évaluation stricte, cet appel va
+toujours sortir par une erreur de division par zéro :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val give_me_a_three : 'a -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">give_me_a_three (1/0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Division_by_zero.
+</span></code></pre>
+
+<p>Si vous avez programmé dans n&#39;importe quel langage conventionnel, c&#39;est
+le comportement auquel vous vous attendrez et vous serez surpris qu&#39;il
+en soit autrement.</p>
+<p>Dans un langage à évaluation paresseuse, des choses bizarres se passent.
+Les arguments de fonction ne sont évalués que si la fonction les
+utilise. Vous rappelez-vous que la fonction <code>give_me_a_three</code> n&#39;utilise
+pas ses arguments et retourne toujours 3 ? Dans un langage à évaluation
+paresseuse, cet appel précédent ne fera <em>pas</em> d&#39;erreur, simplement parce
+que <code>give_me_a_three</code> ne regarde jamais ses arguments, donc si
+l&#39;argument n&#39;est jamais évalué, la division par zéro n&#39;arrive pas.</p>
+<p>Les langages à analyse paresseuse permettent de faire d&#39;autres choses
+bizarres, comme la définition d&#39;une liste infinie. Tant qu&#39;on n&#39;essaye pas
+d&#39;itérer sur la totalité de la liste, cela fonctionne.</p>
+<p>OCaml est un langage à évaluation stricte, mais a un module d&#39;évaluation
+paresseuse (<code>Lazy</code>) qui permettent d&#39;écrire des expressions paresseuses.
+Voici un exemple. D&#39;abord, nous créons une expression paresseuse pour
+<code>1/0</code> :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lazy_expr</span> = lazy (1/0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val lazy_expr : int lazy_t = &lt;lazy&gt;
+</span></code></pre>
+
+<p>A noter que le type de l&#39;expression est <code>int lazy_t</code></p>
+<p>Parce que <code>give_me_a_three</code> prend un <code>&#39;a</code> (tout type) nous pouvons passer
+cette expression à la fonction :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">give_me_a_three lazy_expr</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3
+</span></code></pre>
+
+<p>Pour évaluer une expression paresseuse, nous devons utiliser la fonction
+<code>Lazy.force</code> :</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Lazy</span>.force lazy_expr</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Division_by_zero.
+</span></code></pre>
+
+<h2 id="Boxed-vs-unboxed-types">Boxed vs. unboxed types</h2><p>(NDT: trouver une traduction correcte pour « boxed » et « unboxed »)</p>
+<p>Un terme qu&#39;on entend beaucoup lorsqu&#39;on parle de langages fonctionnels
+est « boxed ». J&#39;étais très confus lorsque j&#39;ai entendu ce terme pour la
+première fois, mais en fait la distinction entre types « boxed » et
+« unboxed » est très simple si vous avez déjà fait du C, du C++ ou du java
+avant (en Perl tout est « boxed »).</p>
+<p>La façon de voir un objet « boxed » est de penser à un objet qui a été
+alloué dans le tas en utilisant <code>malloc()</code> en C (ou <code>new</code> en C++), et/ou
+qui est référé via un pointeur. Prenons ce programme C :</p>
+<pre class="C"><code class="C">#include &lt;stdio.h&gt;
+
+void printit (int* ptr) {
+    printf(&#39;the number is %d\n&#39;, *ptr);
+}
+
+int main () {
+    int a = 3;
+    int *p = &amp;a;
+
+    printit (p);
+
+    return 0;
+}</code></pre><p>La variable <code>a</code> est allouée dans la pile, et est clairement « unboxed ».</p>
+<p>La fonction <code>printit()</code> prends un entier « boxed » et l&#39;affiche.</p>
+<p>Le diagramme ci-dessous
+montre un tableau de « unboxed » (en haut) face à des entiers
+« boxed » (en bas) :</p>
+<p><img src="../../img/boxedarray.png" alt="Boxed Array"/></p>
+<p>Il n&#39;est pas difficile de deviner que le tableau d&#39;entiers « unboxed » est
+plus rapide que le tableau d&#39;entiers « boxed ». De plus, parce qu&#39;il y a
+moins d&#39;allocations séparées, la récupération de la mémoire est plus
+rapide et plus simple sur le tableau d&#39;objets « unboxed ».</p>
+<p>En C ou C++ vous n&#39;aurez aucun problème pour construire chacun des
+tableaux ci-dessus. En java, on a deux types, <code>int</code> qui est « unboxed » et
+<code>Integer</code> qui est « boxed », donc considérablement moins efficace. En
+OCaml, tous les types primitifs sont « unboxed ».</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/index.fr.html">Apprendre</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.fr.html">Exemples de code</a></li>
+      <li><a href="../../learn/tutorials/index.fr.html">Tutoriels</a></li>
+      <li><a href="../../learn/books.html">Livres</a></li>
+      <li><a href="../../learn/success.fr.html">Cas d'usage</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/index.fr.html">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.fr.html">Installer OCaml</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manuel</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Contributions</a></li>
+      <li><a href="../../releases/index.fr.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/index.fr.html">Communauté</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.fr.html">Lieux de discussion</a></li>
+      <li><a href="../../meetings/index.fr.html">Rencontres</a></li>
+      <li><a href="../../community/planet/">Nouvelles</a></li>
+      <li><a href="../../community/support.fr.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Signaler un bug d'OCaml</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Site Web</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/functional_programming.fr.md" target="_blank">Éditer cette page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Problèmes du site Web</a></li>
+      <li><a href="../../about.html">À propos de ce site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Dépôt GitHub</a></li>
+      <li><a href="../../contributors.fr.html">Crédits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

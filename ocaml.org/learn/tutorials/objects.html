@@ -1,0 +1,765 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="objects.html" rel="alternate" hreflang="en"/>
+<link href="objects.ja.html" rel="alternate" hreflang="ja"/>
+<link href="objects.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>Objects &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/objects.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/">OCaml Tutorials</a><span class="divider"></span></li>
+<li class="active">Objects</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+<li><a href="objects.ja.html">日本語</a></li>
+<li><a href="objects.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Objects-and-classes">Objects and classes</a>
+<ul><li><a href="#Polymorphic-classes">Polymorphic classes</a>
+</li><li><a href="#Inheritance-virtual-classes-initializers">Inheritance, virtual classes, initializers</a>
+</li><li><a href="#A-note-about-self">A note about <code>self</code></a>
+</li><li><a href="#Inheritance-and-coercions">Inheritance and coercions</a>
+</li><li><a href="#The-Oo-module-and-comparing-objects">The <code>Oo</code> module and comparing objects</a>
+</li></ul>
+</li><li><a href="#Objects-without-class">Objects without class</a>
+<ul><li><a href="#Immediate-objects-and-object-types">Immediate objects and object types</a>
+</li><li><a href="#Class-types-vs-just-types">Class types vs. just types</a>
+</li></ul>
+</li><li><a href="#More-objects">More objects</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Objects">Objects</h1>
+
+<h2 id="Objects-and-classes">Objects and classes</h2><p>OCaml is an object-oriented, imperative, functional programming language
+:-) It mixes all these paradigms and lets you use the most appropriate
+(or most familiar) programming paradigm for the task at hand. In this
+chapter I&#39;m going to look at object-oriented programming in OCaml, but
+I&#39;m also going to talk about why you might or might not want to write
+object-oriented programs.</p>
+<p>The classic noddy example used in text books to demonstrate
+object-oriented programming is the stack class. This is a pretty
+terrible example in many ways, but I&#39;m going to use it here to show the
+basics of writing object-oriented OCaml.</p>
+<p>Here&#39;s some basic code to provide a stack of integers. The class is
+implemented using a linked list.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">stack_of_ints</span> <span class="ocaml-variable"></span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">val</span> <span class="keyword">mutable</span> the_list = ( [] : int list ) <span class="comment">(* instance variable *)</span>
+      <span class="governing">method</span> <span class="ocaml-function">push</span> <span class="ocaml-variable">x </span>=                        <span class="comment">(* push method *)</span>
+        the_list &lt;- x :: the_list
+      <span class="governing">method</span> <span class="ocaml-function">pop</span><span class="type"></span> =                           <span class="comment">(* pop method *)</span>
+        <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">List</span>.hd the_list <span class="governing">in</span>
+        the_list &lt;- <span class="ocaml-module">List</span>.tl the_list;
+        result
+      <span class="governing">method</span> <span class="ocaml-function">peek</span><span class="type"></span> =                          <span class="comment">(* peek method *)</span>
+        <span class="ocaml-module">List</span>.hd the_list
+      <span class="governing">method</span> <span class="ocaml-function">size</span><span class="type"></span> =                          <span class="comment">(* size method *)</span>
+        <span class="ocaml-module">List</span>.length the_list
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class stack_of_ints :
+  object
+    val mutable the_list : int list
+    method peek : int
+    method pop : int
+    method push : int -&gt; unit
+    method size : int
+  end
+</span></code></pre>
+
+<p>The basic pattern <code>class name = object (self) ... end</code> defines a class
+called <code>name</code>.</p>
+<p>The class has one instance variable, which is mutable (not constant),
+called <code>the_list</code>. This is the underlying linked list. We initialize
+this (each time a <code>stack_of_ints</code> object is created) using a bit of code
+that you may not be familiar with. The expression <code>( [] : int list )</code>
+means &#39;an empty list, of type <code>int list</code>&#39;. Recall that the simple empty
+list <code>[]</code> has type <code>&#39;a list</code>, meaning a list of any type. However we
+want a stack of <code>int</code>, not anything else, and so in this case we want to
+tell the type inference engine that this list isn&#39;t the general &#39;list of
+anything&#39; but is in fact the narrower &#39;list of <code>int</code>&#39;. The syntax
+<code>( expression : type )</code> means <code>expression</code> which is in fact of type
+<code>type</code>. This <em>isn&#39;t</em> a general type cast, because you can&#39;t use it to
+overrule the type inference engine, only to narrow a general type to
+make it more specific. So you can&#39;t write, for example, <code>( 1 : float )</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="ocaml-error-loc">1</span> : float)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type int but an expression was expected of type
+         float
+</span></code></pre>
+
+<p>Type safety is preserved. Back to the example ...</p>
+<p>This class has four simple methods. <code>push</code> pushes an integer onto the
+stack. <code>pop</code> pops the top integer off the stack and returns it. Notice
+the <code>&lt;-</code> assignment operator used for updating our mutable instance
+variable. It&#39;s the same <code>&lt;-</code> assignment operator which is used for
+updating mutable fields in records.</p>
+<p><code>peek</code> returns the top of the stack (ie. head of the list) without
+affecting the stack, while <code>size</code> returns the number of elements in the
+stack (ie. the length of the list).</p>
+<p>Let&#39;s write some code to test stacks of ints. First let&#39;s create a new
+object. We use the familiar <code>new</code> operator:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack_of_ints</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : stack_of_ints = &lt;obj&gt;
+</span></code></pre>
+
+<p>Now we&#39;ll push and pop some elements off the stack:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 1 <span class="keyword">to</span> 10 <span class="keyword">do</span>
+    s#push i
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>Popped %d off the stack.\n' s#pop
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>Notice the syntax. <code>object#method</code> means call <code>method</code> on <code>object</code>. This
+is the same as <code>object.method</code> or <code>object-&gt;method</code> that you will be
+familiar with in imperative languages.</p>
+<p>In the OCaml toplevel we can examine the types of objects and methods in
+more detail:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack_of_ints</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : stack_of_ints = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>s</code> is an opaque object. The implementation (ie. the list) is hidden
+from callers.</p>
+<h3 id="Polymorphic-classes">Polymorphic classes</h3><p>A stack of integers is good, but what about a stack that can store any
+type? (Not a single stack that can store a mixture of types, but
+multiple stacks each storing objects of any single type). As with
+<code>&#39;a list</code>, we can define <code>&#39;a stack</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">class ['a] stack =
+    <span class="governing">object</span> (self)
+      <span class="governing">val</span> <span class="keyword">mutable</span> list = ( [] : 'a list )  <span class="comment">(* instance variable *)</span>
+      <span class="governing">method</span> <span class="ocaml-function">push</span> <span class="ocaml-variable">x </span>=                      <span class="comment">(* push method *)</span>
+        list &lt;- x :: list
+      <span class="governing">method</span> <span class="ocaml-function">pop</span><span class="type"></span> =                         <span class="comment">(* pop method *)</span>
+        <span class="governing">let </span><span class="ocaml-variable">result</span> = <span class="ocaml-module">List</span>.hd list <span class="governing">in</span>
+        list &lt;- <span class="ocaml-module">List</span>.tl list;
+        result
+      <span class="governing">method</span> <span class="ocaml-function">peek</span><span class="type"></span> =                        <span class="comment">(* peek method *)</span>
+        <span class="ocaml-module">List</span>.hd list
+      <span class="governing">method</span> <span class="ocaml-function">size</span><span class="type"></span> =                        <span class="comment">(* size method *)</span>
+        <span class="ocaml-module">List</span>.length list
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class ['a] stack :
+  object
+    val mutable list : 'a list
+    method peek : 'a
+    method pop : 'a
+    method push : 'a -&gt; unit
+    method size : int
+  end
+</span></code></pre>
+
+<p>The <code>class [&#39;a] stack</code> doesn&#39;t really define just one class, but a whole
+&#39;class of classes&#39;, one for every possible type (ie. an infinitely large
+number of classes!) Let&#39;s try and use our <code>&#39;a stack</code> class. In this
+instance we create a stack and push a floating point number onto the
+stack. Notice the type of the stack:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="keyword">new</span> stack</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : '_weak1 stack = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 1.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float stack = &lt;obj&gt;
+</span></code></pre>
+
+<p>This stack is now a <code>float stack</code>, and only floating point numbers may
+be pushed and popped from this stack. (For an explanation of the <code>&#39;_a</code>
+notation, see the <a href="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html" title="http://caml.inria.fr/pub/old_caml_site/FAQ/FAQ_EXPERT-eng.html">OCaml expert
+FAQ</a>).
+Let&#39;s demonstrate the type-safety of our new <code>float stack</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 3.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 1.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="ocaml-error-loc">'</span>a string'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>We can define polymorphic functions which can operate on any type of
+stack. Our first attempt is this one:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">drain_stack</span> <span class="ocaml-variable">s </span>=
+    <span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+      ignore (s#pop)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drain_stack : &lt; pop : 'a; size : int; .. &gt; -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<p>Notice the type of <code>drain_stack</code>. Cleverly - perhaps <em>too</em> cleverly -
+OCaml&#39;s type inference engine has worked out that <code>drain_stack</code> works on
+<em>any</em> object which has <code>pop</code> and <code>size</code> methods! So if we defined
+another, entirely separate class which happened to contain <code>pop</code> and
+<code>size</code> methods with suitable type signatures, then we might accidentally
+call <code>drain_stack</code> on objects of that other type.</p>
+<p>We can force OCaml to be more specific and only allow <code>drain_stack</code> to
+be called on <code>&#39;a stack</code>s by narrowing the type of the <code>s</code> argument, like
+this:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">drain_stack</span> <span class="ocaml-variable">(s : 'a stack) </span>=
+    <span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
+      ignore (s#pop)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drain_stack : 'a stack -&gt; unit = &lt;fun&gt;
+</span></code></pre>
+
+<h3 id="Inheritance-virtual-classes-initializers">Inheritance, virtual classes, initializers</h3><p>I&#39;ve noticed programmers in Java tend to overuse inheritance, possibly
+because it&#39;s the only reasonable way of extending code in that language.
+A much better and more general way to extend code is usually to use
+hooks (cf. Apache&#39;s module API). Nevertheless in certain narrow areas
+inheritance can be useful, and the most important of these is in writing
+GUI widget libraries.</p>
+<p>Let&#39;s consider an imaginary OCaml widget library similar to Java&#39;s
+Swing. We will define buttons and labels with the following class
+hierarchy:</p>
+<pre><code>widget  (superclass for all widgets)
+  |
+  +----&gt; container  (any widget that can contain other widgets)
+  |        |
+  |        +----&gt; button
+  |
+  +-------------&gt; label</code></pre><p>(Notice that a <code>button</code> is a <code>container</code> because it can contain either a
+label or an image, depending on what is displayed on the button).</p>
+<p><code>widget</code> is the virtual superclass for all widgets. I want every widget
+to have a name (just a string) which is constant over the life of that
+widget. This was my first attempt:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="ocaml-error-loc">class virtual</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-function"><span class="ocaml-error-loc">widget</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-variable"><span class="ocaml-error-loc">name </span></span><span class="ocaml-error-loc">=
+    </span><span class="governing"><span class="ocaml-error-loc">object</span></span><span class="ocaml-error-loc"> (self)
+      </span><span class="governing"><span class="ocaml-error-loc">method</span></span><span class="ocaml-error-loc"> </span><span class="ocaml-function"><span class="ocaml-error-loc">get_name</span></span><span class="type"></span><span class="ocaml-error-loc"> =
+        name
+      method virtual repaint : unit
+    </span><span class="governing"><span class="ocaml-error-loc">end</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some type variables are unbound in this type:
+         class virtual widget :
+           'a -&gt;
+           object method get_name : 'a method virtual repaint : unit end
+       The method get_name has type 'a where 'a is unbound
+</span></code></pre>
+
+<p>Oops! I forgot that OCaml cannot infer the type of <code>name</code> so will assume
+that it is <code>&#39;a</code>. But that defines a polymorphic class, and I didn&#39;t
+declare the class as polymorphic (<code>class [&#39;a] widget</code>). I need to narrow
+the type of <code>name</code> like this:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class virtual</span> <span class="ocaml-function">widget</span> <span class="ocaml-variable">(name : string) </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">method</span> <span class="ocaml-function">get_name</span><span class="type"></span> =
+        name
+      method virtual repaint : unit
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class virtual widget :
+  string -&gt; object method get_name : string method virtual repaint : unit end
+</span></code></pre>
+
+<p>Now there are several new things going on in this code. Firstly the
+class contains an <strong>initializer</strong>. This is an argument to the class
+(<code>name</code>) which you can think of as exactly the equivalent of an argument
+to a constructor in, eg., Java:</p>
+<pre class="java"><code class="java">public class Widget
+{
+  public Widget (String name)
+  {
+    ...
+  }
+}</code></pre><p>In OCaml a constructor constructs the whole class, it&#39;s not just a
+specially named function, so we write the arguments as if they are
+arguments to the class:</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">foo</span> <span class="ocaml-variable">arg1 arg2 ... </span>=</code></pre>
+
+<p>Secondly the class contains a virtual method, and thus the whole class
+is marked as virtual. The virtual method is our <code>repaint</code> method. We
+need to tell OCaml it&#39;s virtual (<code>method virtual</code>), <em>and</em> we need to
+tell OCaml the type of the method. Because the method doesn&#39;t contain
+any code, OCaml can&#39;t use type inference to automatically work out the
+type for you, so you need to tell it the type. In this case the method
+just returns <code>unit</code>. If your class contains any virtual methods (even
+just inherited ones) then you need to specify the whole class as virtual
+by using <code>class virtual ...</code>.</p>
+<p>As in C++ and Java, virtual classes cannot be directly instantiated
+using <code>new</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword">new</span> widget <span class="ocaml-error-loc">'</span>my widget'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>Now my <code>container</code> class is more interesting. It must inherit from
+<code>widget</code> and have the mechanics for storing the list of contained
+widgets. Here is my simple implementation for <code>container</code>:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class virtual</span> <span class="ocaml-function">container</span> <span class="ocaml-variable">name </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> widget name
+      <span class="governing">val</span> <span class="keyword">mutable</span> widgets = ( [] : widget list )
+      <span class="governing">method</span> <span class="ocaml-function">add</span> <span class="ocaml-variable">w </span>=
+        widgets &lt;- w :: widgets
+      <span class="governing">method</span> <span class="ocaml-function">get_widgets</span><span class="type"></span> =
+        widgets
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> w -&gt; w#repaint) widgets
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class virtual container :
+  string -&gt;
+  object
+    val mutable widgets : widget list
+    method add : widget -&gt; unit
+    method get_name : string
+    method get_widgets : widget list
+    method repaint : unit
+  end
+</span></code></pre>
+
+<p>Notes:</p>
+<ol><li><p>The <code>container</code> class is marked as virtual. It doesn&#39;t contain any
+ virtual methods, but in this case I just want to prevent people
+ creating containers directly.</p>
+</li><li><p>The <code>container</code> class has a <code>name</code> argument which is passed directly
+ up when constructing the <code>widget</code>.</p>
+</li><li><p><code>inherit widget name</code> means that the <code>container</code> inherits from
+ <code>widget</code>, and it passes the <code>name</code> argument to the constructor for
+ <code>widget</code>.</p>
+</li><li><p>My <code>container</code> contains a mutable list of widgets and methods to
+ <code>add</code> a widget to this list and <code>get_widgets</code> (return the list of
+ widgets).</p>
+</li><li><p>The list of widgets returned by <code>get_widgets</code> cannot be modified by
+ code outside the class. The reason for this is somewhat subtle, but
+ basically comes down to the fact that OCaml&#39;s linked lists are
+ immutable. Let&#39;s imagine that someone wrote this code:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="lower">list</span> <span class="keywordsign">=</span> <span class="lower">container</span><span class="keywordsign">#</span><span class="lower">get_widgets</span> <span class="governing">in</span>
+<span class="lower">x</span> <span class="keywordsign">::</span> <span class="lower">list</span></code></pre>
+
+<p>Would this modify the private internal representation of my <code>container</code>
+class, by prepending <code>x</code> to the list of widgets? No it wouldn&#39;t. The
+private variable <code>widgets</code> would be unaffected by this or any other
+change attempted by the outside code. This means, for example, that you
+could change the internal representation to use an array at some later
+date, and no code outside the class would need to be changed.</p>
+</li></ol>
+
+<p>Last, but not least, we have implemented the previously virtual
+<code>repaint</code> function so that <code>container#repaint</code> will repaint all of the
+contained widgets. Notice I use <code>List.iter</code> to iterate over the list,
+and I also use a probably unfamiliar anonymous function expression:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">(<span class="keyword">fun</span> w -&gt; w#repaint)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : &lt; repaint : 'a; .. &gt; -&gt; 'a = &lt;fun&gt;
+</span></code></pre>
+
+<p>which defines an anonymous function with one argument <code>w</code> that just
+calls <code>w#repaint</code> (the <code>repaint</code> method on widget <code>w</code>).</p>
+<p>In this instance our <code>button</code> class is simple (rather unrealistically
+simple in fact, but nevermind that):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">button_state</span> = Released | Pressed</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type button_state = Released | Pressed
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">button</span> <span class="ocaml-variable">?callback name </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> container name <span class="keyword">as</span> super
+      <span class="governing">val</span> <span class="keyword">mutable</span> state = Released
+      <span class="governing">method</span> <span class="ocaml-function">press</span><span class="type"></span> =
+        state &lt;- Pressed;
+        <span class="keyword">match</span> callback <span class="keyword">with</span>
+        | None -&gt; ()
+        | Some f -&gt; f ()
+      <span class="governing">method</span> <span class="ocaml-function">release</span><span class="type"></span> =
+        state &lt;- Released
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        super#repaint;
+        print_endline (<span class="ocaml-error-loc">'</span>Button being repainted, state is ' ^
+                       (<span class="keyword">match</span> state <span class="keyword">with</span>
+                        | Pressed -&gt; 'Pressed'
+                        | Released -&gt; 'Released'))
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>Notes:</p>
+<ol><li><p>This function has an optional argument (see the previous chapter)
+ which is used to pass in the optional callback function. The
+ callback is called when the button is pressed.</p>
+</li><li><p>The expression <code>inherit container name as super</code> names the
+ superclass <code>super</code>. I use this in the <code>repaint</code> method:
+ <code>super#repaint</code>. This expressly calls the superclass method.</p>
+</li><li><p>Pressing the button (calling <code>button#press</code> in this rather
+ simplistic code) sets the state of the button to <code>Pressed</code> and calls
+ the callback function, if one was defined. Notice that the
+ <code>callback</code> variable is either <code>None</code> or <code>Some f</code>, in other words it
+ has type <code>(unit -&gt; unit) option</code>. Reread the previous chapter if you
+ are unsure about this.</p>
+</li><li><p>Notice a strange thing about the <code>callback</code> variable. It&#39;s defined
+ as an argument to the class, but any method can see and use it. In
+ other words, the variable is supplied when the object is
+ constructed, but persists over the lifetime of the object.</p>
+</li><li><p>The <code>repaint</code> method has been implemented. It calls the superclass
+ (to repaint the container), then repaints the button, displaying the
+ current state of the button.</p>
+</li></ol>
+
+<p>Before defining our <code>label</code> class, let&#39;s play with the <code>button</code> class in
+the OCaml toplevel:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="ocaml-error-loc">'</span>Ouch!') 'button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>Here&#39;s our comparatively trivial <code>label</code> class:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">label</span> <span class="ocaml-variable">name text </span>=
+    <span class="governing">object</span> (self)
+      <span class="governing">inherit</span> widget name
+      <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
+        print_endline (<span class="ocaml-error-loc">'</span>Label: ' ^ text)
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span></code></pre>
+
+<p>Let&#39;s create a label which says &#39;Press me!&#39; and add it to the button:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<h3 id="A-note-about-self">A note about <code>self</code></h3><p>In all the examples above we defined classes using the general pattern:</p>
+<pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">name</span> <span class="ocaml-variable"></span>=
+  <span class="governing">object</span> (self)
+    <span class="comment">(* ... *)</span>
+  <span class="governing">end</span></code></pre>
+
+<p>I didn&#39;t explain the reference to <code>self</code>. In fact this names the object,
+allowing you to call methods in the same class or pass the object to
+functions outside the class. In other words, it&#39;s exactly the same as
+<code>this</code> in C++/Java and <code>$self</code> in Perl. You may completely omit the
+<code>(self)</code> part if you don&#39;t need to refer to yourself - indeed in all the
+examples above we could have done exactly that. However, I would advise
+you to leave it in there because you never know when you might modify
+the class and require the reference to <code>self</code>. There is no penalty for
+having it.</p>
+<h3 id="Inheritance-and-coercions">Inheritance and coercions</h3>
+
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="ocaml-error-loc">'</span>button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[<span class="ocaml-error-loc">b</span>; l]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>I created a button <code>b</code> and a label <code>l</code> and I tried to create a list
+containing both, but I got an error. Yet <code>b</code> and <code>l</code> are both <code>widget</code>s,
+so why can&#39;t I put them into the same list? Perhaps OCaml can&#39;t guess
+that I want a <code>widget list</code>? Let&#39;s try telling it:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = ([] : widget list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = []
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = <span class="ocaml-error-loc">b</span> :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span></code></pre>
+
+<p>It turns out that OCaml doesn&#39;t coerce subclasses to the type of the
+superclass by default, but you can tell it to by using the <code>:&gt;</code>
+(coercion) operator:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">b</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">l</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value l
+</span></code></pre>
+
+<p>The expression <code>(b :&gt; widget)</code> means &#39;coerce the button <code>b</code> to have type
+<code>widget</code>&#39;. Type-safety is preserved because it is possible to tell
+completely at compile time whether the coercion will succeed.</p>
+<p>Actually, coercions are somewhat more subtle than described above, and
+so I urge you to read the manual to find out the full details.</p>
+<p>The <code>container#add</code> method defined above is actually incorrect, and
+fails if you try to add widgets of different types into a <code>container</code>. A
+coercion would fix this.</p>
+<p>Is it possible to coerce from a superclass (eg. <code>widget</code>) to a subclass
+(eg. <code>button</code>)? The answer, perhaps surprisingly, is NO! Coercing in
+this direction is <em>unsafe</em>. You might try to coerce a <code>widget</code> which is
+in fact a <code>label</code>, not a <code>button</code>.</p>
+<p>The problem of coercing from a superclass to a subclass will be familiar
+to Java programmers. In Java the container types contain <code>Object</code>s, and
+when you extract an object from a container you must cast it back to its
+original type. This can cause runtime <code>ClassCastException</code>s. OCaml&#39;s
+strong type system has the specific goal of eliminating runtime type
+errors, and this is why this sort of coercion is not permitted.</p>
+<p>Polymorphism and functional programming should remove most of the need
+to coerce from superclasses to subclasses. Java&#39;s container classes
+store <code>Object</code>s because Java (at time of writing) lacks generics
+(&#39;templates&#39; in C++ or polymorphism in OCaml). This is a fault in the
+Java language - a pretty fundamental fault in fact - which will
+hopefully be fixed in Java 1.5. In OCaml it&#39;s so simple to define
+polymorphic types like <code>&#39;a list</code> or <code>&#39;a stack</code> that Java-like
+programming just wouldn&#39;t be required. Having said that, if you do
+extensive OO programming in OCaml then I&#39;m pretty sure you&#39;ll come up
+with a case where this type of coercion would actually be darned useful.
+Perhaps for this reason it&#39;s enough to say that you might try
+implementing solutions functionally first, and in an OO style only in
+the few problem domains where it really makes sense.</p>
+<p>[Yamagata Yoriyuki writes that type-safe downcasts are possible.
+Advanced users should see:
+<a href="http://caml.inria.fr/pub/ml-archives/caml-list/2002/05/a6520926c4eac029206a31d6aa22f967.fr.html">http://caml.inria.fr/pub/ml-archives/caml-list/2002/05/a6520926c4eac029206a31d6aa22f967.fr.html</a>
+, that leads to
+<a href="http://remi.vanicat.free.fr/ocaml/hweak/" title="http://remi.vanicat.free.fr/ocaml/hweak/">hweak</a>]</p>
+<h3 id="The-Oo-module-and-comparing-objects">The <code>Oo</code> module and comparing objects</h3><p>The <code>Oo</code> module contains a few useful functions for OO programming.</p>
+<p><code>Oo.copy</code> makes a shallow copy of an object. <code>Oo.id object</code> returns a
+unique identifying number for each object (a unique number across all
+classes).</p>
+<p><code>=</code> and <code>&lt;&gt;</code> can be used to compare objects for <em>physical</em> equality (an
+object and its copy are not physically identical). You can also use <code>&lt;</code>
+etc. which provides an ordering of objects based apparently on their
+IDs.</p>
+<h2 id="Objects-without-class">Objects without class</h2><p>Here we examine how to use objects pretty much like records, without
+necessarily using classes.</p>
+<h3 id="Immediate-objects-and-object-types">Immediate objects and object types</h3><p>Objects can be used instead of records, and have some nice properties
+that can make them preferrable to records in some cases. We saw that the
+canonical way of creating objects is to first define a class, and use
+this class to create individual objects. This can be cumbersome in some
+situations since class definitions are more than a type definition and
+cannot be defined recursively with types. However, objects have a type
+that is very analog to a record type, and it can be used in type
+definitions. In addition, objects can be created without a class. They
+are called <em>immediate objects</em>. Here is the definition of an immediate
+object:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">o</span> =
+    <span class="governing">object</span>
+      <span class="governing">val</span> <span class="keyword">mutable</span> n = 0
+      <span class="governing">method</span> <span class="ocaml-function">incr</span><span class="type"></span> = n &lt;- n + 1
+      <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = n
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val o : &lt; get : int; incr : unit &gt; = &lt;obj&gt;
+</span></code></pre>
+
+<p>This object has a type, which is defined by its public methods only.
+Values are not visible and neither are private methods (not shown).
+Unlike records, such a type does not need to be predefined explicitly,
+but doing so can make things clearer. We can do it like this:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">counter</span> = &lt; get : int;  incr : unit &gt;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type counter = &lt; get : int; incr : unit &gt;
+</span></code></pre>
+
+<p>Compare with an equivalent record type definition:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">counter_r</span> = { get : unit -&gt; int;
+                     incr : unit -&gt; unit }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type counter_r = { get : unit -&gt; int; incr : unit -&gt; unit; }
+</span></code></pre>
+
+<p>The implementation of a record working like our object would be:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">r</span> =
+    <span class="governing">let </span><span class="ocaml-variable">n</span> = <span class="keyword">ref</span> 0 <span class="governing">in</span>
+    { get = (<span class="keyword">fun</span> () -&gt; !n);
+      incr = (<span class="keyword">fun</span> () -&gt; incr n) }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val r : counter_r = {get = &lt;fun&gt;; incr = &lt;fun&gt;}
+</span></code></pre>
+
+<p>In terms of functionality, both the object and the record are similar,
+but each solution has its own advantages:</p>
+<ul><li><p><strong>speed</strong>: slightly faster field access in records</p>
+</li><li><p><strong>field names</strong>: it is inconvenient to manipulate records of
+ different types when some fields are named identically but it&#39;s not
+ a problem with objects</p>
+</li><li><p><strong>subtyping</strong>: it is impossible to coerce the type of a record to a
+ type with less fields. That is however possible with objects, so
+ objects of different kinds that share some methods can be mixed in a
+ data structure where only their common methods are visible (see next
+ section)</p>
+</li><li><p><strong>type definitions</strong>: there is no need to define an object type in
+ advance, so it lightens the dependency contraints between modules</p>
+</li></ul>
+
+<h3 id="Class-types-vs-just-types">Class types vs. just types</h3><p>Beware of the confusion between <em>class types</em> and object <em>types</em>. A
+<em>class type</em> is not a data <em>type</em>, normally referred to as <em>type</em> in the
+OCaml jargon. An object <em>type</em> is a kind of data <em>type</em>, just like a
+record type or a tuple.</p>
+<p>When a class is defined, both a <em>class type</em> and an object <em>type</em> of the
+same name are defined:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">class</span> <span class="ocaml-function">t</span> <span class="ocaml-variable"></span>=
+    <span class="governing">object</span>
+      <span class="governing"><span class="governing">val</span></span> <span class="ocaml-variable">x</span> = 0
+      <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = x
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class t : object val x : int method get : int end
+</span></code></pre>
+
+<p><code>object val x : int method get : int end</code> is a class type.</p>
+<p>In this example, <code>t</code> is also the type of objects that this class would
+create. Objects that derive from different classes or no class at all
+(immediate objects) can be mixed together as long as they have the same
+type:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ <span class="keyword">new</span> t; x ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : t list = [&lt;obj&gt;; &lt;obj&gt;]
+</span></code></pre>
+
+<p>Mixing objects that share a common subtype can be done, but requires
+explicit type coercion using the <code>:&gt;</code> operator:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="ocaml-error-loc">'</span>hello' <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (<span class="ocaml-error-loc">y</span> :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span></code></pre>
+
+<h2 id="More-objects">More objects</h2><p>The OCaml manual, chapter 3, contains the canonical reference for
+objects and classes. Amongst the things which I have not covered here,
+but which are covered in the manual, are:</p>
+<ul><li><p>private methods</p>
+</li><li><p>complex constructors</p>
+</li><li><p>interfaces</p>
+</li><li><p>multiple inheritance</p>
+</li><li><p>polymorphic methods</p>
+</li><li><p>more detail about coercions</p>
+</li><li><p>functional objects</p>
+</li><li><p>more detail about cloning objects</p>
+</li><li><p>mutually recursive classes</p>
+</li><li><p>binary methods</p>
+</li><li><p>friends</p>
+</li></ul>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/objects.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="description.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>What is OCaml? &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/description.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../learn/">Learn</a><span class="divider"></span></li>
+<li class="active">What is OCaml?</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Strengths">Strengths</a>
+</li><li><a href="#A-Widely-Used-Programming-Language">A Widely Used Programming Language</a>
+</li><li><a href="#Overview-of-the-OCaml-language-and-tools">Overview of the OCaml language and tools</a>
+<ul><li><a href="#Safety">Safety</a>
+</li><li><a href="#Functions">Functions</a>
+</li><li><a href="#Imperative-features">Imperative features</a>
+</li><li><a href="#Error-recovery">Error recovery</a>
+</li><li><a href="#Data-Types">Data Types</a>
+</li><li><a href="#Aptness-to-symbolic-computation">Aptness to symbolic computation</a>
+</li><li><a href="#Polymorphism">Polymorphism</a>
+</li><li><a href="#Programming-in-the-large">Programming in the large</a>
+</li><li><a href="#Object-oriented-programming">Object-oriented programming</a>
+</li><li><a href="#Automatic-memory-management-and-incremental-garbage-collection">Automatic memory management and incremental garbage collection</a>
+</li><li><a href="#Evaluation-regime">Evaluation regime</a>
+</li><li><a href="#Efficient-compiler-efficient-compiled-code">Efficient compiler, efficient compiled code</a>
+</li><li><a href="#Interactivity">Interactivity</a>
+</li><li><a href="#Debugging-facilities">Debugging facilities</a>
+</li><li><a href="#Parsing">Parsing</a>
+</li><li><a href="#Portability">Portability</a>
+</li></ul>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="What-is-OCaml">What is OCaml?</h1>
+
+<div style="float:right; width: 35%; padding-left: 2ex; text-decoration: none">
+  <a href="https://www.infoq.com/presentations/ocaml-browser-iot?utm_source=twitter&utm_medium=link&utm_campaign=qcon" target="_blank"><img src="../img/QCon1805.png"/>
+  <br/>Fast, Flexible and Functional Programming with OCaml,
+  Gemma Gordon and Anil Madhavapeddy
+  </a>
+</div>
+
+<p><strong>OCaml</strong> is a general purpose programming language
+with an emphasis on expressiveness and safety. Developed for more than
+20 years at <a href="http://www.inria.fr/en">Inria</a> by a group of leading
+researchers, it has an advanced type system that helps catch your
+mistakes without getting in your way.
+It&#39;s used in environments where <a href="companies.html">a single mistake can cost
+millions and speed matters</a>, is supported by an
+active community, and has a rich set of
+<a href="libraries.html">libraries</a> and development tools.<br/>For all its power, OCaml is also pretty simple, which is one reason it&#39;s
+often used as a <a href="teaching-ocaml.html">teaching language</a>.</p>
+<p>See “<a href="history.html">A History of OCaml</a>” for an account of the
+origins of the language.</p>
+<h2 id="Strengths">Strengths</h2><p>The OCaml language offers:</p>
+<ul><li><p><strong>A powerful type system</strong>, equipped with parametric polymorphism
+ and type inference. For instance, the type of a collection can be
+ parameterized by the type of its elements. This allows defining some
+ operations over a collection independently of the type of its
+ elements: sorting an array is one example. Furthermore, type
+ inference allows defining such operations without having to
+ explicitly provide the type of their parameters and result.</p>
+</li><li><p><strong>User-definable algebraic data types and pattern-matching</strong>. New
+ algebraic data types can be defined as combinations of records and
+ sums. Functions that operate over such data structures can then be
+ defined by pattern matching, a generalized form of the well-known
+ switch statement, which offers a clean and elegant way of
+ simultaneously examining and naming data.</p>
+</li><li><p><strong>Automatic memory management</strong>, thanks to a fast, unobtrusive,
+ incremental garbage collector.</p>
+</li><li><p><strong>Separate compilation of standalone applications</strong>. Portable
+ bytecode compilers allow creating stand-alone applications out of
+ Caml Light or OCaml programs. A foreign function interface allows
+ OCaml code to interoperate with C code when necessary. Interactive
+ use of OCaml is also supported via a “read-evaluate-print” loop.</p>
+</li></ul>
+
+<p>In addition, OCaml features:</p>
+<ul><li><p><strong>A sophisticated module system</strong>, which allows organizing modules
+ hierarchically and parameterizing a module over a number of other
+ modules.</p>
+</li><li><p><strong>An expressive object-oriented layer</strong>, featuring multiple
+ inheritance, parametric and virtual classes.</p>
+</li><li><p><strong>Efficient native code compilers</strong>. In addition to its bytecode
+ compiler, OCaml offers a compiler that produces efficient machine
+ code for many architectures.</p>
+</li></ul>
+
+<h2 id="A-Widely-Used-Programming-Language">A Widely Used Programming Language</h2><p>The OCaml language was initially used to develop applications that
+involve symbolic computation: automatic theorem provers, compilers and
+interpreters, program analyzers, etc. It is now used to develop software
+in many other application areas. This is illustrated by our list of
+selected <a href="success.html">success stories</a>.</p>
+<p>The OCaml language is widely used for teaching programming. It is also
+used inside academic projects in Europe, Asia, and the Americas. Several
+large corporations develop significant industrial projects in OCaml:
+these include Dassault Systèmes, Microsoft, IBM, and CEA (Commissariat à
+l&#39;Énergie Atomique).</p>
+<p>The <a href="../community/support.html#TheCamlConsortiumatInria">OCaml Consortium</a>
+offers industrial and
+academic partners a formal framework for participating in the
+development, maintenance, and evolution of OCaml. Partners also enjoy
+very liberal licensing conditions regarding the OCaml software
+distribution.</p>
+<h2 id="Overview-of-the-OCaml-language-and-tools">Overview of the OCaml language and tools</h2><h3 id="Safety">Safety</h3><p>OCaml is a safe language. Programs are verified by the compiler before
+they can be executed. This rules out many programming errors, such as,
+for instance, confusing an integer and a pointer, or accessing a
+nonexistent field in a record. More precisely, this protects the
+integrity of the data manipulated by an OCaml program.</p>
+<p>Although OCaml is statically type-checked, it does not require that the
+types of function parameters, local variables, etc. be explicitly
+declared, contrary to, say, C or Java. Much of the necessary type
+information is automatically inferred by the compiler.</p>
+<h3 id="Functions">Functions</h3><p>OCaml is a functional programming language: there is no restriction on
+the definition and use of functions. In other words, functions are
+ordinary values: a function can be passed as an argument to a function
+or returned by a function.</p>
+<h3 id="Imperative-features">Imperative features</h3><p>OCaml offers a full array of imperative features. In particular,
+variables, arrays, and record components can be declared as modifiable.
+Several varieties of loops are available.</p>
+<h3 id="Error-recovery">Error recovery</h3><p>OCaml features a general exception mechanism to signal and handle errors
+and exceptional situations.</p>
+<h3 id="Data-Types">Data Types</h3><p>OCaml offers numerous built-in data types, including:</p>
+<ul><li><p><strong>basic types</strong>: integers, floating point numbers, booleans,
+ characters, strings.</p>
+</li><li><p><strong>more sophisticated data types</strong>: tuples, arrays, lists, sets, hash
+ tables, queues, stacks, data streams.</p>
+</li></ul>
+
+<p>Beyond these powerful built-in types, OCaml offers powerful means of
+defining new data types: records, enumerations, and sum types. Sum types
+are a simple and powerful generalization of enumerations. They allow
+bringing heterogeneous values together into a common type, thanks to the
+use of tags known as data constructors.</p>
+<p>The types defined within a module can be made visible to the module&#39;s
+clients either concretely or abstractly, as the programmer desires. When
+a type is exported in a concrete manner, its full definition remains
+known: so, clients of the modules can build or examine values of this
+type. On the other hand, when a type is exported in an abstract manner,
+only its name is known outside the module. It then becomes impossible,
+from the outside, to create or inspect values of this type.</p>
+<p>This mechanism provides fine-grained control over data encapsulation,
+which is mandatory for programming in the large.</p>
+<h3 id="Aptness-to-symbolic-computation">Aptness to symbolic computation</h3><p>OCaml features pattern matching, a generalization of the traditional
+case analysis construct. Pattern matching offers a clean and elegant way
+of simultaneously examining and naming data. The OCaml compiler takes
+advantage of this feature to perform several checks: superfluous as well
+as missing branches are detected and reported, which often allows
+pinpointing subtle errors. When no error is signaled, one can trust that
+no case has been overlooked.</p>
+<p>Pattern matching brings unrivaled comfort and safety to programs that
+manipulate symbolic data.</p>
+<h3 id="Polymorphism">Polymorphism</h3><p>OCaml features a polymorphic type system: some undetermined types can be
+represented by variables, which may later be instantiated at will. Thus,
+for instance, a single sorting function can be applied to lists of
+integers, lists of integer pairs, or lists of records, without requiring
+any code duplication.</p>
+<h3 id="Programming-in-the-large">Programming in the large</h3><p>An OCaml program is made of compilation units that are dealt with
+separately by the compiler. This scheme is fully compatible with the use
+of traditional project management tools, such as the “make” utility. The
+module system is powerful and safe: every interaction between modules is
+statically typechecked. In OCaml, a module may contain submodules, which
+allows organizing modules hierarchically, and it is possible to
+parameterize a module over a number of other modules, or, in other
+words, to define functions from modules to modules.</p>
+<h3 id="Object-oriented-programming">Object-oriented programming</h3><p>OCaml allows writing programs in an object-oriented style. In keeping
+with the language&#39;s philosophy, the object-oriented layer obeys the
+“strong typing” paradigm: thus, it is impossible to send a message to
+some object that cannot answer it. Such safety does not come at a cost
+in expressiveness: thanks to features such as multiple inheritance and
+parametric classes, the most complex design patterns can be expressed in
+a natural manner.</p>
+<h3 id="Automatic-memory-management-and-incremental-garbage-collection">Automatic memory management and incremental garbage collection</h3><p>OCaml features automatic memory management: allocation and deallocation
+of data structures is implicit, and dealt with by the compiler: there is
+no “new”, “malloc”, “delete”, or “free” operator. This makes programs
+much safer: memory corruption cannot occur.</p>
+<p>Moreover, the memory manager is incremental: it runs in parallel with
+the application, so that garbage collection does not cause noticeable
+delays.</p>
+<h3 id="Evaluation-regime">Evaluation regime</h3><p>OCaml&#39;s evaluation strategy is strict. A lazy evaluation regime may be
+simulated, when required, via explicit suspensions. Thus, it is
+possible, for instance, to manipulate potentially infinite data streams.</p>
+<h3 id="Efficient-compiler-efficient-compiled-code">Efficient compiler, efficient compiled code</h3><p>OCaml offers two batch compilers: a bytecode compiler and a native code
+compiler. Both support separate compilation. Caml Light only offers a
+bytecode compiler.</p>
+<p>The bytecode compilers generate small, portable executables.
+Furthermore, these compilers are extremely fast.</p>
+<p>The native code compiler produces more efficient machine code, whose
+performance meets the highest standards of modern compilers.</p>
+<h3 id="Interactivity">Interactivity</h3><p>OCaml provides an interactive “read-eval-print” loop, which is
+convenient both for learning and for rapid testing and debugging of
+programs. Indeed, there is no need to create a file, or to insert
+display instructions into programs, since results are automatically
+printed by the interactive system.</p>
+<h3 id="Debugging-facilities">Debugging facilities</h3><p>Several different methods are available to debug OCaml programs:</p>
+<ul><li><p>the interactive system offers an elementary yet fast and simple
+ method to test (small) functions: one types various inputs directly
+ into the interactive system and checks that the results are as
+ expected.</p>
+</li><li><p>for more complex cases, the interactive system provides a cheap
+ means of following the computation, using the so-called function
+ call tracing mechanism.</p>
+</li><li><p>last, the symbolic replay debugger is an extremely powerful tool to
+ follow the computation. It allows stopping the program at any time
+ to scrutinize the value of variables and the stack of calling
+ functions, and even going back into the past to resume execution at
+ a particular point of interest.</p>
+</li></ul>
+
+<h3 id="Parsing">Parsing</h3><p>OCaml offers parser generation tools analogous to “lex” and “yacc”.
+Furthermore, it offers a built-in type of data streams which eases the
+definition of LL(1) recursive descent parsers.</p>
+<h3 id="Portability">Portability</h3><p>OCaml runs on a wide variety of platforms. Officially supported
+platforms are described <a href="portability.html">here</a>, and other platforms
+are supported by the community. For example, OCaml apps are available in
+the Apple app store; compiling to iOS is described
+<a href="http://psellos.com/ocaml/compile-to-iphone.html">here</a>. It is also
+possible to compile to javascript with
+<a href="http://ocsigen.org/js_of_ocaml/">js_of_ocaml</a>, enabling the creation
+of rich client-side applications directly with OCaml. A striking example
+of this is <a href="http://try.ocamlpro.com/">Try OCaml</a>, the result of
+compiling the OCaml compiler itself with js_of_ocaml. Finally,
+<a href="http://cafesterol.x9c.fr/">ocamljava</a> enables direct compilation of
+OCaml to Java bytecode, as well as providing other mechanisms for
+interoperating with Java.</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/description.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

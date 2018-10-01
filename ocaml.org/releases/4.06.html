@@ -1,0 +1,843 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="4.06.html" rel="alternate" hreflang="en"/>
+
+    
+    <title>OCaml 4.06 &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li><a href="../learn/">Learn</a></li>
+              <li><a href="../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../community/">Community</a></li>
+              <li><a href="../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.06.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../releases/">Releases</a><span class="divider"></span></li>
+<li class="active">OCaml 4.06</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li class="active">en</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="OCaml-4-06-0">OCaml 4.06.0</h1><p>This page describes OCaml version <strong>4.06.0</strong>, released on
+2017-11-03.  Go <a href="./">here</a> for a list of all releases and
+<a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/">here</a> for all 4.06.*
+files.</p>
+<p>This release is availabe as multiple
+<a href="https://opam.ocaml.org/doc/Usage.html">OPAM</a> switches:</p>
+<ul><li><p>4.06.0 — Official 4.06.0 release</p>
+</li><li><p>4.06.0+afl — Official 4.06.0 release with afl-fuzz instrumentation</p>
+</li><li><p>4.06.0+default-unsafe-string — Official 4.06.0 release without safe
+ strings by default</p>
+</li><li><p>4.06.0+flambda — Official 4.06.0 release with flambda activated</p>
+</li><li><p>4.06.0+force-safe-string — Official 4.06.0 release with -safe-string enabled.</p>
+</li><li><p>4.06.0+fp — Official 4.06.0 release with frame-pointers</p>
+</li><li><p>4.06.0+fp+flambda — Official 4.06.0 release with frame-pointers and
+ flambda activated</p>
+</li></ul>
+
+<h2 id="What-39-s-new">What&#39;s new</h2>
+
+<p>Some of the highlights in release 4.06 are:</p>
+<ul><li><p>Strings (type <code>string</code>) are now immutable by default. In-place
+ modification must use the type <code>bytes</code> of byte sequences, which is
+ distinct from <code>string</code>.  This corresponds to the <code>-safe-string</code>
+ compile-time option, which was introduced in OCaml 4.02 in 2014, and
+ which is now the default.</p>
+</li><li><p>Object types can now extend a previously-defined object type, as in
+ <code>&lt;t; a: int&gt;</code>.</p>
+</li><li><p>Destructive substitution over module signatures can now express more
+ substitutions, such as <code>S with type M.t := type-expr</code>
+ and <code>S with module M.N := path</code>.</p>
+</li><li><p>Users can now define operators that look like array indexing, e.g.
+ <code>let ( .%() ) = List.nth in [0; 1; 2].%(1)</code></p>
+</li><li><p>New escape <code>\u{XXXX}</code> in string literals, denoting the UTF-8
+ encoding of the Unicode code point <code>XXXX</code>.</p>
+</li><li><p>Full Unicode support was added to the Windows runtime system.  In
+ particular, file names can now contain Unicode characters.</p>
+</li><li><p>An alternate register allocator based on linear scan can be selected
+ with <code>ocamlopt -linscan</code>.  It reduces compilation time compared with
+ the default register allocator.</p>
+</li><li><p>The Num library for arbitrary-precision integer and rational
+ arithmetic is no longer part of the core distribution and can be
+ found as a separate OPAM package.</p>
+</li></ul>
+
+<p>For a comprehensive list of changes and details on all new features,
+bug fixes, optimizations, etc., please consult the
+<a href="#Changes">changelog</a>.</p>
+<h2 id="Source-distribution"><img src="../img/source.gif" alt=""/> Source distribution</h2>
+
+<ul><li><p><a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.gz">Source
+ tarball</a>
+ (.tar.gz) for compilation under Unix (including Linux and MacOS X)
+ and Microsoft Windows (including Cygwin).</p>
+</li><li><p>Also available in
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06.0.tar.xz">.tar.xz</a>
+ format.</p>
+</li><li><p><a href="https://opam.ocaml.org/">OPAM</a> is a source-based distribution of
+ OCaml and many companion libraries and tools. Compilation and
+ installation are automated by powerful package managers.</p>
+</li><li><p>The official development repo is hosted on
+ <a href="https://github.com/ocaml/ocaml">GitHub</a>.</p>
+</li></ul>
+
+<p>The
+<a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/notes/INSTALL.adoc">INSTALL</a> file
+of the distribution provides detailed compilation and installation
+instructions -- see also the <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/notes/README.win32.adoc">Windows release
+notes</a> for
+instructions on how to build under Windows.</p>
+<h2 id="Alternative-Compilers">Alternative Compilers</h2>
+
+<p>Additionally, the following projects allow you to compile OCaml code to
+targets traditionally associated with other languages:</p>
+<ul><li><p><a href="http://ocsigen.org/js_of_ocaml/">Js_of_ocaml</a> is a stable OCaml
+ to JavaScript compiler.</p>
+</li><li><p><a href="http://bucklescript.github.io/bucklescript/">Bucklescript</a> is a
+ newer OCaml to JavaScript compiler. See its
+ <a href="https://github.com/bucklescript/bucklescript/wiki/Differences-from-js_of_ocaml">wiki</a> for
+ an explanation of how it differs from js_of_ocaml.</p>
+</li><li><p><a href="http://www.ocamljava.org/">OCaml-java</a> is a stable OCaml to
+ Java compiler.</p>
+</li></ul>
+
+<h2 id="User-39-s-manual"><img src="../img/doc.gif" alt=""/> User&#39;s manual</h2>
+
+<p>The user&#39;s manual for OCaml can be:</p>
+<ul><li><p><a href="http://caml.inria.fr/pub/docs/manual-ocaml-4.06/index.html">browsed
+ online</a>,</p>
+</li><li><p>downloaded as a single
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06-refman.ps.gz">PostScript</a>,
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06-refman.pdf">PDF</a>,
+ or <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06-refman.txt">plain
+ text</a>
+ document,</p>
+</li><li><p>downloaded as a single
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06-refman-html.tar.gz">TAR</a>
+ or
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06-refman-html.zip">ZIP</a>
+ archive of HTML files,</p>
+</li><li><p>downloaded as a single
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/ocaml-4.06-refman.info.tar.gz">tarball</a>
+ of Emacs info files,</p>
+</li></ul>
+
+<h2 id="Download-directory"><img src="../img/source.gif" alt=""/> Download directory</h2>
+
+<p>All the files are also available in <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06">this
+directory</a>, along with
+their MD5 checksums.</p>
+<h2 id="Changes">Changes</h2>
+
+<p>This is the
+<a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/notes/Changes">changelog</a>.</p>
+<p>(Changes that can break existing programs are marked with a &#39;*&#39;)</p>
+<h3 id="Language-features">Language features:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6271">MPR#6271</a>,
+ <a href="https://caml.inria.fr/mantis/view.php?id=7529">MPR#7529</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1249">GPR#1249</a>:
+ Support <code>let open M in ...</code>
+ in class expressions and class type expressions.<br/> (Alain Frisch, reviews by Thomas Refis and Jacques Garrigue)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/792">GPR#792</a>:
+ fix limitations of destructive substitutions, by
+ allowing <code>S with type t := type-expr</code>,
+ <code>S with type M.t := type-expr</code>, <code>S with module M.N := path</code>.<br/> (Valentin Gatien-Baron, review by Jacques Garrigue and Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1064">GPR#1064</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1392">GPR#1392</a>:
+ extended indexing operators, add a new class of
+ user-defined indexing operators, obtained by adding at least one
+ operator character after the dot symbol to the standard indexing
+ operators: e,g <code>.%()</code>, <code>.?[]</code>, <code>.@{}&lt;-</code>:</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">let</span> <span class="keywordsign">(</span> <span class="keywordsign">.</span><span class="keywordsign infix">%</span><span class="keywordsign">(</span><span class="keywordsign">)</span> <span class="keywordsign">)</span> <span class="keywordsign">=</span> <span class="constructor module">List</span><span class="keywordsign">.</span><span class="lower">nth</span> <span class="governing">in</span>
+<span class="keywordsign">[</span><span class="number">0</span><span class="keywordsign">;</span> <span class="number">1</span><span class="keywordsign">;</span> <span class="number">2</span><span class="keywordsign operator">].</span><span class="keywordsign infix">%</span><span class="keywordsign">(</span><span class="number">1</span><span class="keywordsign">)</span></code></pre>
+
+<p>After this change, functions or methods with an explicit polymorphic type
+annotation and of which the first argument is optional now requires a space
+between the dot and the question mark,
+e.g. <code>&lt;f:&#39;a.?opt:int-&gt;unit&gt;</code> must now be written
+<code>&lt;f:&#39;a. ?opt:int-&gt;unit&gt;</code>.<br/>(Florian Angeletti, review by Damien Doligez and Gabriel Radanne)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1118">GPR#1118</a>:
+ Support inherited field in object type expression</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">type</span> <span class="lower">t</span> <span class="keywordsign">=</span> <span class="keywordsign">&#60;</span> <span class="lower">m</span> <span class="keywordsign">:</span> <span class="lower">int</span> <span class="keywordsign">&#62;</span>
+<span class="governing">type</span> <span class="lower">u</span> <span class="keywordsign">=</span> <span class="keywordsign">&#60;</span> <span class="lower">n</span> <span class="keywordsign">:</span> <span class="lower">int</span><span class="keywordsign">;</span> <span class="lower">t</span><span class="keywordsign">;</span> <span class="lower">k</span> <span class="keywordsign">:</span> <span class="lower">int</span> <span class="keywordsign">&#62;</span></code></pre>
+
+<p>(Runhang Li, reivew by Jeremy Yallop, Leo White, Jacques Garrigue,
+and Florian Angeletti)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1232">GPR#1232</a>:
+ Support Unicode character escape sequences in string
+ literals via the <code>\u{X+}</code> syntax. These escapes are substituted by the
+ UTF-8 encoding of the Unicode character.<br/> (Daniel Bünzli, review by Damien Doligez, Alain Frisch, Xavier
+ Leroy and Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1247">GPR#1247</a>:
+ <code>M.(::)</code> construction for expressions
+ and patterns (plus fix printing of (::) in the toplevel)<br/> (Florian Angeletti, review by Alain Frisch, Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1252">GPR#1252</a>:
+ The default mode is now safe-string, can be overridden
+ at configure time or at compile time.
+ (See <a href="https://github.com/ocaml/ocaml/pull/1386">GPR#1386</a>
+ below for the configure-time options)
+ This breaks the code that uses the <code>string</code> type as mutable
+ strings (instead of <code>Bytes.t</code>, introduced by 4.02 in 2014).<br/> (Damien Doligez)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1253">GPR#1253</a>:
+ Private extensible variants
+ This change breaks code relying on the undocumented ability to export
+ extension constructors for abstract type in signature. Briefly,</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">module</span> <span class="governing">type</span> <span class="constructor module">S</span> <span class="keywordsign">=</span> <span class="governing">sig</span>
+  <span class="governing">type</span> <span class="lower">t</span>
+  <span class="governing">type</span> <span class="lower">t</span> <span class="keywordsign infix">+=</span> <span class="constructor module">A</span>
+<span class="governing">end</span></code></pre>
+
+<p>must now be written</p>
+<pre class="ocaml"><code class="ocaml"><span class="governing">module</span> <span class="governing">type</span> <span class="constructor module">S</span> <span class="keywordsign">=</span> <span class="governing">sig</span>
+  <span class="governing">type</span> <span class="lower">t</span> <span class="keywordsign">=</span> <span class="keyword">private</span> <span class="keywordsign">..</span>
+  <span class="governing">type</span> <span class="lower">t</span> <span class="keywordsign infix">+=</span> <span class="constructor module">A</span>
+<span class="governing">end</span></code></pre>
+
+<p>(Leo White, review by Alain Frisch)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1333">GPR#1333</a>:
+ turn off warning 40 by default
+ (Constructor or label name used out of scope)<br/> (Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1348">GPR#1348</a>:
+ accept anonymous type parameters in <code>with</code> constraints:
+ <code>S with type _ t = int</code>.<br/> (Valentin Gatien-Baron, report by Jeremy Yallop)</p>
+</li></ul>
+
+<h3 id="Type-system">Type system</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=248">MPR#248</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1225">GPR#1225</a>:
+ unique names for weak type variables</p>
+<pre class="ocaml"><code class="ocaml"><span class="keywordsign">#</span> <span class="lower">ref</span> <span class="keywordsign operator">[]</span><span class="keywordsign">;;</span>
+<span class="keywordsign">-</span> <span class="keywordsign">:</span> <span class="keywordsign">&#39;</span><span class="lower">_weak1</span> <span class="lower">list</span> <span class="lower">ref</span> <span class="keywordsign">=</span> <span class="keywordsign">{</span><span class="lower">contents</span> <span class="keywordsign">=</span> <span class="keywordsign operator">[]}</span></code></pre></li></ul>
+
+<p> (Florian Angeletti, review by Frédéric Bour, Jacques Garrigue,
+ Gabriel Radanne and Gabriel Scherer)</p>
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6738">MPR#6738</a>,
+ <a href="https://caml.inria.fr/mantis/view.php?id=7215">MPR#7215</a>,
+ <a href="https://caml.inria.fr/mantis/view.php?id=7231">MPR#7231</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/556">GPR#556</a>:
+ Add a new check that <code>let rec</code>
+ bindings are well formed.<br/> (Jeremy Yallop, reviews by Stephen Dolan, Gabriel Scherer, Leo
+ White, and Damien Doligez)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1142">GPR#1142</a>:
+ Mark assertions nonexpansive, so that <code>assert false</code>
+ can be used as a placeholder for a polymorphic function.<br/> (Stephen Dolan)</p>
+</li></ul>
+
+<h3 id="Standard-library">Standard library:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=1771">MPR#1771</a>,
+ <a href="https://caml.inria.fr/mantis/view.php?id=7309">MPR#7309</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1026">GPR#1026</a>:
+ Add update to maps. Allows to update a
+ binding in a map or create a new binding if the key had no binding</p>
+<pre class="ocaml"><code class="ocaml">val update: key -&gt; (&#39;a option -&gt; &#39;a option) -&gt; &#39;a t -&gt; &#39;a t</code></pre>
+
+<p>(Sébastien Briais, review by Daniel Buenzli, Alain Frisch and
+Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7515">MPR#7515</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1147">GPR#1147</a>:
+ <code>Arg.align</code> now optionally uses the tab
+ character <code>&#39;\t&#39;</code> to separate the &#39;unaligned&#39; and &#39;aligned&#39; parts of
+ the documentation string. If tab is not present, then space is used
+ as a fallback. Allows to have spaces in the unaligned part, which is
+ useful for Tuple options.  (Nicolas Ojeda Bar, review by Alain
+ Frisch and Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/615">GPR#615</a>:
+ Format, add symbolic formatters that output symbolic
+ pretty-printing items.  New fields have been added to the
+ <code>formatter_out_functions</code> record, thus this change will break any code
+ building such record from scratch.  When building
+ <code>Format.formatter_out_functions</code> values redefinining the
+ <code>out_spaces</code> field, <code>{ fmt_out_funs with out_spaces = f; }</code> should
+ be replaced by <code>{ fmt_out_funs with out_spaces = f; out_indent = f; }</code>
+ to maintain the old behavior.<br/> (Richard Bonichon and Pierre Weis, review by Alain Frisch, original
+ request by Spiros Eliopoulos in
+ <a href="https://github.com/ocaml/ocaml/pull/506">GPR#506</a>)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/943">GPR#943</a>:
+ Fixed the divergence of the Pervasives module between the
+ stdlib and threads implementations.  In rare circumstances this can
+ change the behavior of existing applications: the implementation of
+ <code>Pervasives.close_out</code> used when compiling with thread support was
+ inconsistent with the manual.  It will now not suppress exceptions
+ escaping <code>Pervasives.flush</code> anymore.  Developers who want the old
+ behavior should use <code>Pervasives.close_out_noerr</code> instead.  The stdlib
+ implementation, used by applications not compiled with thread
+ support, will now only suppress <code>Sys_error</code> exceptions in
+ <code>Pervasives.flush_all</code>.  This should allow exceedingly unlikely
+ assertion exceptions to escape, which could help reveal bugs in the
+ standard library.<br/> (Markus Mottl, review by Hezekiah M. Carty, Jeremie Dimino, Damien
+ Doligez, Alain Frisch, Xavier Leroy, Gabriel Scherer and Mark
+ Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1034">GPR#1034</a>:
+ <code>List.init : int -&gt; (int -&gt; &#39;a) -&gt; &#39;a list</code><br/> (Richard Degenne, review by David Allsopp, Thomas Braibant, Florian
+ Angeletti, Gabriel Scherer, Nathan Moreau, Alain Frisch)</p>
+</li><li><p>GRP#1091 Add the <code>Uchar.{bom,rep}</code> constants.<br/> (Daniel Bünzli, Alain Frisch)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1091">GPR#1091</a>:
+ Add <code>Buffer.add_utf_{8,16le,16be}_uchar</code> to encode <code>Uchar.t</code>
+ values to the corresponding UTF-X transformation formats in <code>Buffer.t</code>
+ values.<br/> (Daniel Bünzli, review by Damien Doligez, Max Mouratov)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1175">GPR#1175</a>:
+ Bigarray, add a <code>change_layout</code> function to each Array[N]
+ submodules.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1306">GPR#1306</a>:
+ In the MSVC and Mingw ports, <code>Sys.rename src dst</code> no
+ longer fails if file <code>dst</code> exists, but replaces it with file <code>src</code>,
+ like in the other ports.<br/> (Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1314">GPR#1314</a>:
+ Format, use the optional width information
+ when formatting a boolean: <code>&#39;%8B&#39;, &#39;%-8B&#39;</code> for example<br/> (Xavier Clerc, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/commit/c9cc0f25138ce58e4f4e68c4219afe33e2a9d034">c9cc0f25138ce58e4f4e68c4219afe33e2a9d034</a>:
+ Resurrect tabulation boxes
+ in module Format. Rewrite/extend documentation of tabulation boxes.<br/> (Pierre Weis)</p>
+</li></ul>
+
+<h3 id="Other-libraries">Other libraries:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7564">MPR#7564</a>, <a href="https://github.com/ocaml/ocaml/pull/1211">GPR#1211</a>: Allow forward slashes in the target of symbolic links
+ created by <code>Unix.symlink</code> under Windows.
+ (Nicolas Ojeda Bar, review by David Allsopp)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7640">MPR#7640</a>, <a href="https://github.com/ocaml/ocaml/pull/1414">GPR#1414</a>: reimplementation of <code>Unix.execvpe</code> to fix issues
+ with the 4.05 implementation.  The main issue is that the current
+ directory was always searched (last), even if the current directory
+ is not listed in the PATH.<br/> (Xavier Leroy, report by Louis Gesbert and Arseniy Alekseyev,
+ review by Ivan Gotovchits)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/997">GPR#997</a>, <a href="https://github.com/ocaml/ocaml/pull/1077">GPR#1077</a>: Deprecate <code>Bigarray.*.map_file</code> and add
+ <code>Unix.map_file</code> as a first step towards moving Bigarray to the stdlib<br/> (Jérémie Dimino and Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1178">GPR#1178</a>: remove the Num library for arbitrary-precision arithmetic.
+ It now lives as a separate project https://github.com/ocaml/num
+ with an OPAM package called <code>num</code>.<br/> (Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1217">GPR#1217</a>: Restrict <code>Unix.environment</code> in privileged contexts; add
+ <code>Unix.unsafe_environment</code>.<br/> (Jeremy Yallop, review by Mark Shinwell, Nicolas Ojeda Bar,
+ Damien Doligez and Hannes Mehnert)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1321">GPR#1321</a>: Reimplement <code>Unix.isatty</code> on Windows. It no longer returns
+ true for the null device.<br/> (David Allsopp)</p>
+</li></ul>
+
+<h3 id="Compiler-user-interface-and-warnings">Compiler user-interface and warnings:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7361">MPR#7361</a>, <a href="https://github.com/ocaml/ocaml/pull/1248">GPR#1248</a>: support <code>ocaml.warning</code> in all attribute
+ contexts, and arrange so that <code>ocaml.ppwarning</code> is correctly scoped
+ by surrounding <code>ocaml.warning</code> attributes.<br/> (Alain Frisch, review by Florian Angeletti and Thomas Refis)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7444">MPR#7444</a>, <a href="https://github.com/ocaml/ocaml/pull/1138">GPR#1138</a>: trigger deprecation warning when a &#39;deprecated&#39;
+ attribute is hidden by signature coercion.<br/> (Alain Frisch, report by bmillwood, review by Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7472">MPR#7472</a>: ensure <code>.cmi</code> files are created atomically,
+ to avoid corruption of <code>.cmi</code> files produced simultaneously by a run
+ of ocamlc and a run of ocamlopt.<br/> (Xavier Leroy, from a suggestion by Gerd Stolpmann)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7514">MPR#7514</a>, <a href="https://github.com/ocaml/ocaml/pull/1152">GPR#1152</a>: add <code>-dprofile</code> option, similar to <code>-dtimings</code> but
+ also displays memory allocation and consumption.
+ The corresponding addition of a new compiler-internal
+ Profile module may affect some users of
+ compilers-libs/ocamlcommon (by creating module conflicts).<br/> (Valentin Gatien-Baron, report by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7620">MPR#7620</a>, <a href="https://github.com/ocaml/ocaml/pull/1317">GPR#1317</a>: <code>Typecore.force_delayed_checks</code> does not run
+ with <code>-i</code> option.<br/> (Jacques Garrigue, report by Jun Furuse)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7624">MPR#7624</a>: handle warning attributes placed on let bindings.<br/> (Xavier Clerc, report by dinosaure, review by Alain Frisch)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/896">GPR#896</a>: <code>-compat-32</code> is now taken into account when building
+ <code>.cmo</code>/<code>.cma</code>.<br/> (Hugo Heuzard)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/948">GPR#948</a>: the compiler now reports warnings-as-errors by prefixing
+ them with &#39;Error (warning ..):&#39;, instead of &#39;Warning ..:&#39; and
+ a trailing &#39;Error: Some fatal warnings were triggered&#39; message.<br/> (Valentin Gatien-Baron, review by Alain Frisch)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1032">GPR#1032</a>: display the output of <code>-dtimings</code> as a hierarchy.<br/> (Valentin Gatien-Baron, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1114">GPR#1114</a>, <a href="https://github.com/ocaml/ocaml/pull/1393">GPR#1393</a>, <a href="https://github.com/ocaml/ocaml/pull/1429">GPR#1429</a>: refine the (<code>ocamlc -config</code>)
+ information on C compilers: the variables
+ <code>{bytecode,native}_c_compiler</code> are deprecated (the distinction is
+ now mostly meaningless) in favor of a single <code>c_compiler</code> variable
+ combined with <code>ocaml{c,opt}_cflags</code> and <code>ocaml{c,opt}_cppflags</code>.<br/> (Sébastien Hinderer, Jeremy Yallop, Gabriel Scherer, review by
+ Adrien Nader and David Allsopp)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1189">GPR#1189</a>: allow MSVC ports to use <code>-l</code> option in <code>ocamlmklib</code>.<br/> (David Allsopp)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1332">GPR#1332</a>: fix ocamlc handling of <code>-output-complete-obj</code>.<br/> (François Bobot)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1336">GPR#1336</a>: <code>-thread</code> and <code>-vmthread</code> option information is propagated to
+ PPX rewriters.<br/> (Jun Furuse, review by Alain Frisch)</p>
+</li></ul>
+
+<h3 id="Code-generation-and-optimizations">Code generation and optimizations:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=5324">MPR#5324</a>, <a href="https://github.com/ocaml/ocaml/pull/375">GPR#375</a>: An alternative Linear Scan register allocator for
+ ocamlopt, activated with the <code>-linscan</code> command-line flag.  This
+ allocator represents a trade-off between worse generated code
+ performance for higher compilation speed (especially interesting in
+ some cases graph coloring is necessarily quadratic).<br/> (Marcell Fischbach and Benedikt Meurer, adapted by Nicolas Ojeda
+ Bar, review by Nicolas Ojeda Bar and Alain Frisch)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6927">MPR#6927</a>, <a href="https://github.com/ocaml/ocaml/pull/988">GPR#988</a>: On macOS, when compiling bytecode stubs, plugins,
+ and shared libraries through <code>-output-obj</code>, generate dylibs instead of
+ bundles.<br/> (whitequark)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7447">MPR#7447</a>, <a href="https://github.com/ocaml/ocaml/pull/995">GPR#995</a>: incorrect code generation for nested recursive
+ bindings.<br/> (Leo White and Jeremy Yallop, report by Stephen Dolan)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7501">MPR#7501</a>, <a href="https://github.com/ocaml/ocaml/pull/1089">GPR#1089</a>: Consider arrays of length zero as constants
+ when using Flambda.<br/> (Pierre Chambart, review by Mark Shinwell and Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7531">MPR#7531</a>, <a href="https://github.com/ocaml/ocaml/pull/1162">GPR#1162</a>: Erroneous code transformation at partial
+ applications.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7614">MPR#7614</a>, <a href="https://github.com/ocaml/ocaml/pull/1313">GPR#1313</a>: Ensure that inlining does not depend on the order
+ of symbols (flambda).<br/> (Leo White, Xavier Clerc, report by Alex, review by Gabriel Scherer
+ and Pierre Chambart)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7616">MPR#7616</a>, <a href="https://github.com/ocaml/ocaml/pull/1339">GPR#1339</a>: don&#39;t warn on mutation of zero size blocks.<br/> (Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7631">MPR#7631</a>, <a href="https://github.com/ocaml/ocaml/pull/1355">GPR#1355</a>: <code>-linscan</code> option crashes ocamlopt.<br/> (Xavier Clerc, report by Paul Steckler)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7642">MPR#7642</a>, <a href="https://github.com/ocaml/ocaml/pull/1411">GPR#1411</a>: ARM port: wrong register allocation for integer
+ multiply on ARMv4 and ARMv5; possible wrong register allocation for
+ floating-point multiply and add on VFP and for floating-point
+ negation and absolute value on soft FP emulation.<br/> (Xavier Leroy, report by Stéphane Glondu and Ximin Luo,
+ review and additional sightings by Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/659">GPR#659</a>: Remove support for SPARC native code generation.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/850">GPR#850</a>: Optimize away some physical equality.<br/> (Pierre Chambart, review by Mark Shinwell and Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/856">GPR#856</a>: Register availability analysis.<br/> (Mark Shinwell, Thomas Refis, review by Pierre Chambart)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1143">GPR#1143</a>: tweaked several allocation functions in the runtime by
+ checking for likely conditions before unlikely ones and eliminating
+ some redundant checks.<br/> (Markus Mottl, review by Alain Frisch, Xavier Leroy, Gabriel Scherer,
+ Mark Shinwell and Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1183">GPR#1183</a>: compile curried functors to multi-argument functions
+ earlier in the compiler pipeline; correctly propagate <code>[@@inline]</code>
+ attributes on such functors; mark functor coercion veneers as
+ stubs.<br/> (Mark Shinwell, review by Pierre Chambart and Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1195">GPR#1195</a>: Merge functions based on partiality rather than
+ <code>Parmatch.irrefutable</code>.
+ (Leo White, review by Thomas Refis, Alain Frisch and Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1215">GPR#1215</a>: Improve compilation of short-circuit operators
+ (Leo White, review by Frédéric Bour and Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1250">GPR#1250</a>: illegal ARM64 assembly code generated for large combined
+ allocations.<br/> (report and initial fix by Steve Walk, review and final fix by
+ Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1271">GPR#1271</a>: Don&#39;t generate Ialloc instructions for closures that exceed
+ <code>Max_young_wosize</code>; instead allocate them on the major heap.  (Related
+ to <a href="https://github.com/ocaml/ocaml/pull/1250">GPR#1250</a>.)<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1294">GPR#1294</a>: Add a configure-time option to remove the dynamic float array
+ optimization and add a floatarray type to let the user choose when to
+ flatten float arrays. Note that float-only records are unchanged: they
+ are still optimized by unboxing their fields.<br/> (Damien Doligez, review by Alain Frisch and Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1304">GPR#1304</a>: Mark registers clobbered by PLT stubs as destroyed across
+ allocations.<br/> (Mark Shinwell, Xavier Clerc, report and initial debugging by
+ Valentin Gatien-Baron)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1323">GPR#1323</a>: make sure that frame tables are generated in the data
+ section and not in the read-only data section, as was the case
+ before in the PPC and System-Z ports.  This avoids relocations in
+ the text segment of shared libraries and position-independent
+ executables generated by ocamlopt.<br/> (Xavier Leroy, review by Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1330">GPR#1330</a>: when generating dynamically-linkable code on AArch64, always
+ reference symbols (even locally-defined ones) through the GOT.<br/> (Mark Shinwell, review by Xavier Leroy)</p>
+</li></ul>
+
+<h3 id="Tools">Tools:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=1956">MPR#1956</a>, <a href="https://github.com/ocaml/ocaml/pull/973">GPR#973</a>: tools/check-symbol-names checks for globally
+ linked names not namespaced with <code>caml_</code>.
+ (Stephen Dolan)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6928">MPR#6928</a>, <a href="https://github.com/ocaml/ocaml/pull/1103">GPR#1103</a>: ocamldoc, do not introduce an empty <code>&lt;h1&gt;</code> in
+ <code>index.html</code> when no <code>-title</code> has been provided.<br/> (Pierre Boutillier)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7048">MPR#7048</a>: ocamldoc, in <code>-latex</code> mode, don&#39;t escape Latin-1 accented
+ letters.<br/> (Xavier Leroy, report by Hugo Herbelin)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7351">MPR#7351</a>: ocamldoc, use semantic tags rather than <code>&lt;br&gt;</code> tags in the html
+ backend.<br/> (Florian Angeletti, request and review by Daniel Bünzli )</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7352">MPR#7352</a>, <a href="https://caml.inria.fr/mantis/view.php?id=7353">MPR#7353</a>: ocamldoc, better paragraphs in html output.<br/> (Florian Angeletti, request by Daniel Bünzli)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7363">MPR#7363</a>, <a href="https://github.com/ocaml/ocaml/pull/830">GPR#830</a>: ocamldoc, start heading levels at <code>{1</code> not <code>{2</code> or <code>{6</code>.
+ This change modifies the mapping between ocamldoc heading level and
+ html heading level, breaking custom css style for ocamldoc.<br/> (Florian Angeletti, request and review by Daniel Bünzli)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7478">MPR#7478</a>, <a href="https://github.com/ocaml/ocaml/pull/1037">GPR#1037</a>: ocamldoc, do not use as a module preamble documentation
+ comments that occur after the first module element. This change may break
+ existing documenation. In particular, module preambles must now come before
+ any <code>open</code> statement.<br/> (Florian Angeletti, review by David Allsopp and report by Daniel Bünzli)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7521">MPR#7521</a>, <a href="https://github.com/ocaml/ocaml/pull/1159">GPR#1159</a>: ocamldoc, end generated latex file with a new
+ line.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7575">MPR#7575</a>, <a href="https://github.com/ocaml/ocaml/pull/1219">GPR#1219</a>: Switch compilers from <code>-no-keep-locs</code>
+ to <code>-keep-locs</code> by default: produced <code>.cmi</code> files will contain locations.
+ This provides better error messages. Note that, as a consequence,
+ <code>.cmi</code> digests now depend on the file path as given to the
+ compiler.<br/> (Daniel Bünzli)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7610">MPR#7610</a>, <a href="https://github.com/ocaml/ocaml/pull/1346">GPR#1346</a>: <code>caml.el</code> (the Emacs editing mode) was cleaned up
+ and made compatible with Emacs 25.<br/> (Stefan Monnier, Christophe Troestler)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7635">MPR#7635</a>, <a href="https://github.com/ocaml/ocaml/pull/1383">GPR#1383</a>: ocamldoc, add an identifier to module
+ and module type elements.<br/> (Florian Angeletti, review by Yawar Amin and Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/681">GPR#681</a>, <a href="https://github.com/ocaml/ocaml/pull/1426">GPR#1426</a>: Introduce ocamltest, a new test driver for the
+ OCaml compiler testsuite.<br/> (Sébastien Hinderer, review by Damien Doligez)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1012">GPR#1012</a>: ocamlyacc, fix parsing of raw strings and nested comments,
+ as well as the handling of <code>&#39;</code> characters in identifiers.<br/> (Demi Obenour)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1045">GPR#1045</a>: ocamldep, add a <code>-shared</code> option to generate dependencies
+ for native plugin files (i.e., <code>.cmxs</code> files).<br/> (Florian Angeletti, suggestion by Sébastien Hinderer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1078">GPR#1078</a>: add a subcommand <code>-depend</code> to <code>ocamlc</code> and <code>ocamlopt</code>, to
+ behave as ocamldep.  Should be used mostly to replace <code>ocamldep</code> in
+ the <code>boot</code> directory to reduce its size in the future.<br/> (Fabrice Le Fessant)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1036">GPR#1036</a>: <code>ocamlcmt</code> (<code>tools/read_cmt</code>) is installed, converts <code>.cmt</code>
+ to <code>.annot</code>.<br/> (Fabrice Le Fessant)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1180">GPR#1180</a>: Add support for recording numbers of direct and indirect
+ calls over the lifetime of a program when using Spacetime
+ profiling.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1457">GPR#1457</a>, ocamldoc: restore label for exception in the LaTeX backend
+ (omitted since 4.04.0).<br/> (Florian Angeletti, review by Gabriel Scherer)</p>
+</li></ul>
+
+<h3 id="Toplevel">Toplevel:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7570">MPR#7570</a>: remove unusable <code>-plugin</code> option from the toplevel.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1041">GPR#1041</a>: <code>-nostdlib</code> no longer ignored by toplevel.<br/> (David Allsopp, review by Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1231">GPR#1231</a>: improved printing of unicode texts in the toplevel,
+ unless <code>OCAMLTOP_UTF_8</code> is set to false.<br/> (Florian Angeletti, review by Daniel Bünzli, Xavier Leroy and
+ Gabriel Scherer)</p>
+</li></ul>
+
+<h3 id="Runtime-system">Runtime system:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=3771">MPR#3771</a>, <a href="https://github.com/ocaml/ocaml/pull/153">GPR#153</a>, <a href="https://github.com/ocaml/ocaml/pull/1200">GPR#1200</a>, <a href="https://github.com/ocaml/ocaml/pull/1357">GPR#1357</a>, <a href="https://github.com/ocaml/ocaml/pull/1362">GPR#1362</a>, <a href="https://github.com/ocaml/ocaml/pull/1363">GPR#1363</a>, <a href="https://github.com/ocaml/ocaml/pull/1369">GPR#1369</a>, <a href="https://github.com/ocaml/ocaml/pull/1398">GPR#1398</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1446">GPR#1446</a>, <a href="https://github.com/ocaml/ocaml/pull/1448">GPR#1448</a>: Unicode support for the Windows runtime.<br/> (ygrek, Nicolas Ojeda Bar, review by Alain Frisch, David Allsopp, Damien
+ Doligez)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7594">MPR#7594</a>, <a href="https://github.com/ocaml/ocaml/pull/1274">GPR#1274</a>, <a href="https://github.com/ocaml/ocaml/pull/1368">GPR#1368</a>: <code>String_val</code> now returns <code>const
+  char*</code>, not <code>char*</code> when <code>-safe-string</code> is enabled at configure time.
+ New macro <code>Bytes_val</code> for accessing bytes values.<br/> (Jeremy Yallop, reviews by Mark Shinwell and Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/71">GPR#71</a>: The runtime can now be shut down gracefully by means of the
+ new <code>caml_shutdown</code> and <code>caml_startup_pooled</code> functions. The new <code>c</code>
+ flag in <code>OCAMLRUNPARAM</code> enables shutting the runtime properly on
+ process exit.<br/> (Max Mouratov, review and discussion by Damien Doligez, Gabriel
+ Scherer, Mark Shinwell, Thomas Braibant, Stephen Dolan, Pierre
+ Chambart, François Bobot, Jacques Garrigue, David Allsopp, and Alain
+ Frisch)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/938">GPR#938</a>, <a href="https://github.com/ocaml/ocaml/pull/1170">GPR#1170</a>, <a href="https://github.com/ocaml/ocaml/pull/1289">GPR#1289</a>: Stack overflow detection on 64-bit
+ Windows.<br/> (Olivier Andrieu, tweaked by David Allsopp)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1070">GPR#1070</a>, <a href="https://github.com/ocaml/ocaml/pull/1295">GPR#1295</a>: enable gcc typechecking for <code>caml_alloc_sprintf</code>,
+ <code>caml_gc_message</code>.  Make <code>caml_gc_message</code> a variadic function.  Fix
+ many <code>caml_gc_message</code> format strings.<br/> (Olivier Andrieu, review and 32bit fix by David Allsopp)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1073">GPR#1073</a>: Remove statically allocated compare stack.<br/> (Stephen Dolan)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1086">GPR#1086</a>: in <code>Sys.getcwd</code>, just fail instead of calling <code>getwd()</code>
+ if <code>HAS_GETCWD</code> is not set.<br/> (Report and first fix by Sebastian Markbåge, final fix by Xavier Leroy,
+ review by MarK Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1269">GPR#1269</a>: Remove 50ms delay at exit for programs using threads.<br/> (Valentin Gatien-Baron, review by Stephen Dolan)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1309">GPR#1309</a>: open files with <code>O_CLOEXEC</code> (or equivalent) in
+ <code>caml_sys_open</code>, thus unifying the semantics between Unix and
+ Windows and also eliminating race condition on Unix.<br/> (David Allsopp, report by Andreas Hauptmann)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1326">GPR#1326</a>: Enable use of CFI directives in AArch64 and ARM runtime
+ systems&#39; assembly code (<code>asmrun/arm64.S</code>).  Add CFI directives to
+ enable unwinding through <code>caml_c_call</code> and <code>caml_call_gc</code> with
+ correct termination of unwinding at <code>main</code>.<br/> (Mark Shinwell, review by Xavier Leroy and Gabriel Scherer, with
+ thanks to Daniel Bünzli and Fu Yong Quah for testing)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1338">GPR#1338</a>: Add <code>-g</code> for bytecode runtime system compilation.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1416">GPR#1416</a>, <a href="https://github.com/ocaml/ocaml/pull/1444">GPR#1444</a>: switch the Windows 10 Console to UTF-8
+ encoding.<br/> (David Allsopp, reviews by Nicolás Ojeda Bär and Xavier Leroy)</p>
+</li></ul>
+
+<h3 id="Manual-and-documentation">Manual and documentation:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6548">MPR#6548</a>: remove obsolete limitation in the description of private
+ type abbreviations.<br/> (Florian Angeletti, suggestion by Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6676">MPR#6676</a>, <a href="https://github.com/ocaml/ocaml/pull/1110">GPR#1110</a>: move record notation to tutorial.<br/> (Florian Angeletti, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6676">MPR#6676</a>, <a href="https://github.com/ocaml/ocaml/pull/1112">GPR#1112</a>: move local opens to tutorial.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6676">MPR#6676</a>, <a href="https://github.com/ocaml/ocaml/pull/1153">GPR#1153</a>: move overriding class definitions to reference
+ manual and tutorial.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6709">MPR#6709</a>: document the associativity and precedence level of
+ pervasive operators.<br/> (Florian Angeletti, review by David Allsopp)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7254">MPR#7254</a>, <a href="https://github.com/ocaml/ocaml/pull/1096">GPR#1096</a>: Rudimentary documentation of ocamlnat.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7281">MPR#7281</a>, <a href="https://github.com/ocaml/ocaml/pull/1259">GPR#1259</a>: fix <code>.TH</code> macros in generated manpages.<br/> (Olaf Hering)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7507">MPR#7507</a>: Align the description of the printf conversion
+ specification <code>&#39;%g&#39;</code> with the ISO C90 description.<br/> (Florian Angeletti, suggestion by Armaël Guéneau)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7551">MPR#7551</a>, <a href="https://github.com/ocaml/ocaml/pull/1194">GPR#1194</a> : make the final <code>&#39;;;&#39;</code> potentially optional in
+ <code>caml_example</code>.<br/> (Florian Angeletti, review and suggestion by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7588">MPR#7588</a>, <a href="https://github.com/ocaml/ocaml/pull/1291">GPR#1291</a>: make format documentation predictable.<br/> (Florian Angeletti, review by Gabriel Radanne)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7604">MPR#7604</a>: Minor Ephemeron documentation fixes.<br/> (Miod Vallat, review by Florian Angeletti)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/594">GPR#594</a>: New chapter on polymorphism troubles:
+ weakly polymorphic types, polymorphic recursion,and higher-ranked
+ polymorphism.<br/> (Florian Angeletti, review by Damien Doligez, Gabriel Scherer,
+ and Gerd Stolpmann)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1187">GPR#1187</a>: Minimal documentation for compiler plugins.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1202">GPR#1202</a>: Fix Typos in comments as well as basic grammar errors.<br/> (JP Rodi, review and suggestions by David Allsopp, Max Mouratov,
+ Florian Angeletti, Xavier Leroy, Mark Shinwell and Damien Doligez)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1220">GPR#1220</a>: Fix <code>-keep-docs</code> option in ocamlopt manpage.<br/> (Etienne Millon)</p>
+</li></ul>
+
+<h3 id="Compiler-distribution-build-system">Compiler distribution build system:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6373">MPR#6373</a>, <a href="https://github.com/ocaml/ocaml/pull/1093">GPR#1093</a>: Suppress trigraph warnings from macOS
+ assembler.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7639">MPR#7639</a>, <a href="https://github.com/ocaml/ocaml/pull/1371">GPR#1371</a>: fix configure script for correct detection of
+ int64 alignment on Mac OS X 10.13 (High Sierra) and above; fix bug in
+ configure script relating to such detection.<br/> (Mark Shinwell, report by John Whitington, review by Xavier Leroy)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/558">GPR#558</a>: enable shared library and natdynlink support on more Linux
+ platforms.<br/> (Felix Janda, Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1104">GPR#1104</a>: remove support for the NeXTStep platform.<br/> (Sébastien Hinderer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1130">GPR#1130</a>: enable detection of IBM XL C compiler (one need to run
+ configure with <code>-cc &lt;path to xlc compiler&gt;</code>).  Enable shared library
+ support for bytecode executables on AIX/xlc (tested on AIX 7.1, XL C
+ 12).  To enable 64-bit, run both <code>configure</code> and <code>make world</code> with
+ <code>OBJECT_MODE=64</code>.<br/> (Konstantin Romanov, Enrique Naudon)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1203">GPR#1203</a>: speed up the manual build by using <code>ocamldoc.opt</code>.<br/> (Gabriel Scherer, review by Florian Angeletti)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1214">GPR#1214</a>: harden <code>config/Makefile</code> against <code>#</code> characters in
+ PREFIX.<br/> (Gabriel Scherer, review by David Allsopp and Damien Doligez)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1216">GPR#1216</a>: move Compplugin and friends from <code>BYTECOMP</code> to <code>COMP</code>.<br/> (Leo White, review by Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1242">GPR#1242</a>: disable C plugins loading by default.<br/> (Alexey Egorov)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1275">GPR#1275</a>: correct configure test for Spacetime availability.<br/> (Mark Shinwell)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1278">GPR#1278</a>: discover presence of <code>&lt;sys/shm.h&gt;</code> during configure for
+ afl runtime.<br/> (Hannes Mehnert)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1386">GPR#1386</a>: provide configure-time options to fine-tune the safe-string
+ options and default settings changed by <a href="https://github.com/ocaml/ocaml/pull/1525">GPR#1525</a>.</p>
+</li></ul>
+
+<p> The previous configure option <code>-safe-string</code> is now
+ renamed <code>-force-safe-string</code>.</p>
+<p> At configure-time, <code>-force-safe-string</code> forces all module to use
+ immutable strings (this disables the per-file, compile-time
+ <code>-unsafe-string</code> option). The new default-(un)safe-string options
+ let you set the default choice for the per-file compile-time
+ option. (The new <a href="https://github.com/ocaml/ocaml/pull/1252">GPR#1252</a> behavior corresponds to having
+ <code>-default-safe-string</code>, while 4.05 and older had
+ <code>-default-unsafe-string</code>).</p>
+<p> (Gabriel Scherer, review by Jacques-Pascal Deplaix and Damien Doligez)</p>
+<ul><li><a href="https://github.com/ocaml/ocaml/pull/1409">GPR#1409</a>: Fix to enable NetBSD/powerpc to work.<br/> (Håvard Eidnes)</li></ul>
+
+<h3 id="Internal-compiler-libs-changes">Internal/compiler-libs changes:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6826">MPR#6826</a>, <a href="https://github.com/ocaml/ocaml/pull/828">GPR#828</a>, <a href="https://github.com/ocaml/ocaml/pull/834">GPR#834</a>: improve compilation time for <code>open</code>.<br/> (Alain Frisch, review by Frédéric Bour and Jacques Garrigue)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7127">MPR#7127</a>, <a href="https://github.com/ocaml/ocaml/pull/454">GPR#454</a>, <a href="https://github.com/ocaml/ocaml/pull/1058">GPR#1058</a>: in toplevel, print bytes and strip
+ strings longer than the size specified by the <code>print_length</code>
+ directive.<br/> (Fabrice Le Fessant, initial PR by Junsong Li)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/406">GPR#406</a>: remove polymorphic comparison for <code>Types.constructor_tag</code>
+ in compiler.<br/> (Dwight Guth, review by Gabriel Radanne, Damien Doligez, Gabriel
+ Scherer, Pierre Chambart, Mark Shinwell)</p>
+</li><li><p>GRP#1119: Change Set (private) type to inline records.<br/> (Albin Coquereau)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1127">GPR#1127</a>: move <code>config/{m,s}.h</code> to <code>byterun/caml</code> and install them.
+ User code should not have to include them directly since they are
+ included by other header files.  Previously <code>{m,s}.h</code> were not
+ installed but they were substituted into <code>caml/config.h</code>; they are
+ now just <code>#include</code>-d by this file.  This may break some scripts
+ relying on the (unspecified) presence of certain <code>#define</code> in
+ <code>config.h</code> instead of <code>m.h</code> and <code>s.h</code> — they can be rewritten to try
+ to grep those files if they exist.<br/> (Sébastien Hinderer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1281">GPR#1281</a>: avoid formatter flushes inside exported printers in
+ <code>Location</code>.<br/> (Florian Angeletti, review by Gabriel Scherer)</p>
+</li></ul>
+
+<h3 id="Bug-fixes">Bug fixes</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=5927">MPR#5927</a>: Type equality broken for conjunctive polymorphic variant
+ tags.<br/> (Jacques Garrigue, report by Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6329">MPR#6329</a>, <a href="https://github.com/ocaml/ocaml/pull/1437">GPR#1437</a>: Introduce padding word before &#39;data_end&#39; symbols
+ to ensure page table tests work correctly on an immediately preceding
+ block of zero size.<br/> (Mark Shinwell, review by Xavier Leroy)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6587">MPR#6587</a>: only elide Pervasives from printed type paths in
+ unambiguous context.<br/> (Florian Angeletti and Jacques Garrigue)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6934">MPR#6934</a>: <code>nonrec</code> misbehaves with GADTs.<br/> (Jacques Garrigue, report by Markus Mottl)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7070">MPR#7070</a>, <a href="https://github.com/ocaml/ocaml/pull/1139">GPR#1139</a>: Unexported values can cause non-generalisable
+ variables error.<br/> (Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7261">MPR#7261</a>: Warn on type constraints in GADT declarations.<br/> (Jacques Garrigue, report by Fabrice Le Botlan)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7321">MPR#7321</a>: Private type in signature clashes with type definition via
+ functor instantiation.<br/> (Jacques Garrigue, report by Markus Mottl)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7372">MPR#7372</a>, <a href="https://github.com/ocaml/ocaml/pull/834">GPR#834</a>: fix type-checker bug with GADT and inline
+ records.<br/> (Alain Frisch, review by Frédéric Bour and Jacques Garrigue)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7344">MPR#7344</a>: Inconsistent behavior with type annotations on <code>let</code>.<br/> (Jacques Garrigue, report by Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7468">MPR#7468</a>: possible GC problem in <code>caml_alloc_sprintf</code>.<br/> (Xavier Leroy, discovery by Olivier Andrieu)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7496">MPR#7496</a>: Fixed conjunctive polymorphic variant tags do not unify
+ with themselves.<br/> (Jacques Garrigue, report by Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7506">MPR#7506</a>: <code>pprintast</code> ignores attributes in tails of a list.<br/> (Alain Frisch, report by Kenichi Asai and Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7513">MPR#7513</a>: <code>List.compare_length_with</code> mishandles negative numbers /
+ overflow.<br/> (Fabrice Le Fessant, report by Jeremy Yallop)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7519">MPR#7519</a>: Incorrect rejection of program due to faux scope escape.<br/> (Jacques Garrigue, report by Markus Mottl)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7540">MPR#7540</a>, <a href="https://github.com/ocaml/ocaml/pull/1179">GPR#1179</a>: Fixed setting of breakpoints within packed modules
+ for <code>ocamldebug</code>.<br/> (Hugo Herbelin, review by Gabriel Scherer, Damien Doligez)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7543">MPR#7543</a>: short-paths <code>printtyp</code> can fail on packed type error
+ messages.<br/> (Florian Angeletti)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7553">MPR#7553</a>, <a href="https://github.com/ocaml/ocaml/pull/1191">GPR#1191</a>: Prevent repeated warnings with recursive
+ modules.<br/> (Leo White, review by Josh Berdine and Alain Frisch)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7563">MPR#7563</a>, <a href="https://github.com/ocaml/ocaml/pull/1210">GPR#1210</a>: code generation bug when a module alias and
+ an extension constructor have the same name in the same module.<br/> (Gabriel Scherer, report by Manuel Fähndrich,
+ review by Jacques Garrigue and Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7591">MPR#7591</a>, <a href="https://github.com/ocaml/ocaml/pull/1257">GPR#1257</a>: on x86-64, frame table is not 8-aligned.<br/> (Xavier Leroy, report by Mantis user &#39;voglerr&#39;, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7601">MPR#7601</a>, <a href="https://github.com/ocaml/ocaml/pull/1320">GPR#1320</a>: It seems like a hidden non-generalized type variable
+ remains in some inferred signatures, which leads to strange errors.<br/> (Jacques Garrigue, report by Mandrikin)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7609">MPR#7609</a>: use-after-free memory corruption if a program debugged
+ under ocamldebug calls <code>Pervasives.flush_all</code>.<br/> (Xavier Leroy, report by Paul Steckler, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7612">MPR#7612</a>, <a href="https://github.com/ocaml/ocaml/pull/1345">GPR#1345</a>: afl-instrumentation bugfix for classes.<br/> (Stephen Dolan, review by Gabriel Scherer and David Allsopp)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7617">MPR#7617</a>, <a href="https://caml.inria.fr/mantis/view.php?id=7618">MPR#7618</a>, <a href="https://github.com/ocaml/ocaml/pull/1318">GPR#1318</a>: Ambiguous (mistakenly) type escaping the
+ scope of its equation.<br/> (Jacques Garrigue, report by Thomas Refis)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7619">MPR#7619</a>, <a href="https://github.com/ocaml/ocaml/pull/1387">GPR#1387</a>: position of the optional last semi-column not included
+ in the position of the expression (same behavior as for lists).<br/> (Christophe Raffalli, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7638">MPR#7638</a>: in the Windows Mingw64 port, multithreaded programs compiled
+ to bytecode could crash when raising an exception from C code.
+ This looks like a Mingw64 issue, which we work around with GCC
+ builtins.<br/> (Xavier Leroy)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7656">MPR#7656</a>, <a href="https://github.com/ocaml/ocaml/pull/1423">GPR#1423</a>: false &#39;unused type/constructor/value&#39; alarms
+ in the 4.06 development version.<br/> (Alain Frisch, review by Jacques Garrigue, report by Jacques-Pascal Deplaix)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7657">MPR#7657</a>, <a href="https://github.com/ocaml/ocaml/pull/1424">GPR#1424</a>: ensures correct call-by-value semantics when
+ eta-expanding functions to eliminate optional arguments.<br/> (Alain Frisch, report by sliquister, review by Leo White and Jacques
+ Garrigue)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7658">MPR#7658</a>, <a href="https://github.com/ocaml/ocaml/pull/1439">GPR#1439</a>: Fix Spacetime runtime system compilation with
+ <code>-force-safe-string</code>.<br/> (Mark Shinwell, report by Christoph Spiel, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1155">GPR#1155</a>: Fix a race condition with <code>WAIT_NOHANG</code> on Windows.<br/> (Jérémie Dimino and David Allsopp)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1199">GPR#1199</a>: Pretty-printing formatting cleanup in <code>pprintast</code>.<br/> (Ethan Aubin, suggestion by Gabriel Scherer, review by David Allsopp,
+ Florian Angeletti, and Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1223">GPR#1223</a>: Fix corruption of the environment when using <code>-short-paths</code>
+ with the toplevel.<br/> (Leo White, review by Alain Frisch)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1243">GPR#1243</a>: Fix <code>pprintast</code> for <code>#...</code> infix operators.<br/> (Alain Frisch, report by Omar Chebib)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1324">GPR#1324</a>: ensure that flambda warning are printed only once.<br/> (Xavier Clerc)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1329">GPR#1329</a>: Prevent recursive polymorphic variant names.<br/> (Jacques Garrigue, fix suggested by Leo White)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1308">GPR#1308</a>: Only treat pure patterns as inactive.<br/> (Leo White, review by Alain Frisch and Gabriel Scherer)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1390">GPR#1390</a>: fix the <code>[@@unboxed]</code> type check to accept parametrized
+ types.<br/> (Leo White, review by Damien Doligez)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1407">GPR#1407</a>: Fix <code>raw_spacetime_lib</code>.<br/> (Leo White, review by Gabriel Scherer and Damien Doligez)</p>
+</li></ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../learn/taste.html">Code Examples</a></li>
+      <li><a href="../learn/tutorials/">Tutorials</a></li>
+      <li><a href="../learn/books.html">Books</a></li>
+      <li><a href="../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/">Community</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../meetings/">Meetings</a></li>
+      <li><a href="../community/planet/">News</a></li>
+      <li><a href="../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.06.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

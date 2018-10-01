@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="success.html" rel="alternate" hreflang="en"/>
+<link href="success.fr.html" rel="alternate" hreflang="fr"/>
+
+    
+    <title>Quelques succès &#8211; OCaml</title>
+    <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../index.fr.html" class="brand"><img src="../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../learn/index.fr.html">Apprendre</a></li>
+              <li><a href="../docs/index.fr.html">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Contributions</a></li>
+              <li><a href="../community/index.fr.html">Communauté</a></li>
+              <li><a href="../community/planet/">Nouvelles</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/success.fr.md" title="Éditer cette page" class="edit-this-page pull-right"><span>Éditer cette page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Rechercher" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../">Home</a><span class="divider"></span></li>
+<li><a href="../learn/index.fr.html">Apprendre</a><span class="divider"></span></li>
+<li class="active">Quelques succès</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="success.html">en</a></li>
+<li class="active">fr</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="Quelques-succ-s">Quelques succès</h1><p><em>Contenu</em></p>
+<h2 id="Le-synchroniseur-de-fichiers-Unison">Le synchroniseur de fichiers Unison</h2><p><a href="../img/unison.png"><img src="../img/unison-thumb.jpg" alt="Screenshot" title="Screenshot of Unison&#39;s main window"/></a></p>
+<p><a href="http://www.cis.upenn.edu/%7Ebcpierce/unison/">Unison</a> est un outil de
+synchronisation de fichiers populaire, qui fonctionne sous Windows et
+sous la plupart des variantes d&#39;Unix. Il permet de stocker deux
+répliques d&#39;une collection de fichiers et de répertoires sur deux
+machines différentes, ou bien sur deux disques différents d&#39;une même
+machine, et de les mettre à jour en propageant les changements de
+chacune des répliques vers l&#39;autre. À la différence d&#39;un simple outil de
+sauvegarde ou de maintien d&#39;une image miroir, Unison est capable de
+gérer la situation où les deux répliques ont été modifiées : les
+changements qui n&#39;entrent pas en conflit sont propagés automatiquement,
+tandis que les changements incompatibles sont détectés et signalés.
+Unison est également résistant aux échecs : il prend soin de laisser les
+deux répliques, ainsi que ses propres structures privées, dans un état
+cohérent à tout instant, même en cas d&#39;arrêt abrupt ou de panne de
+communication.</p>
+<p>*<a href="http://www.cis.upenn.edu/%7Ebcpierce/">Benjamin C. Pierce</a> (University
+of Pennsylvania), chef du projet Unison :* « Je pense qu&#39;Unison est un
+succès très clair pour OCaml – en particulier, grâce à l&#39;extrême
+portabilité et l&#39;excellente conception générale du compilateur et de
+l&#39;environnement d&#39;exécution. Le typage statique fort d&#39;OCaml, ainsi que
+son puissant système de modules, nous ont aidés à organiser un logiciel
+complexe et de grande taille avec un haut degré d&#39;encapsulation. Ceci
+nous a permis de préserver un haut niveau de robustesse, au cours de
+plusieurs années de travail, et avec la participation de nombreux
+programmeurs. En fait, Unison présente la caractéristique, peut-être
+unique parmi les projets de grande taille écrits en OCaml, d&#39;avoir été
+<em>traduit</em> de Java vers OCaml à mi-chemin au cours de son développement.
+L&#39;adoption d&#39;OCaml a été comme une bouffée d&#39;air pur. »</p>
+<h2 id="Le-client-pair-pair-MLdonkey">Le client pair-à-pair MLdonkey</h2><p><a href="../img/mldonkey.jpg"><img src="../img/mldonkey-thumb.jpg" alt="Screenshot" title="Screenshot of one of MLdonkey&#39;s windows"/></a></p>
+<p><a href="http://mldonkey.sourceforge.net/Main_Page">MLdonkey</a> est un client
+pair-à-pair multi-plateformes et multi-réseaux. Il a été le premier
+client « open source » à permettre l&#39;accès au réseau eDonkey.
+Aujourd&#39;hui, MLdonkey autorise également l&#39;accès à plusieurs autres
+réseaux importants, parmi lesquels Overnet, Bittorrent, Gnutella,
+Gnutella2, Fasttrack, Soulseek, Direct-Connect et Opennap. Il permet
+d&#39;effectuer une recherche en parallèle sur plusieurs réseaux, et échange
+des fichiers avec de multiples pairs en parallèle.</p>
+<p><em>Un des développeurs de MLdonkey :</em> « Début 2002, nous avons décidé
+d&#39;utiliser OCaml pour programmer une application réseau dans le monde
+émergent des systèmes pair-à-pair. Le résultat de notre travail,
+MLdonkey, a surpassé nos espérances : MLdonkey est aujourd&#39;hui le client
+de partage de fichiers pair-à-pair le plus populaire, d&#39;après
+<a href="http://freshmeat.net/">freshmeat.net</a>, avec environ dix mille
+utilisateurs quotidiens. De plus, MLdonkey est le seul client capable de
+se connecter à plusieurs réseaux pair-à-pair pour télécharger et
+échanger des fichiers. Il fonctionne en tant que démon, c&#39;est-à-dire en
+tâche de fond et sans surveillance humaine, et peut être contrôlé à
+l&#39;aide d&#39;une interface au choix parmi trois : GTK, web et telnet. »</p>
+<h2 id="Le-Langage-de-Mod-lisation-Financi-re-de-LexiFi">Le Langage de Modélisation Financière de LexiFi</h2><p><a href="../img/lexifi.jpg">&lt;img src=&#39;/img/lexifi-thumb.jpg alt=&#39;Screenshot&#39;
+title=&#39;A report produced by LexiFi software&#39; /&gt;</a></p>
+<p>Développé par la société <a href="http://www.lexifi.com/">LexiFi</a>, le Langage de
+Modélisation Financière (MLFi) est le premier langage formel capable de
+décrire les produits d&#39;investissement, de crédit et de marché de
+capitaux les plus sophistiqués. MLFi est implanté comme une extension
+d&#39;OCaml.</p>
+<p>Les utilisateurs de MLFi retirent deux importants bénéfices de
+l&#39;approche par programmation fonctionnelle. D&#39;abord, le formalisme
+déclaratif des langages de programmation fonctionnels est adapté à la
+<em>spécification</em> de structures de données et d&#39;algorithmes complexes.
+Ensuite, ces langages offrent de nombreuses facilités pour la
+manipulation des listes. Or, les listes jouent un rôle central en
+finance, où elles sont utilisées de façon intensive pour définir des
+agendas d&#39;événements de contrats et de paiements.</p>
+<p>De plus, MLFi est doté de capacités d&#39;intégration cruciales, héritées
+d&#39;OCaml et des outils et librairies qui l&#39;accompagnent, Cela permet aux
+utilisateurs, par exemple, d&#39;interopérer avec des programmes C et Java,
+de manipuler des schémas et documents XML, et de s&#39;interfacer avec des
+bases de données SQL.</p>
+<p>Des modèles de données et modèles objets visant à encapsuler les
+définitions et le comportement des instruments financiers ont été
+développés par l&#39;industrie bancaire depuis deux décennies, mais font
+face à des limitations inhérentes qu&#39;OCaml a aidé à surpasser.</p>
+<p>L&#39;approche de LexiFi pour la modélisation de contrats financiers
+complexes a reçu une récompense académique en 2000, et l&#39;implantation de
+MLFi a été nommée « Produit Logiciel de l&#39;Année 2001 » par le magazine
+<em>Risk</em>, la principale publication dans le domaine des échanges
+financiers et de la gestion des risques. Les solutions basées sur MLFi
+gagnent en reconnaissance à travers l&#39;Europe et contribuent à répandre
+l&#39;utilisation d&#39;OCaml dans l&#39;industrie des services financiers.</p>
+<h2 id="Le-syst-me-de-communication-distribu-e-Ensemble">Le système de communication distribuée Ensemble</h2><p><em>Ohad Rodeh (IBM Haifa), un des développeurs d&#39;Ensemble :</em>
+« <a href="http://dsl.cs.technion.ac.il/projects/Ensemble/">Ensemble</a> est un
+système de communication de groupe écrit en OCaml, développé à Cornell
+et à Hebrew University. À l&#39;auteur d&#39;applications, Ensemble fournit une
+librairie de protocoles que l&#39;on peut utiliser pour construire
+rapidement des applications distribuées complexes. Pour un chercheur en
+systèmes distribués, Ensemble est une boîte à outils hautement modulaire
+et reconfigurable : les protocoles de haut niveau fournis aux
+applications sont en réalité des piles de minuscules « couches » de
+protocoles, dont chacune peut être modifiée ou reconstruite à des fins
+d&#39;expérimentation. OCaml a été choisi initialement pour que le code
+puisse être vérifié par un prouveur de théorèmes semi-automatique. Ce
+code a ensuite fait ses preuves sur le terrain, et nous avons continué à
+développer en OCaml. Le système de types fort, les types de données
+algébriques, la récupération automatique de la mémoire et
+l&#39;environnement d&#39;exécution sont les principales raisons de notre
+intérêt pour OCaml. »</p>
+<h2 id="L-39-assistant-de-preuve-Coq">L&#39;assistant de preuve Coq</h2><p><a href="../img/coq.jpg"><img src="../img/coq-thumb.jpg" alt="Screenshot" title="Screenshot of Coq&#39;s integrated development environment"/></a></p>
+<p>*<a href="http://www.lri.fr/%7Efilliatr/">Jean-Christophe Filliâtre</a> (CNRS), un
+des développeurs de Coq :* « L&#39;outil <a href="http://coq.inria.fr/">Coq</a> est un
+système de manipulation de preuves mathématiques formelles ; une preuve
+réalisée avec Coq est mécaniquement vérifiée par la machine. Outre ses
+applications en mathématiques, l&#39;outil Coq permet également de certifier
+la correction de programmes informatiques. »</p>
+<p>« L&#39;intérêt de OCaml du point de vue de Coq est multiple. D&#39;une part, le
+langage OCaml est parfaitement adapté aux manipulations symboliques, qui
+sont prépondérantes dans un assistant de preuve. D&#39;autre part, le
+système de types de OCaml, et notamment sa notion de type abstrait,
+permet une réelle encapsulation de la partie critique du code de Coq,
+garantissant ainsi la cohérence logique de l&#39;ensemble du système. Enfin,
+le typage fort de OCaml assure de fait une grande qualité au code de Coq
+(tel que l&#39;absence d&#39;erreurs à l&#39;exécution du type « segmentation
+fault »), ce qui est indispensable à un outil dont le but premier est
+justement la rigueur. »</p>
+<h2 id="L-39-analyseur-statique-ASTR-E">L&#39;analyseur statique ASTRÉE</h2><p><a href="http://www.airbus.com/product/a330_a340_backgrounder.asp"><img src="../img/astree.gif" alt="A340" title="ASTRÉE has been used to certify the Airbus A340 flight control software"/></a></p>
+<p>*<a href="http://www-verimag.imag.fr/~monniaux/">David Monniaux</a> (CNRS), membre
+du projet ASTRÉE :* « <a href="http://www.astree.ens.fr/">ASTRÉE</a> est un
+<em>analyseur statique</em> basé sur <a href="http://www.di.ens.fr/%7Ecousot/aiintro.shtml">l&#39;interprétation
+abstraite</a> et qui vise à
+établir l&#39;absence d&#39;erreurs d&#39;exécution dans des logiciels critiques
+écrits dans un sous-ensemble du langage C. »</p>
+<p>« Une analyse automatique et exacte visant à vérifier des propriétés
+telles que l&#39;absence d&#39;erreurs d&#39;exécution est impossible en général,
+pour des raisons mathématiques. L&#39;analyse statique par interprétation
+abstraite contourne cette impossibilité, et permet de prouver des
+propriétés de programmes, en sur-estimant l&#39;ensemble des comportements
+possibles d&#39;un programme. Il est possible de concevoir des
+approximations pessimistes qui, en pratique, permettent d&#39;établir la
+propriété souhaitée pour une large gamme de logiciels. »</p>
+<p>« À ce jour, ASTRÉE a prouvé l&#39;absence d&#39;erreurs d&#39;exécution dans le
+logiciel de contrôle primaire de la <a href="http://www.airbus.com/product/a330_a340_backgrounder.asp">famille Airbus
+A340</a>. Cela
+serait impossible par de simples <em>tests</em>, car le test ne considère qu&#39;un
+<em>sous-ensemble</em> limité des cas, tandis que l&#39;interprétation abstraite
+considère un <em>sur-ensemble</em> de tous les comportements possibles du
+système. »</p>
+<p>« <a href="http://www.astree.ens.fr/">ASTRÉE</a> est écrit en OCaml et mesure
+environ 44000 lignes (plus des librairies externes). Nous avions besoin
+d&#39;un langage doté d&#39;une bonne performance (en termes de vitesse et
+d&#39;occupation mémoire) sur un matériel raisonnable, favorisant l&#39;emploi
+de structures de données avancées, et garantissant la sûreté mémoire.
+OCaml permet également d&#39;organiser le code source de façon modulaire,
+claire et compacte, et facilite la gestion de structures de données
+récursives comme les arbres de syntaxe abstraite. »</p>
+<h2 id="SLAM">SLAM</h2><p>Le projet <a href="http://research.microsoft.com/en-us/projects/slam/">SLAM</a> a
+débuté à Microsoft Research début 2000. Son but était de vérifier
+automatiquement qu&#39;un programme C utilise correctement l&#39;interface d&#39;une
+bibliothèque extérieure. Pour répondre à cette question, SLAM utilise de
+manière novatrice des idées provenant de la vérification symbolique de
+modèles, de l&#39;analyse statique de programmes et de la démonstration
+automatique. Le moteur d&#39;analyse SLAM est au coeur d&#39;un nouvel outil
+appelé SDV (Vérification Statique de Drivers) qui analyse
+systématiquement le code source des drivers (pilotes de périphériques)
+Windows et vérifie leur conformité vis-à-vis d&#39;un ensemble de règles qui
+caractérisent les interactions correctes entre un driver et le noyau du
+système d&#39;exploitation Windows.</p>
+<p>*Dans le rapport technique
+<a href="http://research.microsoft.com/apps/pubs/default.aspx?id=70038">MSR-TR-2004-08</a>,
+T.Ball, B.Cook, V.Levin and S.K.Rajamani, les auteurs de SLAM,
+écrivent:* “The Right Tools for the Job: We developed SLAM using Inria&#39;s
+OCaml functional programming language. The expressiveness of this
+language and robustness of its implementation provided a great
+productivity boost.”</p>
+<h2 id="FFTW">FFTW</h2><p><a href="http://www.fftw.org/">FFTW</a> est une librairie C <a href="http://www.fftw.org/benchfft/">très
+rapide</a> permettant d&#39;effectuer des
+Transformées de Fourier Discrètes (DFT). Elle emploie un puissant
+optimiseur symbolique écrit en OCaml qui, étant donné un entier N,
+produit du code C hautement optimisé pour effectuer des DFTs de taille
+N. FFTW a reçu en 1999 le <a href="http://www.mcs.anl.gov/about-us/j-h-wilkinson-prize-numerical-software">prix
+Wilkinson</a>
+pour les logiciels de calcul numérique.</p>
+<p>Des mesures effectuées sur diverses plate-formes montrent que les
+performances de FFTW sont typiquement supérieures à celles des autres
+logiciels de DFT disponibles publiquement, et peuvent même concurrencer
+le code optimisé proposé par certains fabriquants de processeurs. À la
+différence de ce code propriétaire, cependant, les performances de FFTW
+sont portables : un même programme donnera de bons résultats sur la
+plupart des architectures sans modification. D&#39;où le nom « FFTW, » qui
+signifie « Fastest Fourier Transform in the West. »</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../learn/index.fr.html">Apprendre</a></h1>
+    <ul>
+      <li><a href="../learn/taste.fr.html">Exemples de code</a></li>
+      <li><a href="../learn/tutorials/index.fr.html">Tutoriels</a></li>
+      <li><a href="../learn/books.html">Livres</a></li>
+      <li><a href="../learn/success.fr.html">Cas d'usage</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../docs/index.fr.html">Documentation</a></h1>
+    <ul>
+      <li><a href="../docs/install.fr.html">Installer OCaml</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manuel</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Contributions</a></li>
+      <li><a href="../releases/index.fr.html">Compiler Releases</a></li>
+      <li><a href="../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../community/index.fr.html">Communauté</a></h1>
+    <ul>
+      <li><a href="../community/mailing_lists.fr.html">Lieux de discussion</a></li>
+      <li><a href="../meetings/index.fr.html">Rencontres</a></li>
+      <li><a href="../community/planet/">Nouvelles</a></li>
+      <li><a href="../community/support.fr.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Signaler un bug d'OCaml</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Site Web</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/success.fr.md" target="_blank">Éditer cette page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Problèmes du site Web</a></li>
+      <li><a href="../about.html">À propos de ce site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Dépôt GitHub</a></li>
+      <li><a href="../contributors.fr.html">Crédits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

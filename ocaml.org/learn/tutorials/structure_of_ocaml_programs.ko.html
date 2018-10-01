@@ -1,0 +1,512 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="structure_of_ocaml_programs.html" rel="alternate" hreflang="en"/>
+<link href="structure_of_ocaml_programs.fr.html" rel="alternate" hreflang="fr"/>
+<link href="structure_of_ocaml_programs.it.html" rel="alternate" hreflang="it"/>
+<link href="structure_of_ocaml_programs.ja.html" rel="alternate" hreflang="ja"/>
+<link href="structure_of_ocaml_programs.ko.html" rel="alternate" hreflang="ko"/>
+<link href="structure_of_ocaml_programs.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>OCaml 프로그램의 구조 &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/structure_of_ocaml_programs.ko.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    
+    
+    
+    <div id="content-primary" class="span12">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.ko.html">OCaml튜토리얼</a><span class="divider"></span></li>
+<li class="active">OCaml 프로그램의 구조</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="structure_of_ocaml_programs.html">en</a></li>
+<li><a href="structure_of_ocaml_programs.fr.html">fr</a></li>
+<li><a href="structure_of_ocaml_programs.it.html">it</a></li>
+<li><a href="structure_of_ocaml_programs.ja.html">日本語</a></li>
+<li class="active">한국어</li>
+<li><a href="structure_of_ocaml_programs.zh.html">中文</a></li>
+
+    </ul>
+  </div>
+  
+</div>
+
+      <div id="main-contents" class="content">
+        
+
+<p><em>목차</em></p>
+<h1 id="OCaml">OCaml 프로그램의 구조</h1>
+
+<p>이제 OCaml 프로그램을 자세히 살펴보기로 합니다. 전역 / 지역 변수, 언제 <code>;;</code> 혹은 <code>;</code> 를 사용하는지, 모듈, 중첩 함수, 참조에 대해서 가르칠 것입니다.
+이를 위해 이전에 OCaml 개념을 보지 못했기 때문에 아직은 이해할 수 없는 여러가지 OCaml의 개념들에 대해서 살펴볼 것입니다. 그 순간의 세부 내용에 대해서는 걱정하지 마십시오. 대신 프로그램의 전반적인 형태와 지적하는 기능에 대해서 집중하세요.</p>
+<h2 id="39-variables-39-really-local-expressions">지역 &#39;변수(variables)&#39; (<em>really</em> local expressions)</h2><p>C 언어에서 <code>average</code> 함수를 정의하고, 지역 변수를 추가해 보겠습니다.
+(앞서 전의한 첫 번째 정의와 비교하십시오.)</p>
+<pre class="C"><code class="C">double average (double a, double b)
+{
+  double sum = a + b;
+  return sum / 2;
+}</code></pre><p>이제 동일한 OCaml 버전을 보겠습니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
+    <span class="governing">let </span><span class="ocaml-variable">sum</span> = a +. b <span class="governing">in</span>
+    sum /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p><code>let name = expression in</code> 구문은 표현식에 이름을 정의하기 위해서 사용되고, <code>name</code>은 그 함수에서 나중에 <code>expression</code> 대신 사용할 수 있습니다.
+그리고 <code>;;</code>을 사용하여 코드 블록을 종료합니다. <code>in</code> 다음에 들여쓰기 하지 않은 것을 주목하세요. <code>let ... in</code>은 원래 그런 문법이 있는 것으로 단순히 생각하세요.</p>
+<p>이제 C 지역 변수와 명명된 표현식을 비교하는 것은 일종의 트릭입니다. 사실 이 두 가지는 다소 다릅니다.
+C 변수 <code>sum</code>은 스택에 할당된 슬롯을 가지고 있습니다. 만약 여러분이 원한다면 함수 안에서 나중에 <code>sum</code>을 할당하거나, <code>sum</code>의 주소를 가져올 수도 있습니다. 그러나 OCaml 버전에서는 절대로 적용되지 않습니다. OCaml 버전에서, <code>sum</code>은 그냥 표현식 <code>a + b</code>의 축약어입니다. <code>sum</code>을 다시 할당하거나 변경할 방법은 없습니다. (잠시 후에 값을 어떻게 변경하는지 보게 될 것입니다.)</p>
+<p>이것읆 명확하게 하는 또 다른 예가 있습니다. 다음의 2개의 코드 조각은 같은 값((a+b) + (a+b)²)을 반환합니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">a b </span>=
+    (a +. b) +. (a +. b) ** 2.</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : float -&gt; float -&gt; float = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">a b </span>=
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = a +. b <span class="governing">in</span>
+    x +. x ** 2.</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : float -&gt; float -&gt; float = &lt;fun&gt;
+</span></code></pre>
+
+<p>두 번째 버전은 더 빠를 수도 있습니다. (그러나 대부분의 컴파일러는 &#39;공통 하위표현식 제거&#39; 단계를 수행하도록 되어 있습니다), 그리고 더 읽기 쉽습니다. 두 번째 예제에서 <code>x</code>는 <code>a +. b</code>의 축약입니다.</p>
+<h2 id="39-variables-39-really-global-expressions">전역 &#39;변수(variables)&#39; (<em>really</em> global expressions)</h2>
+
+<p>최상위 수준에 있는 것들에 대한 전역 이름을 정의할 수 있으며, 위의 지역 &#39;변수&#39;와 마찬가지로 이것은 전혀 변하지 않습니다. 이것은 단순히 약식 이름입니다. 다음은 실제 예제의 일부입니다. (생략되어 있습니다.)</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">html</span> =
+  <span class="governing">let </span><span class="ocaml-variable">content</span> = read_whole_file file <span class="governing">in</span>
+  <span class="ocaml-module">GHtml</span>.html_from_string content
+  <span class="ocaml-prompt">;;</span><br/>
+<span class="governing">let</span> <span class="ocaml-function">menu_bold</span> <span class="ocaml-variable">() </span>=
+  <span class="keyword">match</span> bold_button#active <span class="keyword">with</span>
+  | true -&gt; html#set_font_style ~enable:[`BOLD] ()
+  | false -&gt; html#set_font_style ~disable:[`BOLD] ()
+  <span class="ocaml-prompt">;;</span><br/>
+<span class="governing">let</span> <span class="ocaml-function">main</span> <span class="ocaml-variable">() </span>=
+  <span class="comment">(* code omitted *)</span>
+  factory#add_item 'Cut' ~key:_X ~callback: html#cut
+  ;;</code></pre>
+
+<p>이 코드에서, <code>html</code>은 HTML 편집 위젯(lablgtk 라이브러리의 객체)으로, 첫번째 <code>let html =</code> 구문에서 프로그램 시작시 한번 생성됩니다. 이것은 뒤에 정의된 함수 안에서 여러번 참조됩니다.</p>
+<p><code>html</code> 이름은 C 또는 다른 명령형 언어에서와 같이 실제 전역 변수와 비교해서는 안됩니다. <code>html</code> 포인터를 저장하기 위해 할당된 공간은 없습니다. 예를 들어 <code>html</code>을 다른 위젯을 가르키도록 다시 지정하는 방법은 없습니다. 다음 절에서 진짜 변수인 참조(references)에 대해서 설명하겠습니다.</p>
+<h2 id="Let">Let-바인딩</h2><p>최상위 수준(globally)에서 또는 함수 내부에서 사용하는 <code>let ...</code> 구문은 <strong>let-바인딩</strong>이라고 부릅니다.</p>
+<h2 id="References">참조(References): 실제 변수</h2><p>만약 프로그램을 통해 할당하거나 변경할 수 있는 실제 변수를 원하면 어떻게 해야 할까요? <strong>참조(reference)</strong>를 사용해야 합니다. 참조는 C/C++의 포인터와 매우 유사합니다. 자바에서 객체를 저장하는 모든 변수는 실제로 객체에 대한 참조(포인터)입니다. 펄에서는 참조는 OCaml에서와 같은 참조입니다.</p>
+<p>다음은 OCaml에서 <code>int</code>에 대한 참조를 만드는 방법입니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">ref</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int ref = {contents = 0}
+</span></code></pre>
+
+<p>사실 저 구분은 전혀 유용하지 않습니다. 우리는 참조를 만들었고, 이름을 짓지 않았기 때문에 가비지 컬렉터가 따라 와서 즉시 수집할 것입니다. (사실, 그것은 아마도 컴파일 타임에 버려질 겁니다). 참조에 대한 이름을 지어 보겠습니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">my_ref</span> = <span class="keyword">ref</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val my_ref : int ref = {contents = 0}
+</span></code></pre>
+
+<p>이 참조는 현재 정수 0이 저장되어 있습니다. 여기에 다른 값을 넣어 보겠습니다.(할당):</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">my_ref := 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span></code></pre>
+
+<p>이제 참조에 저장된 값을 찾아 보겠습니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">!my_ref</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 100
+</span></code></pre>
+
+<p><code>:=</code> 연산자는 참조에 할당하기 위해 사용되었고, <code>!</code> 연산자는 역참조하여 값을 가져옵니다. 여기 대략적으로 C/C++ 과 비교하는 코드가 있습니다:</p>
+<p>OCaml</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">my_ref</span> = <span class="keyword">ref</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val my_ref : int ref = {contents = 0}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">my_ref := 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">!my_ref</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 100
+</span></code></pre>
+
+<p>C/C++</p>
+<pre class="C"><code class="C">int a = 0; int *my_ptr = &amp;a;
+*my_ptr = 100;
+*my_ptr;</code></pre>
+
+<p>참조에 대해서 설명하기는 했지만, 참조가 자주 쓰이지 않는다는 것을 알게 될 것입니다. 이름을 지어주기 위해서, 참조를 사용하기 보다는 <code>let name = expression in</code> 구문을 사용할 것입니다.</p>
+<h2 id="">중첩 함수</h2><p>C는 실제로 중첩 함수 개념을 갖고 있지 않습니다. GCC에서는 중첩함수를 지원하기는 하지만, 이 실제로 확장기능을 사용하는 프로그램을 전혀 보지 못했습니다. 아무튼, 여기 중첩함수에 대한 gcc 정보 페이지의 내용은 다음과 같이 설명합니다.</p>
+<p>&#39;중첩 함수&#39;는 다른 함수 내부에서 정의된 함수입니다.(중첩 함수는 GNU C++에서 지원되지 않습니다.) 중첩 함수의 이름은 정의된 블록과 같은 장소에 있습니다. 예를 들어, <code>square</code> 라는 중첩 함수를 정의하고, 그것을 두 번 호출합니다:</p>
+<pre class="C"><code class="C">foo (double a, double b)
+{
+  double square (double z) { return z * z; }
+
+  return square (a) + square (b);
+}</code></pre>
+
+<p>중첩 된 함수는 정의된 지점에서 볼 수 있는 포함된 함수의 모든 변수에 액세스 할 수 있습니다. 이것을 &#39;유효 범위(lexical scoping)&#39;라고 부릅니다. 예를 들어, <code>offset</code>이라는 이름의 상속된 변수를 사용하는, 중첩 함수의 예를 보겠습니다.</p>
+<pre class="C"><code class="C">bar (int *array, int offset, int size)
+{
+  int access (int *array, int index)
+    { return array[index + offset]; }
+  int i;
+  /* ... */
+  for (i = 0; i &lt; size; i++)
+    /* ... */ access (array, i) /* ... */
+}</code></pre><p>당신은 아이디어를 얻습니다. 그러나 중첩된 함수는 OCaml에서 매우 유용하고, 매우 많이 사용됩니다. 다음은 실제 코드에서 중첩된 함수의 예입니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">read_whole_channel</span> <span class="ocaml-variable">chan </span>=
+    <span class="governing">let </span><span class="ocaml-variable">buf</span> = <span class="ocaml-module">Buffer</span>.create 4096 <span class="governing">in</span>
+    <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
+      <span class="governing">let </span><span class="ocaml-variable">newline</span> = input_line chan <span class="governing">in</span>
+      <span class="ocaml-module">Buffer</span>.add_string buf newline;
+      <span class="ocaml-module">Buffer</span>.add_char buf '\n';
+      loop ()
+    <span class="governing">in</span>
+    <span class="keyword">try</span>
+      loop ()
+    <span class="keyword">with</span>
+      End_of_file -&gt; <span class="ocaml-module">Buffer</span>.contents buf</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val read_whole_channel : in_channel -&gt; string = &lt;fun&gt;
+</span></code></pre>
+
+<p>이 코드가 하는 일에 대해서 고민하지 마십시오. 이 튜토리얼에서는 다루지 않는 많은 개념을 포함하고 있습니다. 대신 중간에 있는 <code>loop</code>라는 인수가 없는 중첩함수에 집중하세요.
+<code>read_whole_channel</code> 함수 내에서 <code>loop()</code>를 호출할 수 있지만, 이 함수 외부에서는 정의되어 있지 않습니다. 중첩된 함수는 main 함수에 정의된 변수에 접근할 수 있습니다. (여기서 <code>loop</code>는 지역 이름 <code>buf</code>와 <code>chan</code>에 접근합니다.)</p>
+<p>중첩된 함수의 형식은 지역에 명명된 표현식 <code>let name arguments = function-definition in</code>과 동일합니다.</p>
+<p>위 에제처럼, 함수 정의를 새 줄에 들여쓰기하고, 함수가 재귀적인 경우 <code>let</code> 대신 <code>let rec</code>를 사용해야 합니다.</p>
+<h2 id="open">모듈 및 <code>open</code></h2><p>OCaml에는 재미있고 흥미로운 모듈들이 많이 있습니다. 예를 들어 그래픽, GUI 위젯 인터페이스, 큰 숫자 처리, 데이터 구조 및 POSIX 시스템 호출을 위한 표준라이브러리가 있습니다. 이 라이브러리들은 유닉스 시스템의 경우 <code>/usr/lib/ocaml/</code> 위치에 있습니다.
+이 예제에서는, <code>Graphics</code>라는 간단한 모듈에 집중할 것입니다.</p>
+<p><code>Graphics</code> 모듈은 7개의 파일로 설치됩니다.</p>
+<pre><code>/usr/lib/ocaml/graphics.a
+/usr/lib/ocaml/graphics.cma
+/usr/lib/ocaml/graphics.cmi
+/usr/lib/ocaml/graphics.cmx
+/usr/lib/ocaml/graphics.cmxa
+/usr/lib/ocaml/graphics.cmxs
+/usr/lib/ocaml/graphics.mli</code></pre><p>지금은 <code>graphics.mli</code> 파일에 집중하십시오. 이 파일은 텍스트 파일이므로, 읽을 수 있습니다. 먼저 이름이 <code>Graphics.mli</code>이 아니라, <code>graphics.mli</code>인 것을 확인하세요. OCaml은 항상 파일 이름의 첫 글자를 대문자로 만들어서 모듈 이름으로 사용합니다. 그것에 대해 알기 전까지, 이것은 꽤 혼란스러울 수 있습니다!</p>
+<p><code>Graphics</code>에서 함수를 시용하려면, 두 가지 방법이 있습니다. 프로그램의 시작부분에 
+<code>open Graphics;;</code>라고 선언하거나, <code>Graphics.open_graph</code>와 같이 모든 함수 호출에 접두사를 붙이는 것입니다. <code>open</code>은 자바의 <code>import</code> 구문과 약간 비슷하고, 펄의 <code>use</code> 구문과는 매우 유사합니다.</p>
+<p>인터프리터의 최상위 레벨에서 <code>Graphics</code>를 사용하려면, 먼저 라이브러리를 로드해야 합니다.</p>
+<pre><code class="ocaml">#load 'graphics.cma';;</code></pre>
+
+<p>윈도 사용자: 이 예제를 윈도 인터프리터에서 작동하려면, 사용자 정의 최상위 레벨을 작성해야 합니다. 명령행에서 <code>ocamlmktop -o ocaml-graphics graphics.cma</code> 명령을 실행하십시오.
+
+명확히 하기 위해 몇가지 예제가 있습니다. (두 가지 예제는 다른 것을 그립니다. - 시험해 보십시오.) 첫번째 예제는 <code>open_graph</code> 그리고 두 번째 예제는 <code>Graphics.open_graph</code>를 호출합니다.</p>
+<pre><code class="ocaml"><span class="comment">(* To compile this example: ocamlc graphics.cma grtest1.ml -o grtest1 *)</span>
+<span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
+open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
+  set_color (<span class="keyword">if</span> i mod 2 = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
+  fill_circle 320 240 radius
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ()<span class="ocaml-prompt">;;</span><br/>
+<span class="comment">(* To compile this example: ocamlc graphics.cma grtest2.ml -o grtest2 *)</span>
+
+<span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/>
+<span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+  <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
+  <span class="keyword">else</span>
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+    r *. x *. (1.0 -. x)<span class="ocaml-prompt">;;</span><br/>
+<span class="keyword">for</span> x = 0 <span class="keyword">to</span> 639 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
+  <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+    <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+    <span class="ocaml-module">Graphics</span>.plot x y
+  <span class="keyword">done</span>
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>
+read_line ();;</code></pre>
+
+<p>이 두 예제는 아직 설명하지 않은 몇 가지 기능을 사용합니다. 명령형 스타일의 <code>for-loop</code>, <code>if-then-else</code> 및 <code>재귀</code>입니다. 이것에 대해서는 나중에 이야기 할 것입니다. 그럼에도 불구하고 이 프로그램들을 살펴보고, (1) 어떻게 동작하는지, (2) 타입 유추가 버그를 제거하는데 어떻게 도움이 되는지 알아봐야 합니다.</p>
+<h2 id="Pervasives"><code>Pervasives</code>(기본) 모듈</h2><p>절대 <code>open</code>이 필요하지 않은 모듈이 하나 있습니다. 그것은 <code>Pervasives</code> 모듈입니다. (<code>/usr/lib/ocaml/pervasives.mli</code>를 읽어보세요. <code>Pervasives</code> 모듈의 모든 심볼은 OCaml 프로그램에 자동적으로 가져옵니다.</p>
+<h2 id="">모듈 이름 바꾸기</h2><p>만약 <code>Graphics</code> 모듈의 심볼을 사용하고 싶지만, 모든 심볼을 가져오지 않고, 매번 <code>Graphics</code>를 타이핑하는 것이 괴롭다면 어떻게 해야 하나요? 이 트릭을 이용하여 이름을 바꿉니다.</p>
+<pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Gr</span> = <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
+<span class="ocaml-module">Gr</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gr</span>.fill_circle 320 240 240<span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
+
+<p>실제로, 이 방법은 중첩된 모듈(모듈은 서로 중첩될 수 있습니다.)을 가져오지만, 중첩된 모듈의 전체 경로를 타이핑 하고 싶지 않을 때 매우 유용합니다</p>
+<h2 id=""><code>;;</code> 와 <code>;</code>의 이용과 생략</h2>
+
+<p><strong>This section is not up to date with the English one</strong></p>
+<p>이제 우리는 매우 중요한 이슈를 살펴보려 합니다. 언제 <code>;;</code>를 사용해야 하고, 언제 <code>;</code>을 사용해야 하며, 그리고 언제 이것을 사용하면 안될까요? 이것은 까다로운 문제이고, 저자 또한 OCaml을 배우는 동안 오랫동안 부담이 되는 것이었습니다.</p>
+<p>규칙 #1은 코드의 최상위 레벨의 구문을 분리할때 <code>;;</code>을 사용하야 하고, 함수 정의 또는 다른 종류의 명령문에서는 사용하지 않는 것입니다.</p>
+<p>두번째 그래픽 예제의 섹션을 살펴 보십시오.</p>
+<pre><code class="ocaml"><span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/>
+<span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+  <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
+  <span class="keyword">else</span>
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+    r *. x *. (1.0 -. x);;</code></pre>
+
+<p>두개의 최상위 명령문과 함수 정의(<code>iterate</code>)가 있습니다. 각각에는 <code>;;</code>가 있습니다.</p>
+<p>규칙 #2는 <em>때때로</em> <code>;;</code>을 생략할 수 있다는 것입니다. 초보자인 당신이 이것에 대해서 걱정할 필요는 없습니다. 규칙 #1에 따라 <code>;;</code>를 항상 사용해야 하지만, 다른 사람들의 코드를 많이 읽다보면, 가끔 <code>;;</code>를 생략할 수 있다는 것을 알게 될 것입니다. 특정 위치는 다음과 같습니다.</p>
+<ul><li><p><code>let</code> 키워드 앞.</p>
+</li><li><p><code>open</code> 키워드 앞.</p>
+</li><li><p><code>type</code> 키워드 앞.</p>
+</li><li><p>파일의 끝</p>
+</li><li><p>OCaml이 현재 구문의 연속이 아니라 새로운 문장의 시작임을 &#39;추측&#39; 할 수 있는 극소수의 위치(매우 드뭄)</p>
+</li></ul>
+
+<p>다음은 <code>;;</code>를 가능하다면 생략하도록 한 코드의 일부입니다.</p>
+<p>Here is some working code with <code>;;</code> elided wherever possible:</p>
+<pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Random</span>                   <span class="comment">(* ;; *)</span>
+<span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
+self_init ()<span class="ocaml-prompt">;;</span><br/>open_graph ' 640x480'         <span class="comment">(* ;; *)</span>
+
+<span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
+  <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
+  <span class="keyword">else</span>
+    <span class="governing">let </span><span class="ocaml-variable">x</span> = iterate r x_init (i-1) <span class="governing">in</span>
+    r *. x *. (1.0 -. x)<span class="ocaml-prompt">;;</span><br/>
+<span class="keyword">for</span> x = 0 <span class="keyword">to</span> 639 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
+  <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+    <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+    <span class="ocaml-module">Graphics</span>.plot x y
+  <span class="keyword">done</span>
+<span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>
+read_line ()                  <span class="comment">(* ;; *)</span></code></pre>
+
+<p>규칙 #3과 #3는 단일 <code>;</code>에 대한 것입니다. 이것은 <code>;;</code>과 완전히 다릅니다. 단일 세미콜론 <code>;</code>는 C, C++, 자바, 펄과 동일한 목적을 갖는 시퀀스 포인트라 부릅니다. 이것의 &#39;먼저 <code>;</code> 앞의 작업을 수행하고, 첫번째 작업이 완료되면 <code>;</code> 뒤의 작업을 수행하라.&#39; 는 의미입니다. 당신이 몰랐다에 베팅합니다.</p>
+<p>규칙 #3은 <code>let ... in</code> 구문 뒤에 단일 <code>;</code>을 붙이지 않는 것입니다.</p>
+<p>규칙 #4는 마지막 구문을 <em>제외</em>하고, 코드 블럭 내의 모든 다른 구문은 단일 <code>;</code>를 붙이는 것입니다.</p>
+<p>위의 예제에서 <code>for-loop</code>의 내부는 좋은 데모입니다. 이 코드에서 단일 <code>;</code>을 전혀 사용하지 않을 것을 보십시오.</p>
+<pre><code class="ocaml"><span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
+  <span class="governing">let </span><span class="ocaml-variable">x_init</span> = <span class="ocaml-module">Random</span>.float 1.0 <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">x_final</span> = iterate r x_init 500 <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">y</span> = int_of_float (x_final *. 480.) <span class="governing">in</span>
+  <span class="ocaml-module">Graphics</span>.plot x y
+<span class="keyword">done</span></code></pre>
+
+<p>위의 코드에서 <code>;</code>을 넣을 수 있다고 생각할 수 있는 유일한 위치는 <code>Graphics.plot x y</code> 입니다. 그러나 마지막 구문이기 때문에 규칙 #4는 거기에 넣지 않도록 말하고 있습니다.</p>
+<h2 id="39-39">&#39;;&#39;에 대한 정리</h2><p>Brian Hurt는 &#39;;&#39;에 대한 제 의견을 수정했습니다.</p>
+<blockquote><p><code>;</code>는 <code>+</code> 처럼 연산자 입니다. 글쎄요, <code>+</code>와 같지는 않겠지만, 개념적으로는 동일합니다. <code>+</code>의 타입 서명은 <code>int -&gt; int -&gt; int</code> 입니다. 2개의 int를 취해, int(합계)를 반환합니다. <code>;</code>의 타입 서명은 <code>unit -&gt; &#39;b -&gt; &#39;b</code> 입니다. 두 값을 취해 단순히 두번째 값을 반환합니다. 오히려 C의 <code>,</code>(콤마) 연산자와 같습니다. <code>a + b + c + d</code>라고 작성하는 것처럼 단순하게 <code>a ; b ; c ; d</code>라고 작성할 수 있습니다.
+이것은 절대로 쉽게 떠올릴 수 있지 않은, &#39;정신적 도약&#39;의 하나입니다. OCaml에서 거의 모든것이 표현식입니다. <code>if/then/else</code>는 표현식입니다. <code>a ; b</code> 는 표현식입니다. <code>match foo with ...</code> 는 표현식입니다. 다음의 코드는 완벽하게 합법적입니다. (그리고 모두 같은 일을 합니다.)</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= <span class="keyword">if</span> b <span class="keyword">then</span> x+y <span class="keyword">else</span> x+0
+  <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="keyword">if</span> b <span class="keyword">then</span> y <span class="keyword">else</span> 0)
+  <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="keyword">match</span> b <span class="keyword">with</span> true -&gt; y | false -&gt; 0)
+  <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="governing">let</span> <span class="ocaml-function">g</span> <span class="ocaml-variable">z </span>= <span class="keyword">function</span> true -&gt; z | false -&gt; 0 <span class="governing">in</span> g y b)
+  <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="governing">let </span><span class="ocaml-variable">_</span> = y + 3 <span class="governing">in</span> (); <span class="keyword">if</span> b <span class="keyword">then</span> y <span class="keyword">else</span> 0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; bool -&gt; int -&gt; int = &lt;fun&gt;
+</span></code></pre>
+
+<p>특히 마지막 것을 주목하십시오. 저는 2개의 구문을 &#39;조인&#39; 하기 위해 <code>;</code>을 사용했습니다. OCaml에서 모든 함수는 다음과 같이 표현할 수 있습니다.</p>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">name</span> <span class="ocaml-variable">[parameters] </span>= expression</code></pre>
+
+<p>OCaml에서 표현식에 대한 정의는 C 보다 조금 포괄적입니다. 사실 C는 구문의 개념을 가지고 있고, 모든 C 구문은 OCaml에서 표현식입니다. (<code>;</code> 연산자와 결합)</p>
+<p>함수처럼 <code>+</code>를 참조할 수 있다는 점에서 <code>;</code>는 <code>+</code>와 다릅니다. 예를 들어 정수 리스트의 합을 구하기 위해, 다음과 같이 <code>sum_list</code> 함수를 정의할 수 있습니다.</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">sum_list</span> = <span class="ocaml-module">List</span>.fold_left ( + ) 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val sum_list : int list -&gt; int = &lt;fun&gt;
+</span></code></pre></blockquote>
+
+<h2 id="">모두 함께 보기: 실제 코드</h2><p>이 절에서 우리는 lablgtk 1.2 라이브러리의 실제 코드 일부를 볼 것입니다. (Lablgtk는 Unix Gtk 위젯 라이브러리의 OCaml 인터페이스입니다.)
+경고: 여기에는 아직 다루지 않은 많은 내용들이 포함되어 있습니다. 상세한 것을 보지 말고, 작성자가 언제 어디서 <code>;;</code>, <code>;</code>, <code>open</code> 을 사용했는지, 코드의 들여쓰기 방법, 지역, 전역 표현식의 사용 등, 코드 전반의 형태를 살펴보십시오.</p>
+<p>... 그러나, 당신이 헤메지 않도록 약간의 단서를 줄 것입니다!</p>
+<ul><li><p><code>?foo</code> 와 <code>~foo</code> 는 OCaml에서 함수의 선택적(optional) 인수를 사용하는 방법입니다. C 파생언어들은 이런 방법이 없지만 펄, 파이썬, 스몰토크에는 모두 함수 호출에서 인수를 이름을 정하고, 일부는 생략하고, 원하는 순서대로 다른 인수를 제공하는 개념이 있습니다.</p>
+</li><li><p><code>foo#bar</code> <code>foo</code>라는 객체에서 <code>bar</code>라는 메소드를 실행하는 메소드 호출입니다. 그것은 C++, 자바 또는 펄의 <code>foo-&gt;bar</code>, <code>foo.bar</code>, <code>$foo-&gt;bar</code>와 비슷합니다.</p>
+</li></ul>
+
+<p>첫번째 예제: 프로그래머는 표준라이브러리 몇개를 엽니다. (<code>open</code>과 <code>let</code> 키워드 다음의 <code>;;</code>는 생략합니다.) 그런다음 <code>file_dialog</code> 함수를 생성하고, 이 함수 내에서 두 줄의 <code>let sel = ... in</code> 구문을 사용하여 <code>sel</code>이라고 명명된 표현식을 정의합니다. 그런다음 <code>sel</code> 메소드를 여러번 호출합니다.</p>
+<pre><code class="ocaml"><span class="comment">(* First snippet *)</span>
+<span class="governing">open</span> <span class="ocaml-module">StdLabels</span>
+<span class="governing">open</span> <span class="ocaml-module">GMain</span>
+
+<span class="governing">let</span> <span class="ocaml-function">file_dialog</span> <span class="ocaml-variable">~title ~callback ?filename () </span>=
+  <span class="governing">let </span><span class="ocaml-variable">sel</span> =
+    <span class="ocaml-module">GWindow</span>.file_selection ~title ~modal:true ?filename () <span class="governing">in</span>
+  sel#cancel_button#connect#clicked ~callback:sel#destroy;
+  sel#ok_button#connect#clicked ~callback:do_ok;
+  sel#show ()</code></pre>
+
+<p>두번째 예제: 최상위 수준에 전역 이름 목록. 규칙 #2에 의해 모든 <code>;;</code>가 생략된 것을 보십시오.</p>
+<pre><code class="ocaml"><span class="comment">(* Second snippet *)</span>
+<span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:500 ~height:300 ~title:'editor' ()
+<span class="governing">let </span><span class="ocaml-variable">vbox</span> = <span class="ocaml-module">GPack</span>.vbox ~packing:window#add ()
+
+<span class="governing">let </span><span class="ocaml-variable">menubar</span> = <span class="ocaml-module">GMenu</span>.menu_bar ~packing:vbox#pack ()
+<span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory menubar
+<span class="governing">let </span><span class="ocaml-variable">accel_group</span> = factory#accel_group
+<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu 'File'
+<span class="governing">let </span><span class="ocaml-variable">edit_menu</span> = factory#add_submenu 'Edit'
+
+<span class="governing">let </span><span class="ocaml-variable">hbox</span> = <span class="ocaml-module">GPack</span>.hbox ~packing:vbox#add ()
+<span class="governing">let </span><span class="ocaml-variable">editor</span> = <span class="keyword">new</span> editor ~packing:hbox#add ()
+<span class="governing">let </span><span class="ocaml-variable">scrollbar</span> = <span class="ocaml-module">GRange</span>.scrollbar `VERTICAL ~packing:hbox#pack ()</code></pre>
+
+<p>세 번째 예제: 저자는 <code>GdkKeyssyms</code> 모듈에서 모든 심볼을 가져옵니다. 이제 특이한 형태의 let-binding을 보십시오. <code>let _ = expression</code>는 &#39;표현식의 모든 값을 계산(부수적인 부작용이 있습니다.)하고, 결과를 버리십시오&#39;를 의미합니다. 여 경우 Gtk의 메인 루프에서 <code>Main.main()</code> 을 실행하는 것은 &#39;표현식의 값을 계산하세요.&#39; 라는 의미를 가지고 있고, 화면에 창을 띄우고, 전체 응용 프로그램을 실행하는 부작용을 가지고 있습니다. <code>Main.main ()</code>의 결과는 중요하지 않습니다. 아마도 <code>unit</code>가 반환 값이지만, 응용 프로그램이 끝날 때까지 반환되지 않습니다.</p>
+<p>이 코드가 얼마나 많은 절차형 명령들을 가지고 있는지 주목하십시오. 이것은 정말로 고전적인 명령형 프로그램입니다.</p>
+<pre><code class="ocaml"><span class="comment">(* Third snippet *)</span>
+<span class="governing">open</span> <span class="ocaml-module">GdkKeysyms</span>
+
+<span class="governing">let</span> () =
+  window#connect#destroy ~callback:<span class="ocaml-module">Main</span>.quit;
+  <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory file_menu ~accel_group <span class="governing">in</span>
+  factory#add_item '<span class="ocaml-module">Open</span>...' ~key:_O ~callback:editor#open_file;
+  factory#add_item 'Save' ~key:_S ~callback:editor#save_file;
+  factory#add_item 'Save <span class="keyword">as</span>...' ~callback:editor#save_dialog;
+  factory#add_separator ();
+  factory#add_item 'Quit' ~key:_Q ~callback:window#destroy;
+  <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory edit_menu ~accel_group <span class="governing">in</span>
+  factory#add_item 'Copy' ~key:_C ~callback:editor#text#copy_clipboard;
+  factory#add_item 'Cut' ~key:_X ~callback:editor#text#cut_clipboard;
+  factory#add_item 'Paste' ~key:_V ~callback:editor#text#paste_clipboard;
+  factory#add_separator ();
+  factory#add_check_item 'Word wrap' ~active:false
+    ~callback:editor#text#set_word_wrap;
+  factory#add_check_item 'Read only' ~active:false
+    ~callback:(<span class="keyword">fun</span> b -&gt; editor#text#set_editable (not b));
+  window#add_accel_group accel_group;
+  editor#text#event#connect#button_press
+    ~callback:(<span class="keyword">fun</span> ev -&gt;
+      <span class="governing">let </span><span class="ocaml-variable">button</span> = <span class="ocaml-module">GdkEvent</span>.<span class="ocaml-module">Button</span>.button ev <span class="governing">in</span>
+      <span class="keyword">if</span> button = 3 <span class="keyword">then</span> <span class="governing">begin</span>
+        file_menu#popup ~button ~time:(<span class="ocaml-module">GdkEvent</span>.<span class="ocaml-module">Button</span>.time ev); true
+      <span class="governing">end</span> <span class="keyword">else</span> false);
+  editor#text#set_vadjustment scrollbar#adjustment;
+  window#show ();
+  <span class="ocaml-module">Main</span>.main ()</code></pre>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.ko.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/structure_of_ocaml_programs.ko.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>

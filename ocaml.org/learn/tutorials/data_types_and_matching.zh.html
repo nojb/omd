@@ -1,0 +1,509 @@
+<!DOCTYPE HTML>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh" xml:lang="zh">
+  <head>
+    <meta charset="utf-8"/>
+    
+    <link href="data_types_and_matching.html" rel="alternate" hreflang="en"/>
+<link href="data_types_and_matching.fr.html" rel="alternate" hreflang="fr"/>
+<link href="data_types_and_matching.it.html" rel="alternate" hreflang="it"/>
+<link href="data_types_and_matching.ja.html" rel="alternate" hreflang="ja"/>
+<link href="data_types_and_matching.zh.html" rel="alternate" hreflang="zh"/>
+
+    
+    <title>数据类型和匹配 &#8211; OCaml</title>
+    <link href="../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Domine:400,700" rel="stylesheet"/>
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/bootstrap_mod.css" rel="stylesheet" media="screen"/>
+    <link href="../../css/ocamlorg.css" rel="stylesheet" media="screen"/>
+    <script src="../../js/collapsed-menu.js" type="text/javascript"></script>
+    
+    
+    <script>
+      if (document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Image', '1.1')) {
+      document.documentElement.className = 'svg';
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" onclick="toggleVisibilityMenu('menu-items')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="../../" class="brand"><img src="../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
+          <div id="menu-items" class="nav-collapse collapse">
+                        <ul class="nav">
+              <li class="active"><a href="../../learn/">Learn</a></li>
+              <li><a href="../../docs/">Documentation</a></li>
+              <li><a href="https://opam.ocaml.org/">Packages</a></li>
+              <li><a href="../../community/">Community</a></li>
+              <li><a href="../../community/planet/">News</a></li>
+            </ul>
+
+            
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/data_types_and_matching.zh.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+	    <script language="JavaScript">
+	      // Preload the hover image
+	      Image1= new Image(33,33);
+	      Image1.src = '/img/edit-hover.svg';
+	      Image2= new Image(33,33);
+	      Image2.src = '/img/edit-hover.png';
+	    </script>
+            
+            <form id="searchform" class="navbar-search pull-right" method="get" action="//www.google.com/search">
+              <input type="hidden" name="as_sitesearch" value="ocaml.org"/>
+              <input placeholder="Search" class="search-query" name="q" type="text"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+    </nav>
+    
+    
+<div class="container">
+  <div class="row">
+    
+    <div class="span4"></div>
+    <div class="span8">
+      
+<div class="running-header">
+  
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../../">Home</a><span class="divider"></span></li>
+<li><a href="../../learn/">Learn</a><span class="divider"></span></li>
+<li><a href="../../learn/tutorials/index.zh.html">OCaml教程</a><span class="divider"></span></li>
+<li class="active">数据类型和匹配</li>
+
+
+    </ol>
+    <ul class="translations">
+      <li><a href="data_types_and_matching.html">en</a></li>
+<li><a href="data_types_and_matching.fr.html">fr</a></li>
+<li><a href="data_types_and_matching.it.html">it</a></li>
+<li><a href="data_types_and_matching.ja.html">日本語</a></li>
+<li class="active">中文</li>
+
+    </ul>
+  </div>
+  
+</div>
+
+    </div>
+    <div class="span4">
+      <nav id="nav-secondary">
+        <ul class="nav nav-list">
+          <li class="nav-header"><a href="#">Contents</a></li>
+          <ul><li><a href="#Linked-lists">Linked lists</a>
+<ul><li><a href="#">链表的类型</a>
+</li></ul>
+</li><li><a href="#Structures">Structures</a>
+</li><li><a href="#qualified-unions-enum">qualified unions 和枚举（enum）</a>
+<ul><li><a href="#">递归变体</a>
+</li><li><a href="#">参数化变体</a>
+</li></ul>
+</li><li><a href="#">链表，结构，变体 - 总结</a>
+</li><li><a href="#">数据类型的模式匹配</a>
+</li></ul>
+
+        </ul>
+      </nav>
+    </div>
+    <div id="content-primary" class="span8">
+            <div id="tryocaml" class="content" style="display:none;">
+        <div class="container">
+          <div class="row">
+            <div id="lesson-message"></div>
+            <div id="languages" style="display:none;"></div>
+            <div id="menu-lessons" style="display:none">
+              <table class="zebra-striped">
+                <tr><td id="text-x"><code></code></td> <td></td></tr>
+              </table>
+            </div>
+            <div class="span9 ocaml">
+              <div id="toplevel-container">
+                <pre id="output"></pre>
+                <div id="sharp">#</div>
+                <div id="toplevel"></div>
+              </div>
+              <div id="buttons"></div>
+              <div id="graphics-title"></div>
+              <div id="graphics"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main-contents" class="content">
+        
+
+<h1 id="">数据类型和匹配</h1>
+
+<h2 id="Linked-lists">Linked lists</h2>
+
+<p>和Perl一样，OCaml也将对列表的支持直接内建在语言中了。OCaml中一个列表的所有元素的类型必须一致。使用以下格式来写列表：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">[1; 2; 3]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2; 3]
+</span></code></pre>
+
+<p>（注意是分号，不是逗号）。</p>
+<p><code>[]</code> 表示空列表。</p>
+<p>一个列表有一个“<strong>头</strong>”（第一个元素）和一个“<strong>尾</strong>”（剩下的元素）。头是一个元素，而尾则是一个列表，所以前面的例子中，表头是整数1，而表尾是<em>list</em><code>[2; 3]</code>。</p>
+<p>另一种做法是使用<strong>cons</strong>操作符——<code>头 :: 尾</code>。所以下面的列表写法是完全一样的：</p>
+<pre><code>[1; 2; 3]
+1 :: [2; 3]
+1 :: 2 :: [3]
+1 :: 2 :: 3 :: []</code></pre><p>为什么我要提到cons操作符呢？其实，当我们对列表使用<em>模式匹配</em>的时候，它是相当有用的，下面我将详细说明。</p>
+<h3 id="">链表的类型</h3>
+
+<p>整数链表的类型是int list，一般来说，foo类型的链表的类型就是foo list。</p>
+<p>由此可以看出，链表的所有元素都必须是同一种类型的。但是类型却可以是多态的（如，<code>&#39;a list</code>），当你要写操作&#39;lists
+of
+anything&#39;（任意类型的列表）的泛型函数时，这就相当有用了（注意，<code>&#39;a list</code>
+并不代表每个单独的元素可以有不同的类型——所以你还是不能用它来构造包含混合类型的列表，也就是说，元素的类型可以任意，但所有元素的类型必须相同）。</p>
+<p>length函数是定义在OCaml的List模块中的，它是一个很好的例子。它不论列表包含的整数还是字符串或者对象、
+还是什么小怪物，List.length函数都可以对其进行处理。因此，List.length的类型是：</p>
+<pre><code>List.length : &#39;a list -&gt; int</code></pre><h2 id="Structures">Structures</h2>
+
+<p>C和C++都有作为structure简称的<code>struct</code>概念。尽管有点繁琐，Java中类也可以用于类似的效果。</p>
+<p>考虑下面简单的C结构：</p>
+<pre class="C"><code class="C">struct pair_of_ints {
+  int a, b;
+};</code></pre><p>Ocaml中最简单的对应形式是一个<strong>组元（tuple）</strong>，比如具有<code>int * int</code>类型的<code>(3, 4)</code>。和链表不同，组元的元素可以是不同类型，例如<code>(3, &#39;hello&#39;, &#39;x&#39;)</code>的类型是<code>int * string * char</code>。</p>
+<p>在Ocaml中实现一个C中的struct还有另外一种稍显复杂的方法，就是使用<strong>记录（record）</strong>。你可以像C的结构一样在记录中为元素命名。你不能在组元中命名元素，而是要记住它们出现的顺序。下面是和之前的C结构等价的一个记录：</p>
+<p>type pair_of_ints = { a : int; b : int };;</p>
+<p>它定义了记录的类型，然后<em>构造</em>一个该类型的对象：</p>
+<pre><code>{ a=3; b=5 }</code></pre><p>请注意在类型定义中使用&#39;:&#39;，在构造对象时使用&#39;=&#39;。</p>
+<p>下面是在toplevel中输入一些例子的输出：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type pair_of_ints = { a : int; b : int; }
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">{a=3; b=5}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : pair_of_ints = {a = 3; b = 5}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">{a=3}</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Some record fields are undefined: b
+</span></code></pre>
+
+<p>Ocaml要求结构中的所有元素都有确定的值。</p>
+<h2 id="qualified-unions-enum">qualified unions 和枚举（enum）</h2><p>_译注_：不知道这个qualified union有没有专门的术语，要翻译的话实在不好翻。
+虽然gcc有这方面的扩展，但是标准C语言并没有qualified unions。下面是一个C中实现qualified union的一般模式：</p>
+<pre class="C"><code class="C">struct foo {
+  int type;
+#define TYPE_INT 1
+#define TYPE_PAIR_OF_INTS 2
+#define TYPE_STRING 3
+  union {
+    int i;        // If type == TYPE_INT.
+    int pair[2];  // If type == TYPE_PAIR_OF_INTS.
+    char *str;    // If type == TYPE_STRING.
+  } u;
+};</code></pre><p>我觉得我们应该都见过这样的代码了，而且这种代码并不是十分漂亮。首先这并不安全：例如当
+一个字符串被存储到这个结构体的时候，程序员有可能错误地引用了<code>u.i</code>。并且编译器不能很好地
+检查出switch中的所有分支（当然，你可以用枚举来改善这个问题）。还有，程序员有可能会忘记设置
+<code>type</code>域，从而导致各种各样的问题。再说，这个写法也太累赘了。</p>
+<p>下面是OCaml中更加优雅而简洁的版本：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">foo</span> =
+    | Nothing
+    | Int <span class="keyword">of</span> int
+    | Pair <span class="keyword">of</span> int * int
+    | String <span class="keyword">of</span> string</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type foo = Nothing | Int of int | Pair of int * int | String of string
+</span></code></pre>
+
+<p>这是一个类型定义。首先，每个<code>|</code>分开的部分叫做<code>constructor</code>(_译注_：不要和OOP中的<code>constructor</code>
+混淆，他们两个没有半丁点关系，只是名字相同而已，很多函数式编程语言都有类似概念。poor 
+English vocabulary）。他们可以是任何大写字母开头的单词。如果<code>constructor</code>可以被
+用来定义值，它后面必须有<code>of type</code>的模式，来指定值的类型。<code>type</code>必须是小写字母开头。
+在上面的例子中，<code>Nothing</code>被用来当作一个常数，而其他<code>constructor</code>则被用来当作值。</p>
+<p>要真正地<em>创建</em>一个属于这个类型的值，你要：</p>
+<pre><code class="ocaml">Nothing
+Int 3
+Pair (4, 5)
+String 'hello'
+...</code></pre>
+
+<p>这些表达式的类型都是<code>foo</code>。</p>
+<p>注意到<code>of</code>只出现在类型定义中，而不是值的定义。</p>
+<p>一个简单的C的枚举类型可以如下定义：</p>
+<pre class="C"><code class="C">enum sign { positive, zero, negative };</code></pre><p>而Ocaml的版本是：</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">sign</span> = Positive | Zero | Negative</code></pre>
+
+<h3 id="">递归变体</h3><p>变体是可以递归的，其中一个普遍的用法是定义树状结构。这就是函数式语言拥有强大表达力之处：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">binary_tree</span> =
+    | Leaf <span class="keyword">of</span> int
+    | Tree <span class="keyword">of</span> binary_tree * binary_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type binary_tree = Leaf of int | Tree of binary_tree * binary_tree
+</span></code></pre>
+
+<p>下面是一些二叉树。试一下把他们画出来：</p>
+<pre><code class="ocaml">Leaf 3
+Tree (Leaf 3, Leaf 4)
+Tree (Tree (Leaf 3, Leaf 4), Leaf 5)
+Tree (Tree (Leaf 3, Leaf 4), Tree (Tree (Leaf 3, Leaf 4), Leaf 5))</code></pre>
+
+<h3 id="">参数化变体</h3><p>前一节的二叉树每个叶节点只能存储整数，那我们如何才能只描述树的形状，往后才决定在
+节点里放什么值呢？多态变体可以如下实现：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a binary_tree</span> =
+    | Leaf <span class="keyword">of</span> 'a
+    | Tree <span class="keyword">of</span> 'a binary_tree * 'a binary_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type 'a binary_tree = Leaf of 'a | Tree of 'a binary_tree * 'a binary_tree
+</span></code></pre>
+
+<p>这是一个通用的形式。用来存储整型的树是<code>int binary_tree</code>。同样我们可以定义<code>string binary_tree</code>。
+下面一个例子中，类型推导会自动为我们推导出叶节点的类型：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float binary_tree = Leaf 3.
+</span></code></pre>
+
+<p>注意到类型名称是由后到前的。与诸如<code>int list</code>等类型比较一下。</p>
+<p>事实上，<code>&#39;a list</code>也写成反序绝非偶然。链表就是参数化变体，只是有如下奇怪的定义：</p>
+<pre><code class="ocaml"><span class="governing">type</span> <span class="type">'a list</span> = [] | :: <span class="keyword">of</span> 'a * 'a list   <span class="comment">(* not real OCaml code *)</span></code></pre>
+
+<p>事实上，上面的定义不会编译，但下面的代码就几乎是等价的：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">'a equiv_list</span> =
+    | Nil
+    | Cons <span class="keyword">of</span> 'a * 'a equiv_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type 'a equiv_list = Nil | Cons of 'a * 'a equiv_list
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Nil</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : 'a equiv_list = Nil
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Cons(1, Nil)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int equiv_list = Cons (1, Nil)
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">Cons(1, Cons(2, Nil))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int equiv_list = Cons (1, Cons (2, Nil))
+</span></code></pre>
+
+<p>记得原来我们说过链表可以写成两种形式，一种是语法糖的 <code>[1; 2; 3]</code>，或者更加正式的
+<code>1 :: 2 :: 3 :: []</code>。如果你看到上面 <code>&#39;a list</code> 的定义，你就大概可以理解到了正式定义的含义了。</p>
+<h2 id="">链表，结构，变体 - 总结</h2>
+
+<pre class="text"><code class="text">OCaml 名字     类型定义的例子                    用法
+
+链表            int list                       [1; 2; 3]
+tuple          int * string                   (3, &#39;hello&#39;)
+record         type pair =                    { a = 3; b = &#39;hello&#39; }
+                 { a: int; b: string }
+变体            type foo =
+                 | Int of int                 Int 3
+                 | Pair of int * string
+变体            type sign =
+                 | Positive                   Positive
+                 | Zero                       Zero
+                 | Negative
+参数化变体       type &#39;a my_list =
+                 | Empty                      Cons (1, Cons (2, Empty))
+                 | Cons of &#39;a * &#39;a my_list</code></pre>
+
+<h2 id="">数据类型的模式匹配</h2><p>函数式语言的一个相当酷的特性就是能够把数据结构分开并对其做模式匹配。这实际上并不是函数式所独有的，
+你可以想象到有哪个C的衍生语言也可以这样，但这并不妨碍这个特性还是相当酷。（译注：说是这么说，
+但是C系语言有一些原因很难实现这一点）</p>
+<p>让我们来看看实际一点的要求：我希望表示一个数学表达式 <code>n * (x + y)</code> 然后分解公因式
+ <code>n * x + n * y</code>。</p>
+<p>先让我们来定义一个表达式类型：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">expr</span> =
+    | Plus <span class="keyword">of</span> expr * expr        <span class="comment">(* means a + b *)</span>
+    | Minus <span class="keyword">of</span> expr * expr       <span class="comment">(* means a - b *)</span>
+    | Times <span class="keyword">of</span> expr * expr       <span class="comment">(* means a * b *)</span>
+    | Divide <span class="keyword">of</span> expr * expr      <span class="comment">(* means a / b *)</span>
+    | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    Plus of expr * expr
+  | Minus of expr * expr
+  | Times of expr * expr
+  | Divide of expr * expr
+  | Value of string
+</span></code></pre>
+
+<p>这个表达式 <code>n * (x + y)</code> 可以写成：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
+         string
+</span></code></pre>
+
+<p>我们还需要一个函数来把
+<code>Times (Value &#39;n&#39;, Plus (Value &#39;x&#39;, Value &#39;y&#39;))</code> 打印成
+<code>n * (x + y)</code>。下面我将写两个函数，一个会把表达式转变成可读的字符串，而一个将其打印出来
+（原因是我可以把字符串写到文件而不局限于标准输出）。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+    | Minus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+    | Times (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+    | Divide (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_expr</span> <span class="ocaml-variable">e </span>=
+    print_endline (<span class="ocaml-error-loc">to_string</span> e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value to_string
+</span></code></pre>
+
+<p>（提示：<code>^</code>操作符会连接两个字符串。）</p>
+<p>下面是这个打印函数的使用：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span> (Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
+Hint: Did you mean print_char?
+</span></code></pre>
+
+<p>模式匹配的通用形式是：</p>
+<pre><code class="ocaml"><span class="keyword">match</span> value <span class="keyword">with</span>
+| pattern    -&gt;  result
+| pattern    -&gt;  result
+  ...</code></pre>
+
+<p>模式可以是很简单，就如<code>to_string</code>一般，也可以很复杂和嵌套。下一个例子是把<code>n * (x + y)</code>
+或者 <code>(x + y) * n</code>展开的函数，这里面我们会用到嵌套模式匹配：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">multiply_out</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Times (e1, Plus (e2, e3)) -&gt;
+       Plus (Times (multiply_out e1, multiply_out e2),
+             Times (multiply_out e1, multiply_out e3))
+    | Times (Plus (e1, e2), e3) -&gt;
+       Plus (Times (multiply_out e1, multiply_out e3),
+             Times (multiply_out e2, multiply_out e3))
+    | Plus (left, right) -&gt;
+       Plus (multiply_out left, multiply_out right)
+    | Minus (left, right) -&gt;
+       Minus (multiply_out left, multiply_out right)
+    | Times (left, right) -&gt;
+       Times (multiply_out left, multiply_out right)
+    | Divide (left, right) -&gt;
+       Divide (multiply_out left, multiply_out right)
+    | Value v -&gt; Value v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val multiply_out : expr -&gt; expr = &lt;fun&gt;
+</span></code></pre>
+
+<p>让我们实际操作一下：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span>(multiply_out(Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
+Hint: Did you mean print_char?
+</span></code></pre>
+
+<p><code>multiply_out</code>函数是怎么工作的呢？关键在于前两个模式。
+第一个模式 <code>Times (e1, Plus (e2, e3))</code> 匹配 <code>e1 * (e2 + e3)</code>。右手边是把这个表达式
+转化成 <code>(e1 * e2) + (e1 * e3)</code>。</p>
+<p>第二个模式做的事情类似，除了适用的表达式变成了 <code>(e1 + e2) * e3</code>。</p>
+<p>剩下的模式并不改变表达式的形式，但是他们<em>确实</em>递归在子表达式上调用了 <code>multiply_out</code>。
+这保证了所有的子表达式都把加号提取了出来（如果你只想对最顶层进行操作，你可以把余下的表达式
+都应用到<code>e -&gt; e</code>这个模式匹配）。</p>
+<p>我们能否做上面的反变换（提取公因式）？显然是必须的，就是麻烦了些。下面的版本只可以应用到
+最顶层，当然你可以对其扩展，将其应用到表达式的每一层：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">factorize</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (Times (e1, e2), Times (e3, e4)) when e1 = e3 -&gt;
+       Times (e1, Plus (e2, e4))
+    | Plus (Times (e1, e2), Times (e3, e4)) when e2 = e4 -&gt;
+       Times (Plus (e1, e3), e4)
+    | e -&gt; e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val factorize : expr -&gt; expr = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Value <span class="string">'x'</span>),
+                   Times (Value <span class="string">'n'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
+         string
+</span></code></pre>
+
+<p>这个<code>factorize</code>函数有其他一些特性。你可以加上<strong>guard</strong>到每个模式匹配上。一个guard
+是一个跟在<code>when</code>后的条件，它的意思是模式匹配只应用于模式确实匹配并且这个条件语句成立时。</p>
+<pre><code class="ocaml"><span class="keyword">match</span> value <span class="keyword">with</span>
+| pattern  [ when condition ] -&gt;  result
+| pattern  [ when condition ] -&gt;  result
+  ...</code></pre>
+
+<p>第二个特性就是<code>=</code>用来测试结构相等。它会对每个结构进行递归比较以求每个部分都精确相等。</p>
+<p>Ocaml可以在编译时检查你是否遍历了所有的情况。如果我在
+<code>type expr</code> 的定义处多添加一项 <code>Product</code>：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">expr</span> = Plus <span class="keyword">of</span> expr * expr      <span class="comment">(* means a + b *)</span>
+            | Minus <span class="keyword">of</span> expr * expr     <span class="comment">(* means a - b *)</span>
+            | Times <span class="keyword">of</span> expr * expr     <span class="comment">(* means a * b *)</span>
+            | Divide <span class="keyword">of</span> expr * expr    <span class="comment">(* means a / b *)</span>
+            | Product <span class="keyword">of</span> expr list     <span class="comment">(* means a * b * c * ... *)</span>
+            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    Plus of expr * expr
+  | Minus of expr * expr
+  | Times of expr * expr
+  | Divide of expr * expr
+  | Product of expr list
+  | Value of string
+</span></code></pre>
+
+<p>然后再重新编译<code>to_string</code>，Ocaml会报错：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
+    <span class="keyword">match</span> e <span class="keyword">with</span>
+    | Plus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+    | Minus (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+    | Times (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+    | Divide (left, right) -&gt;
+       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span></code></pre>
+
+<p>如你所见，编译器会告诉你<code>Product</code>没有被处理。</p>
+<p>练习：实现<code>to_string</code>中的<code>Product</code>部分，使其编译通过没有报错。</p>
+
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+    
+    <footer id="footer" class="navbar navbar-inverse">
+      <div class="navbar-inner">
+	
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../learn/">Learn</a></h1>
+    <ul>
+      <li><a href="../../learn/taste.html">Code Examples</a></li>
+      <li><a href="../../learn/tutorials/index.zh.html">Tutorials</a></li>
+      <li><a href="../../learn/books.html">Books</a></li>
+      <li><a href="../../learn/success.html">Success Stories</a></li>
+      <li><a href="."></a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../docs/">Documentation</a></h1>
+    <ul>
+      <li><a href="../../docs/install.html">Install</a></li>
+      <li><a href="http://caml.inria.fr/pub/docs/manual-ocaml/">Manual</a></li>
+      <li><a href="https://opam.ocaml.org/packages/">Packages</a></li>
+      <li><a href="../../releases/index.html">Compiler Releases</a></li>
+      <li><a href="../../docs/logos.html">Logos</a></li>
+    </ul>
+  </div>
+</div>
+<div class="column">
+  <div class="entry">
+    <h1><a href="../../community/">Community</a></h1>
+    <ul>
+      <li><a href="../../community/mailing_lists.html">Mailing Lists</a></li>
+      <li><a href="../../meetings/">Meetings</a></li>
+      <li><a href="../../community/planet/">News</a></li>
+      <li><a href="../../community/support.html">Support</a></li>
+      <li><a href="http://caml.inria.fr/mantis/my_view_page.php" target="_blank">Bug Tracker</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="column">
+  <div class="entry">
+    <h1>Website</h1>
+    <ul>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/learn/tutorials/data_types_and_matching.zh.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
+      <li><a href="../../about.html">About This Site</a></li>
+    <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>
+      <li><a href="../../contributors.html">Credits</a></li>
+    </ul>
+  </div>
+</div>
+
+      </div>
+    </footer>
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+
+     
+
+  </body>
+</html>
