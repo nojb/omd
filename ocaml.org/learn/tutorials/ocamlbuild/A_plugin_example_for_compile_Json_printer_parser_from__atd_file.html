@@ -124,29 +124,29 @@
         <h1 id="A-plugin-example-for-compile-Json-printer-parser-from-atd-file">A plugin example for compile Json printer/parser from .atd file</h1><pre><code>open Ocamlbuild_plugin;;
 open Command;;
 let atdgen_rules () = 
-  rule &#39;atdgen: .atd -&gt; _t.ml*&#39;
-    ~prods:[&#39;%_t.ml&#39;;&#39;%_t.mli&#39;]
-    ~dep:&#39;%.atd&#39;
+  rule &quot;atdgen: .atd -&gt; _t.ml*&quot;
+    ~prods:[&quot;%_t.ml&quot;;&quot;%_t.mli&quot;]
+    ~dep:&quot;%.atd&quot;
     (begin fun env build -&gt;
-      let atdgen = &#39;atdgen&#39; in
-      tag_atdgen env [&#39;%_t.ml&#39;;&#39;%_t.mli&#39;];
-      Cmd (S [A atdgen; A &#39;-t&#39;; P (env &#39;%.atd&#39;)]);
+      let atdgen = &quot;atdgen&quot; in
+      tag_atdgen env [&quot;%_t.ml&quot;;&quot;%_t.mli&quot;];
+      Cmd (S [A atdgen; A &quot;-t&quot;; P (env &quot;%.atd&quot;)]);
      end) ;
-  rule &#39;atdgen: .atd -&gt; _j.ml*&#39;
-    ~prods:[&#39;%_j.ml&#39;;&#39;%_j.mli&#39;;]
-    ~dep:&#39;%.atd&#39;
+  rule &quot;atdgen: .atd -&gt; _j.ml*&quot;
+    ~prods:[&quot;%_j.ml&quot;;&quot;%_j.mli&quot;;]
+    ~dep:&quot;%.atd&quot;
     (begin fun env build -&gt;
-      let atdgen = &#39;atdgen&#39; in
-      tag_atdgen env [&#39;%_j.ml&#39;; &#39;%_j.mli&#39;];
-      Cmd (S [A atdgen; A &#39;-j&#39;; A &#39;-j-std&#39;; P (env &#39;%.atd&#39;)]);
+      let atdgen = &quot;atdgen&quot; in
+      tag_atdgen env [&quot;%_j.ml&quot;; &quot;%_j.mli&quot;];
+      Cmd (S [A atdgen; A &quot;-j&quot;; A &quot;-j-std&quot;; P (env &quot;%.atd&quot;)]);
      end) ;
-  rule &#39;atdgen: .atd -&gt; _v.ml*&#39;
-    ~prods:[&#39;%_v.ml&#39;;&#39;%_v.mli&#39;;]
-    ~dep:&#39;%.atd&#39;
+  rule &quot;atdgen: .atd -&gt; _v.ml*&quot;
+    ~prods:[&quot;%_v.ml&quot;;&quot;%_v.mli&quot;;]
+    ~dep:&quot;%.atd&quot;
     (begin fun env build -&gt;
-      let atdgen = &#39;atdgen&#39; in
-      tag_atdgen env [&#39;%_v.ml&#39;;&#39;%_v.mli&#39;;];
-      Cmd (S [A atdgen; A &#39;-v&#39;; P (env &#39;%.atd&#39;)]);
+      let atdgen = &quot;atdgen&quot; in
+      tag_atdgen env [&quot;%_v.ml&quot;;&quot;%_v.mli&quot;;];
+      Cmd (S [A atdgen; A &quot;-v&quot;; P (env &quot;%.atd&quot;)]);
      end) ;
   ()
 let _ = dispatch begin function

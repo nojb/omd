@@ -180,7 +180,7 @@ following type:</p>
 <p>And indeed OCaml lets you use <code>max</code> on any type:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3.5 13.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 13.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max <span class="string">'a'</span> <span class="string">'b'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char = 'b'
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max <span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;b&quot;
 </span></code></pre>
 
 <p>This is because <code>&gt;</code> is in fact polymorphic. It works on any type, even
@@ -231,28 +231,28 @@ like an <a href="https://en.wikipedia.org/wiki/Diode#Current.E2.80.93voltage_cha
 <p>Also in <code>Pervasives</code>, the <code>string_of_float</code> function contains a complex
 pair of nested <code>if</code> expressions:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
-  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float <span class="string">&quot;%.12g&quot;</span> f <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">l</span> = string_length s <span class="governing">in</span>
   <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">i </span>=
-    <span class="keyword">if</span> i &gt;= l <span class="keyword">then</span> s ^ <span class="string">'.'</span>
+    <span class="keyword">if</span> i &gt;= l <span class="keyword">then</span> s ^ <span class="string">&quot;.&quot;</span>
     <span class="keyword">else</span> <span class="keyword">if</span> s.[i] = <span class="string">'.'</span> || s.[i] = <span class="string">'e'</span> <span class="keyword">then</span> s
     <span class="keyword">else</span> loop (i+1) <span class="governing">in</span>
   loop 0</code></pre>
 
 <p>Let&#39;s examine this function. Suppose the function is called with <code>f</code> =
-12.34. Then <code>s</code> = &#39;12.34&#39;, and <code>l</code> = 5. We call <code>loop</code> the first time
+12.34. Then <code>s</code> = &quot;12.34&quot;, and <code>l</code> = 5. We call <code>loop</code> the first time
 with <code>i</code> = 0.</p>
 <p><code>i</code> is not greater than or equal to <code>l</code>, and <code>s.[i]</code> (the
 <code>i</code><sup>th</sup> character in <code>s</code>) is not a period or <code>&#39;e&#39;</code>. So
 <code>loop (i+1)</code> is called, ie. <code>loop 1</code>.</p>
 <p>We go through the same dance for <code>i</code> = 1, and end up calling <code>loop 2</code>.</p>
 <p>For <code>i</code> = 2, however, <code>s.[i]</code> is a period (refer to the original string,
-<code>s</code> = &#39;12.34&#39;). So this immediately returns <code>s</code>, and the function
-<code>string_of_float</code> returns &#39;12.34&#39;.</p>
+<code>s</code> = &quot;12.34&quot;). So this immediately returns <code>s</code>, and the function
+<code>string_of_float</code> returns &quot;12.34&quot;.</p>
 <p>What is <code>loop</code> doing? In fact it&#39;s checking whether the string returned
 from <code>format_float</code> contains a period (or <code>&#39;e&#39;</code>). Suppose that we called
 <code>string_of_float</code> with <code>12.0</code>. <code>format_float</code> would return the string
-&#39;12&#39;, but <code>string_of_float</code> must return &#39;12.&#39; or &#39;12.0&#39; (because
+&quot;12&quot;, but <code>string_of_float</code> must return &quot;12.&quot; or &quot;12.0&quot; (because
 floating point constants in OCaml must contain a period to differentiate
 them from integer constants). Hence the check.</p>
 <p>The strange use of recursion in this function is almost certainly for
@@ -262,16 +262,16 @@ in a way which prevents them from being used in <code>string_of_float</code>. He
 however, is a more straightforward, but approximately twice as slow, way
 of writing <code>string_of_float</code>:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
-  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float <span class="string">&quot;%.12g&quot;</span> f <span class="governing">in</span>
   <span class="keyword">if</span> <span class="ocaml-module">String</span>.contains s <span class="string">'.'</span> || <span class="ocaml-module">String</span>.contains s <span class="string">'e'</span>
   <span class="keyword">then</span> s
-  <span class="keyword">else</span> s ^ <span class="string">'.'</span></code></pre>
+  <span class="keyword">else</span> s ^ <span class="string">&quot;.&quot;</span></code></pre>
 
 <h2 id="Using-begin-end">Using begin ... end</h2><p>Here is some code from lablgtk:</p>
 <pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
   <span class="keyword">fun</span> _ -&gt; f obj
 <span class="keyword">else</span> <span class="governing">begin</span>
-  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  eprintf <span class="string">&quot;Glade-warning: %s expects a %s argument.\n&quot;</span> name cls;
   <span class="keyword">raise</span> Not_found
 <span class="governing">end</span></code></pre>
 
@@ -282,14 +282,14 @@ this instead:</p>
 <pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
   <span class="keyword">fun</span> _ -&gt; f obj
 <span class="keyword">else</span>
-  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  eprintf <span class="string">&quot;Glade-warning: %s expects a %s argument.\n&quot;</span> name cls;
   <span class="keyword">raise</span> Not_found</code></pre>
 
 <p>Fully bracketing and properly indenting the above expression gives:</p>
 <pre><code class="ocaml">(<span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
    <span class="keyword">fun</span> _ -&gt; f obj
  <span class="keyword">else</span>
-   eprintf 'Glade-warning: %s expects a %s argument.\n' name cls
+   eprintf <span class="string">&quot;Glade-warning: %s expects a %s argument.\n&quot;</span> name cls
 );
 <span class="keyword">raise</span> Not_found</code></pre>
 
@@ -299,17 +299,19 @@ expression. You can also use plain ordinary parentheses <code>( ... )</code> if 
 prefer (and I do prefer, because I <strong>loathe</strong> Pascal :-). Here are two
 simple examples:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
-      print_endline <span class="ocaml-error-loc">'</span>THEN'
+      print_endline <span class="string">&quot;THEN&quot;</span>
     <span class="keyword">else</span> <span class="governing">begin</span>
-      print_endline 'ELSE';
-      <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
-    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+      print_endline <span class="string">&quot;ELSE&quot;</span>;
+      <span class="keyword">failwith</span> <span class="string">&quot;<span class="keyword">else</span> clause&quot;</span>
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">ELSE
+</span><span class="ocaml-stderr"></span>Exception: Failure &quot;else clause&quot;.
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
-      print_endline <span class="ocaml-error-loc">'</span>THEN'
+      print_endline <span class="string">&quot;THEN&quot;</span>
     <span class="keyword">else</span> (
-      print_endline 'ELSE';
-      <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
-    )</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+      print_endline <span class="string">&quot;ELSE&quot;</span>;
+      <span class="keyword">failwith</span> <span class="string">&quot;<span class="keyword">else</span> clause&quot;</span>
+    )</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">ELSE
+</span><span class="ocaml-stderr"></span>Exception: Failure &quot;else clause&quot;.
 </span></code></pre>
 
 <h2 id="For-loops-and-while-loops">For loops and while loops</h2><p>OCaml supports a rather limited form of the familiar <code>for</code> loop:</p>
@@ -368,24 +370,24 @@ any use at all, except in conjunction with our old friend references.
 Let&#39;s imagine that OCaml didn&#39;t have references for a moment:</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = false <span class="governing">in</span>
 <span class="keyword">while</span> not quit_loop <span class="keyword">do</span>
-  print_string 'Have you had enough yet? (y/n) ';
+  print_string <span class="string">&quot;Have you had enough yet? (y/n) &quot;</span>;
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
   <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
     <span class="comment">(* how <span class="keyword">do</span> I set quit_loop <span class="keyword">to</span> true ?!? *)</span>
 <span class="keyword">done</span></code></pre>
 
-<p>Remember that <code>quit_loop</code> is not a real &#39;variable&#39; - the let-binding
+<p>Remember that <code>quit_loop</code> is not a real &quot;variable&quot; - the let-binding
 just makes <code>quit_loop</code> a shorthand for <code>false</code>. This means the while
 loop condition (shown in red) is always true, and the loop runs on
 forever!</p>
 <p>Luckily OCaml <em>does have</em> references, so we can write the code above if
 we want. Don&#39;t get confused and think that the <code>!</code> (exclamation mark)
-means &#39;not&#39; as in C/Java. It&#39;s used here to mean &#39;dereference the
-pointer&#39;, similar in fact to Forth. You&#39;re better off reading <code>!</code> as
-&#39;get&#39; or &#39;deref&#39;.</p>
+means &quot;not&quot; as in C/Java. It&#39;s used here to mean &quot;dereference the
+pointer&quot;, similar in fact to Forth. You&#39;re better off reading <code>!</code> as
+&quot;get&quot; or &quot;deref&quot;.</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = <span class="keyword">ref</span> false <span class="governing">in</span>
 <span class="keyword">while</span> not !quit_loop <span class="keyword">do</span>
-  print_string 'Have you had enough yet? (y/n) ';
+  print_string <span class="string">&quot;Have you had enough yet? (y/n) &quot;</span>;
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
   <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
     quit_loop := true
@@ -403,8 +405,18 @@ I&#39;ll only talk about the most useful ones here.</p>
 <p>If you want to call a function once on every element of the list, use
 <code>List.iter</code>, like this:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">elem </span>=
-    <span class="ocaml-module">Printf</span>.printf <span class="string">'I'</span>m looking at element %d now<span class="ocaml-error-loc">\</span>n' elem <span class="governing">in</span>
-  <span class="ocaml-module">List</span>.iter f my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal character (\\)
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;I'm looking at element %d now\n&quot;</span> elem <span class="governing">in</span>
+  <span class="ocaml-module">List</span>.iter f my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">I'm looking at element 1 now
+I'm looking at element 2 now
+I'm looking at element 3 now
+I'm looking at element 4 now
+I'm looking at element 5 now
+I'm looking at element 6 now
+I'm looking at element 7 now
+I'm looking at element 8 now
+I'm looking at element 9 now
+I'm looking at element 10 now
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p><code>List.iter</code> is in fact what you should think about using first every
@@ -415,7 +427,7 @@ function will be familiar to people who&#39;ve programmed in Perl before.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.map (( * ) 2) my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [2; 4; 6; 8; 10; 12; 14; 16; 18; 20]
 </span></code></pre>
 
-<p>Perl has the useful function &#39;grep&#39; for filtering only elements of a
+<p>Perl has the useful function &quot;grep&quot; for filtering only elements of a
 list which satisfy some condition - eg. returning all even numbers in a
 list. In OCaml this function is called <code>List.filter</code>:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">i </span>=
@@ -428,15 +440,15 @@ member):</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.mem 12 my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
 </span></code></pre>
 
-<p><code>List.for_all</code> and <code>List.exists</code> are the same as the &#39;forall&#39; and
-&#39;exist&#39; operators in predicate logic.</p>
-<p>For operating over two lists at the same time, there are &#39;-2&#39; variants
+<p><code>List.for_all</code> and <code>List.exists</code> are the same as the &quot;forall&quot; and
+&quot;exist&quot; operators in predicate logic.</p>
+<p>For operating over two lists at the same time, there are &quot;-2&quot; variants
 of some of these functions, namely <code>iter2</code>, <code>map2</code>, <code>for_all2</code>,
 <code>exists2</code>.</p>
 <p>The <code>map</code> and <code>filter</code> functions operate on individual list elements in
 isolation. <strong>Fold</strong> is a more unusual operation that is best
-thought about as &#39;inserting an operator between each element of the
-list&#39;. Suppose I wanted to add all the numbers in my list together. In
+thought about as &quot;inserting an operator between each element of the
+list&quot;. Suppose I wanted to add all the numbers in my list together. In
 hand-waving terms what I want to do is insert a plus sign between the
 elements in my list:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 55
@@ -447,7 +459,7 @@ bit more tricky. First of all, what happens if I try to fold an empty
 list? In the case of summing the list it would be nice if the answer was
 zero, instead of error. However if I was trying to find the product of
 the list, I&#39;d like the answer to be one instead. So I obviously have to
-provide some sort of &#39;default&#39; argument to my fold. The second issue
+provide some sort of &quot;default&quot; argument to my fold. The second issue
 doesn&#39;t arise with simple operators like <code>+</code> and <code>*</code>: what happens if
 the operator I&#39;m using isn&#39;t associative, ie. (a <em>op</em> b) <em>op</em> c not
 equal to a <em>op</em> (b <em>op</em> c)? In that case it would matter if I started
@@ -521,7 +533,7 @@ line parameter.</p>
 <span class="governing">let</span> () =
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
-  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+  printf <span class="string">&quot;I read %d characters from %s\n&quot;</span> (<span class="ocaml-module">String</span>.length str) filename</code></pre>
 
 <p>Approach 1 works but is not very satisfactory because <code>read_whole_chan</code>
 won&#39;t work on non-file channels like keyboard input or sockets. Approach
@@ -549,7 +561,7 @@ won&#39;t work on non-file channels like keyboard input or sockets. Approach
 <span class="governing">let</span> () =
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
-  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+  printf <span class="string">&quot;I read %d characters from %s\n&quot;</span> (<span class="ocaml-module">String</span>.length str) filename</code></pre>
 
 <p>The key to approach 2 is to look at the central while loop. Remember
 that I said the only way to break out of a while loop early was with an
@@ -565,7 +577,7 @@ that while loops, like for loops, are just expressions, and they return
 the <code>unit</code> object (<code>()</code>). However OCaml demands that the return type
 inside a <code>try</code> matches the return type of each caught exception. In this
 case because <code>End_of_file</code> results in a <code>string</code>, the main body of the
-<code>try</code> must also &#39;return&#39; a string — even though because of the infinite
+<code>try</code> must also &quot;return&quot; a string — even though because of the infinite
 while loop the string could never actually be returned.  <code>assert false</code>
 has a polymorphic type, so will unify with whatever value is returned
 by the <code>with</code> branch.</p>
@@ -593,7 +605,7 @@ by the <code>with</code> branch.</p>
 <span class="governing">let</span> () =
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
-  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+  printf <span class="string">&quot;I read %d characters from %s\n&quot;</span> (<span class="ocaml-module">String</span>.length str) filename</code></pre>
 
 <p>Again we have an infinite loop - but in this case done using recursion.
 <code>loop</code> calls itself at the end of the function. The infinite recursion
@@ -614,7 +626,7 @@ read elements from the directory. I&#39;m going to define a handy
 <code>readdir_no_ex</code> function which hides the annoying <code>End_of_file</code>
 exception that <code>readdir</code> throws when it reaches the end of the
 directory:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Unix</span>  <span class="comment">(*  You may need <span class="keyword">to</span> #load '<span class="ocaml-module">Unix</span>.cma' *)</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Unix</span>  <span class="comment">(*  You may need <span class="keyword">to</span> #load <span class="string">&quot;<span class="ocaml-module">Unix</span>.cma&quot;</span> *)</span>
     
   <span class="governing">let</span> <span class="ocaml-function">readdir_no_ex</span> <span class="ocaml-variable">dirh </span>=
     <span class="keyword">try</span>
@@ -631,14 +643,14 @@ null pointers.</p>
 convert the <code>filesystem</code> type into a string for (eg) printing:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">string_of_filesystem</span> <span class="ocaml-variable">fs </span>=
     <span class="keyword">match</span> fs <span class="keyword">with</span>
-    | File filename -&gt; filename ^ '\n'
+    | File filename -&gt; filename ^ <span class="string">&quot;\n&quot;</span>
     | Directory fs_list -&gt;
-        <span class="ocaml-module">List</span>.fold_left (^) <span class="ocaml-error-loc">'</span>' (<span class="ocaml-module">List</span>.map string_of_filesystem fs_list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+        <span class="ocaml-module">List</span>.fold_left (^) <span class="string">&quot;&quot;</span> (<span class="ocaml-module">List</span>.map string_of_filesystem fs_list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val string_of_filesystem : filesystem -&gt; string = &lt;fun&gt;
 </span></code></pre>
 
 <p>Note the use of <code>fold_left</code> and <code>map</code>. The <code>map</code> is used to
 (recursively) convert each <code>filesystem</code> in the list into a <code>string</code>.
-Then the <code>fold_left (^) &#39;&#39;</code> concatenates the list together into one big
+Then the <code>fold_left (^) &quot;&quot;</code> concatenates the list together into one big
 string. Notice also the use of pattern matching. (The library defines a
 function called <code>String.concat</code> which is essentially equivalent to
 <code>fold_left (^) </code>, but implemented more efficiently).</p>
@@ -667,16 +679,16 @@ type of <code>loop</code> will be:</p>
 
 <p>First we read the next filename from the directory handle. <code>filename</code>
 has type <code>string option</code>, in other words it could be <code>None</code> or
-<code>Some &#39;foo&#39;</code> where <code>foo</code> is the name of the next filename in the
-directory. We also need to ignore the <code>&#39;.&#39;</code> and <code>&#39;..&#39;</code> files (ie. the
+<code>Some &quot;foo&quot;</code> where <code>foo</code> is the name of the next filename in the
+directory. We also need to ignore the <code>&quot;.&quot;</code> and <code>&quot;..&quot;</code> files (ie. the
 current directory and the parent directory). We can do all this with a
 nice pattern match:</p>
 <pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
   <span class="keyword">match</span> filename <span class="keyword">with</span>
   | None -&gt; []
-  | Some <span class="string">'.'</span> -&gt; loop ()
-  | Some '..' -&gt; loop ()
+  | Some <span class="string">&quot;.&quot;</span> -&gt; loop ()
+  | Some <span class="string">&quot;..&quot;</span> -&gt; loop ()
   | Some filename -&gt;
      <span class="comment">(* ..... *)</span></code></pre>
 
@@ -684,7 +696,7 @@ nice pattern match:</p>
 and we&#39;ve reached the end of the directory, <code>loop</code> needs to return a
 list of entries - and there&#39;s no entries - so it returns the empty list
 (<code>[]</code>).</p>
-<p>For <code>&#39;.&#39;</code> and <code>&#39;..&#39;</code> we just ignore the file and call <code>loop</code> again.</p>
+<p>For <code>&quot;.&quot;</code> and <code>&quot;..&quot;</code> we just ignore the file and call <code>loop</code> again.</p>
 <p>What do we do when <code>loop</code> reads a real filename (the <code>Some filename</code>
 match below)? Let <code>pathname</code> be the full path to the file. We &#39;stat&#39; the
 file to see if it&#39;s really a directory. If it <em>is</em> a directory, we set
@@ -701,17 +713,17 @@ to which we prepend <code>this</code>.</p>
       <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
       <span class="keyword">match</span> filename <span class="keyword">with</span>
       | None -&gt; []
-      | Some <span class="string">'.'</span> -&gt; loop ()
-      | Some <span class="ocaml-error-loc">'</span>..' -&gt; loop ()
+      | Some <span class="string">&quot;.&quot;</span> -&gt; loop ()
+      | Some <span class="string">&quot;..&quot;</span> -&gt; loop ()
       | Some filename -&gt;
-          <span class="governing">let </span><span class="ocaml-variable">pathname</span> = path ^ <span class="string">'/'</span> ^ filename <span class="governing">in</span>
+          <span class="governing">let </span><span class="ocaml-variable">pathname</span> = path ^ <span class="string">&quot;/&quot;</span> ^ filename <span class="governing">in</span>
           <span class="governing">let </span><span class="ocaml-variable">stat</span> = lstat pathname <span class="governing">in</span>
           <span class="governing">let </span><span class="ocaml-variable">this</span> = <span class="keyword">if</span> stat.st_kind = S_DIR <span class="keyword">then</span>
                        read_directory pathname
                      <span class="keyword">else</span>
                        File pathname <span class="governing">in</span>
           this :: loop () <span class="governing">in</span>
-    Directory (loop ())</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    Directory (loop ())</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val read_directory : string -&gt; filesystem = &lt;fun&gt;
 </span></code></pre>
 
 <p>That&#39;s quite a complex bit of recursion, but although this is a made-up
@@ -757,11 +769,11 @@ handles.</p>
   result</code></pre>
 
 <p>Next up is the issue of <code>readdir</code> throwing an exception in a rather
-&#39;unexceptional&#39; situation, namely <code>End_of_file</code>. I don&#39;t agree that
+&quot;unexceptional&quot; situation, namely <code>End_of_file</code>. I don&#39;t agree that
 throwing an exception in this case is the right thing to do. In typical
 programs I want to never have to write a <code>try ... with</code> clause, because
-exceptions are supposed to mean &#39;something really bad happened which I&#39;m
-not prepared to deal with&#39;, like running out of disk space or memory.
+exceptions are supposed to mean &quot;something really bad happened which I&#39;m
+not prepared to deal with&quot;, like running out of disk space or memory.
 Throwing an exception as part of the routine running of a function
 (every program which uses <code>readdir</code> <em>has</em> to be prepared to handle
 <code>End_of_file</code>), that&#39;s not an exceptional situation.</p>
@@ -769,8 +781,8 @@ Throwing an exception as part of the routine running of a function
 the exception, and this highlights another frequent technique used by
 functional programmers. Namely, passing an <strong>accumulator</strong> which
 contains the result of the function call, but passed as an <em>argument</em> to
-the function (!) Really the accumulator means &#39;this is the result so
-far&#39;, so in the exceptional case (<code>End_of_file</code>) we give up and return
+the function (!) Really the accumulator means &quot;this is the result so
+far&quot;, so in the exceptional case (<code>End_of_file</code>) we give up and return
 the result so far. Here is his code with all the references to the
 accumulator argument in red:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">read_filesystem</span> <span class="ocaml-variable">path </span>=
@@ -784,17 +796,18 @@ accumulator argument in red:</p>
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">entries </span>=
       <span class="keyword">try</span>
         <span class="keyword">match</span> readdir dirh <span class="keyword">with</span>
-        | <span class="string">'.'</span> | <span class="ocaml-error-loc">'</span>..' -&gt; loop entries
+        | <span class="string">&quot;.&quot;</span> | <span class="string">&quot;..&quot;</span> -&gt; loop entries
         | filename -&gt;
-           loop (read_filesystem (path ^ <span class="string">'/'</span> ^ filename) :: entries)
+           loop (read_filesystem (path ^ <span class="string">&quot;/&quot;</span> ^ filename) :: entries)
       <span class="keyword">with</span> End_of_file -&gt; entries <span class="governing">in</span>
     <span class="governing">let </span><span class="ocaml-variable">list</span> = loop [] <span class="governing">in</span>
     closedir dirh;
-    list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: pattern expected.
+    list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val read_filesystem : string -&gt; filesystem = &lt;fun&gt;
+val read_directory : string -&gt; filesystem list = &lt;fun&gt;
 </span></code></pre>
 
-<p>Notice <code>End_of_file -&gt; entries</code> which means &#39;when we get the exception,
-give up and return the result so far&#39;.</p>
+<p>Notice <code>End_of_file -&gt; entries</code> which means &quot;when we get the exception,
+give up and return the result so far&quot;.</p>
 <p>Next up - it was pointed out that the easiest way to do this is actually
 not to use recursion at all, but instead to do the loop imperatively (a
 while loop is probably best) and have a reference to a list to store the
@@ -812,11 +825,11 @@ language</a>,
 doesn&#39;t mind you using the imperative approach when it makes sense.</p>
 <p>Here is the outline of the imperative approach by Fabrice Le Fessant:</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">list</span> = <span class="keyword">ref</span> [] <span class="governing">in</span>
-<span class="governing">let </span><span class="ocaml-variable">dir</span> = opendir '.......' <span class="governing">in</span>
+<span class="governing">let </span><span class="ocaml-variable">dir</span> = opendir <span class="string">&quot;.......&quot;</span> <span class="governing">in</span>
 <span class="keyword">try</span>
   <span class="keyword">while</span> true <span class="keyword">do</span>
     <span class="keyword">match</span> readdir dir <span class="keyword">with</span>
-    | <span class="string">'.'</span> | '..' -&gt; ()
+    | <span class="string">&quot;.&quot;</span> | <span class="string">&quot;..&quot;</span> -&gt; ()
     | filename -&gt; list := filename :: !list
   <span class="keyword">done</span>;
   <span class="keyword">assert</span> false
@@ -832,8 +845,8 @@ doesn&#39;t mind you using the imperative approach when it makes sense.</p>
 case pattern. In this example - finding the maximum element in a list -
 we&#39;re going to have two base cases and one recursive case. But before I
 jump ahead to the code, let&#39;s just step back and think about the
-problem. By thinking about the problem, the solution will appear &#39;as if
-by magic&#39; (I promise you :-)</p>
+problem. By thinking about the problem, the solution will appear &quot;as if
+by magic&quot; (I promise you :-)</p>
 <p>First of all, let&#39;s be clear that the maximum element of a list is just
 the biggest one, e.g. the maximum element of the list <code>[1; 2; 3; 4; 1]</code>
 is <code>4</code>.</p>
@@ -844,7 +857,7 @@ list, we should throw an error.</p>
 That&#39;s easy: it&#39;s just the element itself. So <code>list_max [4]</code> should
 return <code>4</code>, or in the general case, <code>list_max [x]</code> should return <code>x</code>.</p>
 <p>What&#39;s the maximum element of the general list <code>x :: remainder</code> (this is
-the &#39;cons&#39; notation for the list, so <code>remainder</code> is the tail - also a
+the &quot;cons&quot; notation for the list, so <code>remainder</code> is the tail - also a
 list)?</p>
 <p>Think about this for a while. Suppose you know the maximum element of
 <code>remainder</code>, which is, say, <code>y</code>. What&#39;s the maximum element of
@@ -860,20 +873,20 @@ the overall maximum of the whole list is <code>y = 4</code>.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">list_max</span> <span class="ocaml-variable">xs </span>=
       <span class="keyword">match</span> xs <span class="keyword">with</span>
       | [] -&gt;   <span class="comment">(* empty list: fail *)</span>
-         <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>list_max called on empty list'
+         <span class="keyword">failwith</span> <span class="string">&quot;list_max called on empty list&quot;</span>
       | [x] -&gt; <span class="comment">(* single element list: return the element *)</span>
          x
       | x :: remainder -&gt; <span class="comment">(* multiple element list: recursive case *)</span>
-         max x (list_max remainder)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+         max x (list_max remainder)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val list_max : 'a list -&gt; 'a = &lt;fun&gt;
 </span></code></pre>
 
 <p>I&#39;ve added comments so you can see how the rules / special cases we
 decided upon above really correspond to lines of code.</p>
 <p>Does it work?</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [1; 2; 3; 4; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1; 100]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max [1; 2; 3; 4; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 4
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Failure &quot;list_max called on empty list&quot;.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max [5; 4; 3; 2; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max [5; 4; 3; 2; 1; 100]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 100
 </span></code></pre>
 
 <p>Notice how the solution proposed is both (a) very different from the
@@ -883,7 +896,7 @@ because the functional style is much higher level than the imperative
 style, and therefore better and simpler. Whether you believe them is up
 to you. It&#39;s certainly true that it&#39;s much simpler to reason logically
 about the functional version, which is useful if you wanted to formally
-prove that <code>list_max</code> is correct (&#39;correct&#39; being the mathematical way
+prove that <code>list_max</code> is correct (&quot;correct&quot; being the mathematical way
 to say that a program is provably bug-free, useful for space shuttles,
 nuclear power plants and higher quality software in general).</p>
 <h3 id="Tail-recursion">Tail recursion</h3><p>Let&#39;s look at the <code>range</code> function again for about the twentieth time:</p>
@@ -930,13 +943,13 @@ very last thing. In fact the last thing to happen is the <code>::</code> (cons)
 operation. As a result, the compiler doesn&#39;t turn the recursion into a
 while loop, and the function is not efficient in its use of stack space.</p>
 <p>Now recall we discussed in the addendum above Eric Cooper&#39;s
-&#39;accumulator&#39; technique, and I said that this technique was widely used
+&quot;accumulator&quot; technique, and I said that this technique was widely used
 in functional programming. We will now see why this is the case. It&#39;s
 because it allows you to write functions such as <code>range</code> above in a
 tail-recursive manner, which means they will be efficient and work
 properly on large inputs.</p>
 <p>Let&#39;s plan our rewritten <code>range</code> function which will use an accumulator
-argument to store the &#39;result so far&#39;:</p>
+argument to store the &quot;result so far&quot;:</p>
 <pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
   <span class="comment">(* ... *)</span>
   
@@ -944,8 +957,8 @@ argument to store the &#39;result so far&#39;:</p>
   range2 a b []</code></pre>
 
 <p>(I could and probably should have used a nested function here.)</p>
-<p>The <code>accum</code> argument is going to accumulate the result. It&#39;s the &#39;result
-so far&#39;. We pass in the empty list (&#39;no result so far&#39;). The easy case
+<p>The <code>accum</code> argument is going to accumulate the result. It&#39;s the &quot;result
+so far&quot;. We pass in the empty list (&quot;no result so far&quot;). The easy case
 is when <code>a &gt; b</code>:</p>
 <pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range2</span> <span class="ocaml-variable">a b accum </span>=
   <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> accum
@@ -1012,28 +1025,30 @@ from memory.</p>
 <p>Here is a function defined on names which prints the <code>name</code> field and
 increments the mutable <code>access_count</code> field:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_name</span> <span class="ocaml-variable">name </span>=
-    print_endline (<span class="ocaml-error-loc">'</span>The name is ' ^ name.name);
-    name.access_count &lt;- name.access_count + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+    print_endline (<span class="string">&quot;The name is &quot;</span> ^ name.name);
+    name.access_count &lt;- name.access_count + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_name : name -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>Notice a strange, and very non-functional feature of <code>print_name</code>: it
 modifies its <code>access_count</code> parameter. If you read chapter 5 closely,
-you&#39;ll see that this function is not &#39;pure&#39;. OCaml is a functional
+you&#39;ll see that this function is not &quot;pure&quot;. OCaml is a functional
 language, but not to the extent that it forces functional programming
 down your throat.</p>
 <p>Anyway, let&#39;s see <code>print_name</code> in action:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = { name = <span class="ocaml-error-loc">'</span>Richard Jones'; access_count = 0 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_name</span> n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_name
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_name</span> n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_name
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = { name = <span class="string">&quot;Richard Jones&quot;</span>; access_count = 0 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val n : name = {name = &quot;Richard Jones&quot;; access_count = 0}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : name = {name = &quot;Richard Jones&quot;; access_count = 0}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">print_name n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">The name is Richard Jones
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : name = {name = &quot;Richard Jones&quot;; access_count = 1}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">print_name n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">The name is Richard Jones
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : name = {name = &quot;Richard Jones&quot;; access_count = 2}
 </span></code></pre>
 
 <p>Only fields explicitly marked as <code>mutable</code> can be assigned to using the
 <code>&lt;-</code> operator. If you try to assign to a non-mutable field, OCaml won&#39;t
 let you:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">n.name &lt;- <span class="ocaml-error-loc">'</span>John Smith'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n.name &lt;- </span><span class="string"><span class="ocaml-error-loc">&quot;John Smith&quot;</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: The record field name is not mutable
 </span></code></pre>
 
 <p>References, with which we should be familiar by now, are implemented
@@ -1113,7 +1128,14 @@ imperative in style:</p>
       mmult size size m1 m2 m3
     <span class="keyword">done</span>;
     mmult size size m1 m2 m3;
-    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>%d %d %d %d\n' m3.(0).(0) m3.(2).(3) m3.(3).(2) m3.(4).(4)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d %d %d %d\n&quot;</span> m3.(0).(0) m3.(2).(3) m3.(3).(2) m3.(4).(4)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">270165 1061760 1453695 1856025
+</span><span class="ocaml-stderr"></span>val size : int = 30
+val mkmatrix : int -&gt; int -&gt; int array array = &lt;fun&gt;
+val inner_loop : int -&gt; int -&gt; int array -&gt; int array array -&gt; int -&gt; int =
+  &lt;fun&gt;
+val mmult :
+  int -&gt; int -&gt; int array array -&gt; int array array -&gt; int array array -&gt; unit =
+  &lt;fun&gt;
 </span></code></pre>
 
       </div>

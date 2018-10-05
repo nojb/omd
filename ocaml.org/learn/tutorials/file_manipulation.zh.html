@@ -221,13 +221,13 @@ channels that point to regular files, use <code>seek_in</code> or <code>seek_out
 
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
   
-<span class="governing">let </span><span class="ocaml-variable">file</span> = 'example.dat'
-<span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello!'
+<span class="governing">let </span><span class="ocaml-variable">file</span> = <span class="string">&quot;example.dat&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello!&quot;</span>
   
 <span class="governing">let</span> () =
   <span class="comment">(* &#21521;&#25991;&#20214;&#20889;&#20449;&#24687; *)</span>
   <span class="governing">let </span><span class="ocaml-variable">oc</span> = open_out file <span class="governing">in</span>    <span class="comment">(* &#26032;&#24314;&#25110;&#20462;&#25913;&#25991;&#20214;,&#36820;&#22238;&#36890;&#36947; *)</span>
-  fprintf oc '%s\n' message;   <span class="comment">(* &#20889;&#19968;&#20123;&#19996;&#35199; *)</span>
+  fprintf oc <span class="string">&quot;%s\n&quot;</span> message;   <span class="comment">(* &#20889;&#19968;&#20123;&#19996;&#35199; *)</span>
   close_out oc;                <span class="comment">(* &#20889;&#20837;&#24182;&#20851;&#38381;&#36890;&#36947; *)</span>
   
   <span class="comment">(* &#35835;&#21462;&#25991;&#20214;&#24182;&#26174;&#31034;&#31532;&#19968;&#34892; *)</span>

@@ -151,8 +151,8 @@ p2/src</code></pre>
 ln -s ../base/src p2/base</code></pre>
 
 <p>and modify <code>p1</code> and <code>p2</code>&#39;s <code>_tags</code> files as follows :</p>
-<pre class="shell"><code class="shell">echo &#39;&lt;base&gt;: include&#39; &gt;&gt; p1/_tags
-echo &#39;&lt;base&gt;: include&#39; &gt;&gt; p2/_tags</code></pre>
+<pre class="shell"><code class="shell">echo &quot;&lt;base&gt;: include&quot; &gt;&gt; p1/_tags
+echo &quot;&lt;base&gt;: include&quot; &gt;&gt; p2/_tags</code></pre>
 
 <p>The rest will be sorted out by ocamlbuild. When a change is done in
 <code>base/src</code> nothing needs to be recompiled there: new builds of <code>p1</code> or
@@ -179,7 +179,7 @@ Finally add the following <code>p1/myocamlbuild.ml</code> and <code>p2/myocamlbu
 plugins.</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span><span class="ocaml-prompt">;;</span><br/><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_pack</span><span class="ocaml-prompt">;;</span><br/>dispatch <span class="governing">begin</span> function
 | After_rules -&gt;
-    <span class="ocaml-module">Pathname</span>.define_context 'base' ['base/internal']
+    <span class="ocaml-module">Pathname</span>.define_context <span class="string">&quot;base&quot;</span> [<span class="string">&quot;base/internal&quot;</span>]
 | _ -&gt; ()
 <span class="governing">end</span>;;</code></pre>
 

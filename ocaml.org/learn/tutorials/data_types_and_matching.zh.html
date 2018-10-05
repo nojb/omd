@@ -168,9 +168,9 @@
 <h3 id="">链表的类型</h3>
 
 <p>整数链表的类型是int list，一般来说，foo类型的链表的类型就是foo list。</p>
-<p>由此可以看出，链表的所有元素都必须是同一种类型的。但是类型却可以是多态的（如，<code>&#39;a list</code>），当你要写操作&#39;lists
+<p>由此可以看出，链表的所有元素都必须是同一种类型的。但是类型却可以是多态的（如，<code>&#39;a list</code>），当你要写操作&quot;lists
 of
-anything&#39;（任意类型的列表）的泛型函数时，这就相当有用了（注意，<code>&#39;a list</code>
+anything&quot;（任意类型的列表）的泛型函数时，这就相当有用了（注意，<code>&#39;a list</code>
 并不代表每个单独的元素可以有不同的类型——所以你还是不能用它来构造包含混合类型的列表，也就是说，元素的类型可以任意，但所有元素的类型必须相同）。</p>
 <p>length函数是定义在OCaml的List模块中的，它是一个很好的例子。它不论列表包含的整数还是字符串或者对象、
 还是什么小怪物，List.length函数都可以对其进行处理。因此，List.length的类型是：</p>
@@ -180,11 +180,11 @@ anything&#39;（任意类型的列表）的泛型函数时，这就相当有用�
 <p>考虑下面简单的C结构：</p>
 <pre class="C"><code class="C">struct pair_of_ints {
   int a, b;
-};</code></pre><p>Ocaml中最简单的对应形式是一个<strong>组元（tuple）</strong>，比如具有<code>int * int</code>类型的<code>(3, 4)</code>。和链表不同，组元的元素可以是不同类型，例如<code>(3, &#39;hello&#39;, &#39;x&#39;)</code>的类型是<code>int * string * char</code>。</p>
+};</code></pre><p>Ocaml中最简单的对应形式是一个<strong>组元（tuple）</strong>，比如具有<code>int * int</code>类型的<code>(3, 4)</code>。和链表不同，组元的元素可以是不同类型，例如<code>(3, &quot;hello&quot;, &#39;x&#39;)</code>的类型是<code>int * string * char</code>。</p>
 <p>在Ocaml中实现一个C中的struct还有另外一种稍显复杂的方法，就是使用<strong>记录（record）</strong>。你可以像C的结构一样在记录中为元素命名。你不能在组元中命名元素，而是要记住它们出现的顺序。下面是和之前的C结构等价的一个记录：</p>
 <p>type pair_of_ints = { a : int; b : int };;</p>
 <p>它定义了记录的类型，然后<em>构造</em>一个该类型的对象：</p>
-<pre><code>{ a=3; b=5 }</code></pre><p>请注意在类型定义中使用&#39;:&#39;，在构造对象时使用&#39;=&#39;。</p>
+<pre><code>{ a=3; b=5 }</code></pre><p>请注意在类型定义中使用&quot;:&quot;，在构造对象时使用&quot;=&quot;。</p>
 <p>下面是在toplevel中输入一些例子的输出：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">pair_of_ints</span> = { a : int; b : int }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type pair_of_ints = { a : int; b : int; }
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">{a=3; b=5}</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : pair_of_ints = {a = 3; b = 5}
@@ -225,7 +225,7 @@ English vocabulary）。他们可以是任何大写字母开头的单词。如�
 <pre><code class="ocaml">Nothing
 Int 3
 Pair (4, 5)
-String 'hello'
+String <span class="string">&quot;hello&quot;</span>
 ...</code></pre>
 
 <p>这些表达式的类型都是<code>foo</code>。</p>
@@ -255,7 +255,7 @@ Tree (Tree (Leaf 3, Leaf 4), Tree (Tree (Leaf 3, Leaf 4), Leaf 5))</code></pre>
 
 <p>这是一个通用的形式。用来存储整型的树是<code>int binary_tree</code>。同样我们可以定义<code>string binary_tree</code>。
 下面一个例子中，类型推导会自动为我们推导出叶节点的类型：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="string">&quot;hello&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string binary_tree = Leaf &quot;hello&quot;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float binary_tree = Leaf 3.
 </span></code></pre>
 
@@ -279,8 +279,8 @@ Tree (Tree (Leaf 3, Leaf 4), Tree (Tree (Leaf 3, Leaf 4), Leaf 5))</code></pre>
 <pre class="text"><code class="text">OCaml 名字     类型定义的例子                    用法
 
 链表            int list                       [1; 2; 3]
-tuple          int * string                   (3, &#39;hello&#39;)
-record         type pair =                    { a = 3; b = &#39;hello&#39; }
+tuple          int * string                   (3, &quot;hello&quot;)
+record         type pair =                    { a = 3; b = &quot;hello&quot; }
                  { a: int; b: string }
 变体            type foo =
                  | Int of int                 Int 3
@@ -304,7 +304,7 @@ record         type pair =                    { a = 3; b = &#39;hello&#39; }
     | Minus <span class="keyword">of</span> expr * expr       <span class="comment">(* means a - b *)</span>
     | Times <span class="keyword">of</span> expr * expr       <span class="comment">(* means a * b *)</span>
     | Divide <span class="keyword">of</span> expr * expr      <span class="comment">(* means a / b *)</span>
-    | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+    | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;n&quot;</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
     Plus of expr * expr
   | Minus of expr * expr
   | Times of expr * expr
@@ -313,33 +313,32 @@ record         type pair =                    { a = 3; b = &#39;hello&#39; }
 </span></code></pre>
 
 <p>这个表达式 <code>n * (x + y)</code> 可以写成：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string">&quot;n&quot;</span>, Plus (Value <span class="string">&quot;x&quot;</span>, Value <span class="string">&quot;y&quot;</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : expr = Times (Value &quot;n&quot;, Plus (Value &quot;x&quot;, Value &quot;y&quot;))
 </span></code></pre>
 
 <p>我们还需要一个函数来把
-<code>Times (Value &#39;n&#39;, Plus (Value &#39;x&#39;, Value &#39;y&#39;))</code> 打印成
+<code>Times (Value &quot;n&quot;, Plus (Value &quot;x&quot;, Value &quot;y&quot;))</code> 打印成
 <code>n * (x + y)</code>。下面我将写两个函数，一个会把表达式转变成可读的字符串，而一个将其打印出来
 （原因是我可以把字符串写到文件而不局限于标准输出）。</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
     <span class="keyword">match</span> e <span class="keyword">with</span>
     | Plus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; + &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
     | Minus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; - &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
     | Times (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; * &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
     | Divide (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
-    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; / &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val to_string : expr -&gt; string = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_expr</span> <span class="ocaml-variable">e </span>=
-    print_endline (<span class="ocaml-error-loc">to_string</span> e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value to_string
+    print_endline (to_string e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_expr : expr -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>（提示：<code>^</code>操作符会连接两个字符串。）</p>
 <p>下面是这个打印函数的使用：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span> (Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
-Hint: Did you mean print_char?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_expr (Times (Value <span class="string">&quot;n&quot;</span>, Plus (Value <span class="string">&quot;x&quot;</span>, Value <span class="string">&quot;y&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">(n * (x + y))
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>模式匹配的通用形式是：</p>
@@ -370,8 +369,8 @@ Hint: Did you mean print_char?
 </span></code></pre>
 
 <p>让我们实际操作一下：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span>(multiply_out(Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
-Hint: Did you mean print_char?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_expr(multiply_out(Times (Value <span class="string">&quot;n&quot;</span>, Plus (Value <span class="string">&quot;x&quot;</span>, Value <span class="string">&quot;y&quot;</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">((n * x) + (n * y))
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p><code>multiply_out</code>函数是怎么工作的呢？关键在于前两个模式。
@@ -390,9 +389,8 @@ Hint: Did you mean print_char?
     | Plus (Times (e1, e2), Times (e3, e4)) when e2 = e4 -&gt;
        Times (Plus (e1, e3), e4)
     | e -&gt; e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val factorize : expr -&gt; expr = &lt;fun&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Value <span class="string">'x'</span>),
-                   Times (Value <span class="string">'n'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string">&quot;n&quot;</span>, Value <span class="string">&quot;x&quot;</span>),
+                   Times (Value <span class="string">&quot;n&quot;</span>, Value <span class="string">&quot;y&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : expr = Times (Value &quot;n&quot;, Plus (Value &quot;x&quot;, Value &quot;y&quot;))
 </span></code></pre>
 
 <p>这个<code>factorize</code>函数有其他一些特性。你可以加上<strong>guard</strong>到每个模式匹配上。一个guard
@@ -410,7 +408,7 @@ Hint: Did you mean print_char?
             | Times <span class="keyword">of</span> expr * expr     <span class="comment">(* means a * b *)</span>
             | Divide <span class="keyword">of</span> expr * expr    <span class="comment">(* means a / b *)</span>
             | Product <span class="keyword">of</span> expr list     <span class="comment">(* means a * b * c * ... *)</span>
-            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;n&quot;</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
     Plus of expr * expr
   | Minus of expr * expr
   | Times of expr * expr
@@ -421,16 +419,19 @@ Hint: Did you mean print_char?
 
 <p>然后再重新编译<code>to_string</code>，Ocaml会报错：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
-    <span class="keyword">match</span> e <span class="keyword">with</span>
+    <span class="keyword"><span class="ocaml-error-loc">match</span></span><span class="ocaml-error-loc"> e </span><span class="keyword"><span class="ocaml-error-loc">with</span></span><span class="ocaml-error-loc">
     | Plus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; + &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
     | Minus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; - &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
     | Times (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; * &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
     | Divide (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
-    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; / &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
+    | Value v -&gt; v</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+Product _
+</span>val to_string : expr -&gt; string = &lt;fun&gt;
 </span></code></pre>
 
 <p>如你所见，编译器会告诉你<code>Product</code>没有被处理。</p>

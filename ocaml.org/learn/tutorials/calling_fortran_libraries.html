@@ -226,7 +226,7 @@ required to provide the implementations of the built in fortran
 functions that are used.</p>
 <h3 id="Step-4-Now-to-OCaml">Step 4: Now to OCaml</h3><p>Now in an OCaml file (gtd6.ml) we have to define the external reference
 to the function and a function to call it.</p>
-<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">temp</span>&nbsp;: int -&gt; float -&gt; float -&gt; float -&gt; float -&gt; float = 'gtd6_t'
+<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">temp</span>&nbsp;: int -&gt; float -&gt; float -&gt; float -&gt; float -&gt; float = <span class="string">&quot;gtd6_t&quot;</span>
 
 <span class="governing">let</span> () =
   print_double (temp 1 2.0 3.0 4.0 5.0);

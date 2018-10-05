@@ -180,35 +180,38 @@
 </span></code></pre>
 
 <p>然后再往里面加数据:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>fred<span class="string">' '</span>sugarplums' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;fred&quot;</span> <span class="string">&quot;sugarplums&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p><code>m</code>是一个全新的映射，因此前一个<code>m</code>已经被隐藏掉。这个<code>m</code>比前一个多了用户
-&#39;fred&#39; 和他的密码 &#39;sugarplums&#39;。有一点很值得指出的是，当我们加入字符串 &#39;sugarplums&#39; 
+&quot;fred&quot; 和他的密码 &quot;sugarplums&quot;。有一点很值得指出的是，当我们加入字符串 &quot;sugarplums&quot; 
 的时候，我们已经固定了映射的目标类型。这也就是说，我们的模块<code>MyUsers</code>成为了一个<em>只能</em>从字符串到字符串
 的映射。如果我们想插入一个整数作为键还是值，都必须创建一个新的映射。</p>
 <p>让我们加入更多的数据。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>tom<span class="string">' '</span>ilovelucy' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>mark<span class="string">' '</span>ocamlrules' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>pete<span class="string">' '</span>linux' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;tom&quot;</span> <span class="string">&quot;ilovelucy&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;mark&quot;</span> <span class="string">&quot;ocamlrules&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;pete&quot;</span> <span class="string">&quot;linux&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>但是我们也得看得到里面的数据啊？一个函数足以完成这个任务：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_users</span> <span class="ocaml-variable">key password </span>=
-    print_string(key ^ <span class="string"><span class="ocaml-error-loc">' '</span></span><span class="ocaml-error-loc"></span> ^ password ^ '\n')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+    print_string(key ^ <span class="string">&quot; &quot;</span> ^ password ^ <span class="string">&quot;\n&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_users : string -&gt; string -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>通过传入两个字符串到该函数，就能在屏幕很好地打印出键和密码，并且换行。然后我们得把这个函数
 应用到映射的每对键值对上：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.iter <span class="ocaml-error-loc">print_users</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_users
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.iter print_users m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">fred sugarplums
+mark ocamlrules
+pete linux
+tom ilovelucy
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>当然，有时候我们只想找到(find)某个用户的密码：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.find <span class="ocaml-error-loc">'</span>fred' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.find <span class="string">&quot;fred&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;sugarplums&quot;
 </span></code></pre>
 
-<p>这个调用会很迅速地返回Fred的密码: &#39;sugarplums&#39;。</p>
+<p>这个调用会很迅速地返回Fred的密码: &quot;sugarplums&quot;。</p>
 
       </div>
     </div>

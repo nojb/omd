@@ -194,7 +194,7 @@ Basile Starynkevitch, Toby Moth, Pierre Lescanne.</p>
 <h2 id="General-guidelines-to-write-programs">General guidelines to write programs</h2><h3 id="Be-simple-and-readable">Be simple and readable</h3><p>The time you spend typing the programs is negligible compared to the
 time spent reading them. That&#39;s the reason why you save a lot of time if
 you work hard to optimize readability.</p>
-<p>All the time you are &#39;wasting&#39; to get a simpler program today, will
+<p>All the time you are &quot;wasting&quot; to get a simpler program today, will
 return a hundred times in the future during the uncountably many
 modifications and readings of the program (starting with the first
 debugging).</p>
@@ -282,8 +282,8 @@ plus an indication of string continuation at the end of each line (a <code>\</co
 character at the end of the line that omits white spaces on the
 beginning of next line):</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">universal_declaration</span> =
-  '-1- Programs are born <span class="governing">and</span> remain free <span class="governing">and</span> equal under the law;\n\
-   distinctions can only be based on the common good.' <span class="governing">in</span>
+  <span class="string">&quot;-1- Programs are born <span class="governing">and</span> remain free <span class="governing">and</span> equal under the law;\n\
+   distinctions can only be based on the common good.&quot;</span> <span class="governing">in</span>
   ...</code></pre>
 
 <h2 id="Indentation-of-programs">Indentation of programs</h2><blockquote><p><strong>Landin&#39;s pseudo law</strong>: Treat the indentation of your programs as if
@@ -546,7 +546,7 @@ construct:</p>
 
 <span class="keyword">try</span> f x <span class="keyword">with</span>
 | Not_found -&gt; ...
-| Failure 'not yet implemented' -&gt; ...</code></pre>
+| Failure <span class="string">&quot;not yet implemented&quot;</span> -&gt; ...</code></pre>
 
 <p>Put the keyword <code>with</code> at the end of the line. If the preceding
 expression extends beyond one line, put <code>with</code> on a line by itself:</p>
@@ -555,7 +555,7 @@ expression extends beyond one line, put <code>with</code> on a line by itself:</
   <span class="keyword">if</span> ...
 <span class="keyword">with</span>
 | Not_found -&gt; ...
-| Failure 'not yet implemented' -&gt; ...</code></pre>
+| Failure <span class="string">&quot;not yet implemented&quot;</span> -&gt; ...</code></pre>
 
 <blockquote><p><strong>Justification</strong>: The keyword <code>with</code>, on a line by itself shows that
 the program enters the pattern matching part of the construct.</p>
@@ -793,10 +793,10 @@ information of interest;</p>
 *)</span>
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">print_lambda</span> <span class="ocaml-variable">lam </span>=
   <span class="keyword">match</span> lam <span class="keyword">with</span>
-  | Var s -&gt; printf '%s' s
-  | Abs l -&gt; printf '\\ %a' print_lambda l
+  | Var s -&gt; printf <span class="string">&quot;%s&quot;</span> s
+  | Abs l -&gt; printf <span class="string">&quot;\\ %a&quot;</span> print_lambda l
   | App (l1, l2) -&gt;
-     printf '(%a %a)' print_lambda l1 print_lambda l2</code></pre>
+     printf <span class="string">&quot;(%a %a)&quot;</span> print_lambda l1 print_lambda l2</code></pre>
 
 <h4 id="Usage-in-module-interface">Usage in module interface</h4><p>The function&#39;s usage must appear in the interface of the module which
 exports it, not in the program which implements it. Choose comments as
@@ -935,11 +935,11 @@ printing function, and this could be perfectly silent, since many of
 leads to subtle bugs in the display, that are difficult to trace. For
 instance:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">() </span>=
-  <span class="ocaml-module">Format</span>.print_string 'Hello World!'; print_newline ()</code></pre>
+  <span class="ocaml-module">Format</span>.print_string <span class="string">&quot;Hello World!&quot;</span>; print_newline ()</code></pre>
 
 <p>is bogus since it does not call <code>Format.print_newline</code> to flush the
-pretty-printer queue and output <code>&#39;Hello World!&#39;</code>. Instead
-<code>&#39;Hello World!&#39;</code> is stuck into the pretty-printer queue, while
+pretty-printer queue and output <code>&quot;Hello World!&quot;</code>. Instead
+<code>&quot;Hello World!&quot;</code> is stuck into the pretty-printer queue, while
 <code>Pervasives.print_newline</code> outputs a carriage return on the standard
 output ... If <code>Format</code> is printing on a file and standard output is the
 terminal, the user will have a bad time finding that a carriage return
@@ -1398,12 +1398,12 @@ x + y</code></pre>
  of these methods. For example:</p>
 </li></ul>
 
-<pre><code class="ocaml">(<span class="keyword">fun</span> u -&gt; print_string 'world'; print_string u)
-  (<span class="governing">let </span><span class="ocaml-variable">temp</span> = print_string 'Hello'; <span class="string">'!'</span> <span class="governing">in</span>
-   ((<span class="keyword">fun</span> x -&gt; print_string x; flush stdout) <span class="string">' '</span>;
+<pre><code class="ocaml">(<span class="keyword">fun</span> u -&gt; print_string <span class="string">&quot;world&quot;</span>; print_string u)
+  (<span class="governing">let </span><span class="ocaml-variable">temp</span> = print_string <span class="string">&quot;Hello&quot;</span>; <span class="string">&quot;!&quot;</span> <span class="governing">in</span>
+   ((<span class="keyword">fun</span> x -&gt; print_string x; flush stdout) <span class="string">&quot; &quot;</span>;
     temp));;</code></pre>
 
-<p>If you naturally write the program <code>print_string &#39;Hello world!&#39;</code> in this
+<p>If you naturally write the program <code>print_string &quot;Hello world!&quot;</code> in this
 way, you can without a doubt submit your work to the <a href="mailto:Pierre.Weis@inria.fr">Obfuscated OCaml
 Contest</a>.</p>
 <h2 id="Managing-program-development">Managing program development</h2><p>We give here tips from veteran OCaml programmers, which have served in

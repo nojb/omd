@@ -277,7 +277,7 @@ native Windows ports of OCaml (but it runs under the Cygwin port).</p>
 <span class="governing">let</span> <span class="ocaml-function">add_address</span> <span class="ocaml-variable">name address </span>= l := (name, address) :: ! l
 
 <span class="governing">let</span> () =
-  add_address 'IRIA<span class="string">' '</span>Rocquencourt'<span class="ocaml-prompt">;;</span><br/>  print_string (find_address 'INRIA'); print_newline ();;</code></pre>
+  add_address <span class="string">&quot;IRIA&quot;</span> <span class="string">&quot;Rocquencourt&quot;</span><span class="ocaml-prompt">;;</span><br/>  print_string (find_address <span class="string">&quot;INRIA&quot;</span>); print_newline ();;</code></pre>
 
 <p>At runtime, the program raises an uncaught exception <code>Not_found</code>.
 Suppose we want to find where and why this exception has been raised, we
@@ -320,7 +320,7 @@ that is :</p>
 
 <p>The function that calls it is in module <code>Uncaught</code>, file <code>uncaught.ml</code>
 char 221:</p>
-<pre><code class="ocaml">print_string (find_address 'INRIA'); print_newline ()<span class="ocaml-prompt">;;</span><br/>                                  ^</code></pre>
+<pre><code class="ocaml">print_string (find_address <span class="string">&quot;INRIA&quot;</span>); print_newline ()<span class="ocaml-prompt">;;</span><br/>                                  ^</code></pre>
 
 <p>To sum up: if you&#39;re developping a program you can compile it with the
 <code>-g</code> option, to be ready to debug the program if necessary. Hence, to
@@ -350,7 +350,7 @@ beginning (<code>(g)oto 0</code> then <code>(r)un</code>):</p>
   (ocd) r
   Time : 6 - pc : 19112 - module Uncaught
   Breakpoint : 1
-  9 add 'IRIA<span class="string">' '</span>Rocquencourt'&lt;|a|&gt;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  9 add <span class="string">&quot;IRIA&quot;</span> <span class="string">&quot;Rocquencourt&quot;</span>&lt;|a|&gt;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
 </span></code></pre>
 
 <p>Then, we can step and find what happens when <code>find_address</code> is about to
@@ -360,13 +360,13 @@ Time : 7 - pc : 19012 - module Uncaught
 5 let find_address name = &lt;|b|&gt;List.assoc name !l;;
 
 (ocd) p name
-name : string = &#39;INRIA&#39;
+name : string = &quot;INRIA&quot;
 
 (ocd) p !l
-$1 : (string * string) list = [&#39;IRIA&#39;, &#39;Rocquencourt&#39;]
+$1 : (string * string) list = [&quot;IRIA&quot;, &quot;Rocquencourt&quot;]
 (ocd)</code></pre>
 
-<p>Now we can guess why <code>List.assoc</code> will fail to find &#39;INRIA&#39; in the
+<p>Now we can guess why <code>List.assoc</code> will fail to find &quot;INRIA&quot; in the
 list...</p>
 <h3 id="Using-the-debugger-under-X-Emacs">Using the debugger under (X)Emacs</h3>
 

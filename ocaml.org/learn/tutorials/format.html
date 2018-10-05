@@ -200,7 +200,7 @@ so skip the rest at first reading).</p>
 margin (that indicates no more room). We represent any char as a <code>-</code>
 sign; characters <code>[</code> and <code>]</code> indicates the opening and closing of a box
 and <code>b</code> stands for a break hint given to the pretty-printing engine.</p>
-<p>The output &#39;--b--b--&#39; is displayed like this (the b symbol stands for
+<p>The output &quot;--b--b--&quot; is displayed like this (the b symbol stands for
 the value of the break that is explained below):</p>
 <ul><li><p>within a “h” box:</p>
 <pre class="text"><code class="text">--b--b--</code></pre></li><li><p>within a “v” box:</p>
@@ -208,18 +208,18 @@ the value of the break that is explained below):</p>
 --b
 --</code></pre></li><li><p>within a “hv” box:</p>
 <p>If there is enough room to print the box on the line:</p>
-<pre class="text"><code class="text">--b--b--</code></pre><p>But &#39;---b---b---&#39; that cannot fit on the line is written</p>
+<pre class="text"><code class="text">--b--b--</code></pre><p>But &quot;---b---b---&quot; that cannot fit on the line is written</p>
 <pre class="text"><code class="text">---b
 ---b
 ---</code></pre></li><li><p>within a “hov” box:</p>
 <p>If there is enough room to print the box on the line:</p>
-<pre class="text"><code class="text">--b--b--</code></pre><p>But if &#39;---b---b---&#39; cannot fit on the line, it is written as</p>
+<pre class="text"><code class="text">--b--b--</code></pre><p>But if &quot;---b---b---&quot; cannot fit on the line, it is written as</p>
 <pre class="text"><code class="text">---b---b
 ---</code></pre><p>The first break hint does not lead to a new line, since there is
 enough room on the line. The second one leads to a new line since
 there is no more room to print the material following it. If the
 room left on the line were even shorter, the first break hint may
-lead to a new line and &#39;---b---b---&#39; is written as:</p>
+lead to a new line and &quot;---b---b---&quot; is written as:</p>
 <pre class="text"><code class="text">---b
 ---b
 ---</code></pre></li></ul>
@@ -230,7 +230,7 @@ the separation between printing items). You output a break hint using
 <code>print_break sp indent</code>, and this <code>sp</code> integer is used to print “sp”
 spaces. Thus <code>print_break sp ...</code> may be thought as: print <code>sp</code> spaces
 or output a new line.</p>
-<p>For instance, if b is <code>break 1 0</code> in the output &#39;--b--b--&#39;, we get</p>
+<p>For instance, if b is <code>break 1 0</code> in the output &quot;--b--b--&quot;, we get</p>
 <ul><li><p>within a “h” box:</p>
 <pre class="text"><code class="text">-- -- --</code></pre></li><li><p>within a “v” box:</p>
 <pre class="text"><code class="text">--
@@ -242,7 +242,7 @@ or output a new line.</p>
 --</code></pre></li><li><p>and similarly for “hov” boxes.</p>
 </li></ul>
 
-<p>Generally speaking, a printing routine using &#39;format&#39;, should not
+<p>Generally speaking, a printing routine using &quot;format&quot;, should not
 directly output white spaces: the routine should use break hints
 instead. (For instance <code>print_space ()</code> that is a convenient
 abbreviation for <code>print_break 1 0</code> and outputs a single space or break
@@ -252,7 +252,7 @@ the line.)</p>
  indentation added to each new line opened within that box.<br/>
  For instance: <code>open_hovbox 1</code> opens a “hov” box with new lines
  indented 1 more than the initial indentation of the box. With output
- &#39;---[--b--b--b--&#39;, we get:</p>
+ &quot;---[--b--b--b--&quot;, we get:</p>
 <pre class="text"><code class="text">---[--b--b
      --b--</code></pre><p>with <code>open_hovbox 2</code>, we get</p>
 <pre class="text"><code class="text">---[--b--b
@@ -267,7 +267,7 @@ box. Last “screen” stands for:</p>
  of the box where the break occurs.<br/>
  For instance, if <code>[</code> stands for the opening of a “hov” box with 1
  as extra indentation (as obtained by <code>open_hovbox 1</code>), and b is
- <code>print_break       1       2</code>, then from output &#39;---[--b--b--b--&#39;,
+ <code>print_break       1       2</code>, then from output &quot;---[--b--b--b--&quot;,
  we get:</p>
 <pre class="text"><code class="text">---[-- --
       --
@@ -324,7 +324,7 @@ is printed like this:</p>
  definition, more precisely a <code>let rec ident =     expression</code> value
  definition. You will probably treat the first three spaces as
  “unbreakable spaces” and write them directly in the string constants
- for keywords, and print <code>&#39;let rec &#39;</code> before the identifier, and
+ for keywords, and print <code>&quot;let rec &quot;</code> before the identifier, and
  similarly write <code>=</code> to get an unbreakable space after the
  identifier; in contrast, the space after the <code>=</code> sign is certainly a
  break hint, since breaking the line after <code>=</code> is a usual (and
@@ -369,7 +369,8 @@ be called from within a <code>printf</code> format string. For instance</p>
 </li></ul>
 
 <p>For instance</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Format</span>.printf <span class="ocaml-error-loc">'</span>@[&lt;1&gt;%s@ =@ %d@ %s@]@.<span class="string">' '</span>Prix TTC' 100 'Euros'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Format</span>.printf <span class="string">&quot;@[&lt;1&gt;%s@ =@ %d@ %s@]@.&quot;</span> <span class="string">&quot;Prix TTC&quot;</span> 100 <span class="string">&quot;Euros&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Prix TTC = 100 Euros
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h2 id="A-concrete-example">A concrete example</h2>
@@ -396,7 +397,7 @@ the <a href="../description.html#Interactivity">interactive system</a>):</p>
 val kwd : string -&gt; unit = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">print_exp0</span> = <span class="keyword">function</span>
     | Var s -&gt;  ident s
-    | lam -&gt; open_hovbox 1; kwd <span class="string"><span class="ocaml-error-loc">'('</span></span><span class="ocaml-error-loc"></span>; print_lambda lam; kwd <span class="string">')'</span>; close_box ()
+    | lam -&gt; open_hovbox 1; kwd <span class="string">&quot;(&quot;</span>; print_lambda lam; kwd <span class="string">&quot;)&quot;</span>; close_box ()
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">print_app</span> = <span class="keyword">function</span>
     | e -&gt; open_hovbox 2; print_other_applications e; close_box ()
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">print_other_applications</span> <span class="ocaml-variable">f </span>=
@@ -406,14 +407,16 @@ val kwd : string -&gt; unit = &lt;fun&gt;
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">print_lambda</span> = <span class="keyword">function</span>
     | Lambda (s, lam) -&gt;
         open_hovbox 1;
-        kwd '\\'; ident s; kwd <span class="string">'.'</span>; print_space(); print_lambda lam;
+        kwd <span class="string">&quot;\\&quot;</span>; ident s; kwd <span class="string">&quot;.&quot;</span>; print_space(); print_lambda lam;
         close_box()
-    | e -&gt; print_app e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+    | e -&gt; print_app e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_exp0 : lambda -&gt; unit = &lt;fun&gt;
+val print_app : lambda -&gt; unit = &lt;fun&gt;
+val print_other_applications : lambda -&gt; unit = &lt;fun&gt;
+val print_lambda : lambda -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>In Caml Light, replace the first line by:</p>
-<pre><code class="ocaml">#open 'format';;</code></pre>
+<pre><code class="ocaml">#open <span class="string">&quot;format&quot;</span>;;</code></pre>
 
 <h3 id="Most-general-pretty-printing-using-fprintf">Most general pretty-printing: using <code>fprintf</code></h3>
 
@@ -430,28 +433,33 @@ function (these user&#39;s supplied functions also have a formatter as first
 argument).</p>
 <p>Using <code>fprintf</code>, the lambda-terms printing routines can be written as
 follows:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Format</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">ident</span> <span class="ocaml-variable">ppf s </span>= fprintf ppf <span class="ocaml-error-loc">'</span>%s' s
-  <span class="governing">let</span> <span class="ocaml-function">kwd</span> <span class="ocaml-variable">ppf s </span>= fprintf ppf '%s' s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Format</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">ident</span> <span class="ocaml-variable">ppf s </span>= fprintf ppf <span class="string">&quot;%s&quot;</span> s
+  <span class="governing">let</span> <span class="ocaml-function">kwd</span> <span class="ocaml-variable">ppf s </span>= fprintf ppf <span class="string">&quot;%s&quot;</span> s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val ident : Format.formatter -&gt; string -&gt; unit = &lt;fun&gt;
+val kwd : Format.formatter -&gt; string -&gt; unit = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">pr_exp0</span> <span class="ocaml-variable">ppf </span>= <span class="keyword">function</span>
-    | Var s -&gt; fprintf ppf <span class="ocaml-error-loc">'</span>%a' ident s
-    | lam -&gt; fprintf ppf '@[&lt;1&gt;(%a)@]' pr_lambda lam
+    | Var s -&gt; fprintf ppf <span class="string">&quot;%a&quot;</span> ident s
+    | lam -&gt; fprintf ppf <span class="string">&quot;@[&lt;1&gt;(%a)@]&quot;</span> pr_lambda lam
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">pr_app</span> <span class="ocaml-variable">ppf e </span>=
-    fprintf ppf '@[&lt;2&gt;%a@]' pr_other_applications e
+    fprintf ppf <span class="string">&quot;@[&lt;2&gt;%a@]&quot;</span> pr_other_applications e
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">pr_other_applications</span> <span class="ocaml-variable">ppf f </span>=
     <span class="keyword">match</span> f <span class="keyword">with</span>
-    | Apply (f, arg) -&gt; fprintf ppf '%a@ %a' pr_app f pr_exp0 arg
+    | Apply (f, arg) -&gt; fprintf ppf <span class="string">&quot;%a@ %a&quot;</span> pr_app f pr_exp0 arg
     | f -&gt; pr_exp0 ppf f
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">pr_lambda</span> <span class="ocaml-variable">ppf </span>= <span class="keyword">function</span>
     | Lambda (s, lam) -&gt;
-       fprintf ppf '@[&lt;1&gt;%a%a%a@ %a@]'
-               kwd '\\' ident s kwd <span class="string">'.'</span> pr_lambda lam
-    | e -&gt; pr_app ppf e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       fprintf ppf <span class="string">&quot;@[&lt;1&gt;%a%a%a@ %a@]&quot;</span>
+               kwd <span class="string">&quot;\\&quot;</span> ident s kwd <span class="string">&quot;.&quot;</span> pr_lambda lam
+    | e -&gt; pr_app ppf e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val pr_exp0 : Format.formatter -&gt; lambda -&gt; unit = &lt;fun&gt;
+val pr_app : Format.formatter -&gt; lambda -&gt; unit = &lt;fun&gt;
+val pr_other_applications : Format.formatter -&gt; lambda -&gt; unit = &lt;fun&gt;
+val pr_lambda : Format.formatter -&gt; lambda -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>Given those general printing routines, procedures to print to <code>stdout</code>
 or <code>stderr</code> is just a matter of partial application:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">print_lambda</span> = <span class="ocaml-error-loc">pr_lambda</span> std_formatter
-  <span class="governing">let </span><span class="ocaml-variable">eprint_lambda</span> = pr_lambda err_formatter</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value pr_lambda
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">print_lambda</span> = pr_lambda std_formatter
+  <span class="governing">let </span><span class="ocaml-variable">eprint_lambda</span> = pr_lambda err_formatter</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_lambda : lambda -&gt; unit = &lt;fun&gt;
+val eprint_lambda : lambda -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
       </div>

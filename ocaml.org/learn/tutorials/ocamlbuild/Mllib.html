@@ -8,7 +8,7 @@
     <link href="Mllib.html" rel="alternate" hreflang="en"/>
 
     
-    <title> &#8211; OCaml</title>
+    <title>Mllib &#8211; OCaml</title>
     <link href="../../../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
@@ -40,7 +40,7 @@
           <a href="../../../" class="brand"><img src="../../../img/colour-logo-white.svg" class="svg" alt="OCaml"/><img src="../../../img/colour-logo-white.png" class="png" alt="OCaml"/></a>
           <div id="menu-items" class="nav-collapse collapse">
                         <ul class="nav">
-              <li><a href="../../../learn/">Learn</a></li>
+              <li class="active"><a href="../../../learn/">Learn</a></li>
               <li><a href="../../../docs/">Documentation</a></li>
               <li><a href="https://opam.ocaml.org/">Packages</a></li>
               <li><a href="../../../community/">Community</a></li>
@@ -122,6 +122,20 @@
 
       <div id="main-contents" class="content">
         
+
+<h1 id="Mllib">Mllib</h1><p>A .cma or .cmxa file is an archive of .cmo or .cmx files. It can contain
+any list of .cmo or .cmx, with or without their dependencies. This is
+needed because &lt;Ocamlbuild&gt; cannot guess which files you want in your
+library. To make &lt;Ocamlbuild&gt; build .cma or .cmxa files, simply write a
+.mllib file with the list of Modules to link. For instance: \$ cat
+parse.mllib</p>
+<p><code>Parser</code><br/><code>Lexer</code>
+<code>Now, if you call </code>[`Ocamlbuild`]<code> using the following command:</code><br/><code>ocamlbuild parse.cma</code>
+<code>It will generate a parse.cma file that includes the Parser and Lexer modules (from parser.cmo and lexer.cmo).  The parse.cma file will be in the &quot;_build/&quot; directory and a link will be created to it from your main directory.</code></p>
+<p>If you want to use your library inside your project with one single call
+to &lt;Ocamlbuild&gt;, you have to make a plugin. See <a href="Using_internal_libraries.html">using internal
+libraries</a>.</p>
+
       </div>
     </div>
   </div>

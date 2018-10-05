@@ -234,7 +234,7 @@ their MD5 checksums.</p>
 
 <p>This is the
 <a href="http://caml.inria.fr/pub/distrib/ocaml-4.06/notes/Changes">changelog</a>.</p>
-<p>(Changes that can break existing programs are marked with a &#39;*&#39;)</p>
+<p>(Changes that can break existing programs are marked with a &quot;*&quot;)</p>
 <h3 id="Language-features">Language features:</h3>
 
 <ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6271">MPR#6271</a>,
@@ -342,7 +342,7 @@ Gabriel Scherer)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7515">MPR#7515</a>,
  <a href="https://github.com/ocaml/ocaml/pull/1147">GPR#1147</a>:
  <code>Arg.align</code> now optionally uses the tab
- character <code>&#39;\t&#39;</code> to separate the &#39;unaligned&#39; and &#39;aligned&#39; parts of
+ character <code>&#39;\t&#39;</code> to separate the &quot;unaligned&quot; and &quot;aligned&quot; parts of
  the documentation string. If tab is not present, then space is used
  as a fallback. Allows to have spaces in the unaligned part, which is
  useful for Tuple options.  (Nicolas Ojeda Bar, review by Alain
@@ -390,7 +390,7 @@ Gabriel Scherer)</p>
  like in the other ports.<br/> (Xavier Leroy)</p>
 </li><li><p><a href="https://github.com/ocaml/ocaml/pull/1314">GPR#1314</a>:
  Format, use the optional width information
- when formatting a boolean: <code>&#39;%8B&#39;, &#39;%-8B&#39;</code> for example<br/> (Xavier Clerc, review by Gabriel Scherer)</p>
+ when formatting a boolean: <code>&quot;%8B&quot;, &quot;%-8B&quot;</code> for example<br/> (Xavier Clerc, review by Gabriel Scherer)</p>
 </li><li><p><a href="https://github.com/ocaml/ocaml/commit/c9cc0f25138ce58e4f4e68c4219afe33e2a9d034">c9cc0f25138ce58e4f4e68c4219afe33e2a9d034</a>:
  Resurrect tabulation boxes
  in module Format. Rewrite/extend documentation of tabulation boxes.<br/> (Pierre Weis)</p>
@@ -423,7 +423,7 @@ Gabriel Scherer)</p>
 <ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7361">MPR#7361</a>, <a href="https://github.com/ocaml/ocaml/pull/1248">GPR#1248</a>: support <code>ocaml.warning</code> in all attribute
  contexts, and arrange so that <code>ocaml.ppwarning</code> is correctly scoped
  by surrounding <code>ocaml.warning</code> attributes.<br/> (Alain Frisch, review by Florian Angeletti and Thomas Refis)</p>
-</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7444">MPR#7444</a>, <a href="https://github.com/ocaml/ocaml/pull/1138">GPR#1138</a>: trigger deprecation warning when a &#39;deprecated&#39;
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7444">MPR#7444</a>, <a href="https://github.com/ocaml/ocaml/pull/1138">GPR#1138</a>: trigger deprecation warning when a &quot;deprecated&quot;
  attribute is hidden by signature coercion.<br/> (Alain Frisch, report by bmillwood, review by Leo White)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7472">MPR#7472</a>: ensure <code>.cmi</code> files are created atomically,
  to avoid corruption of <code>.cmi</code> files produced simultaneously by a run
@@ -439,8 +439,8 @@ Gabriel Scherer)</p>
 </li><li><p><a href="https://github.com/ocaml/ocaml/pull/896">GPR#896</a>: <code>-compat-32</code> is now taken into account when building
  <code>.cmo</code>/<code>.cma</code>.<br/> (Hugo Heuzard)</p>
 </li><li><p><a href="https://github.com/ocaml/ocaml/pull/948">GPR#948</a>: the compiler now reports warnings-as-errors by prefixing
- them with &#39;Error (warning ..):&#39;, instead of &#39;Warning ..:&#39; and
- a trailing &#39;Error: Some fatal warnings were triggered&#39; message.<br/> (Valentin Gatien-Baron, review by Alain Frisch)</p>
+ them with &quot;Error (warning ..):&quot;, instead of &quot;Warning ..:&quot; and
+ a trailing &quot;Error: Some fatal warnings were triggered&quot; message.<br/> (Valentin Gatien-Baron, review by Alain Frisch)</p>
 </li><li><p><a href="https://github.com/ocaml/ocaml/pull/1032">GPR#1032</a>: display the output of <code>-dtimings</code> as a hierarchy.<br/> (Valentin Gatien-Baron, review by Gabriel Scherer)</p>
 </li><li><p><a href="https://github.com/ocaml/ocaml/pull/1114">GPR#1114</a>, <a href="https://github.com/ocaml/ocaml/pull/1393">GPR#1393</a>, <a href="https://github.com/ocaml/ocaml/pull/1429">GPR#1429</a>: refine the (<code>ocamlc -config</code>)
  information on C compilers: the variables
@@ -627,8 +627,8 @@ Gabriel Scherer)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7254">MPR#7254</a>, <a href="https://github.com/ocaml/ocaml/pull/1096">GPR#1096</a>: Rudimentary documentation of ocamlnat.<br/> (Mark Shinwell)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7281">MPR#7281</a>, <a href="https://github.com/ocaml/ocaml/pull/1259">GPR#1259</a>: fix <code>.TH</code> macros in generated manpages.<br/> (Olaf Hering)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7507">MPR#7507</a>: Align the description of the printf conversion
- specification <code>&#39;%g&#39;</code> with the ISO C90 description.<br/> (Florian Angeletti, suggestion by Armaël Guéneau)</p>
-</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7551">MPR#7551</a>, <a href="https://github.com/ocaml/ocaml/pull/1194">GPR#1194</a> : make the final <code>&#39;;;&#39;</code> potentially optional in
+ specification <code>&quot;%g&quot;</code> with the ISO C90 description.<br/> (Florian Angeletti, suggestion by Armaël Guéneau)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7551">MPR#7551</a>, <a href="https://github.com/ocaml/ocaml/pull/1194">GPR#1194</a> : make the final <code>&quot;;;&quot;</code> potentially optional in
  <code>caml_example</code>.<br/> (Florian Angeletti, review and suggestion by Gabriel Scherer)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7588">MPR#7588</a>, <a href="https://github.com/ocaml/ocaml/pull/1291">GPR#1291</a>: make format documentation predictable.<br/> (Florian Angeletti, review by Gabriel Radanne)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7604">MPR#7604</a>: Minor Ephemeron documentation fixes.<br/> (Miod Vallat, review by Florian Angeletti)</p>
@@ -707,7 +707,7 @@ Gabriel Scherer)</p>
 
 <ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=5927">MPR#5927</a>: Type equality broken for conjunctive polymorphic variant
  tags.<br/> (Jacques Garrigue, report by Leo White)</p>
-</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6329">MPR#6329</a>, <a href="https://github.com/ocaml/ocaml/pull/1437">GPR#1437</a>: Introduce padding word before &#39;data_end&#39; symbols
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6329">MPR#6329</a>, <a href="https://github.com/ocaml/ocaml/pull/1437">GPR#1437</a>: Introduce padding word before &quot;data_end&quot; symbols
  to ensure page table tests work correctly on an immediately preceding
  block of zero size.<br/> (Mark Shinwell, review by Xavier Leroy)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=6587">MPR#6587</a>: only elide Pervasives from printed type paths in
@@ -737,7 +737,7 @@ Gabriel Scherer)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7563">MPR#7563</a>, <a href="https://github.com/ocaml/ocaml/pull/1210">GPR#1210</a>: code generation bug when a module alias and
  an extension constructor have the same name in the same module.<br/> (Gabriel Scherer, report by Manuel Fähndrich,
  review by Jacques Garrigue and Leo White)</p>
-</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7591">MPR#7591</a>, <a href="https://github.com/ocaml/ocaml/pull/1257">GPR#1257</a>: on x86-64, frame table is not 8-aligned.<br/> (Xavier Leroy, report by Mantis user &#39;voglerr&#39;, review by Gabriel Scherer)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7591">MPR#7591</a>, <a href="https://github.com/ocaml/ocaml/pull/1257">GPR#1257</a>: on x86-64, frame table is not 8-aligned.<br/> (Xavier Leroy, report by Mantis user &quot;voglerr&quot;, review by Gabriel Scherer)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7601">MPR#7601</a>, <a href="https://github.com/ocaml/ocaml/pull/1320">GPR#1320</a>: It seems like a hidden non-generalized type variable
  remains in some inferred signatures, which leads to strange errors.<br/> (Jacques Garrigue, report by Mandrikin)</p>
 </li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7609">MPR#7609</a>: use-after-free memory corruption if a program debugged

@@ -182,42 +182,45 @@
 </span></code></pre>
 
 <p>ふぅむ。空の写像はちょっとつまらないので、何かデータを加えよう。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>fred<span class="string">' '</span>sugarplums' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;fred&quot;</span> <span class="string">&quot;sugarplums&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
 </span></code></pre>
 
-<p>ここで &#39;<code>fred</code>&#39; と、 彼のパスワードである &#39;<code>sugarplums</code>&#39;
+<p>ここで &quot;<code>fred</code>&quot; と、 彼のパスワードである &quot;<code>sugarplums</code>&quot;
 をモジュールに加えた。 とても重要な点を指摘する。 一旦、文字列
-&#39;<code>sugarplums</code>&#39; を加えると写像の型が固定される。 つまりこれは <code>MyUsers</code>
+&quot;<code>sugarplums</code>&quot; を加えると写像の型が固定される。 つまりこれは <code>MyUsers</code>
 モジュールが文字列から文字列への写像であるということだ。
 もし文字列から整数への写像や整数から何かへの写像が欲しければ
 別の写像を作らないといけない。</p>
 <p>ついでにいくつか追加データを加えよう。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>tom<span class="string">' '</span>ilovelucy' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>mark<span class="string">' '</span>ocamlrules' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>pete<span class="string">' '</span>linux' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;tom&quot;</span> <span class="string">&quot;ilovelucy&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;mark&quot;</span> <span class="string">&quot;ocamlrules&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;pete&quot;</span> <span class="string">&quot;linux&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>写像のなかにいくつかデータがあるので、
 どこかでデータが見られると親切じゃないかな?
 簡単な表示関数を作ってみよう。</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_users</span> <span class="ocaml-variable">key password </span>=
-    print_string(key ^ <span class="string"><span class="ocaml-error-loc">' '</span></span><span class="ocaml-error-loc"></span> ^ password ^ '\n')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+    print_string(key ^ <span class="string">&quot; &quot;</span> ^ password ^ <span class="string">&quot;\n&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_users : string -&gt; string -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>ふたつの文字列、キーとパスワードをとって
 それらを最後の改行も込みにして表示してくれる関数である。
 これで必要なのは写像に適用する関数だ。 それはこんな感じになるだろう:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.iter <span class="ocaml-error-loc">print_users</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_users
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.iter print_users m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">fred sugarplums
+mark ocamlrules
+pete linux
+tom ilovelucy
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>だが写像にデータを置く理由は、
 データを素早く見つけ出したいからかもしれない。
 見つけ出しかたを実際に示す:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.find <span class="ocaml-error-loc">'</span>fred' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.find <span class="string">&quot;fred&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;sugarplums&quot;
 </span></code></pre>
 
-<p>これは素早く効率的にFredのパスワードである &#39;sugarplums&#39; を返す。</p>
+<p>これは素早く効率的にFredのパスワードである &quot;sugarplums&quot; を返す。</p>
 
       </div>
     </div>

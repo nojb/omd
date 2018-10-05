@@ -183,7 +183,7 @@ en argument une chaîne de caractères <code>s</code> et un nombre <code>n</code
 nouvelle chaîne de caractères qui contient l&#39;originale répétée <code>n</code> fois.</p>
 <p>Dans la plupart des languages dérivés du C, un appel de fonction
 ressemble à ça :</p>
-<pre class="C"><code class="C">repeated (&#39;hello&#39;, 3)  /* c&#39;est du code C */</code></pre>
+<pre class="C"><code class="C">repeated (&quot;hello&quot;, 3)  /* c&#39;est du code C */</code></pre>
 
 <p>Ca veut dire « appelle la fonction <code>repeated</code> avec deux arguments, le
 premier étant la chaîne de caractères hello et le second étant le nombre
@@ -191,12 +191,12 @@ premier étant la chaîne de caractères hello et le second étant le nombre
 <p>OCaml, tout comme d&#39;autres langages fonctionnels, écrit et parenthèse
 différemment les appels de fonctions, ce qui entraîne bien des erreurs
 au début. Voici le même appel de fonction en OCaml :</p>
-<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* c'est du code OCaml *)</span></code></pre>
+<pre><code class="ocaml">repeated <span class="string">&quot;hello&quot;</span> 3  <span class="comment">(* c'est du code OCaml *)</span></code></pre>
 
 <p>Notez-bien : <strong>pas</strong> de parenthèses, et <strong>pas</strong> de virgule entre les
 arguments.</p>
 <p>Maintenant ce qui est source de confusion est que
-<code>repeated (&#39;hello&#39;, 3)</code> <strong>a un sens</strong> particulier en OCaml. Cela
+<code>repeated (&quot;hello&quot;, 3)</code> <strong>a un sens</strong> particulier en OCaml. Cela
 signifie « appelle la fonction <code>repeated</code> avec UN argument, cet argument
 étant une structure représentant un couple d&#39;éléments ». Bien sûr ce
 serait ici une erreur puisque la fonction <code>repeated</code> attend 2 arguments
@@ -212,19 +212,19 @@ de caractère ainsi entrée. Nous voulons passer cette chaîne de
 caractères à la fonction <code>repeated</code>. Voici les versions C et OCaml :</p>
 <pre class="C"><code class="C">/* code C: */
 repeated (get_string_from_user
-           (&#39;Veuillez entrer une chaîne de caractères.&#39;), 3)</code></pre>
+           (&quot;Veuillez entrer une chaîne de caractères.&quot;), 3)</code></pre>
 <pre><code class="ocaml"><span class="comment">(* code OCaml: *)</span>
 repeated (get_string_from_user
-           'Veuillez entrer une cha&icirc;ne de caract&egrave;res.') 3</code></pre>
+           <span class="string">&quot;Veuillez entrer une cha&icirc;ne de caract&egrave;res.&quot;</span>) 3</code></pre>
 
 <p>Soyez attentif au parenthésage et à l&#39;absence de virgules. En général la
 règle est la suivante : « mettez des parenthèses autour de tout l&#39;appel
 de fonction - ne mettez pas de parenthèses autour des arguments passés à
 une fonction ». Voici quelques exemples supplémentaires :</p>
-<pre><code>f 5 (g &#39;hello&#39;) 3    (* f a 3 arguments, g a un argument *)
+<pre><code>f 5 (g &quot;hello&quot;) 3    (* f a 3 arguments, g a un argument *)
 f (g 3 4)            (* f a un argument, g a 2 arguments *)
 
-# repeated (&#39;hello&#39;, 3);;     (* OCaml va repérer l&#39;erreur *)
+# repeated (&quot;hello&quot;, 3);;     (* OCaml va repérer l&#39;erreur *)
 This expression has type string * int but is here used with type string</code></pre>
 
 <h2 id="D-finir-une-fonction">Définir une fonction</h2><p>Vous savez tous comment on définit une fonction (ou une méthode
@@ -340,7 +340,7 @@ il indique cette erreur :</p>
          int
 </span></code></pre>
 
-<p>Cela signifie &#39;ceci est un float, mais ici j&#39;attendais un int&#39;.</p>
+<p>Cela signifie &quot;ceci est un float, mais ici j&#39;attendais un int&quot;.</p>
 <p>Pour ajouter deux floats, il faut utiliser un opérateur différent, <code>+.</code>
 (notez le point qui suit le plus).</p>
 <p>OCaml ne convertit pas les ints en floats automatiquement, donc le code
@@ -440,7 +440,7 @@ donc normalement comme ceci :</p>
 <pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
 
 <p>où <code>&#39;a</code> est mis pour n&#39;importe quel type. Vous pouvez par exemple
-utiliser cette fonction comme ceci: <code>give_me_a_three &#39;foo&#39;</code>, ou comme
+utiliser cette fonction comme ceci: <code>give_me_a_three &quot;foo&quot;</code>, ou comme
 cela: <code>give_me_a_three 2.0</code>, et les deux sont tout-à-fait valides en
 OCaml.</p>
 <p>Pour le moment l&#39;utilité des fonctions polymorphes n&#39;est pas évidente,

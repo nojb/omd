@@ -143,21 +143,21 @@ named <code>myocamlbuild.ml</code> at the root of your project).</p>
     <span class="comment">(* Add our rules after the standard ones. *)</span>
   | After_rules -&gt;
      <span class="comment">(* Add pa_openin.cmo <span class="keyword">to</span> the ocaml pre-processor when use_opening is set *)</span>
-     flag ['ocaml'; 'pp'; 'use_openin'] (<span class="ocaml-module">A'pa_openin</span>.cmo');
+     flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;pp&quot;</span>; <span class="string">&quot;use_openin&quot;</span>] (A<span class="string">&quot;pa_openin.cmo&quot;</span>);
  
      <span class="comment">(* Running ocamldep on ocaml code that is tagged <span class="keyword">with</span> use_openin
         will require the cmo.  Note that you only need this
         declaration when the syntax extension is part <span class="keyword">of</span> the sources
         <span class="keyword">to</span> be compiled <span class="keyword">with</span> ocamlbuild. *)</span>
-     dep ['ocaml'; 'ocamldep'; 'use_openin'] ['pa_openin.cmo'];
+     dep [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;ocamldep&quot;</span>; <span class="string">&quot;use_openin&quot;</span>] [<span class="string">&quot;pa_openin.cmo&quot;</span>];
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
 
 <p>Then one can tag our files that use pa_openin:</p>
 <pre class="shell"><code class="shell">$ cat _tags
-&#39;bar.ml&#39;: camlp4o, use_openin
+&quot;bar.ml&quot;: camlp4o, use_openin
 &lt;foo/*.ml&gt; or &lt;baz/**/*.ml&gt;: camlp4r, use_openin
-&#39;pa_openin.ml&#39;: use_camlp4, camlp4of</code></pre>
+&quot;pa_openin.ml&quot;: use_camlp4, camlp4of</code></pre>
 
 <p>Now we can compile:</p>
 <pre class="shell"><code class="shell">$ ocamlbuild bar.byte</code></pre>

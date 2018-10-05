@@ -152,34 +152,34 @@
 に入力する必要がある。</p>
 <p>ハッシュ表は修正をするとそこで更新される、つまり <code>Map</code> とは違い、
 表を変更するたびに別のハッシュ表が作られるわけではないことに注意。
-ゆえに、 &#39;<code>let my_hash = Hashtbl.add my_hash ...</code>&#39;
+ゆえに、 &quot;<code>let my_hash = Hashtbl.add my_hash ...</code>&quot;
 というコードは全く意味がない。 かわりにこのように書こう:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> <span class="ocaml-error-loc">'</span>hello';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hi';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hug';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hard';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'wimp';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'world';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'wine'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hello&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hi&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hug&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hard&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;wimp&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;world&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;wine&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
-<p><code>my_hash</code> の中から &#39;<code>h</code>&#39;
+<p><code>my_hash</code> の中から &quot;<code>h</code>&quot;
 をキーとする要素をひとつ取り出すには次のように書く。 <code>find</code>
-がちょうど一つの要素だけをどう返すのか分かるだろうか。 &#39;<code>h</code>&#39;
+がちょうど一つの要素だけをどう返すのか分かるだろうか。 &quot;<code>h</code>&quot;
 をキーとする最後に入力したデータ要素だ。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;hard&quot;
 </span></code></pre>
 
-<p>我々が欲しかったものは &#39;<code>h</code>&#39; で始まる全ての要素だったはずだ。
-そのために、それら全部を見つけたい。&#39;<code>find_all</code>&#39; とは
+<p>我々が欲しかったものは &quot;<code>h</code>&quot; で始まる全ての要素だったはずだ。
+そのために、それら全部を見つけたい。&quot;<code>find_all</code>&quot; とは
 まさにおあつらえ向きの名前ではないか。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : '_weak3 list = []
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;hard&quot;; &quot;hug&quot;; &quot;hi&quot;; &quot;hello&quot;]
 </span></code></pre>
 
-<p>とすると<code>[&#39;hard&#39;; &#39;hug&#39;; &#39;hi&#39;; &#39;hello&#39;]</code>が返る。</p>
+<p>とすると<code>[&quot;hard&quot;; &quot;hug&quot;; &quot;hi&quot;; &quot;hello&quot;]</code>が返る。</p>
 <p><code>my_hash</code> のなかにある文字で始まるエントリがあるかどうかを見つけるには
 次のようにする:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.mem my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.mem my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
       </div>

@@ -209,16 +209,14 @@ character strings. For printing in the interactive toplevel (aka
 <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>),
 a custom printer can be
 used. An example under OCaml is given below.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>nums.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Num</span>
-  <span class="governing">open</span> <span class="ocaml-module">Format</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_num</span> <span class="ocaml-variable">ff n </span>= fprintf ff <span class="ocaml-error-loc">'</span>%s' (string_of_num n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#install_printer print_num</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Unbound value print_num.
-</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">num_of_string <span class="ocaml-error-loc">'</span>2/3'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = num_of_string <span class="ocaml-error-loc">'</span>1/3' +/ num_of_string '2/3'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;nums.cma&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Num</span>
+  <span class="governing">open</span> <span class="ocaml-module">Format</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_num</span> <span class="ocaml-variable">ff n </span>= fprintf ff <span class="string">&quot;%s&quot;</span> (string_of_num n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_num : Format.formatter -&gt; Num.num -&gt; unit = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#install_printer print_num</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">num_of_string <span class="string">&quot;2/3&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : Num.num = 2/3
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = num_of_string <span class="string">&quot;1/3&quot;</span> +/ num_of_string <span class="string">&quot;2/3&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val n : Num.num = 1
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">fact</span> <span class="ocaml-variable">n </span>=
-    <span class="keyword">if</span> n &lt;= 0 <span class="keyword">then</span> (num_of_int 1) <span class="keyword">else</span> num_of_int n */ (fact (n - 1))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">File &quot;&quot;, line 1:
-Error: Reference to undefined global `Num'
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">fact</span> 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value fact
+    <span class="keyword">if</span> n &lt;= 0 <span class="keyword">then</span> (num_of_int 1) <span class="keyword">else</span> num_of_int n */ (fact (n - 1))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fact : int -&gt; Num.num = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">fact 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : Num.num =
+93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
 </span></code></pre>
 
 <h3 id="Data-structures">Data structures</h3><h4 id="My-array-is-modified-and-I-don-39-t-know-why">My array is modified, and I don&#39;t know why</h4>
@@ -289,17 +287,18 @@ type with 3 constants:</p>
 <p>The names <code>Blue</code>, <code>White</code> and <code>Red</code> are the constructors of the <code>color</code>
 type. One can define functions on this type by pattern matching:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">string_of_color</span> = <span class="keyword">function</span>
-    | Blue -&gt;<span class="ocaml-error-loc"> </span>'blue'
-    | White -&gt; 'white'
-    | Red -&gt; 'red'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | Blue -&gt; <span class="string">&quot;blue&quot;</span>
+    | White -&gt; <span class="string">&quot;white&quot;</span>
+    | Red -&gt; <span class="string">&quot;red&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val string_of_color : color -&gt; string = &lt;fun&gt;
 </span></code></pre>
 
 <h4 id="Is-it-possible-to-make-a-record-value-without-declaring-its-type-first">Is it possible to make a record value without declaring its type first?</h4><p>No, Before making a record, you must give record&#39;s type a name, using the <code>type</code> keyword, 
 or the type name for the record should at least be in scope. Ocaml needs to know
 the record type&#39;s name and associated field names before making a record value.
-Otherwise it results in error &#39;Unbound record field&#39;.</p>
+Otherwise it results in error &quot;Unbound record field&quot;.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">person</span> = { name: string; age: int }
-  <span class="governing">let </span><span class="ocaml-variable">p1</span> = { name=<span class="ocaml-error-loc">'</span>John'; age=30 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  <span class="governing">let </span><span class="ocaml-variable">p1</span> = { name=<span class="string">&quot;John&quot;</span>; age=30 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type person = { name : string; age : int; }
+val p1 : person = {name = &quot;John&quot;; age = 30}
 </span></code></pre>
 
 <h4 id="How-to-share-a-field-between-two-different-record-types">How to share a field between two different record types?</h4>
@@ -448,7 +447,8 @@ newline on the terminal, gets no meaningful argument: it has type
 <p>Procedures with argument are defined exactly as ordinary functions. For
 instance:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">message</span> <span class="ocaml-variable">s </span>= print_string s; print_newline()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val message : string -&gt; unit = &lt;fun&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">message <span class="ocaml-error-loc">'</span>Hello world!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">message <span class="string">&quot;Hello world!&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Hello world!
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h4 id="How-to-define-a-procedure-function-that-takes-no-argument">How to define a procedure/function that takes no argument?</h4>
@@ -585,8 +585,8 @@ written the same. Consider for instance:</p>
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = T 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : t = T 1
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">t</span> = T <span class="keyword">of</span> int</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type t = T of int
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">incr</span> = <span class="keyword">function</span> T x -&gt; T (x+1)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val incr : t -&gt; t = &lt;fun&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">incr <span class="ocaml-error-loc">x</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type t/1407 but an expression was expected of type
-         t/1410
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">incr <span class="ocaml-error-loc">x</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type t/1440 but an expression was expected of type
+         t/1443
 </span></code></pre>
 
 <p>This phenomenon appears when you load many times the same file into the
@@ -666,9 +666,11 @@ I/O system. In effect, the material printed by functions from the
 order to find out the proper line breaking to perform with the material
 at hand. By contrast low level output is performed with no more
 buffering than usual I/O buffering.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_endline <span class="ocaml-error-loc">'</span>before';
-  <span class="ocaml-module">Format</span>.print_string 'MIDDLE';
-  print_endline 'after'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_endline <span class="string">&quot;before&quot;</span>;
+  <span class="ocaml-module">Format</span>.print_string <span class="string">&quot;MIDDLE&quot;</span>;
+  print_endline <span class="string">&quot;after&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">before
+after
+MIDDLE</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>To avoid this kind of problems you should not mix printing orders from

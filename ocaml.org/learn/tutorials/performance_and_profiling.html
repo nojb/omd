@@ -103,7 +103,7 @@
           <ul><li><a href="#ObQuote">ObQuote...</a>
 </li><li><a href="#Speed">Speed</a>
 <ul><li><a href="#Basics-of-assembly-language">Basics of assembly language</a>
-</li><li><a href="#The-39-hello-world-39-program">The &#39;hello, world&#39; program</a>
+</li><li><a href="#The-quot-hello-world-quot-program">The &quot;hello, world&quot; program</a>
 </li><li><a href="#Tail-recursion">Tail recursion</a>
 </li><li><a href="#Digression-Where-are-the-types">Digression: Where are the types?</a>
 </li><li><a href="#Polymorphic-types">Polymorphic types</a>
@@ -156,9 +156,9 @@
 
 <h1 id="Performance-and-Profiling">Performance and Profiling</h1>
 
-<h2 id="ObQuote">ObQuote...</h2><p>*&#39;One serious obstacle to the adoption of good programming languages is
+<h2 id="ObQuote">ObQuote...</h2><p>*&quot;One serious obstacle to the adoption of good programming languages is
 the notion that everything has to be sacrificed for speed. In computer
-languages as in life, speed kills.&#39; — Mike Vanier*</p>
+languages as in life, speed kills.&quot; — Mike Vanier*</p>
 <h2 id="Speed">Speed</h2><p>Why is OCaml fast? Indeed, step back and ask <em>is OCaml fast?</em> How can we
 make programs faster? In this chapter we&#39;ll look at what actually
 happens when you compile your OCaml programs down to machine code. This
@@ -172,7 +172,7 @@ section. Don&#39;t be afraid! I&#39;ll help you out by translating the assembler
 into a C-like pseudocode (after all C is just a portable assembly
 language).</p>
 <h3 id="Basics-of-assembly-language">Basics of assembly language</h3><p>The examples I give in this chapter are all compiled on an x86 Linux
-machine. The x86 is, of course, a 32 bit machine, so an x86 &#39;word&#39; is 4
+machine. The x86 is, of course, a 32 bit machine, so an x86 &quot;word&quot; is 4
 bytes (= 32 bits) long. At this level OCaml deals mostly with word-sized
 objects, so you&#39;ll need to remember to multiply by four to get the size
 in bytes.</p>
@@ -183,8 +183,8 @@ puts <code>%</code> in front of register names. The registers are: <code>%eax</c
 frames), and <code>%esp</code> (the stack pointer).</p>
 <p>The Linux assembler (in common with other Unix assemblers, but opposite
 to MS-derived assemblers) writes moves to and from registers/memory as:</p>
-<pre class="assembly"><code class="assembly">movl from, to</code></pre><p>So <code>movl %ebx, %eax</code> means &#39;copy the contents of register <code>%ebx</code> into
-register <code>%eax</code>&#39; (not the other way round).</p>
+<pre class="assembly"><code class="assembly">movl from, to</code></pre><p>So <code>movl %ebx, %eax</code> means &quot;copy the contents of register <code>%ebx</code> into
+register <code>%eax</code>&quot; (not the other way round).</p>
 <p>Almost all of the assembly language that we will look at is going to be
 dominated not by machine code instructions like <code>movl</code> but by what are
 known as <strong>assembler directives</strong>. These directives begin
@@ -192,7 +192,7 @@ with a . (period) and they literally <em>direct</em> the assembler to do
 something. Here are the common ones for the Linux assembler:</p>
 <h4 id="text">.text</h4>
 
-<p><strong>Text</strong> is the Unix way of saying &#39;program code&#39;. The <strong>text segment</strong>
+<p><strong>Text</strong> is the Unix way of saying &quot;program code&quot;. The <strong>text segment</strong>
 simply means the part of the executable where program code is stored.
 The <code>.text</code> directive switches the assembler so it starts writing into
 the text segment.</p>
@@ -207,14 +207,14 @@ preceeding <code>.globl</code> directive declares a local symbol (local to just 
 current file).</p>
 <pre class="assembly"><code class="assembly">.long 12345
 .byte 9
-.ascii &#39;hello&#39;
+.ascii &quot;hello&quot;
 .space 4</code></pre><p><code>.long</code> writes a word (4 bytes) to the current segment. <code>.byte</code> writes a
 single byte. <code>.ascii</code> writes a string of bytes (NOT nul-terminated).
 <code>.space</code> writes the given number of zero bytes. Normally you use these
 in the data segment.</p>
-<h3 id="The-39-hello-world-39-program">The &#39;hello, world&#39; program</h3><p>Enough assembler. Put the following program into a file called
+<h3 id="The-quot-hello-world-quot-program">The &quot;hello, world&quot; program</h3><p>Enough assembler. Put the following program into a file called
 <code>smallest.ml</code>:</p>
-<pre><code class="ocaml">print_string 'hello, world\n'</code></pre>
+<pre><code class="ocaml">print_string <span class="string">&quot;hello, world\n&quot;</span></code></pre>
 
 <p>And compile it to a native code executable using:</p>
 <pre class="shell"><code class="shell">ocamlopt -S smallest.ml -o smallest</code></pre><p>The <code>-S</code> (capital S) tells the compiler to leave the assembly language
@@ -225,7 +225,7 @@ added. First of all the data segment:</p>
     .long   4348                     ; header for string
     .globl  Smallest__1
 lest__1:
-    .ascii  &#39;hello, world\12&#39;        ; string
+    .ascii  &quot;hello, world\12&quot;        ; string
     .space  2                        ; padding ..
     .byte   2                        ;  .. after string</code></pre><p>Next up the text (program code) segment:</p>
 <pre class="assembly"><code class="assembly">    .text
@@ -245,7 +245,7 @@ lest__entry:
     ret</code></pre>
 
 <p>In C everything has to be inside a function. Think about how you can&#39;t
-just write <code>printf (&#39;hello, world\n&#39;);</code> in C, but instead you have to
+just write <code>printf (&quot;hello, world\n&quot;);</code> in C, but instead you have to
 put it inside <code>main () { ... }</code>. In OCaml you are allowed to have
 commands at the top level, not inside a function. But when we translate
 this into assembly language, where do we put those commands? There needs
@@ -255,8 +255,8 @@ this by taking the filename (<code>smallest.ml</code>), capitalizing it and addi
 <code>__entry</code>, thus making up a symbol called <code>Smallest__entry</code> to refer to
 the top level commands in this file.</p>
 <p>Now look at the code that OCaml has generated. The original code said
-<code>print_string &#39;hello, world\n&#39;</code>, but OCaml has instead compiled the
-equivalent of <code>Pervasives.output_string stdout &#39;hello, world\n&#39;</code>. Why?
+<code>print_string &quot;hello, world\n&quot;</code>, but OCaml has instead compiled the
+equivalent of <code>Pervasives.output_string stdout &quot;hello, world\n&quot;</code>. Why?
 If you look into <code>pervasives.ml</code> you&#39;ll see why:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">print_string</span> <span class="ocaml-variable">s </span>= output_string stdout s</code></pre>
 
@@ -326,7 +326,7 @@ Java program and a second or so for a Perl script.</p>
 calls into simple loops. Is this actually true? Let&#39;s look at what
 simple tail recursion compiles to:</p>
 <pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
-  print_string 'I go on forever ...';
+  print_string <span class="string">&quot;I go on forever ...&quot;</span>;
   loop ()
   
 <span class="governing">let</span> () = loop ()</code></pre>
@@ -356,14 +356,14 @@ jump back, and so on forever. It&#39;s a simple loop, <em>not</em> a recursive
 function call, so it doesn&#39;t use any stack space.</p>
 <h3 id="Digression-Where-are-the-types">Digression: Where are the types?</h3><p>OCaml is statically typed as we&#39;ve said before on many occasions, so at
 compile time, OCaml knows that the type of <code>loop</code> is <code>unit -&gt; unit</code>. It
-knows that the type of <code>&#39;hello, world\n&#39;</code> is <code>string</code>. It doesn&#39;t make
+knows that the type of <code>&quot;hello, world\n&quot;</code> is <code>string</code>. It doesn&#39;t make
 any attempt to communicate this fact to the <code>output_string</code> function.
 <code>output_string</code> is expecting a <code>channel</code> and a <code>string</code> as arguments,
 and indeed that&#39;s what it gets. What would happen if we passed, say, an
 <code>int</code> instead of a <code>string</code>?</p>
 <p>This is essentially an impossible condition. Because OCaml knows the
 types at compile time, it doesn&#39;t need to deal with types or check types
-at run time. There is no way, in pure OCaml, to &#39;trick&#39; the compiler
+at run time. There is no way, in pure OCaml, to &quot;trick&quot; the compiler
 into generating a call to <code>Pervasives.output_string stdout 1</code>. Such an
 error would be flagged at compile time, by type inference, and so could
 never be compiled.</p>
@@ -411,7 +411,7 @@ Max__max_56:
         movl    %eax, 4(%esp)
         movl    %ebx, 0(%esp)
 
-        ; Call the C &#39;greaterthan&#39; function (in the OCaml library).
+        ; Call the C &quot;greaterthan&quot; function (in the OCaml library).
 
         pushl   %ebx
         pushl   %eax
@@ -420,7 +420,7 @@ Max__max_56:
 .L102:
         addl    $8, %esp
 
-        ; If the C &#39;greaterthan&#39; function returned 1, jump to .L100
+        ; If the C &quot;greaterthan&quot; function returned 1, jump to .L100
 
         cmpl    $1, %eax
         je      .L100
@@ -457,7 +457,7 @@ OCaml will generate a specialised version of <code>max</code> which only works o
         .globl  Max_int__max_56
 Max_int__max_56:
 
-        ; Single assembly instruction &#39;cmpl&#39; for performing the &gt; op.
+        ; Single assembly instruction &quot;cmpl&quot; for performing the &gt; op.
         cmpl    %ebx, %eax
 
         ; If %ebx &gt; %eax, jump to .L100
@@ -496,7 +496,7 @@ you can help the compiler by specifying types for one or more of the
 arguments.</p>
 <h3 id="The-representation-of-integers-tag-bits-heap-allocated-values">The representation of integers, tag bits, heap-allocated values</h3><p>There are a number of peculiarities about integers in OCaml. One of
 these is that integers are 31 bit entities, not 32 bit entities. What
-happens to the &#39;missing&#39; bit?</p>
+happens to the &quot;missing&quot; bit?</p>
 <p>Write this to <code>int.ml</code>:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_int 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">3</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
@@ -554,7 +554,7 @@ memory accesses to multiples of 4, then things go faster.</p>
 32 bit processors, and multiples of 8 for 64 bit processors. This means
 that the bottom bit of any pointer in OCaml will always be zero.</p>
 <p>So you can see that by looking at the bottom bit of a register, you can
-immediately tell if it stores a pointer (&#39;tag&#39; bit is zero), or an
+immediately tell if it stores a pointer (&quot;tag&quot; bit is zero), or an
 integer (tag bit set to one).</p>
 <p>Remember our polymorphic &gt; function which caused us so much trouble in
 the previous section? We looked at the assembler and found out that
@@ -650,7 +650,7 @@ first line, which creates the array, is compiled to a simple C call:</p>
 .L100:</code></pre><p>The important statement is the one which stores the float into the
 array. It is:</p>
 <pre class="assembly"><code class="assembly">        fstpl   -4(%ecx, %eax, 4)</code></pre><p>The assembler syntax is rather complex, but the bracketed expression
-<code>-4(%ecx, %eax, 4)</code> means &#39;at the address <code>%ecx + 4*%eax - 4</code>&#39;. Recall
+<code>-4(%ecx, %eax, 4)</code> means &quot;at the address <code>%ecx + 4*%eax - 4</code>&quot;. Recall
 that <code>%eax</code> is the OCaml representation of i, complete with tag bit, so
 it is essentially equal to <code>i*2+1</code>, so let&#39;s substitute that and
 multiply it out:</p>
@@ -664,8 +664,8 @@ compile this code:</p>
 <pre><code class="ocaml"><span class="ocaml-module">Array</span>.map ((+) 2) [| 1; 2; 3; 4; 5 |]</code></pre>
 
 <p>If you recall the syntax, <code>[| ... |]</code> declares an array (in this case an
-<code>int array</code>), and <code>((+) 2)</code> is a closure - &#39;the function which adds 2 to
-things&#39;.</p>
+<code>int array</code>), and <code>((+) 2)</code> is a closure - &quot;the function which adds 2 to
+things&quot;.</p>
 <p>Compiling this code reveals some interesting new features. Firstly the
 code which allocates the array:</p>
 <pre class="assembly"><code class="assembly">        movl    $24, %eax           ; Allocate 5 * 4 + 4 = 24 bytes of memory.
@@ -684,7 +684,7 @@ data word, ie. 4 bytes into the allocated memory block.</p>
         movl    $9, 12(%eax)
         movl    $11, 16(%eax)</code></pre><p>The header word is 5120, which if you write it in binary means a block
 containing 5 words, with tag zero. The tag of zero means it&#39;s a
-&#39;structured block&#39; a.k.a. an array. We also copy the numbers 1, 2, 3, 4
+&quot;structured block&quot; a.k.a. an array. We also copy the numbers 1, 2, 3, 4
 and 5 to the appropriate places in the array. Notice the OCaml
 representation of integers is used. Because this is a structured block,
 the garbage collector will scan each word in this block, and the GC
@@ -758,7 +758,7 @@ Here is an example:</p>
   
 <span class="governing">let</span> () =
   <span class="ocaml-module">Random</span>.self_init ();
-  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480'
+  <span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span>
   
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
   <span class="comment">(* 12820000 *)</span> <span class="keyword">if</span> i == 1 <span class="keyword">then</span> <span class="comment">(* 25640 *)</span> x_init
@@ -803,7 +803,7 @@ covered in this tutorial.</p>
 
 <p>We compile it using the <code>-p</code> option to <code>ocamlopt</code> which tells the
 compiler to include profiling information for <code>gprof</code>:</p>
-<pre class="shell"><code class="shell">ocamlopt -p -pp &#39;camlp4o pa_extend.cmo&#39; -I +camlp4 sieve.ml -o sieve</code></pre><p>After running the program as normal, the profiling code dumps out a file
+<pre class="shell"><code class="shell">ocamlopt -p -pp &quot;camlp4o pa_extend.cmo&quot; -I +camlp4 sieve.ml -o sieve</code></pre><p>After running the program as normal, the profiling code dumps out a file
 <code>gmon.out</code> which we can interpret with <code>gprof</code>:</p>
 <pre><code>$ gprof ./sieve
 Flat profile:
@@ -868,7 +868,7 @@ your programs:</p>
 </li></ol>
 
 <h3 id="Further-reading">Further reading</h3><p>You can find out more about how OCaml represents different types by
-reading chapter 18 of the manual (&#39;Interfacing C with OCaml&#39;) and also
+reading chapter 18 of the manual (&quot;Interfacing C with OCaml&quot;) and also
 looking at the <code>mlvalues.h</code> header file.</p>
 <h2 id="Discussion-On-This-Page">Discussion On This Page</h2><h3 id="Java-dynamic-dispatch">Java dynamic dispatch</h3><p><strong>There are some serious mistakes in the last paragraph:</strong></p>
 <ul><li><p>Dynamic method dispatch itself is seldom a performance problem. In

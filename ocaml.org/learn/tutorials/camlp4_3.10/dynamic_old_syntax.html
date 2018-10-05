@@ -127,18 +127,18 @@
 
 <p><strong>Deprecation Warning:</strong> this tutorial describes technology that is considered obsolete. It&#39;s been replaced by <a href="http://caml.inria.fr/pub/docs/manual-ocaml-4.07/extn.html#sec243">extensions points and ppx rewriters</a></p>
 <p>dynamic_old_syntax.ml:</p>
-<pre><code class="ocaml"><span class="comment">(* #load 'camlp4orf.cma' *)</span>
+<pre><code class="ocaml"><span class="comment">(* #load <span class="string">&quot;camlp4orf.cma&quot;</span> *)</span>
 <span class="governing">type</span> <span class="type">t1</span> = A | B
 <span class="governing">type</span> <span class="type">t2</span> = Foo <span class="keyword">of</span> string * t1
 <span class="governing">open</span> <span class="ocaml-module">Pcaml</span>
-<span class="governing">let </span><span class="ocaml-variable">foo</span> = <span class="ocaml-module">Entry</span>.mk gram 'foo'
-<span class="governing">let </span><span class="ocaml-variable">bar</span> = <span class="ocaml-module">Entry</span>.mk gram 'bar'
+<span class="governing">let </span><span class="ocaml-variable">foo</span> = <span class="ocaml-module">Entry</span>.mk gram <span class="string">&quot;foo&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">bar</span> = <span class="ocaml-module">Entry</span>.mk gram <span class="string">&quot;bar&quot;</span>
 <span class="governing">let</span> () =
   EXTEND
     GLOBAL: foo bar;
-    foo: [ [ 'foo'; i = LIDENT; b = bar -&gt; Foo(i, b) ] ];
-    bar: [ [ <span class="string">'?'</span> -&gt; A | <span class="string">'.'</span> -&gt; B ] ];
-  END<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Entry</span>.parse foo (<span class="ocaml-module">Stream</span>.of_string 'foo x?') = Foo(<span class="string">'x'</span>, A)<span class="ocaml-prompt">;;</span><br/>DELETE_RULE foo: 'foo'; LIDENT; bar END;;</code></pre>
+    foo: [ [ <span class="string">&quot;foo&quot;</span>; i = LIDENT; b = bar -&gt; Foo(i, b) ] ];
+    bar: [ [ <span class="string">&quot;?&quot;</span> -&gt; A | <span class="string">&quot;.&quot;</span> -&gt; B ] ];
+  END<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Entry</span>.parse foo (<span class="ocaml-module">Stream</span>.of_string <span class="string">&quot;foo x?&quot;</span>) = Foo(<span class="string">&quot;x&quot;</span>, A)<span class="ocaml-prompt">;;</span><br/>DELETE_RULE foo: <span class="string">&quot;foo&quot;</span>; LIDENT; bar END;;</code></pre>
 
       </div>
     </div>

@@ -159,7 +159,7 @@ it is used, it is frequent to obtain this kind of message:</p>
          int
 </span></code></pre>
 
-<p>&#39;This expression has type <em>X</em> but is here used with type <em>Y</em>&#39; means that
+<p>&quot;This expression has type <em>X</em> but is here used with type <em>Y</em>&quot; means that
 if the contents of the expression is isolated (2.5), its type is
 inferred as <em>X</em> (float). But the context, i.e. everything which is
 around (1 + ...) tells that the gap expects an expression of type <em>Y</em>
@@ -179,9 +179,9 @@ that is already taken by another type. Consider the following session:</p>
 
 <p>For the compiler, the second definition of my_type is totally
 independent from the first definition. So we have defined two types
-which have the same name. Since &#39;a&#39; was defined earlier, it belongs to
-the first type while &#39;b&#39; belongs to the second type. In this example,
-redefining &#39;a&#39; after the last definition of my_type solves the problem.
+which have the same name. Since &quot;a&quot; was defined earlier, it belongs to
+the first type while &quot;b&quot; belongs to the second type. In this example,
+redefining &quot;a&quot; after the last definition of my_type solves the problem.
 This kind of problem should not happen in real programs unless you use
 the same name for the same type in the same module, which is highly
 discouraged.</p>
@@ -249,10 +249,10 @@ variable y may match different arguments. (See manual section 8.5)
 matching is about. Remember the following:</p>
 <ul><li><p>the tree of cases is traversed linearly, from left to right. There
  is <em>no backtracking</em> as in regexp matching.</p>
-</li><li><p>a guard (&#39;when&#39; clause) is not part of a pattern. It is simply a
+</li><li><p>a guard (&quot;when&quot; clause) is not part of a pattern. It is simply a
  condition which is evaluated at most once and is used as a last
  resort to jump to the next match case.</p>
-</li><li><p>lowercase identifiers (bindings such as &#39;y&#39; above) are just names,
+</li><li><p>lowercase identifiers (bindings such as &quot;y&quot; above) are just names,
  so they will always match.</p>
 </li></ul>
 
@@ -264,7 +264,7 @@ will ever be tested. This leads to the following results:</p>
 
 <h3 id="This-pattern-matching-is-not-exhaustive">This pattern-matching is not exhaustive</h3><p>OCaml&#39;s pattern matching can check whether a set of patterns is
 exhaustive or not, based on the <em>type</em> only. So in the following
-example, the compiler doesn&#39;t know what range of ints the &#39;mod&#39; operator
+example, the compiler doesn&#39;t know what range of ints the &quot;mod&quot; operator
 would return:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">x </span>=
     <span class="keyword"><span class="ocaml-error-loc">match</span></span><span class="ocaml-error-loc"> x mod 2 </span><span class="keyword"><span class="ocaml-error-loc">with</span></span><span class="ocaml-error-loc">
@@ -299,8 +299,9 @@ sufficient to solve this problem.</p>
 strings since they should be doubled. Such a message may be displayed
 when compiling an older program, and can be turned off with the <code>-w x</code>
 option.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\e</span>\n' <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\e)
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\\</span>e\n' <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\\)
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;<span class="ocaml-error-loc">\e</span>\n&quot;</span> <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 14: illegal backslash escape in string.
+</span>- : string = &quot;\\e\n&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;\\e\n&quot;</span> <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;\\e\n&quot;
 </span></code></pre>
 
       </div>

@@ -135,31 +135,31 @@
 <span class="governing">let</span> <span class="ocaml-function">atdgen_rules</span> <span class="ocaml-variable">() </span>= 
  <span class="governing">let</span> <span class="ocaml-function">tag_atdgen</span> <span class="ocaml-variable">env patterns </span>=
    <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> p -&gt;
-       tag_file (env p) (<span class="ocaml-module">Tags</span>.elements (<span class="ocaml-module">Tags</span>.of_list ['package(atdgen)']))
+       tag_file (env p) (<span class="ocaml-module">Tags</span>.elements (<span class="ocaml-module">Tags</span>.of_list [<span class="string">&quot;package(atdgen)&quot;</span>]))
      ) patterns <span class="governing">in</span>
- rule 'atdgen: .atd -&gt; _t.ml*'
-    ~prods:['%_t.ml<span class="string">';'</span>%_t.mli']
-    ~dep:'%.atd'
+ rule <span class="string">&quot;atdgen: .atd -&gt; _t.ml*&quot;</span>
+    ~prods:[<span class="string">&quot;%_t.ml&quot;</span>;<span class="string">&quot;%_t.mli&quot;</span>]
+    ~dep:<span class="string">&quot;%.atd&quot;</span>
     (<span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt;
-      <span class="governing">let </span><span class="ocaml-variable">atdgen</span> = 'atdgen' <span class="governing">in</span>
-      tag_atdgen env ['%_t.ml<span class="string">';'</span>%_t.mli'];
-      Cmd (S [A atdgen; A '-t'; P (env '%.atd')]);
+      <span class="governing">let </span><span class="ocaml-variable">atdgen</span> = <span class="string">&quot;atdgen&quot;</span> <span class="governing">in</span>
+      tag_atdgen env [<span class="string">&quot;%_t.ml&quot;</span>;<span class="string">&quot;%_t.mli&quot;</span>];
+      Cmd (S [A atdgen; A <span class="string">&quot;-t&quot;</span>; P (env <span class="string">&quot;%.atd&quot;</span>)]);
      <span class="governing">end</span>) ;
-  rule 'atdgen: .atd -&gt; _j.ml*'
-    ~prods:['%_j.ml<span class="string">';'</span>%_j.mli';]
-    ~dep:'%.atd'
+  rule <span class="string">&quot;atdgen: .atd -&gt; _j.ml*&quot;</span>
+    ~prods:[<span class="string">&quot;%_j.ml&quot;</span>;<span class="string">&quot;%_j.mli&quot;</span>;]
+    ~dep:<span class="string">&quot;%.atd&quot;</span>
     (<span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt;
-      <span class="governing">let </span><span class="ocaml-variable">atdgen</span> = 'atdgen' <span class="governing">in</span>
-      tag_atdgen env ['%_j.ml'; '%_j.mli'];
-      Cmd (S [A atdgen; A '-j'; A '-j-std'; P (env '%.atd')]);
+      <span class="governing">let </span><span class="ocaml-variable">atdgen</span> = <span class="string">&quot;atdgen&quot;</span> <span class="governing">in</span>
+      tag_atdgen env [<span class="string">&quot;%_j.ml&quot;</span>; <span class="string">&quot;%_j.mli&quot;</span>];
+      Cmd (S [A atdgen; A <span class="string">&quot;-j&quot;</span>; A <span class="string">&quot;-j-std&quot;</span>; P (env <span class="string">&quot;%.atd&quot;</span>)]);
      <span class="governing">end</span>) ;
-  rule 'atdgen: .atd -&gt; _v.ml*'
-    ~prods:['%_v.ml<span class="string">';'</span>%_v.mli';]
-    ~dep:'%.atd'
+  rule <span class="string">&quot;atdgen: .atd -&gt; _v.ml*&quot;</span>
+    ~prods:[<span class="string">&quot;%_v.ml&quot;</span>;<span class="string">&quot;%_v.mli&quot;</span>;]
+    ~dep:<span class="string">&quot;%.atd&quot;</span>
     (<span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt;
-      <span class="governing">let </span><span class="ocaml-variable">atdgen</span> = 'atdgen' <span class="governing">in</span>
-      tag_atdgen env ['%_v.ml<span class="string">';'</span>%_v.mli';];
-      Cmd (S [A atdgen; A '-v'; P (env '%.atd')]);
+      <span class="governing">let </span><span class="ocaml-variable">atdgen</span> = <span class="string">&quot;atdgen&quot;</span> <span class="governing">in</span>
+      tag_atdgen env [<span class="string">&quot;%_v.ml&quot;</span>;<span class="string">&quot;%_v.mli&quot;</span>;];
+      Cmd (S [A atdgen; A <span class="string">&quot;-v&quot;</span>; P (env <span class="string">&quot;%.atd&quot;</span>)]);
      <span class="governing">end</span>) ;
   ()
 

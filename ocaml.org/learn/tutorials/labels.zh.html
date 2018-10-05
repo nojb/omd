@@ -108,7 +108,7 @@
 </li><li><a href="#">标签化和可选参数</a>
 <ul><li><a href="#">标签化参数</a>
 </li><li><a href="#">可选参数</a>
-</li><li><a href="#39-Warning-This-optional-argument-cannot-be-erased-39">&#39;Warning: This optional argument cannot be erased&#39;</a>
+</li><li><a href="#quot-Warning-This-optional-argument-cannot-be-erased-quot">&quot;Warning: This optional argument cannot be erased&quot;</a>
 </li><li><a href="#">更多<code>~</code>简写</a>
 </li><li><a href="#foo">函数调用中的 <code>?foo</code></a>
 </li><li><a href="#">什么时候该用和不该用 <code>~</code> 和 <code>?</code></a>
@@ -191,26 +191,26 @@ val odd : int -&gt; bool = &lt;fun&gt;
 这装的...）。总之就这样，你可以用这个简单的语法来定义多递归的类定义和模块。</p>
 <h2 id="">函数及其参数的别名</h2><p>记得在第五章我们讲到过部分函数应用。这是一种整洁的方法来偷懒：为函数和参数起别名。</p>
 <p>虽然我们还没有讲到面向对象，下面是一个OCamlNet的别名函数调用的例子，你只需要知道
-<code>cgi # output # output_string &#39;string&#39;</code> 是一个函数调用，跟Java中的
-<code>cgi.output().output_string (&#39;string&#39;)</code> 类似。</p>
+<code>cgi # output # output_string &quot;string&quot;</code> 是一个函数调用，跟Java中的
+<code>cgi.output().output_string (&quot;string&quot;)</code> 类似。</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">begin_page</span> <span class="ocaml-variable">cgi title </span>=
   <span class="governing">let </span><span class="ocaml-variable">out</span> = cgi # output # output_string <span class="governing">in</span>
-  out '&lt;html&gt;\n';
-  out '&lt;head&gt;\n';
-  out ('&lt;title&gt;' ^ text title ^ '&lt;/title&gt;\n');
-  out ('&lt;style <span class="governing">type</span>=\'text/css\'&gt;\n');
-  out 'body { background: white; color: black; }\n';
-  out '&lt;/style&gt;\n';
-  out '&lt;/head&gt;\n';
-  out '&lt;body&gt;\n';
-  out ('&lt;h1&gt;' ^ text title ^ '&lt;/h1&gt;\n')</code></pre>
+  out <span class="string">&quot;&lt;html&gt;\n&quot;</span>;
+  out <span class="string">&quot;&lt;head&gt;\n&quot;</span>;
+  out (<span class="string">&quot;&lt;title&gt;&quot;</span> ^ text title ^ <span class="string">&quot;&lt;/title&gt;\n&quot;</span>);
+  out (<span class="string">&quot;&lt;style <span class="governing">type</span>=\&quot;text/css\&quot;&gt;\n&quot;</span>);
+  out <span class="string">&quot;body { background: white; color: black; }\n&quot;</span>;
+  out <span class="string">&quot;&lt;/style&gt;\n&quot;</span>;
+  out <span class="string">&quot;&lt;/head&gt;\n&quot;</span>;
+  out <span class="string">&quot;&lt;body&gt;\n&quot;</span>;
+  out (<span class="string">&quot;&lt;h1&gt;&quot;</span> ^ text title ^ <span class="string">&quot;&lt;/h1&gt;\n&quot;</span>)</code></pre>
 
 <p><code>let out = ... </code> 是一个对那个方法的部分函数应用（这是部分，因为字符串参数还没有传入）。
 <code>out</code>因而是一个接收一个字符串的函数。</p>
-<pre><code class="ocaml">out '&lt;html&gt;\n';</code></pre>
+<pre><code class="ocaml">out <span class="string">&quot;&lt;html&gt;\n&quot;</span>;</code></pre>
 
 <p>等价于：</p>
-<pre><code class="ocaml">cgi # output # output_string '&lt;html&gt;\n';</code></pre>
+<pre><code class="ocaml">cgi # output # output_string <span class="string">&quot;&lt;html&gt;\n&quot;</span>;</code></pre>
 
 <p>我们这下偷了不少懒。</p>
 <p>我们也可以加上参数。 <code>print_string</code>也可以定义成部分函数应用：</p>
@@ -240,7 +240,7 @@ ask_ok (complaint=&#39;Please answer yes or no!&#39;, prompt=&#39;Are you sure?&
   # ... etc.
 }
   
-ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>OCaml也可以有标签化和可选参数。</p>
+ask_ok (prompt =&gt; &quot;Are you sure?&quot;, retries =&gt; 2);</code></pre><p>OCaml也可以有标签化和可选参数。</p>
 <p>基本语法是：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">~first:a ~last:b </span>=
     <span class="keyword">if</span> a &gt; b <span class="keyword">then</span> []
@@ -282,7 +282,8 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
 
 <p>这个函数是干什么的？运行它可以告诉我们些什么：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline (Some <span class="ocaml-error-loc">'</span>hello')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline (Some <span class="string">&quot;hello&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">hello
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>如果未标签化的参数是一个“空指针”，那么它什么也不干，否则，<code>f</code>会被调用到它上。为什么
@@ -305,7 +306,7 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
                   <span class="keyword">mutable</span> height: int }
     
   <span class="governing">let</span> <span class="ocaml-function">create_window</span> <span class="ocaml-variable">() </span>=
-    { title = <span class="ocaml-error-loc">'</span>none'; width = 640; height = 480; }
+    { title = <span class="string">&quot;none&quot;</span>; width = 640; height = 480; }
     
   <span class="governing">let</span> <span class="ocaml-function">set_title</span> <span class="ocaml-variable">window title </span>=
     window.title &lt;- title
@@ -321,24 +322,34 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
     may ~f:(set_title window) title;
     may ~f:(set_width window) width;
     may ~f:(set_height window) height;
-    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type window = {
+  mutable title : string;
+  mutable width : int;
+  mutable height : int;
+}
+val create_window : unit -&gt; window = &lt;fun&gt;
+val set_title : window -&gt; string -&gt; unit = &lt;fun&gt;
+val set_width : window -&gt; int -&gt; unit = &lt;fun&gt;
+val set_height : window -&gt; int -&gt; unit = &lt;fun&gt;
+val open_window :
+  ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; unit -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>这个例子有点复杂难懂，不过这个模式在lablgtk的源代码中是很常见的。让我们先来看看 <code>create_window</code>。
 这个函数接收一个<code>unit</code>并且返回一个<code>window</code>，并且初始化标题和宽高：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">create_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">create_window ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;none&quot;; width = 640; height = 480}
 </span></code></pre>
 
 <p> <code>set_title</code>, <code>set_width</code> 和 <code>set_height</code> 是 <code>window</code> 的setter，是非纯的。比如说：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = create_window () <span class="governing">in</span>
-  set_title w <span class="ocaml-error-loc">'</span>My Application';
-  w</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  set_title w <span class="string">&quot;My Application&quot;</span>;
+  w</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;My Application&quot;; width = 640; height = 480}
 </span></code></pre>
 
 <p>这里为止，都是之前提到的指令式的可变record。但是麻烦的地方是 <code>open_window</code> 函数。
 这个函数接收<em>4</em>个参数，但是3个是可选的，一个<code>unit</code>是必需的。让我们来看看这个函数的调用：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>Clock' ~width:128 ~height:128 ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="string">&quot;My Application&quot;</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;My Application&quot;; width = 640; height = 480}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="string">&quot;Clock&quot;</span> ~width:128 ~height:128 ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;Clock&quot;; width = 128; height = 128}
 </span></code></pre>
 
 <p>它竟然工作了！这里的原因是<code>may</code>函数，而且这些可选参数没有默认值。</p>
@@ -349,25 +360,27 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
 <pre><code class="ocaml">may ~f:(set_title window) title;</code></pre>
 
 <p>如果<code>title</code>没有传入，那么它就是<code>None</code>，所以<code>may</code>不会做任何事，但是假如我们：</p>
-<pre><code class="ocaml">open_window ~title:'My Application' ()</code></pre>
+<pre><code class="ocaml">open_window ~title:<span class="string">&quot;My Application&quot;</span> ()</code></pre>
 
-<p>那么 <code>title</code> = <code>Some &#39;My Application&#39;</code>，而 <code>may</code> 会调用
-<code>set_title window &#39;My Application&#39;</code>。</p>
+<p>那么 <code>title</code> = <code>Some &quot;My Application&quot;</code>，而 <code>may</code> 会调用
+<code>set_title window &quot;My Application&quot;</code>。</p>
 <p>在你看下一节之前，你最好先完全弄懂这一节在说什么。</p>
-<h3 id="39-Warning-This-optional-argument-cannot-be-erased-39">&#39;Warning: This optional argument cannot be erased&#39;</h3><p>我们已经接触到了标签和可选函数，但是就算是这么短的解释也会带来很多问题。第一个可能是
+<h3 id="quot-Warning-This-optional-argument-cannot-be-erased-quot">&quot;Warning: This optional argument cannot be erased&quot;</h3><p>我们已经接触到了标签和可选函数，但是就算是这么短的解释也会带来很多问题。第一个可能是
 为什么 <code>open_window</code> 会需要一个多余的<code>unit</code>参数？让我们来试试去掉这个参数来定义：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height </span>=
-    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?<span class="ocaml-error-loc">height</span> </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = create_window () <span class="governing">in</span>
     may ~f:(set_title window) title;
     may ~f:(set_width window) width;
     may ~f:(set_height window) height;
-    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 16: this optional argument cannot be erased.
+</span>val open_window : ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; window =
+  &lt;fun&gt;
 </span></code></pre>
 
 <p>虽然OCaml编译了这个函数，但是它对<code>?height</code>产生了一个臭名昭著的警告：
- &#39;This optional argument cannot be erased&#39;。我们来看看调用这个函数 <code>open_window</code> 会发生什么：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+ &quot;This optional argument cannot be erased&quot;。我们来看看调用这个函数 <code>open_window</code> 会发生什么：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; window = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="string">&quot;My Application&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ?width:int -&gt; ?height:int -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>这段代码再也不工作了。实际上<code>open_window</code>根本没被调用，却打印了莫名其妙的信息，为什么呢？</p>
@@ -389,19 +402,20 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
 <p>OCaml很小心地处理了它，并没有调用这个函数，而是把它作为函数来返回。</p>
 <p>让我们回到原来<code>unit</code>在最后的 <code>open_window</code>的定义：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height () </span>=
-    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = create_window () <span class="governing">in</span>
     may ~f:(set_title window) title;
     may ~f:(set_width window) width;
     may ~f:(set_height window) height;
-    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val open_window :
+  ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; unit -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>如果你想传入可选参数，你必须在<code>unit</code>前传入，因而你可以：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;none&quot;; width = 640; height = 480}
 </span></code></pre>
 
 <p>这里你肯定是想要用缺省设置调用这个函数，而：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; unit -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>你则是</p>
@@ -415,7 +429,8 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
 <code>~last:last</code>的简写。</p>
 <h3 id="foo">函数调用中的 <code>?foo</code></h3><p>可选参数还有另一个很奇葩的地方。如果我们在某个函数中调用 <code>open_window</code> 来打开应用程序：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
-    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ~width ~height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    open_window ~title:<span class="string">&quot;My Application&quot;</span> ~<span class="ocaml-error-loc">width</span> ~height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type 'a option
+       but an expression was expected of type int
 </span></code></pre>
 
 <p> <code>~width</code> 是 <code>~width:width</code> 的意思。但
@@ -424,7 +439,8 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
 这里 <code>unwrap</code> 可以理解成是一个函数，用来去掉 <code>width</code> 的 <code>option</code> 包装（当然这只是说法上的，
 实际上你不可能写出这个函数）。所以这个函数的正确定义是：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
-    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    open_window ~title:<span class="string">&quot;My Application&quot;</span> ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val open_application : ?width:int -&gt; ?height:int -&gt; unit -&gt; unit -&gt; window =
+  &lt;fun&gt;
 </span></code></pre>
 
 <h3 id="">什么时候该用和不该用 <code>~</code> 和 <code>?</code></h3><p>标签和可选参数的语法想让难理解，你可能会想问什么时候用 <code>~foo</code>，什么时候用 <code>?foo</code>，
@@ -434,7 +450,8 @@ ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre><p>O
 
 <p>或者当你想要去掉<code>option</code>包装的时候：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
-    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    open_window ~title:<span class="string">&quot;My Application&quot;</span> ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val open_application : ?width:int -&gt; ?height:int -&gt; unit -&gt; unit -&gt; window =
+  &lt;fun&gt;
 </span></code></pre>
 
 <p><code>?foo</code> 的声明创建了一个叫 <code>foo</code> 的变量，所以当你需要 <code>?foo</code>的值时，你用 <code>foo</code>。</p>
@@ -477,7 +494,7 @@ main ()
   int fd, n;
   char buffer[256];
 
-  fd = open (&#39;/etc/motd&#39;, O_RDONLY);                     // line 12
+  fd = open (&quot;/etc/motd&quot;, O_RDONLY);                     // line 12
   while ((n = read (fd, buffer, sizeof buffer)) &gt; 0)
     write (1, buffer, n);
   close (fd);                                            // line 15
@@ -555,15 +572,15 @@ constructor的某个类型”。本质上，这些设计都是为了克服语言
 <p>让我们来编写一个打印 <code>lock</code> 状态的函数：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_lock</span> <span class="ocaml-variable">st </span>=
     <span class="keyword">match</span> st <span class="keyword">with</span>
-    | `Open -&gt; print_endline <span class="ocaml-error-loc">'</span>The lock is open'
-    | `Close -&gt; print_endline 'The lock is closed'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | `Open -&gt; print_endline <span class="string">&quot;The lock is open&quot;</span>
+    | `Close -&gt; print_endline <span class="string">&quot;The lock is closed&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_lock : [&lt; `Close | `Open ] -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>注意看这个函数的类型，类型推导知道<code>st</code>参数的类型是 <code>[&lt; `Close | `Open]</code>。
 这个小于号是指这个类型是一个 __关闭的类__。 也就是说这个函数只会应用到 <code>`Close</code> 或者 <code>`Open</code>
 上而不能是其他。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_lock</span> `Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_lock
-Hint: Did you mean print_float?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_lock `Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">The lock is open
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>译者补充例子：请先参照我上面的注加深一下对类型系统的理解。这里的小于号是由于<code>match</code>语句
@@ -571,10 +588,10 @@ Hint: Did you mean print_float?
 小于号变成大于号：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_lock2</span> <span class="ocaml-variable">st </span>=
     <span class="keyword">match</span> st <span class="keyword">with</span>
-    | `Open -&gt; <span class="ocaml-error-loc">'</span>open'
-    | `Close -&gt; 'close'
-    | _ -&gt; 'abc'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_lock2</span> `A</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_lock2
+    | `Open -&gt; <span class="string">&quot;open&quot;</span>
+    | `Close -&gt; <span class="string">&quot;close&quot;</span>
+    | _ -&gt; <span class="string">&quot;abc&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_lock2 : [&gt; `Close | `Open ] -&gt; string = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">print_lock2 `A</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;abc&quot;
 </span></code></pre>
 
 <p>注意到<code>print_lock</code>对于 <code>door</code> 和<code>lock</code> 一样工作！我们已经一定程度上地放弃了类型推导，

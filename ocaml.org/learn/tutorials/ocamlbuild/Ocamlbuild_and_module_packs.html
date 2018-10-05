@@ -174,7 +174,7 @@ API function <code>Pathname.define_context</code>.  Write the following
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
   | After_rules&nbsp;-&gt;
-     <span class="ocaml-module">Pathname</span>.define_context 'otherdir2' ['otherdir1'; 'otherdir2']
+     <span class="ocaml-module">Pathname</span>.define_context <span class="string">&quot;otherdir2&quot;</span> [<span class="string">&quot;otherdir1&quot;</span>; <span class="string">&quot;otherdir2&quot;</span>]
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
 

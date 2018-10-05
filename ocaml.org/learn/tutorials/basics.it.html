@@ -185,21 +185,21 @@ che prende una stringa <code>s</code> ed un numero <code>n</code>, e restituisce
 stringa che contiene la stringa originale <code>s</code> ripetuta <code>n</code> volte.</p>
 <p>Nella maggior parte dei linguaggi derivati da C una chiamata a questa
 funzione apparirà come segue:</p>
-<pre class="C"><code class="C">repeated (&#39;hello&#39;, 3)  /* questo è codice C */</code></pre><p>Questo significa &#39;chiama la funzione <code>repeated</code> con due argomenti, di
-cui il primo è la stringa hello ed il secondo il numero 3&#39;.</p>
+<pre class="C"><code class="C">repeated (&quot;hello&quot;, 3)  /* questo è codice C */</code></pre><p>Questo significa &quot;chiama la funzione <code>repeated</code> con due argomenti, di
+cui il primo è la stringa hello ed il secondo il numero 3&quot;.</p>
 <p>OCaml, in comune con altri linguaggi funzionali, scrive e mette tra
 parentesi le chiamate di funzioni in modo differente, e questo è causa
 di molti errori. Ecco la medesima chiamata di funzione in OCaml:</p>
-<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* questo &egrave; codice OCaml *)</span></code></pre>
+<pre><code class="ocaml">repeated <span class="string">&quot;hello&quot;</span> 3  <span class="comment">(* questo &egrave; codice OCaml *)</span></code></pre>
 
 <p>Notate - <strong>non</strong> vi sono parentesi e <strong>non</strong> vi sono virgole fra gli
 argomenti.</p>
-<p>Ora, cosa che può confondere, <code>repeated (&#39;hello&#39;, 3)</code> <strong>ha</strong> significato
-in OCaml. Significa &#39;chiama la funzione <code>repeated</code> con UN argumento,
-essendo tale argomento una struttura &#39;coppia&#39; di due&#39;. Naturalmente
+<p>Ora, cosa che può confondere, <code>repeated (&quot;hello&quot;, 3)</code> <strong>ha</strong> significato
+in OCaml. Significa &quot;chiama la funzione <code>repeated</code> con UN argumento,
+essendo tale argomento una struttura &#39;coppia&#39; di due&quot;. Naturalmente
 questo sarebbe un errore, poiché la funzione <code>repeated</code> si aspetta due
 argomenti, non uno soltanto, ed in ogni caso il primo argomento è una
-stringa, non una coppia. Ma non preoccupiamoci delle coppie (&#39;tuple&#39;)
+stringa, non una coppia. Ma non preoccupiamoci delle coppie (&quot;tuple&quot;)
 per ora. Invece, ricordate soltanto che è un errore mettere parentesi e
 virgole intorno agli argomenti di una chiamata di funzione e fra di
 essi.</p>
@@ -208,18 +208,18 @@ una stringa da terminale e restituisce la stringa digitata dall&#39;utente.
 Vogliamo passare questa stringa in <code>repeated</code>. Seguono le versioni C e
 OCaml:</p>
 <pre class="C"><code class="C">/* codice C: */
-repeated (get_string_from_user (&#39;Si inserisca una stringa.&#39;), 3)</code></pre>
+repeated (get_string_from_user (&quot;Si inserisca una stringa.&quot;), 3)</code></pre>
 <pre><code class="ocaml"><span class="comment">(* codice OCaml: *)</span>
-repeated (get_string_from_user 'Si inserisca una stringa.') 3</code></pre>
+repeated (get_string_from_user <span class="string">&quot;Si inserisca una stringa.&quot;</span>) 3</code></pre>
 
 <p>Guardate con attenzione la posizione delle parentesi e la mancanza di
-virgole. In generale la regola è: &#39;parentesi intorno all&#39;intera chiamata
+virgole. In generale la regola è: &quot;parentesi intorno all&#39;intera chiamata
 di funzione - non mettere parentesi intorno agli argomenti ad una
-chiamata di funzione&#39;. Seguono ulteriori esempi:</p>
-<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f ha tre argomenti, g ha un argomento *)</span>
+chiamata di funzione&quot;. Seguono ulteriori esempi:</p>
+<pre><code class="ocaml">f 5 (g <span class="string">&quot;hello&quot;</span>) 3    <span class="comment">(* f ha tre argomenti, g ha un argomento *)</span>
 f (g 3 4)            <span class="comment">(* f ha un argomento, g ha due argomenti *)</span>
 
-# repeated ('hello', 3);;     <span class="comment">(* OCaml segnaler&agrave; l'errore *)</span>
+# repeated (<span class="string">&quot;hello&quot;</span>, 3);;     <span class="comment">(* OCaml segnaler&agrave; l'errore *)</span>
 This expression has <span class="governing">type</span> string * int but is here used <span class="keyword">with</span> <span class="governing">type</span> <span class="type">string</span></code></pre>
 
 <h2 id="Definire-una-funzione">Definire una funzione</h2><p>Tutti voi sapete come definire una funzione (o un metodo statico, per
@@ -230,7 +230,7 @@ prende due numeri floating point e ne calcola la media:</p>
     (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
 </span></code></pre>
 
-<p>Scrivete questo nel &#39;toplevel&#39; di OCaml (su Unix, scrivete il comando
+<p>Scrivete questo nel &quot;toplevel&quot; di OCaml (su Unix, scrivete il comando
 <code>ocaml</code> dalla shell) e vedrete così:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
     (a +. b) /. 2.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val average : float -&gt; float -&gt; float = &lt;fun&gt;
@@ -272,7 +272,7 @@ Probabilmente chiederete:</p>
 </li><li><p>OCaml non fa alcun cast implicito. Se volete un float, dovete
  scrivere <code>2.0</code> poiché <code>2</code> è un intero.</p>
 </li><li><p>Poiché OCaml non fa cast impliciti, ha operatori differenti per
- significare &#39;somma due interi&#39; (che è <code>+</code>) ovvero &#39;somma due float&#39;
+ significare &quot;somma due interi&quot; (che è <code>+</code>) ovvero &quot;somma due float&quot;
  (che è <code>+.</code> - si noti il punto in coda). E così per gli altri
  operatori aritmetici.</p>
 </li><li><p>OCaml restituisce l&#39;ultima espressione in una funzione, quindi non
@@ -327,8 +327,8 @@ questo errore:</p>
          int
 </span></code></pre>
 
-<p>(Nel linguaggio &#39;tradotto dal francese&#39; dei messaggi di errore di OCaml
-questo significa &#39;hai messo qui un float, ma aspettavo un int&#39;).</p>
+<p>(Nel linguaggio &quot;tradotto dal francese&quot; dei messaggi di errore di OCaml
+questo significa &quot;hai messo qui un float, ma aspettavo un int&quot;).</p>
 <p>Per sommare insieme due float dovete utilizzare un operatore differente,
 <code>+.</code> (si noti il punto in coda).</p>
 <p>OCaml non promuove gli int a float automaticamente, quindi è un errore
@@ -393,7 +393,7 @@ prende gli argomenti <code>arg1</code>, <code>arg2</code>, ... <code>argn</code>
 <pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
 
 <p>La sintassi con le frecce sembrerà ora strana, ma quando più tardi
-verremo al cosiddetto &#39;currying&#39; vedrete perché è stata scelta. Per ora
+verremo al cosiddetto &quot;currying&quot; vedrete perché è stata scelta. Per ora
 vi darò soltanto degli esempi.</p>
 <p>La nostra funzione <code>repeated</code> che prende una stringa e un intero e
 restituisce una stringa ha tipo:</p>
@@ -417,13 +417,13 @@ prende un argomento, ma semplicemente lo ignora e restituisce sempre 3:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3;;</code></pre>
 
 <p>Qual è il tipo di questa funzione? In OCaml utilizziamo uno speciale
-segnaposto per significare &#39;qualsiasi tipo voi immaginiate&#39;. È un
+segnaposto per significare &quot;qualsiasi tipo voi immaginiate&quot;. È un
 carattere di virgoletta singola (NdT: un apice) seguito da una lettera.
 Il tipo della funzione sopra sarebbe normalmente scritto:</p>
 <pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
 
 <p>Dove <code>&#39;a</code> significa in realtà qualsiasi tipo. Potete, ad esempio,
-chiamare questa funzione come <code>give_me_a_three &#39;foo&#39;</code> o
+chiamare questa funzione come <code>give_me_a_three &quot;foo&quot;</code> o
 <code>give_me_a_three 2.0</code> ed entrambe sarebbero espressioni valide in OCaml.</p>
 <p>Ancora non sarà chiaro perché le funzioni polimorfiche sono utili, ma
 esse sono molto utili e molto comuni, e quindi ne discuteremo più tardi.
@@ -435,9 +435,9 @@ ha tutte queste Cartteristiche Veramente Fiche infilate dentro insieme,
 il che lo rende dunque un linguaggio molto pratico da usare per veri
 programmatori. Ma la cosa strana è che la maggior parte di queste
 caratteristiche fiche non hanno proprio nulla a che fare con la
-&#39;programmazione funzionale&#39;. Difatti, sono giunto alla prima
+&quot;programmazione funzionale&quot;. Difatti, sono giunto alla prima
 Caratteristica Veramente Fica, e non ho ancora parlato del perché la
-programmazione funzionale è chiamata &#39;funzionale&#39;. Ad ogni modo, ecco la
+programmazione funzionale è chiamata &quot;funzionale&quot;. Ad ogni modo, ecco la
 prima Caratteristica Veramente Fica: l&#39;inferenza dei tipi.</p>
 <p>Metti e basta: non devi dichiarare i tipi delle tue funzioni e
 variabili, poiché OCaml semplicemente li ricaverà per te.</p>

@@ -148,27 +148,27 @@ simplifying many common stream-oriented tasks.</p>
 <h2 id="Interactive-Use">Interactive Use</h2><p>To enable stream expression support in the
 <a href="basics.html">interactive toplevel</a>, you can type the
 following:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>dynlink.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>camlp4o.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span></code></pre>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;dynlink.cma&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;camlp4o.cma&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span></code></pre>
 
 <p>Or, if you are using findlib:</p>
-<pre><code class="ocaml">#use 'topfind'<span class="ocaml-prompt">;;</span><br/>#camlp4o;;</code></pre>
+<pre><code class="ocaml">#use <span class="string">&quot;topfind&quot;</span><span class="ocaml-prompt">;;</span><br/>#camlp4o;;</code></pre>
 
 <h2 id="Stream-Literals">Stream Literals</h2><p>Stream expressions are enclosed by <code>[&lt;</code> and <code>\&gt;]</code> brackets, and using
 them is a lot like using lists. The simplest stream possible is the
 empty stream:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">[&lt;</span> &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">[&lt; &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">    Camlp4 Parsing version 4.06.1
+
+</span><span class="ocaml-stderr"></span>- : 'a Stream.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>Literal values in stream expressions are prefixied by single-quotes:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">more_numbers</span> = <span class="ocaml-error-loc">[&lt;</span> '1; '2; '(1 + 2) &gt;]
-     <span class="comment">(* Equivalent <span class="keyword">to</span> <span class="ocaml-module">Stream</span>.of_list [1; 2; 3] *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">more_numbers</span> = [&lt; '1; '2; '(1 + 2) &gt;]
+     <span class="comment">(* Equivalent <span class="keyword">to</span> <span class="ocaml-module">Stream</span>.of_list [1; 2; 3] *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val more_numbers : int Stream.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>This is to distinguish them from streams, which are automatically
 concatenated:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">[&lt;</span> '1; '2; more_numbers; '99 &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">[&lt; '1; '2; more_numbers; '99 &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int Stream.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>In the above example, the stream will produce the integers 1 and 2,
@@ -179,39 +179,39 @@ straightforward and familiar mechanism to produce infinite sequences.
 The following defines an never-ending stream of 1s:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">ones</span> =
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">aux</span> <span class="ocaml-variable">() </span>=
-      <span class="ocaml-error-loc">[&lt;</span> '1; aux () &gt;] <span class="governing">in</span>
-    aux ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+      [&lt; '1; aux () &gt;] <span class="governing">in</span>
+    aux ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val ones : int Stream.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>Note the auxiliary function, <code>aux</code>, which is called recursively to form
 a loop. This is necessarily different from infinite lists, which can be
-defined with &#39;let rec&#39; without a helper function:</p>
+defined with &quot;let rec&quot; without a helper function:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">rec</span> <span class="ocaml-variable">ones </span>= 1 :: ones</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val ones : int list = [1; &lt;cycle&gt;]
 </span></code></pre>
 
 <p>The stream expression syntax is not able to interpret recursive values
 like this, and attempts to do this will result in an error:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">rec</span> <span class="ocaml-variable">ones </span>= <span class="ocaml-error-loc">[&lt;</span> '1; ones &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">rec</span> <span class="ocaml-variable">ones </span>= [&lt; <span class="ocaml-error-loc">'1</span>; ones &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This kind of expression is not allowed as right-hand side of `let rec'
 </span></code></pre>
 
 <p>This is only a minor inconvenience, since most streams will be built
 from one or more parameters. For example, here is the <code>const_stream</code>
 from the <a href="streams.html" title="Streams">Streams</a> chapter, redefined using
 stream expression syntax:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">const_stream</span> <span class="ocaml-variable">k </span>= <span class="ocaml-error-loc">[&lt;</span> 'k; const_stream k &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">const_stream</span> <span class="ocaml-variable">k </span>= [&lt; 'k; const_stream k &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val const_stream : 'a -&gt; 'a Stream.t = &lt;fun&gt;
 </span></code></pre>
 
 <p>Similarly, this simple one-liner is all it takes to produce a counter:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">count_stream</span> <span class="ocaml-variable">i </span>= <span class="ocaml-error-loc">[&lt;</span> 'i; count_stream (i + 1) &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">count_stream</span> <span class="ocaml-variable">i </span>= [&lt; 'i; count_stream (i + 1) &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val count_stream : int -&gt; int Stream.t = &lt;fun&gt;
 </span></code></pre>
 
 <p>Below is a slightly more complicated example, using two stream
 expressions to define a Fibonacci sequence:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">fib</span> =
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">aux</span> <span class="ocaml-variable">a b </span>=
-      <span class="ocaml-error-loc">[&lt;</span> '(a + b); aux b (a + b) &gt;] <span class="governing">in</span>
-    [&lt; '0; '1; aux 0 1 &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.npeek 10 <span class="ocaml-error-loc">fib</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value fib
+      [&lt; '(a + b); aux b (a + b) &gt;] <span class="governing">in</span>
+    [&lt; '0; '1; aux 0 1 &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fib : int Stream.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.npeek 10 fib</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [0; 1; 1; 2; 3; 5; 8; 13; 21; 34]
 </span></code></pre>
 
 <h2 id="Example-Directory-walker">Example: Directory walker</h2><p>As a more practical example, we can define a recursive directory walker
@@ -231,10 +231,13 @@ that avoids loading the entire directory tree into memory:</p>
     <span class="ocaml-module">Array</span>.fold_right
       (<span class="keyword">fun</span> item rest -&gt;
          <span class="keyword">match</span> item <span class="keyword">with</span>
-         | `Dir path -&gt; <span class="ocaml-error-loc">[&lt;</span> 'item; walk path; rest &gt;]
+         | `Dir path -&gt; [&lt; 'item; walk path; rest &gt;]
          | _ -&gt; [&lt; 'item; rest &gt;])
       items
-      [&lt; &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+      [&lt; &gt;]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val walk :
+  string -&gt;
+  [&gt; `Dir of string | `Error of string * exn | `File of string ] Stream.t =
+  &lt;fun&gt;
 </span></code></pre>
 
 <p>This function works by first assembling an array of paths for the
@@ -258,13 +261,18 @@ and files underneath
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> () =
     <span class="ocaml-module">Stream</span>.iter
       (function
-       | `Dir path -&gt;  <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>dir: %s%!\n' path
-       | `File path -&gt; <span class="ocaml-module">Printf</span>.printf 'file: %s%!\n' path
+       | `Dir path -&gt;  <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;dir: %s%!\n&quot;</span> path
+       | `File path -&gt; <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;file: %s%!\n&quot;</span> path
        | `Error (path, e) -&gt;
-           <span class="ocaml-module">Printf</span>.printf 'error: %s (%s)%!\n' path
+           <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;error: %s (%s)%!\n&quot;</span> path
              (<span class="ocaml-module">Printexc</span>.to_string e))
-      (walk 'site/caml-light')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
-</span></code></pre>
+      (walk <span class="string">&quot;site/caml-light&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">file: site/caml-light/license.md
+dir: site/caml-light/releases
+file: site/caml-light/releases/0.75.md
+file: site/caml-light/releases/index.md
+file: site/caml-light/faq.md
+file: site/caml-light/index.md
+</span><span class="ocaml-stderr"></span></span></code></pre>
 
       </div>
     </div>

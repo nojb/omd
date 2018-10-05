@@ -157,7 +157,7 @@
          int
 </span></code></pre>
 
-<p>&#39;This expression has type <em>X</em> but is here used with type <em>Y</em>&#39; 的意思是
+<p>&quot;This expression has type <em>X</em> but is here used with type <em>Y</em>&quot; 的意思是
 如果一个表达式的内容是隔离的 (2.5)，那么它的类型可以推导成 <em>X</em> (float)。但是上下文
 告诉我们 (1 + ...) 应该是类型 <em>Y</em>
 (int) 的，因而与 <em>X</em> 不匹配。</p>
@@ -242,7 +242,7 @@ variable y may match different arguments. (See manual section 8.5)
 
 <h3 id="This-pattern-matching-is-not-exhaustive">This pattern-matching is not exhaustive</h3><p>OCaml&#39;s pattern matching can check whether a set of patterns is
 exhaustive or not, based on the <em>type</em> only. So in the following
-example, the compiler doesn&#39;t know what range of ints the &#39;mod&#39; operator
+example, the compiler doesn&#39;t know what range of ints the &quot;mod&quot; operator
 would return:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">is_even</span> <span class="ocaml-variable">x </span>=
     <span class="keyword"><span class="ocaml-error-loc">match</span></span><span class="ocaml-error-loc"> x mod 2 </span><span class="keyword"><span class="ocaml-error-loc">with</span></span><span class="ocaml-error-loc">
@@ -277,8 +277,9 @@ sufficient to solve this problem.</p>
 strings since they should be doubled. Such a message may be displayed
 when compiling an older program, and can be turned off with the <code>-w x</code>
 option.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\e</span>\n' <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\e)
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\\</span>e\n' <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\\)
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;<span class="ocaml-error-loc">\e</span>\n&quot;</span> <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 14: illegal backslash escape in string.
+</span>- : string = &quot;\\e\n&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;\\e\n&quot;</span> <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;\\e\n&quot;
 </span></code></pre>
 
       </div>

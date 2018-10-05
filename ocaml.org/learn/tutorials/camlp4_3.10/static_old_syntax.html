@@ -130,14 +130,14 @@
 <pre><code class="ocaml"><span class="governing">type</span> <span class="type">t1</span> = A | B
 <span class="governing">type</span> <span class="type">t2</span> = Foo <span class="keyword">of</span> string * t1
 <span class="governing">module</span> <span class="ocaml-module">Gram</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Grammar</span>.GMake(...)
-<span class="governing">let </span><span class="ocaml-variable">foo</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk 'foo'
-<span class="governing">let </span><span class="ocaml-variable">bar</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk 'bar'
+<span class="governing">let </span><span class="ocaml-variable">foo</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk <span class="string">&quot;foo&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">bar</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk <span class="string">&quot;bar&quot;</span>
 <span class="governing">let</span> () =
   GEXTEND Gram
     GLOBAL: foo bor;
-    foo: [ [ 'foo'; i = LIDENT; b = bar -&gt; Foo(i, b) ] ];
-    bar: [ [ <span class="string">'?'</span> -&gt; A | <span class="string">'.'</span> -&gt; B ] ];
-  END<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.parse foo (<span class="ocaml-module">Stream</span>.of_string 'foo x?') = Foo(<span class="string">'x'</span>, A)<span class="ocaml-prompt">;;</span><br/>GDELETE_RULE Gram foo: 'foo'; LIDENT; bar END</code></pre>
+    foo: [ [ <span class="string">&quot;foo&quot;</span>; i = LIDENT; b = bar -&gt; Foo(i, b) ] ];
+    bar: [ [ <span class="string">&quot;?&quot;</span> -&gt; A | <span class="string">&quot;.&quot;</span> -&gt; B ] ];
+  END<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.parse foo (<span class="ocaml-module">Stream</span>.of_string <span class="string">&quot;foo x?&quot;</span>) = Foo(<span class="string">&quot;x&quot;</span>, A)<span class="ocaml-prompt">;;</span><br/>GDELETE_RULE Gram foo: <span class="string">&quot;foo&quot;</span>; LIDENT; bar END</code></pre>
 
       </div>
     </div>

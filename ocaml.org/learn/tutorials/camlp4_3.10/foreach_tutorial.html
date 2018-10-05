@@ -157,9 +157,9 @@ difference between LL, LR and LALR parsers is a plus.</p>
 pre-processor pretty-printer that lets you add syntactic sugar to the
 language without rewriting the entire grammar from scratch. A syntactic
 sugar is a language construct that can be decomposed to an existing
-construct. For example, OCaml doesn&#39;t have a &#39;for-each&#39; syntax, which
+construct. For example, OCaml doesn&#39;t have a &quot;for-each&quot; syntax, which
 can be illustrated by the following Python code:</p>
-<pre class="python"><code class="python">a_list = [&#39;hello&#39;, &#39;world&#39;]
+<pre class="python"><code class="python">a_list = [&quot;hello&quot;, &quot;world&quot;]
 for s in a_list:
   print s</code></pre>
 
@@ -169,28 +169,28 @@ world</code></pre>
 
 <p>However, that doesn&#39;t mean OCaml can&#39;t support iterators! As it turns
 out, many modules in OCaml that define a data structure also provide an
-&#39;iter&#39; higher-order function that works similarly:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a_list</span> = ['hello'; 'world'] <span class="governing">in</span>
+&quot;iter&quot; higher-order function that works similarly:</p>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a_list</span> = [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>] <span class="governing">in</span>
 <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; print_endline s) a_list</code></pre>
 
-<p>Besides <code>List</code>, other modules that provide &#39;iter&#39; are
+<p>Besides <code>List</code>, other modules that provide &quot;iter&quot; are
 <code>Array</code>, <code>Hashtbl</code>, <code>Map.Make(*)</code>,
 <code>Queue</code>, <code>Set.Make(*)</code>, <code>Stack</code>, and
 even <code>String</code>. Wouldn&#39;t it be nice if one can write:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a_list</span> = ['hello'; 'world'] <span class="governing">in</span>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a_list</span> = [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>] <span class="governing">in</span>
 <span class="keyword">for</span> s <span class="governing">in</span> a_list <span class="keyword">do</span>
   print_endline s
 <span class="keyword">done</span></code></pre>
 
 <p>instead? Imagine a long for-each body; this style of writing puts the
-&#39;each&#39; variable and the list next to each other, which results in
+&quot;each&quot; variable and the list next to each other, which results in
 cleaner code.</p>
 <p>The idea is to transform the latter code into former, leveraging the
 <code>iter</code> function provided by these modules.</p>
 <p>Notice that we can&#39;t generally look up a module specific <code>iter</code> function
 by the type of the expression we want to iterate over, so we have to
 specify a module like this:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a_list</span> = ['hello'; 'world'] <span class="governing">in</span>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">a_list</span> = [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>] <span class="governing">in</span>
 <span class="keyword">for</span> s <span class="governing">in</span> List a_list <span class="keyword">do</span>
   print_endline s
 <span class="keyword">done</span></code></pre>
@@ -212,9 +212,9 @@ the following:</p>
 
 <span class="governing">let</span> () =
   EXTEND Gram
-    expr: LEVEL 'top'
-    [ [ '<span class="keyword">for</span>'; v = a_LIDENT; '<span class="governing">in</span>'; m = a_UIDENT; e = expr; '<span class="keyword">do</span>';
-        seq = sequence; '<span class="keyword">done</span>' -&gt;
+    expr: LEVEL <span class="string">&quot;top&quot;</span>
+    [ [ <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; v = a_LIDENT; <span class="string">&quot;<span class="governing">in</span>&quot;</span>; m = a_UIDENT; e = expr; <span class="string">&quot;<span class="keyword">do</span>&quot;</span>;
+        seq = sequence; <span class="string">&quot;<span class="keyword">done</span>&quot;</span> -&gt;
           &lt;:expr&lt; $uid:m$.iter (<span class="keyword">fun</span> $lid:v$ -&gt; $seq$) $e$ &gt;&gt;
       ] ];
   END</code></pre>
@@ -248,19 +248,20 @@ reflected in the camlp4 executable that we use here,
 <a href="http://brion.inria.fr/gallium/index.php/Using_Camlp4">Using Camlp4</a>
 for the explanation and additional options.</p>
 <p>We can verify that it works:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>camlp4o.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Add directory where the syntax extension is compiled <span class="keyword">to</span> the module
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;camlp4o.cma&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Add directory where the syntax extension is compiled <span class="keyword">to</span> the module
      path (not required <span class="keyword">if</span> pa_foreach.cmo is <span class="governing">in</span> the current directory). *)</span>
-  #directory <span class="ocaml-error-loc">'</span>site/learn/tutorials/camlp4_3.10/'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>pa_foreach.cmo'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> s <span class="governing"><span class="ocaml-error-loc">in</span></span><span class="ocaml-error-loc"></span> List ['hello'; 'world'] <span class="keyword">do</span> print_endline s <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  #directory <span class="string">&quot;site/learn/tutorials/camlp4_3.10/&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">    Camlp4 Parsing version 4.06.1
+
+</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;pa_foreach.cmo&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> s <span class="governing">in</span> List [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>] <span class="keyword">do</span> print_endline s <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">hello
+world
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Now we have a rudimentary syntax extension. However, it is quite
 restrictive. For example, it would be nice to do pattern matching like
 this:</p>
-<pre><code class="ocaml"><span class="keyword">for</span> (k, v) <span class="governing">in</span> List [(0, 'hello'); (1, 'world')] <span class="keyword">do</span>
-  <span class="ocaml-module">Printf</span>.printf '%d: %s\n' k v
+<pre><code class="ocaml"><span class="keyword">for</span> (k, v) <span class="governing">in</span> List [(0, <span class="string">&quot;hello&quot;</span>); (1, <span class="string">&quot;world&quot;</span>)] <span class="keyword">do</span>
+  <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d: %s\n&quot;</span> k v
 <span class="keyword">done</span></code></pre>
 
 <p>It doesn&#39;t support <code>Hashtbl.iter</code> yet because, so far, we
@@ -287,7 +288,7 @@ files in the source distribution under
 <p>From these files, we can see that <code>ipatt</code> rule supplies what
 we want for matching patterns, and <code>LIST1</code> modifier allows us
 to take one or more patterns. There is also a <code>LIST0</code>
-modifier for &#39;zero or more&#39; matching.  Here is our second version,
+modifier for &quot;zero or more&quot; matching.  Here is our second version,
 <a href="pa_foreach2.ml">pa_foreach2.ml</a>, of the syntax extension:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Camlp4</span>.<span class="ocaml-module">PreCast</span>
 <span class="governing">open</span> <span class="ocaml-module">Syntax</span>
@@ -301,9 +302,9 @@ modifier for &#39;zero or more&#39; matching.  Here is our second version,
   
 <span class="governing">let</span> () =
   EXTEND Gram
-    expr: LEVEL 'top'
-    [ [ '<span class="keyword">for</span>'; patts = LIST1 ipatt; '<span class="governing">in</span>'; m = a_UIDENT; e = expr; '<span class="keyword">do</span>';
-        seq = sequence; '<span class="keyword">done</span>' -&gt;
+    expr: LEVEL <span class="string">&quot;top&quot;</span>
+    [ [ <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; patts = LIST1 ipatt; <span class="string">&quot;<span class="governing">in</span>&quot;</span>; m = a_UIDENT; e = expr; <span class="string">&quot;<span class="keyword">do</span>&quot;</span>;
+        seq = sequence; <span class="string">&quot;<span class="keyword">done</span>&quot;</span> -&gt;
           <span class="governing">let </span><span class="ocaml-variable">f</span> = mkfun _loc patts seq <span class="governing">in</span>
           &lt;:expr&lt; $uid:m$.iter $f$ $e$ &gt;&gt;
       ] ];
@@ -321,20 +322,24 @@ generates, for patterns <code>patt1</code> ... <code>pattN</code>,</p>
 <p>We can verify that pattern works:</p>
 <pre><code>ocamlc -I +camlp4 camlp4lib.cma -pp camlp4orf -c pa_foreach2.ml</code></pre>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>pa_foreach2.cmo'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> (k, v) <span class="governing"><span class="ocaml-error-loc">in</span></span><span class="ocaml-error-loc"></span> List [(0, 'hello'); (1, 'world')] <span class="keyword">do</span>
-    <span class="ocaml-module">Printf</span>.printf '%d: %s\n' k v
-  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;pa_foreach2.cmo&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> (k, v) <span class="governing">in</span> List [(0, <span class="string">&quot;hello&quot;</span>); (1, <span class="string">&quot;world&quot;</span>)] <span class="keyword">do</span>
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d: %s\n&quot;</span> k v
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">0: hello
+1: world
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>and that multiple arguments work:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">tbl</span> = <span class="ocaml-module">Hashtbl</span>.create 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val tbl : ('_weak1, '_weak2) Hashtbl.t = &lt;abstr&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add tbl 0 <span class="ocaml-error-loc">'</span>hello';
-  <span class="ocaml-module">Hashtbl</span>.add tbl 1 'world';
-  <span class="ocaml-module">Hashtbl</span>.add tbl 2 'foobar'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> k <span class="ocaml-error-loc">v</span> <span class="governing">in</span> Hashtbl tbl <span class="keyword">do</span>
-    <span class="ocaml-module">Printf</span>.printf '%d: %s\n' k v
-  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add tbl 0 <span class="string">&quot;hello&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add tbl 1 <span class="string">&quot;world&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add tbl 2 <span class="string">&quot;foobar&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> k v <span class="governing">in</span> Hashtbl tbl <span class="keyword">do</span>
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d: %s\n&quot;</span> k v
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">2: foobar
+0: hello
+1: world
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>There are still some subtle problems with this approach. In the next
@@ -343,12 +348,12 @@ section, we&#39;ll discuss solutions to these problems.</p>
 
 <p>The first problem we find out is that foreach body is supposed to be a
 sequence, but that doesn&#39;t work:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> s <span class="governing"><span class="ocaml-error-loc">in</span></span><span class="ocaml-error-loc"></span> List ['hello'; 'world'] <span class="keyword">do</span> print_endline s; () <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> s <span class="governing">in</span> List [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>] <span class="keyword">do</span> <span class="ocaml-error-loc">print_endline s; ()</span> <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error:Failure: &quot;expr; expr: not allowed here, use do {...} or [|...|] to surround them&quot;
 </span></code></pre>
 
 
 <p>The problem is due to the desugared form, which becomes:</p>
-<pre><code class="ocaml"><span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; print_endline s; ()) ['hello'; 'world']</code></pre>
+<pre><code class="ocaml"><span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; print_endline s; ()) [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>]</code></pre>
 
 <p>and this is ambiguous. Do we interpret the expression 
 <code>fun s -&gt; print_endline s; ()</code> as 
@@ -363,7 +368,7 @@ to handle this.</p>
 <a href="http://caml.inria.fr/pub/ml-archives/caml-list/2007/07/40966461d8ade5dcee6790fa32cc9983.en.html">this post</a>
 by Nicolas Pouillard for a discussion of a similar issue.</p>
 <p>We also notice that the original for-loop syntax ceases working:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 0 <span class="keyword">to</span> 5 <span class="keyword">do</span> print_int i <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">012345</span><span class="ocaml-stderr"></span>- : unit = ()
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> <span class="ocaml-error-loc">i</span> = 0 <span class="keyword">to</span> 5 <span class="keyword">do</span> print_int i <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error:Parse error: [ipatt] or &quot;in&quot; expected (in [expr])
 </span></code></pre>
 
 
@@ -387,49 +392,49 @@ these issues can be found below:</p>
 <span class="governing">let</span> <span class="ocaml-function">lident_of_patt</span> <span class="ocaml-variable">p </span>=
   <span class="keyword">match</span> p <span class="keyword">with</span>
   | &lt;:patt&lt; $lid:i$ &gt;&gt; -&gt; i
-  | _ -&gt; invalid_arg 'lident_of_patt'
+  | _ -&gt; invalid_arg <span class="string">&quot;lident_of_patt&quot;</span>
 
 <span class="governing">let</span> () =
   DELETE_RULE Gram
   expr:
-    '<span class="keyword">for</span>'; a_LIDENT; <span class="string">'='</span>; sequence; direction_flag; sequence;
-    '<span class="keyword">do</span>'; do_sequence
+    <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; a_LIDENT; <span class="string">&quot;=&quot;</span>; sequence; direction_flag; sequence;
+    <span class="string">&quot;<span class="keyword">do</span>&quot;</span>; do_sequence
   END;
 
   EXTEND Gram
-  expr: LEVEL 'top'
-    [ [ '<span class="keyword">for</span>'; i = ipatt; <span class="string">'='</span>; e1 = sequence; df = direction_flag;
-        e2 = sequence; '<span class="keyword">do</span>'; seq = do_sequence -&gt;
+  expr: LEVEL <span class="string">&quot;top&quot;</span>
+    [ [ <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; i = ipatt; <span class="string">&quot;=&quot;</span>; e1 = sequence; df = direction_flag;
+        e2 = sequence; <span class="string">&quot;<span class="keyword">do</span>&quot;</span>; seq = do_sequence -&gt;
          &lt;:expr&lt;
            <span class="keyword">for</span> $lident_of_patt i$ =
              $mksequence _loc e1$ $<span class="keyword">to</span>:df$ $mksequence _loc e2$
              <span class="keyword">do</span> $seq$ <span class="keyword">done</span>
          &gt;&gt;
-      | '<span class="keyword">for</span>'; p = ipatt; patts = LIST0 ipatt; '<span class="governing">in</span>';
-        m = a_UIDENT; e = expr; '<span class="keyword">do</span>'; seq = do_sequence -&gt;
+      | <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; p = ipatt; patts = LIST0 ipatt; <span class="string">&quot;<span class="governing">in</span>&quot;</span>;
+        m = a_UIDENT; e = expr; <span class="string">&quot;<span class="keyword">do</span>&quot;</span>; seq = do_sequence -&gt;
          <span class="governing">let </span><span class="ocaml-variable">patts</span> = p :: patts <span class="governing">in</span>
          <span class="governing">let </span><span class="ocaml-variable">f</span> = mkfun _loc patts seq <span class="governing">in</span>
          &lt;:expr&lt; $uid:m$.iter $f$ $e$ &gt;&gt;
       ] ];
   END</code></pre>
 
-<p>In order for alternative rules to &#39;fall through&#39; correctly, rules must
+<p>In order for alternative rules to &quot;fall through&quot; correctly, rules must
 share a common prefix, and the rest of the non-terminals must be
-distinct enough. The way we structured the &#39;for&#39; syntax before, we
+distinct enough. The way we structured the &quot;for&quot; syntax before, we
 essentially have the following two rules:</p>
 <pre><code class="ocaml">EXTEND Gram
-  expr: LEVEL 'top'
-    [ [ '<span class="keyword">for</span>'; patts = LIST1 ipatt; '<span class="governing">in</span>'; m = a_UIDENT; e = expr;
-       '<span class="keyword">do</span>'; seq = do_sequence -&gt;
+  expr: LEVEL <span class="string">&quot;top&quot;</span>
+    [ [ <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; patts = LIST1 ipatt; <span class="string">&quot;<span class="governing">in</span>&quot;</span>; m = a_UIDENT; e = expr;
+       <span class="string">&quot;<span class="keyword">do</span>&quot;</span>; seq = do_sequence -&gt;
          <span class="comment">(* ... *)</span>
-      | '<span class="keyword">for</span>'; i = a_LIDENT; <span class="string">'='</span>; e1 = sequence; df = direction_flag;
-       e2 = sequence; '<span class="keyword">do</span>'; seq = do_sequence -&gt;
+      | <span class="string">&quot;<span class="keyword">for</span>&quot;</span>; i = a_LIDENT; <span class="string">&quot;=&quot;</span>; e1 = sequence; df = direction_flag;
+       e2 = sequence; <span class="string">&quot;<span class="keyword">do</span>&quot;</span>; seq = do_sequence -&gt;
          <span class="comment">(* ... *)</span>
       ] ]
   ;
 END</code></pre>
 
-<p>Once the &#39;for&#39; keyword is matched, the parser proceeds to match the next
+<p>Once the &quot;for&quot; keyword is matched, the parser proceeds to match the next
 token, but <code>ipatt</code> also matches <code>a_LIDENT</code> (a
 lowercase identifier is also a legal pattern). At this point, the parser
 fixes on a rule (whichever comes first) and no longer backtracks to the
@@ -439,16 +444,22 @@ alternative option.</p>
 <p>We can now verify that everything works as expected.</p>
 <pre><code>$ ocamlc -I +camlp4 camlp4lib.cma -pp camlp4orf -c pa_foreach3.ml</code></pre>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>pa_foreach3.cmo'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;pa_foreach3.cmo&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Delete.Rule_not_found _.
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">tbl</span> = <span class="ocaml-module">Hashtbl</span>.create 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val tbl : ('_weak3, '_weak4) Hashtbl.t = &lt;abstr&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add tbl 0 <span class="ocaml-error-loc">'</span>hello';
-  <span class="ocaml-module">Hashtbl</span>.add tbl 1 'world';
-  <span class="ocaml-module">Hashtbl</span>.add tbl 2 'foo'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> k <span class="ocaml-error-loc">v</span> <span class="governing">in</span> Hashtbl tbl <span class="keyword">do</span> <span class="ocaml-module">Printf</span>.printf '%d: %s\n' k v <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> i = 0 <span class="keyword">to</span> 5 <span class="keyword">do</span> print_int i <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">012345</span><span class="ocaml-stderr"></span>- : unit = ()
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> k, v <span class="governing"><span class="ocaml-error-loc">in</span></span><span class="ocaml-error-loc"></span> List [0, 'hello'; 1, 'world'; 2, 'foo'] <span class="keyword">do</span>
-    <span class="ocaml-module">Printf</span>.printf '%d: %s\n' k v
-  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: pattern expected.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add tbl 0 <span class="string">&quot;hello&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add tbl 1 <span class="string">&quot;world&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add tbl 2 <span class="string">&quot;foo&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> k v <span class="governing">in</span> Hashtbl tbl <span class="keyword">do</span> <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d: %s\n&quot;</span> k v <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">2: foo
+0: hello
+1: world
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> <span class="ocaml-error-loc">i</span> = 0 <span class="keyword">to</span> 5 <span class="keyword">do</span> print_int i <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error:Parse error: [ipatt] or &quot;in&quot; expected (in [expr])
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">for</span> k, v <span class="governing">in</span> List [0, <span class="string">&quot;hello&quot;</span>; 1, <span class="string">&quot;world&quot;</span>; 2, <span class="string">&quot;foo&quot;</span>] <span class="keyword">do</span>
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d: %s\n&quot;</span> k v
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">0: hello
+1: world
+2: foo
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h2 id="Conclusion">Conclusion</h2>

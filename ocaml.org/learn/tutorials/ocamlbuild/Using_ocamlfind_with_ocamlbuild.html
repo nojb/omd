@@ -144,8 +144,8 @@
 <p>There are many ways to make ocamlbuild use ocamlfind. The first section
 gives the simplest one, starting from ocamlfind 3.12. The second section
 gives a generic <a href="Making_plugins.html">plugin</a> which replaces the
-&#39;ocamlc&#39;, &#39;ocamldep&#39;... commands with ocamlfind equivalents. The third
-shows how to call &#39;ocamlfind query&#39; from a
+&quot;ocamlc&quot;, &quot;ocamldep&quot;... commands with ocamlfind equivalents. The third
+shows how to call &quot;ocamlfind query&quot; from a
 <a href="Making_plugins.html">plugin</a>.</p>
 <h2 id="Simple-tag-from-3-12">Simple tag (from 3.12)</h2><p>Starting with version 3.12, the support of <em>ocamlfind</em> is native in
 <em>ocamlbuild</em>. To activate it, you need to pass the command line option
@@ -156,13 +156,13 @@ predicates can be activated with the <code>predicate(...)</code> tag.</p>
 <pre class="shell"><code class="shell"># Suppose that prog.ml is the main module and
 # that your project use num and str libraries.
 $ cat _tags
-&lt;*.ml&gt; or &#39;prog.byte&#39;: package(num), package(str)
+&lt;*.ml&gt; or &quot;prog.byte&quot;: package(num), package(str)
 $ ocamlbuild -use-ocamlfind prog.byte --
 Hello World!</code></pre>
 
 <p>To include sub-packages, use the doted notation</p>
 <pre><code>&lt;*.ml&gt;: package(lwt.unix), package(lwt.syntax), syntax(camlp4o)
-&#39;prog.byte&#39;: package(lwt.unix)</code></pre>
+&quot;prog.byte&quot;: package(lwt.unix)</code></pre>
 
 <h2 id="Generic-plugin">Generic plugin</h2><p>Here is presented a rather generic <a href="Making_plugins.html">plugin</a>
 to access packages using ocamlfind.</p>
@@ -195,14 +195,14 @@ root of your project.</p>
 
 <span class="comment">(* this lists all supported packages *)</span>
 <span class="governing">let</span> <span class="ocaml-function">find_packages</span> <span class="ocaml-variable">() </span>=
-  <span class="ocaml-module">List</span>.map before_space (split_nl &amp; run_and_read 'ocamlfind list')
+  <span class="ocaml-module">List</span>.map before_space (split_nl &amp; run_and_read <span class="string">&quot;ocamlfind list&quot;</span>)
 
 <span class="comment">(* this is supposed <span class="keyword">to</span> list available syntaxes,
    but I don't know how <span class="keyword">to</span> <span class="keyword">do</span> it. *)</span>
-<span class="governing">let</span> <span class="ocaml-function">find_syntaxes</span> <span class="ocaml-variable">() </span>= ['camlp4o'; 'camlp4r']
+<span class="governing">let</span> <span class="ocaml-function">find_syntaxes</span> <span class="ocaml-variable">() </span>= [<span class="string">&quot;camlp4o&quot;</span>; <span class="string">&quot;camlp4r&quot;</span>]
 
 <span class="comment">(* ocamlfind command *)</span>
-<span class="governing">let</span> <span class="ocaml-function">ocamlfind</span> <span class="ocaml-variable">x </span>= S[A'ocamlfind'; x]
+<span class="governing">let</span> <span class="ocaml-function">ocamlfind</span> <span class="ocaml-variable">x </span>= S[A<span class="string">&quot;ocamlfind&quot;</span>; x]
 
 <span class="governing">let </span><span class="ocaml-variable">_</span> = dispatch <span class="governing">begin</span> function
   | Before_options -&gt;
@@ -210,53 +210,53 @@ root of your project.</p>
         have an higher priority on the contrary using After_options
         will guarantee <span class="keyword">to</span> have the higher priority *)</span>
      <span class="comment">(* override default commands by ocamlfind ones *)</span>
-     <span class="ocaml-module">Options</span>.ocamlc     := ocamlfind &amp; A'ocamlc';
-     <span class="ocaml-module">Options</span>.ocamlopt   := ocamlfind &amp; A'ocamlopt';
-     <span class="ocaml-module">Options</span>.ocamldep   := ocamlfind &amp; A'ocamldep';
-     <span class="ocaml-module">Options</span>.ocamldoc   := ocamlfind &amp; A'ocamldoc';
-     <span class="ocaml-module">Options</span>.ocamlmktop := ocamlfind &amp; A'ocamlmktop'
+     <span class="ocaml-module">Options</span>.ocamlc     := ocamlfind &amp; A<span class="string">&quot;ocamlc&quot;</span>;
+     <span class="ocaml-module">Options</span>.ocamlopt   := ocamlfind &amp; A<span class="string">&quot;ocamlopt&quot;</span>;
+     <span class="ocaml-module">Options</span>.ocamldep   := ocamlfind &amp; A<span class="string">&quot;ocamldep&quot;</span>;
+     <span class="ocaml-module">Options</span>.ocamldoc   := ocamlfind &amp; A<span class="string">&quot;ocamldoc&quot;</span>;
+     <span class="ocaml-module">Options</span>.ocamlmktop := ocamlfind &amp; A<span class="string">&quot;ocamlmktop&quot;</span>
 
   | After_rules -&gt;
      <span class="comment">(* When one link an OCaml library/binary/package, one should
         use -linkpkg *)</span>
-     flag ['ocaml'; 'link'; 'program'] &amp; A'-linkpkg';
+     flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;link&quot;</span>; <span class="string">&quot;program&quot;</span>] &amp; A<span class="string">&quot;-linkpkg&quot;</span>;
 
      <span class="comment">(* For each ocamlfind package one inject the -package option when
         compiling, computing dependencies, generating documentation <span class="governing">and</span>
         linking. *)</span>
      <span class="ocaml-module">List</span>.iter <span class="governing">begin</span> <span class="keyword">fun</span> pkg -&gt;
-         flag ['ocaml'; 'compile';  'pkg_'^pkg] &amp; S[A'-package'; A pkg];
-         flag ['ocaml'; 'ocamldep'; 'pkg_'^pkg] &amp; S[A'-package'; A pkg];
-         flag ['ocaml'; 'doc';      'pkg_'^pkg] &amp; S[A'-package'; A pkg];
-         flag ['ocaml'; 'link';     'pkg_'^pkg] &amp; S[A'-package'; A pkg];
-         flag ['ocaml'; 'infer_interface'; 'pkg_'^pkg] &amp; S[A'-package'; A pkg];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;compile&quot;</span>;  <span class="string">&quot;pkg_&quot;</span>^pkg] &amp; S[A<span class="string">&quot;-package&quot;</span>; A pkg];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;ocamldep&quot;</span>; <span class="string">&quot;pkg_&quot;</span>^pkg] &amp; S[A<span class="string">&quot;-package&quot;</span>; A pkg];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;doc&quot;</span>;      <span class="string">&quot;pkg_&quot;</span>^pkg] &amp; S[A<span class="string">&quot;-package&quot;</span>; A pkg];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;link&quot;</span>;     <span class="string">&quot;pkg_&quot;</span>^pkg] &amp; S[A<span class="string">&quot;-package&quot;</span>; A pkg];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;infer_interface&quot;</span>; <span class="string">&quot;pkg_&quot;</span>^pkg] &amp; S[A<span class="string">&quot;-package&quot;</span>; A pkg];
        <span class="governing">end</span> (find_packages ());
 
      <span class="comment">(* Like -package but <span class="keyword">for</span> extensions syntax. Morover -syntax is
         useless when linking. *)</span>
      <span class="ocaml-module">List</span>.iter <span class="governing">begin</span> <span class="keyword">fun</span> syntax -&gt;
-         flag ['ocaml'; 'compile';  'syntax_' ^ syntax]
-         &amp; S[A'-syntax'; A syntax];
-         flag ['ocaml'; 'ocamldep'; 'syntax_' ^ syntax]
-         &amp; S[A'-syntax'; A syntax];
-         flag ['ocaml'; 'doc';      'syntax_' ^ syntax]
-         &amp; S[A'-syntax'; A syntax];
-         flag ['ocaml'; 'infer_interface'; 'syntax_' ^ syntax]
-         &amp; S[A'-syntax'; A syntax];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;compile&quot;</span>;  <span class="string">&quot;syntax_&quot;</span> ^ syntax]
+         &amp; S[A<span class="string">&quot;-syntax&quot;</span>; A syntax];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;ocamldep&quot;</span>; <span class="string">&quot;syntax_&quot;</span> ^ syntax]
+         &amp; S[A<span class="string">&quot;-syntax&quot;</span>; A syntax];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;doc&quot;</span>;      <span class="string">&quot;syntax_&quot;</span> ^ syntax]
+         &amp; S[A<span class="string">&quot;-syntax&quot;</span>; A syntax];
+         flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;infer_interface&quot;</span>; <span class="string">&quot;syntax_&quot;</span> ^ syntax]
+         &amp; S[A<span class="string">&quot;-syntax&quot;</span>; A syntax];
        <span class="governing">end</span> (find_syntaxes ());
        
-     <span class="comment">(* The default 'thread' tag is not compatible <span class="keyword">with</span> ocamlfind.
-         Indeed, the default rules add the 'threads.cma' or
-         'threads.cmxa' options when using this tag. When using the
-         '-linkpkg' option <span class="keyword">with</span> ocamlfind, this module will <span class="keyword">then</span> be
+     <span class="comment">(* The default <span class="string">&quot;thread&quot;</span> tag is not compatible <span class="keyword">with</span> ocamlfind.
+         Indeed, the default rules add the <span class="string">&quot;threads.cma&quot;</span> or
+         <span class="string">&quot;threads.cmxa&quot;</span> options when using this tag. When using the
+         <span class="string">&quot;-linkpkg&quot;</span> option <span class="keyword">with</span> ocamlfind, this module will <span class="keyword">then</span> be
          added twice on the command line.
        
-        To solve this, one approach is <span class="keyword">to</span> add the '-thread' option
-        when using the 'threads' package using the previous plugin.
+        To solve this, one approach is <span class="keyword">to</span> add the <span class="string">&quot;-thread&quot;</span> option
+        when using the <span class="string">&quot;threads&quot;</span> package using the previous plugin.
       *)</span>
-     flag ['ocaml'; 'pkg_threads'; 'compile'] (S[A '-thread']);
-     flag ['ocaml'; 'pkg_threads'; 'link'] (S[A '-thread']);
-     flag ['ocaml'; 'pkg_threads'; 'infer_interface'] (S[A '-thread'])
+     flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;pkg_threads&quot;</span>; <span class="string">&quot;compile&quot;</span>] (S[A <span class="string">&quot;-thread&quot;</span>]);
+     flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;pkg_threads&quot;</span>; <span class="string">&quot;link&quot;</span>] (S[A <span class="string">&quot;-thread&quot;</span>]);
+     flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;pkg_threads&quot;</span>; <span class="string">&quot;infer_interface&quot;</span>] (S[A <span class="string">&quot;-thread&quot;</span>])
   | _ -&gt; ()
 <span class="governing">end</span></code></pre>
 
@@ -270,7 +270,7 @@ be used at link-time (usually you&#39;ll want both).</p>
 <pre class="shell"><code class="shell"># Suppose that prog.ml is the main module and
 # that your project use nums and str libraries.
 $ cat _tags
-&lt;*.ml&gt; or &#39;prog.byte&#39;: pkg_nums, pkg_str
+&lt;*.ml&gt; or &quot;prog.byte&quot;: pkg_nums, pkg_str
 $ ocamlbuild prog.byte --
 Hello World!</code></pre>
 
@@ -286,26 +286,26 @@ $ cat _tags
 $ ocamlbuild yahoo.byte -- ocaml
 ...</code></pre>
 
-<h3 id="Summary">Summary</h3><ul><li><p>Tag the files that need the &#39;foo&#39; package with <code>pkg_foo</code> (sources
+<h3 id="Summary">Summary</h3><ul><li><p>Tag the files that need the &quot;foo&quot; package with <code>pkg_foo</code> (sources
  and binaries)</p>
-</li><li><p>Don&#39;t use the &#39;thread&#39; tag, use <code>pkg_threads</code> instead.</p>
+</li><li><p>Don&#39;t use the &quot;thread&quot; tag, use <code>pkg_threads</code> instead.</p>
 </li></ul>
 
 <h2 id="Using-ocamlfind-only-for-querying-package-installation-directories">Using ocamlfind only for querying package installation directories</h2><p>Maybe you do not want to invoke ocamllfind as a wrapper around the
 toolchain commands (ocamlc, etc.). In that case, you can still invoke
 ocamlfind to locate the directories in which registered packages are
-installed. The &#39;ocamlfind query pkgname&#39; command yields the installation
+installed. The &quot;ocamlfind query pkgname&quot; command yields the installation
 directory of the command. Here is the ocamlbuild equivalent of
 <code>$(ocamlfind query pkgname)</code>:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">ocamlfind_query</span> <span class="ocaml-variable">pkg </span>=
-  <span class="governing">let </span><span class="ocaml-variable">cmd</span> = <span class="ocaml-module">Printf</span>.sprintf 'ocamlfind query %s' (<span class="ocaml-module">Filename</span>.quote pkg) <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">cmd</span> = <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;ocamlfind query %s&quot;</span> (<span class="ocaml-module">Filename</span>.quote pkg) <span class="governing">in</span>
   <span class="ocaml-module">Ocamlbuild_pack</span>.<span class="ocaml-module">My_unix</span>.run_and_open cmd (<span class="keyword">fun</span> ic -&gt;
-      <span class="ocaml-module">Log</span>.dprintf 5 'Getting Ocaml directory from command %s' cmd;
+      <span class="ocaml-module">Log</span>.dprintf 5 <span class="string">&quot;Getting Ocaml directory from command %s&quot;</span> cmd;
       input_line ic
     )</code></pre>
 
 <p>You can use it as follows in the After_rules section:</p>
-<pre><code>ocaml_lib ~extern:true ~dir:(ocamlfind_query &#39;sexplib&#39;) &#39;sexplib&#39;;</code></pre>
+<pre><code>ocaml_lib ~extern:true ~dir:(ocamlfind_query &quot;sexplib&quot;) &quot;sexplib&quot;;</code></pre>
 
       </div>
     </div>

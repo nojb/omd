@@ -153,7 +153,7 @@
 realmente considerato la <strong>programmazione funzionale</strong>. Tutte le
 caratteristiche date finora - ricchi tipi di dati, pattern matching,
 inferenza dei tipi, funzioni annidate - si potrebbe immaginare che
-esistessero in una specie di linguaggio &#39;super C&#39;. Si tratta certamente
+esistessero in una specie di linguaggio &quot;super C&quot;. Si tratta certamente
 di Caratteristiche Forti, e che rendono il vostro codice conciso, facile
 da leggere e con meno bug, ma che in realtà hanno ben poco a che fare
 con la programmazione funzionale. In effetti il mio argomento sarà che
@@ -195,7 +195,7 @@ Perl e la funzione <code>map</code> di Perl, che è esattamente ciò di cui stia
 parlando. Il fatto è che Perl è in realtà abbastanza piuttosto buono
 come linguaggio funzionale.</p>
 <p>Le <strong>closure</strong> sono funzioni che si portano dietro qualcosa
-dell&#39;&#39;ambiente&#39; in cui sono definite. In particolare, una closure può
+dell&#39;&quot;ambiente&quot; in cui sono definite. In particolare, una closure può
 fare riferimento a variabili che siano disponibili al punto della sua
 definizione. Generalizziamo la funzione sopra così da poter ora prendere
 una lista di interi e moltiplicare ciascun elemento per un valore
@@ -220,7 +220,7 @@ della funzione <code>multiply</code> e dunque disponibile entro tale funzione.</
 chiamata a map: <code>List.map f list</code>.</p>
 <p><code>map</code> è definita all&#39;interno del modulo <code>List</code> module, lontano dal
 corrente codice. In altre parole, stiamo passando <code>f</code> in un modulo
-definito &#39;tanto tempo fa, in una galassia lontana lontana&#39;. Per quello
+definito &quot;tanto tempo fa, in una galassia lontana lontana&quot;. Per quello
 che sappiamo quel codice potrebbe passare <code>f</code> ad altri moduli, o salvare
 in qualche posto un riferimento a <code>f</code> e chiamarlo più tardi. Che lo
 faccia o no, la closure assicurerà che <code>f</code> abbia sempre accesso al suo
@@ -287,7 +287,7 @@ per vedere che cosa fa:</p>
 esempio</a>
 perché possiamo stabilire che <code>plus 2</code> è la funzione che aggiunge 2 alle
 cose.</p>
-<p>Tornando alla definizione originale, &#39;riempiamo&#39; il primo argomento
+<p>Tornando alla definizione originale, &quot;riempiamo&quot; il primo argomento
 (<code>a</code>) impostandolo a 2 per avere:</p>
 <pre><code class="ocaml"><span class="governing">let </span>plus 2 b =       <span class="comment">(* Questo non &egrave; codice OCaml reale! *)</span>
   2 + b</code></pre>
@@ -340,7 +340,7 @@ funzione intermedia <code>f</code>) così:</p>
 <p>Nell&#39;esempio sopra, <code>((*) n)</code> è l&#39;applicazione parziale della funzione
 <code>(*)</code> (times). Si notino gli spazi extra necessari perché OCaml non
 pensi che <code>(*</code> cominci un commmento.</p>
-<p>Per fare funzioni potete usare operatori &#39;infix&#39; tra parentesi tonde.
+<p>Per fare funzioni potete usare operatori &quot;infix&quot; tra parentesi tonde.
 Ecco una definizione di <code>plus</code> identica a quella sopra:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">plus</span> = (+)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val plus : int -&gt; int -&gt; int = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">plus 2 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
@@ -377,7 +377,7 @@ certamente non vi restituirà il medesimo puntatore. <code>malloc</code>,
 naturalmente, dipende da un enorme numero di stati interni nascosti
 (oggetti allocati nel mucchio, il metodo di allocazione in uso, prendere
 pagine dal sistema operativo, etc.).</p>
-<p>I linguaggi derivati da ML come OCaml sono &#39;per lo più puri&#39;. Consentono
+<p>I linguaggi derivati da ML come OCaml sono &quot;per lo più puri&quot;. Consentono
 effetti laterali attraverso cose come i riferimenti e gli array, ma in
 linea di massima la maggior parte del codice che scriverete sarà
 puramente funzionale, poiché essi incoraggiano questo modo di pensare.
@@ -405,9 +405,9 @@ approccio top-down, ma nell&#39;opinione dell&#39;autore questo ha spesso per
 effetto il fallimento di progetti.</p>
 <h2 id="Severit-e-pigrizia">Severità e pigrizia</h2>
 
-<p>I linguaggi derivati da C e quelli derivati da ML sono &#39;strict&#39;
-(&#39;severi&#39;). Haskell e Miranda sono linguaggi &#39;non-strict&#39;, o &#39;lazy&#39;
-(&#39;pigri&#39;). OCaml è normalmente strict ma consente uno stile lazy di
+<p>I linguaggi derivati da C e quelli derivati da ML sono &quot;strict&quot;
+(&quot;severi&quot;). Haskell e Miranda sono linguaggi &quot;non-strict&quot;, o &quot;lazy&quot;
+(&quot;pigri&quot;). OCaml è normalmente strict ma consente uno stile lazy di
 programmazione quando è necessario.</p>
 <p>In un linguaggio strict, sono sempre prima valutati gli argomenti delle
 funzioni, e i risultati sono quindi passati alla funzione. Ad esempio in
@@ -450,7 +450,7 @@ espressione lazy nella funzione:</p>
 <h2 id="Tipi-boxed-e-unboxed">Tipi boxed e unboxed</h2>
 
 <p>Un termine che sentirete spesso discutendo di linguaggi funzionali è
-&#39;boxed&#39;. Ero molto comfuso quando ho sentito per la prima volta questo
+&quot;boxed&quot;. Ero molto comfuso quando ho sentito per la prima volta questo
 termine, ma di fatto la distinzione fra tipi boxed ed unboxed è
 piuttosto semplice se avete usato in precedenza C, C++ o Java (in Perl,
 tutto è boxed).</p>
@@ -463,7 +463,7 @@ Diamo uno sguardo a questo programma C di esempio:</p>
 void
 printit (int *ptr)
 {
-  printf (&#39;the number is %d\n&#39;, *ptr);
+  printf (&quot;the number is %d\n&quot;, *ptr);
 }
 
 void

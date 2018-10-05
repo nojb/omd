@@ -162,13 +162,13 @@ mechanism</a> for more details.</p>
 <code>-documentation</code> option of <code>ocamlbuild</code>.  For example, for the <code>thread</code>
 tag:</p>
 <pre class="shell"><code class="shell">$ ocamlbuild -documentation | grep thread
-flag {. byte, link, ocaml, thread, toplevel .} &#39;threads.cma&#39;
-flag {. link, native, ocaml, thread, toplevel .} &#39;threads.cmxa&#39;
-flag {. byte, link, ocaml, program, thread .} &#39;threads.cma&#39;
-flag {. link, native, ocaml, program, thread .} &#39;threads.cmxa&#39;
-flag {. doc, ocaml, thread .} &#39;-I +threads&#39;
-flag {. link, ocaml, thread .} &#39;-thread&#39;
-flag {. compile, ocaml, thread .} &#39;-thread&#39;</code></pre>
+flag {. byte, link, ocaml, thread, toplevel .} &quot;threads.cma&quot;
+flag {. link, native, ocaml, thread, toplevel .} &quot;threads.cmxa&quot;
+flag {. byte, link, ocaml, program, thread .} &quot;threads.cma&quot;
+flag {. link, native, ocaml, program, thread .} &quot;threads.cmxa&quot;
+flag {. doc, ocaml, thread .} &quot;-I +threads&quot;
+flag {. link, ocaml, thread .} &quot;-thread&quot;
+flag {. compile, ocaml, thread .} &quot;-thread&quot;</code></pre>
 
 <p>For example, the last flag says that files with tags <code>compile</code>,
 <code>ocaml</code> and <code>thread</code> should be compiled using the <code>-thread</code>
@@ -180,12 +180,12 @@ use the threads library and the <code>-thread</code> option.</p>
 <pre class="shell"><code class="shell">$ ocamlbuild -show-tags test.byte
 Warning: the following tags do not include dynamically-generated tags, such as link, compile, pack, byte, native, c, pdf... (this list is by no means exhaustive).
  
-Tags for &#39;test.byte&#39;:
+Tags for &quot;test.byte&quot;:
   {. byte, extension:byte, file:test.byte, ocaml, program, quiet .}
 Finished, 0 targets (0 cached) in 00:00:00.</code></pre>
 
 <p>Unfortunately, to get the full semantics of a tag, you need to know in
-which commands (more precisely, which &#39;holes&#39;) it appears. Some tags are
+which commands (more precisely, which &quot;holes&quot;) it appears. Some tags are
 always part of some commands: the <code>link</code> tag is always part of the
 linking commands. Some commands use the tags of their sources and / or
 the tags of their production. The only precise documentation is the

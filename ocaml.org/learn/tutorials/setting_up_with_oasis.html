@@ -195,7 +195,7 @@ Plugins: META (0.4), DevFiles (0.4)</code></pre>
 
 <p>An <code>_oasis</code> file is organized in sections, each section defining a small part of your project. <code>_oasis</code> files are white-space sensitive, fields in a section must be properly indented.</p>
 <p>We will start by defining an executable <code>foo</code> with sources located in an <code>src</code> directory.</p>
-<pre class="oasis"><code class="oasis">Executable &#39;foo&#39;
+<pre class="oasis"><code class="oasis">Executable &quot;foo&quot;
   Path: src
   MainIs: foo.ml</code></pre>
 
@@ -209,7 +209,7 @@ These files are the only one necessary for OASIS to work, and you should put onl
 
 <p>It will produce the <code>foo.byte</code> file than you can execute.</p>
 <p>To produce native executables and use external libraries, we add some fields to the section:</p>
-<pre class="oasis"><code class="oasis">Executable &#39;foo&#39;
+<pre class="oasis"><code class="oasis">Executable &quot;foo&quot;
   Path: src
   MainIs: foo.ml
   CompiledObject: best
@@ -222,12 +222,12 @@ These files are the only one necessary for OASIS to work, and you should put onl
 <h3 id="Defining-libraries">Defining libraries</h3>
 
 <p>To define a library, we use the <code>Library</code> section. Here we will define two libraries with some inter dependencies.</p>
-<pre class="oasis"><code class="oasis">Library &#39;foo&#39;
+<pre class="oasis"><code class="oasis">Library &quot;foo&quot;
   Path: foo_src
   Modules: Foo
   InternalModules: InternalFoo
 
-Library &#39;bar&#39;
+Library &quot;bar&quot;
   Path: bar_src
   Modules: Bar
   InternalModules:
@@ -245,14 +245,14 @@ Library &#39;bar&#39;
 
 <p>Documentation is a very important part of a library. OASIS allows to build an <a href="http://caml.inria.fr/pub/docs/manual-ocaml/ocamldoc.html">ocamldoc</a>-powered HTML documentation for the complete project quite easily.</p>
 <pre class="oasis"><code class="oasis">AlphaFeatures: ocamlbuild_more_args
-Document &#39;foobar_api&#39;
+Document &quot;foobar_api&quot;
   Type: ocamlbuild (0.4)
   BuildTools: ocamldoc
 
   Title: API reference for FooBar
   XOCamlbuildPath: .
   XOCamlbuildExtraArgs:
-    &#39;-docflags &#39;-colorize-code -short-functors -charset utf-8&#39;&#39;
+    &quot;-docflags &#39;-colorize-code -short-functors -charset utf-8&#39;&quot;
   XOCamlbuildLibraries: foo, bar</code></pre>
 
 <p>The important part is the <code>XOCamlbuildLibraries</code> field, which is a list of ocamlfind libraries defined in the <code>_oasis</code> file.
@@ -295,13 +295,13 @@ lwt.syntax.options</code></pre>
 
 <p>It is possible to define such hierarchy in OASIS using two additional fields: <code>FindLibName</code> and <code>FindLibParent</code>.
 Let say we want to isolate the core of <code>foo</code> in a library <code>foo.core</code>:</p>
-<pre class="oasis"><code class="oasis">Library &#39;foo_core&#39;
+<pre class="oasis"><code class="oasis">Library &quot;foo_core&quot;
   FindLibName: core
   FindLibParent: foo
   Path: foo
   Modules: Foo
 
-Library &#39;foo&#39;
+Library &quot;foo&quot;
   Path: foo
   Modules: FooMore
   BuildDepends: foo.core</code></pre>
@@ -309,13 +309,13 @@ Library &#39;foo&#39;
 <h3 id="Flags-and-conditional-compilation">Flags and conditional compilation</h3>
 
 <p>OASIS allows to define a set of flags that can be activated by the user or by a package manager like opam.</p>
-<pre class="oasis"><code class="oasis">Flag &#39;with-baz&#39;
+<pre class="oasis"><code class="oasis">Flag &quot;with-baz&quot;
   Description: Build baz support for bar
   Default: false</code></pre>
 
 <p><code>configure --enable-with-baz</code> will turn this flag on. Be careful that <code>_</code> will be turned into <code>-</code> in the command line option.</p>
 <p>You can then condition the build of some library or executable by this flag.</p>
-<pre class="oasis"><code class="oasis">Library &#39;bar_with_baz&#39;
+<pre class="oasis"><code class="oasis">Library &quot;bar_with_baz&quot;
   Build$: flag(baz)
   FindLibName: baz
   FindLibParent: bar
@@ -328,14 +328,14 @@ Conditional values are explained in details <a href="http://oasis.forge.ocamlcor
 <h3 id="Tests">Tests</h3>
 
 <p>OASIS can also handle tests, be them unit tests or not. First we want to test our <code>foo</code> executable defined earlier.</p>
-<pre class="oasis"><code class="oasis">Test &#39;test_foo&#39;
+<pre class="oasis"><code class="oasis">Test &quot;test_foo&quot;
   TestTools: foo
   Command: $foo test/some_test_input</code></pre>
 
 <p><code>TestTools</code> allows to give the dependency.
 To enable and run the tests, run <code>configure --enable-tests</code> and <code>make test</code>. Tests are disabled by default.</p>
 <p>For unit testing, we can declare an executable only for tests, using the <a href="http://ounit.forge.ocamlcore.org/">oUnit</a> testing framework for example, and a test using it. For this, we use the predefined flag <code>tests</code>.</p>
-<pre class="oasis"><code class="oasis">Executable &#39;test_bar_and_baz&#39;
+<pre class="oasis"><code class="oasis">Executable &quot;test_bar_and_baz&quot;
   Path: test
   MainIs: test_bar.ml
   Build$: flag(tests) &amp;&amp; flag(baz)
@@ -343,7 +343,7 @@ To enable and run the tests, run <code>configure --enable-tests</code> and <code
   Install: false
   BuildDepends: bar, baz, bar.baz, oUnit
 
-Test &#39;test_bar_and_baz&#39;
+Test &quot;test_bar_and_baz&quot;
   Run$: flag(tests) &amp;&amp; flag(baz)
   TestTools: test_bar_and_baz
   Command: $test_bar_and_baz
@@ -354,7 +354,7 @@ Test &#39;test_bar_and_baz&#39;
 <h4 id="Using-a-syntax-extension">Using a syntax extension</h4>
 
 <p>Camlp4 syntax extensions are almost always bundled as ocamlfind subpackages finishing in <code>.syntax</code>. When this is the case, we can just add the name of the package as a dependency:</p>
-<pre class="oasis"><code class="oasis">Library &#39;foo&#39;
+<pre class="oasis"><code class="oasis">Library &quot;foo&quot;
   Path: foo
   Modules: FooMore
   BuildDepends: foo.core, lwt, lwt.syntax</code></pre>
@@ -365,7 +365,7 @@ Test &#39;test_bar_and_baz&#39;
 <h4 id="Creating-a-syntax-extension">Creating a syntax extension</h4>
 
 <p>To define a syntax extension, we must define the special properties <code>XMETAType</code>:</p>
-<pre class="oasis"><code class="oasis">Library &#39;foo_syntax&#39;
+<pre class="oasis"><code class="oasis">Library &quot;foo_syntax&quot;
   Path: foo_syntax
   FindLibName: syntax
   FindLibParent: foo
@@ -378,7 +378,7 @@ Test &#39;test_bar_and_baz&#39;
 
 <p>To build a joint library with OCaml and C code, we can use the <code>CSources</code> field.
 The <code>CCLib</code> allows to link against C libraries and the <code>CCOpt</code> field allows to pass options to the C compiler.</p>
-<pre class="oasis"><code class="oasis">Library &#39;foo-with-C&#39;
+<pre class="oasis"><code class="oasis">Library &quot;foo-with-C&quot;
   Path: lib
   Modules: FooC
   CSources: fooC_stubs.c, fooC_stubs.h

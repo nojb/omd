@@ -145,7 +145,7 @@
       <div id="main-contents" class="content">
         
 
-<h1 id="Making-plugins">Making plugins</h1><h2 id="Getting-started">Getting started</h2><p>An OCamlbuild plugin is a single Ocaml file, named &#39;myocamlbuild.ml&#39;,
+<h1 id="Making-plugins">Making plugins</h1><h2 id="Getting-started">Getting started</h2><p>An OCamlbuild plugin is a single Ocaml file, named &quot;myocamlbuild.ml&quot;,
 which must be in the root directory of your project. Before building any
 target, this file will be compiled, linked to and executed by
 OCamlbuild. This means that your plugin will have access to some parts
@@ -153,7 +153,7 @@ of OCamlbuild, namely the <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/
 API</a>.</p>
 <h3 id="Hello-world">Hello, world!</h3><p>Before actually using the API, let&#39;s show that the plugin is indeed
 executed by OCamlbuild. Write a simple <code>myocamlbuild.ml</code> such as:</p>
-<pre><code class="ocaml">print_string 'Hello, world!\n'</code></pre>
+<pre><code class="ocaml">print_string <span class="string">&quot;Hello, world!\n&quot;</span></code></pre>
 
 <p>Now execute OCamlbuild. You should
 get something like this:</p>
@@ -177,16 +177,16 @@ parameter at the beginning and at the end of the following stages:</p>
 </li></ul>
 
 <p>For demonstration purposes, try the following plugin, which prints the
-value of the <code>-ocamlc</code> option before, and after the &#39;options&#39; stage:</p>
+value of the <code>-ocamlc</code> option before, and after the &quot;options&quot; stage:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span> <span class="comment">(* open the main API module *)</span>
  
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
   | Before_options -&gt;
-      <span class="ocaml-module">Printf</span>.printf 'Before options, the -ocamlc option is set <span class="keyword">to</span> %s.\n'
+      <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;Before options, the -ocamlc option is set <span class="keyword">to</span> %s.\n&quot;</span>
         (<span class="ocaml-module">Command</span>.string_of_command_spec !<span class="ocaml-module">Options</span>.ocamlc)
   | After_options -&gt;
-      <span class="ocaml-module">Printf</span>.printf 'After options, The -ocamlc option is set <span class="keyword">to</span> %s.\n'
+      <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;After options, The -ocamlc option is set <span class="keyword">to</span> %s.\n&quot;</span>
         (<span class="ocaml-module">Command</span>.string_of_command_spec !<span class="ocaml-module">Options</span>.ocamlc)
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
@@ -196,7 +196,7 @@ value of the <code>-ocamlc</code> option before, and after the &#39;options&#39;
 Before options, the -ocamlc option is set to &lt;virtual OCAMLC&gt;.
 After options, The -ocamlc option is set to bla.</code></pre>
 
-<p>Usually, you will want your code to be executed after the &#39;rules&#39; stage
+<p>Usually, you will want your code to be executed after the &quot;rules&quot; stage
 (i.e., using the <code>After_rules</code> hook). But for some needs, you will use
 other hooks, for instance:</p>
 <ul><li><p><code>Before_options</code>: to change the default value of some options</p>
@@ -225,24 +225,24 @@ or change the tags of a file. This is usually done <code>After_rules</code>.</p>
 example, a useful debugging function might be:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">print_info</span> <span class="ocaml-variable">f </span>=
   <span class="ocaml-module">Format</span>.fprintf <span class="ocaml-module">Format</span>.std_formatter
-    '@[&lt;hv 2&gt;Tags <span class="keyword">for</span> file %s:@ %a@]@.' f
+    <span class="string">&quot;@[&lt;hv 2&gt;Tags <span class="keyword">for</span> file %s:@ %a@]@.&quot;</span> f
     <span class="ocaml-module">Tags</span>.print (tags_of_pathname f)</code></pre>
 
 <h4 id="Tag-a-file">Tag a file</h4><p>To add tags to a file, use the API function <code>tag_file</code>. For example, to
 tag the file <code>bla.ml</code> with the tag <code>use_unix</code>:</p>
-<pre><code>tag_file &#39;bla.ml&#39; [&#39;use_unix&#39;]</code></pre>
+<pre><code>tag_file &quot;bla.ml&quot; [&quot;use_unix&quot;]</code></pre>
 
 <h4 id="Untag-a-file">Untag a file</h4><p>To remove tags from a file, use the same API <code>tag_file</code> with a minus
 before the tag&#39;s name. For example, to remove the tag <code>use_unix</code> from
 the file <code>bla.ml</code>:</p>
-<pre><code>tag_file &#39;bla.ml&#39; [&#39;-use_unix&#39;]</code></pre>
+<pre><code>tag_file &quot;bla.ml&quot; [&quot;-use_unix&quot;]</code></pre>
 
 <h4 id="Example">Example</h4><p>If you dispatch the following code after the rules <code>After_rules</code>:</p>
-<pre><code class="ocaml">print_info 'bla.ml';
-tag_file 'bla.ml' ['test'];
-print_info 'bla.ml';
-tag_file 'bla.ml' ['-test'; '-ocaml'];
-print_info 'bla.ml';</code></pre>
+<pre><code class="ocaml">print_info <span class="string">&quot;bla.ml&quot;</span>;
+tag_file <span class="string">&quot;bla.ml&quot;</span> [<span class="string">&quot;test&quot;</span>];
+print_info <span class="string">&quot;bla.ml&quot;</span>;
+tag_file <span class="string">&quot;bla.ml&quot;</span> [<span class="string">&quot;-test&quot;</span>; <span class="string">&quot;-ocaml&quot;</span>];
+print_info <span class="string">&quot;bla.ml&quot;</span>;</code></pre>
 
 <p>You will get the following result:</p>
 <pre><code>Tags for file bla.ml:
@@ -273,12 +273,12 @@ to experiment with stuff and, why not, to read the OCamlbuild source.</p>
 <h3 id="Add-or-modify-rules">Add or modify rules</h3><p>Before reading this section, be sure you understand the <a href="Solver_mechanism.html">solver
 mechanism</a>.</p>
 <h4 id="Rules">Rules</h4><p>Once you know how rules are handled by OCamlbuild, all you have to
-know is that adding a rule is done using the &#39;rule&#39; function of the
+know is that adding a rule is done using the &quot;rule&quot; function of the
 <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.PLUGIN.html">API</a>.</p>
-<p>Usually, all you have to do is call the &#39;rule&#39; function with these
+<p>Usually, all you have to do is call the &quot;rule&quot; function with these
 arguments:</p>
 <ul><li><p>The name of the rule. It should be unique. This is the name that
- appears when using the &#39;-documentation&#39; or <code>-verbose</code> options.</p>
+ appears when using the &quot;-documentation&quot; or <code>-verbose</code> options.</p>
 </li><li><p><code>~dep</code>: the dependency (use <code>~deps</code> if there are more than 1)</p>
 </li><li><p><code>~prod</code>: the production (use <code>~prods</code> if there are more than 1)</p>
 </li><li><p>The action of the rule, i.e. a function which returns the command to
@@ -288,15 +288,15 @@ arguments:</p>
 </li></ul>
 
 <h5 id="File-names">File names</h5><p>The <code>~deps</code> and <code>~prod</code> parameters don&#39;t have to be exact path names. For
-example, with <code>~dep=&#39;%.ml&#39;</code> and <code>~prod=&#39;%.byte&#39;</code>, you can produce
+example, with <code>~dep=&quot;%.ml&quot;</code> and <code>~prod=&quot;%.byte&quot;</code>, you can produce
 <code>bla.byte</code> from <code>bla.ml</code>, or <code>foo.byte</code> from <code>foo.ml</code>, or... If you need
 more than one <code>%</code> you can use <code>%(name)</code> where name is any identifier. For
 example, the file <code>why.not.ml</code> matches the pattern <code>%(bla).%(foo).ml</code>
 with <code>%(bla)=why</code> and <code>%(foo)=not</code>.</p>
 <p>The action of the rules takes two arguments. The first one is usually
 called <code>env</code> and is used to replace your <code>%</code> in a string. For example,
-with the previous example, <code>env &#39;%(foo).%(bla).plop&#39;</code> returns
-<code>&#39;not.why.plop&#39;</code>.</p>
+with the previous example, <code>env &quot;%(foo).%(bla).plop&quot;</code> returns
+<code>&quot;not.why.plop&quot;</code>.</p>
 <h5 id="Commands">Commands</h5><p>Your action returns a command (see module
 <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.COMMAND.html">Command</a>)
 which should build the productions of the rule.</p>
@@ -305,11 +305,11 @@ which should build the productions of the rule.</p>
 module, such as usual Unix commands (<code>cp</code>, <code>mv</code>, ...).</p>
 <p>Commands may come with tag holes that will be filled depending on the
 tags. For instance:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">ml</span> = env '%.ml' <span class="governing">in</span>
-Cmd(S[ocamlc; A '-c';
-      T(tags_of_pathname ml ++ 'ocaml' ++ 'compile' ++ 'byte'); A ml])</code></pre>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">ml</span> = env <span class="string">&quot;%.ml&quot;</span> <span class="governing">in</span>
+Cmd(S[ocamlc; A <span class="string">&quot;-c&quot;</span>;
+      T(tags_of_pathname ml ++ <span class="string">&quot;ocaml&quot;</span> ++ <span class="string">&quot;compile&quot;</span> ++ <span class="string">&quot;byte&quot;</span>); A ml])</code></pre>
 
-<p>Usually, the executed command will be (if <code>env &#39;%.ml&#39; = &#39;bla.ml&#39;</code>):</p>
+<p>Usually, the executed command will be (if <code>env &quot;%.ml&quot; = &quot;bla.ml&quot;</code>):</p>
 <pre class="shell"><code class="shell">ocamlc -c bla.ml</code></pre>
 
 <p>But say the file <code>bla.ml</code> is tagged with <code>thread</code>. There is a
@@ -321,12 +321,12 @@ command becomes:</p>
 <h5 id="Dynamic-dependencies">Dynamic dependencies</h5><p>The second argument of the action is usually called <code>build</code> and is used
 to build new dependencies that you couldn&#39;t write in the <code>~deps</code>
 parameter. It takes a conjunction of alternative targets. For instance,
-<code>build [[&#39;a&#39;; &#39;b&#39;]; [&#39;c&#39;]]</code> will try to build two targets: <code>&#39;a&#39;</code> and <code>&#39;c&#39;</code>, or
-<code>&#39;b&#39;</code> and <code>&#39;c&#39;</code>.</p>
+<code>build [[&quot;a&quot;; &quot;b&quot;]; [&quot;c&quot;]]</code> will try to build two targets: <code>&quot;a&quot;</code> and <code>&quot;c&quot;</code>, or
+<code>&quot;b&quot;</code> and <code>&quot;c&quot;</code>.</p>
 <p>The value returned by <code>build</code> tells you which files have been built. For
-instance, <code>build [[&#39;a&#39;; &#39;b&#39;]; [&#39;c&#39;]]</code> may return <code>[Good &#39;a&#39;; Bad exn]</code>. This
-means that <code>&#39;a&#39;</code> has been built, but that <code>&#39;c&#39;</code> couldn&#39;t be built. You
-should raise the <code>exn</code> exception if you can&#39;t do without <code>&#39;c&#39;</code>.</p>
+instance, <code>build [[&quot;a&quot;; &quot;b&quot;]; [&quot;c&quot;]]</code> may return <code>[Good &quot;a&quot;; Bad exn]</code>. This
+means that <code>&quot;a&quot;</code> has been built, but that <code>&quot;c&quot;</code> couldn&#39;t be built. You
+should raise the <code>exn</code> exception if you can&#39;t do without <code>&quot;c&quot;</code>.</p>
 <p>The
 <a href="http://gallium.inria.fr/~pouillar/ocamlbuild/html/Signatures.OUTCOME.html">Outcome</a>
 module has some handy functions to help you with the return values of
@@ -345,9 +345,9 @@ module has some handy functions to help you with the return values of
 allows you to automatically build some dependencies when a file is
 tagged with some given tags, and the <code>flag</code> function allows you to
 associate command options with tags (to fill the holes of a command).
-For instance, here is how to declare that tags <code>&#39;ocaml&#39;</code>, <code>&#39;compile&#39;</code> and
-<code>&#39;thread&#39;</code> should become <code>&#39;-thread&#39;</code>:</p>
-<pre><code>flag [&#39;ocaml&#39;; &#39;compile&#39;; &#39;thread&#39;] (A &#39;-thread&#39;)</code></pre>
+For instance, here is how to declare that tags <code>&quot;ocaml&quot;</code>, <code>&quot;compile&quot;</code> and
+<code>&quot;thread&quot;</code> should become <code>&quot;-thread&quot;</code>:</p>
+<pre><code>flag [&quot;ocaml&quot;; &quot;compile&quot;; &quot;thread&quot;] (A &quot;-thread&quot;)</code></pre>
 
 <p>Examples:</p>
 <ul><li><p><a href="A_plugin_for_camlp4_syntax_extension__pa_openin_.html">A plugin for camlp4 syntax extension (pa

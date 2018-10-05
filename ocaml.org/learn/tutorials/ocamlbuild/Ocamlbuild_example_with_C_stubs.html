@@ -131,61 +131,61 @@ put in a file named <code>myocamlbuild.ml</code> at the root of your project).</
 <span class="governing">open</span> <span class="ocaml-module">Command</span>
  
 <span class="comment">(* Configuration section *)</span>
-<span class="governing">let </span><span class="ocaml-variable">have_zlib</span> = '-DHAVE_ZLIB'
-<span class="governing">let </span><span class="ocaml-variable">zlib_lib</span> = '-lz'
-<span class="governing">let </span><span class="ocaml-variable">zlib_libdir</span> = '-L/usr/lib'
-<span class="comment">(* <span class="governing">let </span><span class="ocaml-variable">zlib_libdir</span> = '-L/usr/lib64'  (* <span class="keyword">for</span> x86-64 Linux *) *)</span>
-<span class="governing">let </span><span class="ocaml-variable">zlib_include</span> = '-I/usr/<span class="governing">include</span>'
+<span class="governing">let </span><span class="ocaml-variable">have_zlib</span> = <span class="string">&quot;-DHAVE_ZLIB&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">zlib_lib</span> = <span class="string">&quot;-lz&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">zlib_libdir</span> = <span class="string">&quot;-L/usr/lib&quot;</span>
+<span class="comment">(* <span class="governing">let </span><span class="ocaml-variable">zlib_libdir</span> = <span class="string">&quot;-L/usr/lib64&quot;</span>  (* <span class="keyword">for</span> x86-64 Linux *) *)</span>
+<span class="governing">let </span><span class="ocaml-variable">zlib_include</span> = <span class="string">&quot;-I/usr/<span class="governing">include</span>&quot;</span>
  
 <span class="governing">let </span><span class="ocaml-variable">static</span> = true
  
 <span class="comment">(* List <span class="keyword">of</span> headers *)</span>
 <span class="governing">let </span><span class="ocaml-variable">headers</span> =
-  ['arcfour.h'; 'd3des.h'; 'rijndael-alg-fst.h';
-   'ripemd160.h'; 'sha1.h'; 'sha256.h']
+  [<span class="string">&quot;arcfour.h&quot;</span>; <span class="string">&quot;d3des.h&quot;</span>; <span class="string">&quot;rijndael-alg-fst.h&quot;</span>;
+   <span class="string">&quot;ripemd160.h&quot;</span>; <span class="string">&quot;sha1.h&quot;</span>; <span class="string">&quot;sha256.h&quot;</span>]
  
 <span class="governing">let</span> () = 
  dispatch <span class="governing">begin</span> function
  | After_rules -&gt;
     <span class="comment">(* When one make a C library that use the zlib <span class="keyword">with</span> ocamlmklib,
        <span class="keyword">then</span> issue these flags. *)</span>
-    flag ['ocamlmklib'; <span class="string">'c'</span>; 'use_zlib']
+    flag [<span class="string">&quot;ocamlmklib&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;use_zlib&quot;</span>]
          (S[A zlib_libdir; A zlib_lib]);
  
     <span class="comment">(* When one compile C code using the zlib *)</span>
-    flag [<span class="string">'c'</span>; 'compile'; 'include_zlib']
-         (S[A'-ccopt'; A zlib_include; A'-ccopt'; A have_zlib]);
+    flag [<span class="string">&quot;c&quot;</span>; <span class="string">&quot;compile&quot;</span>; <span class="string">&quot;include_zlib&quot;</span>]
+         (S[A<span class="string">&quot;-ccopt&quot;</span>; A zlib_include; A<span class="string">&quot;-ccopt&quot;</span>; A have_zlib]);
  
-    flag ['link'; 'ocaml'; 'library'; 'use_zlib']
-         (S[A'-ccopt'; A zlib_libdir; A'-cclib'; A zlib_lib]);
+    flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;library&quot;</span>; <span class="string">&quot;use_zlib&quot;</span>]
+         (S[A<span class="string">&quot;-ccopt&quot;</span>; A zlib_libdir; A<span class="string">&quot;-cclib&quot;</span>; A zlib_lib]);
  
     <span class="comment">(* If `static' is true <span class="keyword">then</span> every ocaml link <span class="governing">in</span> bytecode
        will add -custom *)</span>`
-    <span class="keyword">if</span> static <span class="keyword">then</span> flag ['link'; 'ocaml'; 'byte'] (A'-custom');
+    <span class="keyword">if</span> static <span class="keyword">then</span> flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;byte&quot;</span>] (A<span class="string">&quot;-custom&quot;</span>);
  
     <span class="comment">(* cryptokit is an ocaml library.
        This will declare use_cryptokit <span class="governing">and</span> include_cryptokit *)</span>
-    ocaml_lib 'cryptokit';
+    ocaml_lib <span class="string">&quot;cryptokit&quot;</span>;
  
-    flag ['link'; 'library'; 'ocaml'; 'byte'; 'use_libcryptokit']
-         (S[A'-dllib'; A'-lcryptokit'; A'-cclib'; A'-lcryptokit']);
+    flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;library&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;byte&quot;</span>; <span class="string">&quot;use_libcryptokit&quot;</span>]
+         (S[A<span class="string">&quot;-dllib&quot;</span>; A<span class="string">&quot;-lcryptokit&quot;</span>; A<span class="string">&quot;-cclib&quot;</span>; A<span class="string">&quot;-lcryptokit&quot;</span>]);
  
-    flag ['link'; 'library'; 'ocaml'; 'native'; 'use_libcryptokit']
-         (S[A'-cclib'; A'-lcryptokit']);
+    flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;library&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;native&quot;</span>; <span class="string">&quot;use_libcryptokit&quot;</span>]
+         (S[A<span class="string">&quot;-cclib&quot;</span>; A<span class="string">&quot;-lcryptokit&quot;</span>]);
  
     <span class="comment">(* When ocaml link something that use the libcryptokit,
        <span class="keyword">then</span> one need that file <span class="keyword">to</span> be up <span class="keyword">to</span> date. *)</span>
-    dep ['link'; 'ocaml'; 'use_libcryptokit'] ['libcryptokit.a'];
+    dep [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;use_libcryptokit&quot;</span>] [<span class="string">&quot;libcryptokit.a&quot;</span>];
  
     <span class="comment">(* As an approximation all our C files use the headers.
        Note: This will import headers <span class="governing">in</span> the build directory. *)</span>
-    dep  ['compile'; <span class="string">'c'</span>] headers;
+    dep  [<span class="string">&quot;compile&quot;</span>; <span class="string">&quot;c&quot;</span>] headers;
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
 
 <pre class="shell"><code class="shell">$ cat _tags
 &lt;*.c&gt;: include_zlib
-&#39;libcryptokit.a&#39;: use_zlib
+&quot;libcryptokit.a&quot;: use_zlib
 &lt;cryptokit.cm{x,}a&gt;: use_zlib, use_libcryptokit
 &lt;{,speed}test.{byte,native}&gt;: use_cryptokit, use_unix, use_nums
 $ cat libcryptokit.clib

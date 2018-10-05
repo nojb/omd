@@ -203,14 +203,14 @@ Python&#39;s standard library which has everything under the sun + the
 moon. There are a few standard library replacements, one is called
 <code>Core</code> and its provided by Jane Street. Its the library used in the
 <strong>Real World OCaml</strong> book/website. Another standard library
-replacement is called <code>Batteries</code>, this is more &#39;community&#39;
+replacement is called <code>Batteries</code>, this is more &quot;community&quot;
 supported. There is a more recent contender called <code>Containers</code>. For a
 categorized list of contemporary and well liked/must have libraries,
 checkout the <a href="https://github.com/rizo/awesome-ocaml">awesome-ocaml</a>
 repository.</p>
 <h1 id="Speaking-of-Libraries">Speaking of Libraries...</h1>
 
-<p>This is &#39;functional programming,&#39; so many of the real world libraries
+<p>This is &quot;functional programming,&quot; so many of the real world libraries
 you&#39;ll encounter will have Monadic interfaces, like <code>lwt</code> or Core&#39;s
 <code>async</code>, both are asynchronous threading libraries, use Monads and
 that wacky <code>&gt;&gt;=</code> function. But you really shouldn&#39;t fret about what a
@@ -231,18 +231,18 @@ code samples assume the file is named <code>code.ml</code> and can be run with
 
 <ol><li>Reading output of a process</li></ol>
 
-<pre><code class="ocaml">#require 'podge'
+<pre><code class="ocaml">#require <span class="string">&quot;podge&quot;</span>
 <span class="governing">let</span> () = 
-  <span class="ocaml-module">Podge</span>.<span class="ocaml-module">Unix</span>.read_process_output 'ls -halt' |&gt; <span class="ocaml-module">List</span>.iter print_endline</code></pre>
+  <span class="ocaml-module">Podge</span>.<span class="ocaml-module">Unix</span>.read_process_output <span class="string">&quot;ls -halt&quot;</span> |&gt; <span class="ocaml-module">List</span>.iter print_endline</code></pre>
 
 <p>The <code>|&gt;</code> just means piping, its piping the output of
 <code>read_process_output</code> into the input of the partially applied function
 <code>iter</code></p>
 <ol><li>Reading a file</li></ol>
 
-<pre><code class="ocaml">#require 'podge'
+<pre><code class="ocaml">#require <span class="string">&quot;podge&quot;</span>
 <span class="governing">let</span> () = 
-  <span class="ocaml-module">Podge</span>.<span class="ocaml-module">Unix</span>.read_lines 'code.ml' |&gt; <span class="ocaml-module">List</span>.iter print_endline</code></pre>
+  <span class="ocaml-module">Podge</span>.<span class="ocaml-module">Unix</span>.read_lines <span class="string">&quot;code.ml&quot;</span> |&gt; <span class="ocaml-module">List</span>.iter print_endline</code></pre>
 
 <p>Similar to 1, this reads all lines of file and gives it to the input
 of the partially applied function <code>iter</code>.</p>
@@ -373,9 +373,9 @@ with opam just by doing this in the same project root directory:</p>
    ;; Add opam emacs directory to the load-path
    (setq opam-share
      (substring
-      (shell-command-to-string &#39;opam config var share 2&gt; /dev/null&#39;)
+      (shell-command-to-string &quot;opam config var share 2&gt; /dev/null&quot;)
       0 -1))
-   (add-to-list &#39;load-path (concat opam-share &#39;/emacs/site-lisp&#39;))
+   (add-to-list &#39;load-path (concat opam-share &quot;/emacs/site-lisp&quot;))
    ;; Load merlin-mode
    (require &#39;merlin)
    ;; Start merlin on ocaml files
@@ -387,9 +387,9 @@ with opam just by doing this in the same project root directory:</p>
    (setq merlin-command &#39;opam)
    (company-mode)
    (require &#39;ocp-indent)
-   (autoload &#39;utop-minor-mode &#39;utop&#39; &#39;Minor mode for utop&#39; t)
-   (autoload &#39;utop-setup-ocaml-buffer &#39;utop&#39; &#39;Toplevel for OCaml&#39; t)
-   (autoload &#39;merlin-mode &#39;merlin&#39; &#39;Merlin mode&#39; t)
+   (autoload &#39;utop-minor-mode &quot;utop&quot; &quot;Minor mode for utop&quot; t)
+   (autoload &#39;utop-setup-ocaml-buffer &quot;utop&quot; &quot;Toplevel for OCaml&quot; t)
+   (autoload &#39;merlin-mode &quot;merlin&quot; &quot;Merlin mode&quot; t)
    (utop-minor-mode)
    (company-quickhelp-mode)
    ;; Important to note that setq-local is a macro and it needs to be
@@ -400,13 +400,13 @@ with opam just by doing this in the same project root directory:</p>
    (setq-local indent-line-function &#39;ocp-indent-line)
    (setq-local indent-region-function &#39;ocp-indent-region)
    (if (equal system-type &#39;darwin)
-       (load-file &#39;/Users/Edgar/.opam/working/share/emacs/site-lisp/ocp-indent.el&#39;)
-     (load-file &#39;/home/gar/.opam/working/share/emacs/site-lisp/ocp-indent.el&#39;))
+       (load-file &quot;/Users/Edgar/.opam/working/share/emacs/site-lisp/ocp-indent.el&quot;)
+     (load-file &quot;/home/gar/.opam/working/share/emacs/site-lisp/ocp-indent.el&quot;))
    (merlin-mode)))
 
 (add-hook &#39;utop-mode-hook (lambda ()
                 (set-process-query-on-exit-flag
-                 (get-process &#39;utop&#39;) nil)))</code></pre>
+                 (get-process &quot;utop&quot;) nil)))</code></pre>
 
 <h2 id="OCaml-as-shell-scripting-example-assume-gandalf">OCaml as shell scripting, example assume gandalf</h2>
 
@@ -418,8 +418,8 @@ Objective-C++ and Grand Central Dispatch.</p>
 regular program, no compiling necessary.</p>
 <pre><code class="ocaml">#!/usr/bin/env ocaml
 <span class="comment">(* Need topfind <span class="keyword">to</span> make require work, need require <span class="keyword">to</span> use podge package *)</span>
-#use 'topfind'
-#require 'podge'
+#use <span class="string">&quot;topfind&quot;</span>
+#require <span class="string">&quot;podge&quot;</span>
 
 <span class="governing">module</span> <span class="ocaml-module">U</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Yojson</span>.<span class="ocaml-module">Basic</span>.Util
 <span class="governing">module</span> <span class="ocaml-module">A</span> <span class="ocaml-variable"></span>= <span class="ocaml-module">Podge</span>.ANSITerminal
@@ -430,33 +430,33 @@ regular program, no compiling necessary.</p>
 <span class="governing">type</span> <span class="type">error_condition</span> = Copy_error | Exec_error
 
 <span class="governing">let</span> <span class="ocaml-function">connected_devices</span> <span class="ocaml-variable">() </span>=
-  <span class="ocaml-module">Podge</span>.<span class="ocaml-module">Unix</span>.read_process_output 'gandalf -s'
+  <span class="ocaml-module">Podge</span>.<span class="ocaml-module">Unix</span>.read_process_output <span class="string">&quot;gandalf -s&quot;</span>
   |&gt; <span class="ocaml-module">Podge</span>.<span class="ocaml-module">List</span>.drop ~n:5
-  |&gt; <span class="ocaml-module">String</span>.concat ''
+  |&gt; <span class="ocaml-module">String</span>.concat <span class="string">&quot;&quot;</span>
   |&gt; <span class="ocaml-module">Yojson</span>.<span class="ocaml-module">Basic</span>.from_string
   |&gt; <span class="ocaml-module">U</span>.to_list
   |&gt; <span class="ocaml-module">List</span>.fold_left
-    (<span class="keyword">fun</span> accum item -&gt; <span class="ocaml-module">U</span>.(member 'Local Port' item |&gt; to_int) :: accum) []
+    (<span class="keyword">fun</span> accum item -&gt; <span class="ocaml-module">U</span>.(member <span class="string">&quot;Local Port&quot;</span> item |&gt; to_int) :: accum) []
 
 <span class="governing">let</span> <span class="ocaml-function">command</span> = <span class="keyword">function</span>
   | Scp (port, target) -&gt;
-    <span class="ocaml-module">Printf</span>.sprintf 'scp -P %d %s root@localhost:~/' port target
+    <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;scp -P %d %s root@localhost:~/&quot;</span> port target
   | Ssh (port, cmd) -&gt;
-    <span class="ocaml-module">Printf</span>.sprintf 'ssh root@localhost -p %d \'%s\'' port cmd
+    <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;ssh root@localhost -p %d \&quot;%s\&quot;&quot;</span> port cmd
 
 <span class="governing">let</span> <span class="ocaml-function">usage</span> <span class="ocaml-variable">() </span>=
-  'This deploy script assumes that it was started\n\
-   from the makefile <span class="keyword">with</span> `make deploy` <span class="governing">and</span> that gandalf is running'
+  <span class="string">&quot;This deploy script assumes that it was started\n\
+   from the makefile <span class="keyword">with</span> `make deploy` <span class="governing">and</span> that gandalf is running&quot;</span>
   |&gt; print_endline;
   exit 1
 
 <span class="governing">let</span> <span class="ocaml-function">with_gandalf</span> <span class="ocaml-variable">udid ~f </span>=
-  <span class="governing">let </span><span class="ocaml-variable">f_name</span> = <span class="ocaml-module">Filename</span>.temp_file 'gandalf<span class="string">' '</span>deployment' <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">f_name</span> = <span class="ocaml-module">Filename</span>.temp_file <span class="string">&quot;gandalf&quot;</span> <span class="string">&quot;deployment&quot;</span> <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">f_chan</span> = open_out f_name <span class="governing">in</span>
-  <span class="ocaml-module">Printf</span>.sprintf '%s:2000:22' udid |&gt; output_string f_chan;
+  <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;%s:2000:22&quot;</span> udid |&gt; output_string f_chan;
   close_out f_chan;
   <span class="governing">let </span><span class="ocaml-variable">gandalf_pid</span> =
-    <span class="ocaml-module">Unix</span>.(create_process 'gandalf' [|'gandalf'; '-m'; f_name|] stdin stdout stderr)
+    <span class="ocaml-module">Unix</span>.(create_process <span class="string">&quot;gandalf&quot;</span> [|<span class="string">&quot;gandalf&quot;</span>; <span class="string">&quot;-m&quot;</span>; f_name|] stdin stdout stderr)
   <span class="governing">in</span>
   <span class="ocaml-module">Unix</span>.sleep 1;
   f ();
@@ -475,24 +475,24 @@ regular program, no compiling necessary.</p>
       <span class="governing">let </span><span class="ocaml-variable">devices</span> = connected_devices () <span class="governing">in</span>
       devices |&gt; <span class="ocaml-module">List</span>.iter <span class="governing">begin</span> <span class="keyword">fun</span> i_device -&gt;
         <span class="governing">let </span><span class="ocaml-variable">scp_cmd</span> = <span class="ocaml-module">Sys</span>.(Scp (i_device, argv.(1))) |&gt; command <span class="governing">in</span>
-        <span class="ocaml-module">Printf</span>.sprintf 'Deploying binary <span class="keyword">to</span> remote device: %s' scp_cmd
+        <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;Deploying binary <span class="keyword">to</span> remote device: %s&quot;</span> scp_cmd
         |&gt; <span class="ocaml-module">A</span>.colored_message |&gt; print_endline;
         <span class="ocaml-module">Sys</span>.command scp_cmd
-        |&gt; cmd_result ~error_msg:'Was unable <span class="keyword">to</span> copy over the binary';
+        |&gt; cmd_result ~error_msg:<span class="string">&quot;Was unable <span class="keyword">to</span> copy over the binary&quot;</span>;
         <span class="governing">let </span><span class="ocaml-variable">ssh_cmd_sign</span> =
-          <span class="ocaml-module">Sys</span>.(Ssh (i_device, 'ldid -S /var/root/' ^ argv.(1))) |&gt; command
+          <span class="ocaml-module">Sys</span>.(Ssh (i_device, <span class="string">&quot;ldid -S /var/root/&quot;</span> ^ argv.(1))) |&gt; command
         <span class="governing">in</span>
-        <span class="ocaml-module">Printf</span>.sprintf 'Signing binary on remote device: %s' ssh_cmd_sign
+        <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;Signing binary on remote device: %s&quot;</span> ssh_cmd_sign
         |&gt; <span class="ocaml-module">A</span>.colored_message |&gt; print_endline;
         <span class="ocaml-module">Sys</span>.command ssh_cmd_sign
         |&gt; cmd_result
-          ~error_msg:(<span class="ocaml-module">Printf</span>.sprintf 'Signing binary on remote device: %s' ssh_cmd_sign);
-        <span class="governing">let </span><span class="ocaml-variable">ssh_cmd</span> = <span class="ocaml-module">Sys</span>.(Ssh (i_device, '/var/root/' ^ argv.(1))) |&gt; command <span class="governing">in</span>
-        <span class="ocaml-module">Printf</span>.sprintf 'Executing binary on remote device: %s' ssh_cmd
+          ~error_msg:(<span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;Signing binary on remote device: %s&quot;</span> ssh_cmd_sign);
+        <span class="governing">let </span><span class="ocaml-variable">ssh_cmd</span> = <span class="ocaml-module">Sys</span>.(Ssh (i_device, <span class="string">&quot;/var/root/&quot;</span> ^ argv.(1))) |&gt; command <span class="governing">in</span>
+        <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;Executing binary on remote device: %s&quot;</span> ssh_cmd
         |&gt; print_endline;
         <span class="ocaml-module">Sys</span>.command ssh_cmd
-        |&gt; cmd_result ~error_msg:'Was unable <span class="keyword">to</span> execute the binary';
-        <span class="ocaml-module">A</span>.colored_message 'Deployed <span class="governing">and</span> tested successfully'
+        |&gt; cmd_result ~error_msg:<span class="string">&quot;Was unable <span class="keyword">to</span> execute the binary&quot;</span>;
+        <span class="ocaml-module">A</span>.colored_message <span class="string">&quot;Deployed <span class="governing">and</span> tested successfully&quot;</span>
         |&gt; print_endline
       <span class="governing">end</span>
     <span class="governing">end</span></code></pre>

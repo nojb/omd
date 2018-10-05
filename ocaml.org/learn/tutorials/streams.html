@@ -147,7 +147,7 @@ but because the entire file is loaded into memory, it does not scale
 well when the file is large.</p>
 <p>More commonly, the <code>input_line</code> function can be used to read one line at
 a time from a channel. This typically looks like:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">in_channel</span> = open_in 'lines.txt' <span class="governing">in</span>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">in_channel</span> = open_in <span class="string">&quot;lines.txt&quot;</span> <span class="governing">in</span>
 <span class="keyword">try</span>
   <span class="keyword">while</span> true <span class="keyword">do</span>
     <span class="governing">let </span><span class="ocaml-variable">line</span> = input_line in_channel <span class="governing">in</span>
@@ -175,7 +175,7 @@ that builds a stream of lines from an input channel:</p>
          <span class="keyword">try</span> Some (input_line channel) <span class="keyword">with</span> End_of_file -&gt; None)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val line_stream_of_channel : in_channel -&gt; string Stream.t = &lt;fun&gt;
 </span></code></pre>
 
-<p>The &#39;Stream.from&#39; function builds a stream from a callback function.
+<p>The &quot;Stream.from&quot; function builds a stream from a callback function.
 This function is passed the current stream count (starting with 0) as an
 argument and is expected to return an <code>&#39;a option</code>. If the option has a
 value (<code>Some x</code>), that value will be the next item in the stream. If it
@@ -185,17 +185,18 @@ further reads will be attempted. Since the option is polymorphic,
 type of <code>&#39;a Stream.t</code>.</p>
 <p>With this simple function, we can now easily construct line streams from
 any input channel:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">in_channel</span> = open_in <span class="ocaml-error-loc">'</span><span class="ocaml-module"><span class="ocaml-error-loc"></span>README</span>.md'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lines</span> = line_stream_of_channel <span class="ocaml-error-loc">in_channel</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value in_channel
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">in_channel</span> = open_in <span class="string">&quot;<span class="ocaml-module">README</span>.md&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val in_channel : in_channel = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lines</span> = line_stream_of_channel in_channel</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val lines : string Stream.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>This variable <code>lines</code> is a stream of strings, one string per line. We
 can now begin reading lines from it by passing it to <code>Stream.next</code>:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> true <span class="keyword">do</span> ignore(<span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span>) <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string =
+&quot;[![Travis Build Status](https://travis-ci.org/ocaml/ocaml.org.svg?branch=master)](https://travis-ci.org/ocaml/ocaml.org)&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;OCAML.ORG PROJECT&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;=================&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> true <span class="keyword">do</span> ignore(<span class="ocaml-module">Stream</span>.next lines) <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Stream.Failure.
 </span></code></pre>
 
 <p>As you can see, <code>Stream.next</code> either returns the next item in the stream
@@ -203,18 +204,16 @@ or raises a <code>Stream.Failure</code> exception indicating that the stream is
 empty. Likewise, with a little help from the <code>Stream.of_list</code>
 constructor and the <code>Str</code> regular expression module, we could build a
 stream of lines from a string in memory:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>str.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">line_stream_of_string</span> <span class="ocaml-variable">string </span>=
-    <span class="ocaml-module">Stream</span>.of_list (<span class="ocaml-module">Str</span>.split (<span class="ocaml-module">Str</span>.regexp <span class="ocaml-error-loc">'\n'</span>) string)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;str.cma&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">line_stream_of_string</span> <span class="ocaml-variable">string </span>=
+    <span class="ocaml-module">Stream</span>.of_list (<span class="ocaml-module">Str</span>.split (<span class="ocaml-module">Str</span>.regexp <span class="string">&quot;\n&quot;</span>) string)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val line_stream_of_string : string -&gt; string Stream.t = &lt;fun&gt;
 </span></code></pre>
 
 <p>and these streams could be used exactly the same way:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lines</span> = line_stream_of_string <span class="ocaml-error-loc">'</span>hello\nstream\nworld'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lines</span> = line_stream_of_string <span class="string">&quot;hello\nstream\nworld&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val lines : string Stream.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;hello&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;stream&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;world&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.next lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Stream.Failure.
 </span></code></pre>
 
 <p>Since both cases raise <code>Stream.Failure</code> on an empty stream, there is no
@@ -224,7 +223,7 @@ receive data from multiple sources.</p>
 <p>The <code>Stream.iter</code> function automates the common task of performing an
 operation for each item. With it, we can rewrite the original example as
 follows:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">in_channel</span> = open_in '<span class="ocaml-module">README</span>.md' <span class="governing">in</span>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">in_channel</span> = open_in <span class="string">&quot;<span class="ocaml-module">README</span>.md&quot;</span> <span class="governing">in</span>
 <span class="keyword">try</span>
   <span class="ocaml-module">Stream</span>.iter
     (<span class="keyword">fun</span> line -&gt;
@@ -256,7 +255,10 @@ reusable functions:</p>
       <span class="keyword">raise</span> e
   
   <span class="governing">let</span> <span class="ocaml-function">process_string</span> <span class="ocaml-variable">string </span>=
-    process_lines (<span class="ocaml-error-loc">line_stream_of_string</span> string)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value line_stream_of_string
+    process_lines (line_stream_of_string string)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val process_line : string -&gt; unit = &lt;fun&gt;
+val process_lines : string Stream.t -&gt; unit = &lt;fun&gt;
+val process_file : string -&gt; unit = &lt;fun&gt;
+val process_string : string -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <h2 id="Constructing-streams">Constructing streams</h2><p>In the above examples, we saw two methods for constructing streams:</p>
@@ -285,16 +287,16 @@ sequences. Here are a few simple stream builders defined with
 from a stream. There is another way to work with streams that is often
 preferable: <code>Stream.peek</code> and <code>Stream.junk</code>. When used together, these
 functions allow you to see what the next item would be. This feature,
-known as &#39;look ahead&#39;, is very useful when writing parsers. Even if you
+known as &quot;look ahead&quot;, is very useful when writing parsers. Even if you
 don&#39;t need to look ahead, the peek/junk protocol may be nicer to work
 with because it uses options instead of exceptions:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lines</span> = line_stream_of_string <span class="ocaml-error-loc">'</span>hello\nworld'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.junk <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.junk <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek <span class="ocaml-error-loc">lines</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value lines
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">lines</span> = line_stream_of_string <span class="string">&quot;hello\nworld&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val lines : string Stream.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = Some &quot;hello&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = Some &quot;hello&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.junk lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = Some &quot;world&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.junk lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.peek lines</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = None
 </span></code></pre>
 
 <p>As you can see, it is necessary to call <code>Stream.junk</code> to advance to the
@@ -307,15 +309,15 @@ As such, it is both a stream consumer and a stream producer.</p>
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">next</span> <span class="ocaml-variable">para_lines i </span>=
       <span class="keyword">match</span> <span class="ocaml-module">Stream</span>.peek lines, para_lines <span class="keyword">with</span>
       | None, [] -&gt; None
-      | Some <span class="ocaml-error-loc">'</span>', [] -&gt;
+      | Some <span class="string">&quot;&quot;</span>, [] -&gt;
           <span class="ocaml-module">Stream</span>.junk lines;
           next para_lines i
-      | Some '', _ | None, _ -&gt;
-          Some (<span class="ocaml-module">String</span>.concat '\n' (<span class="ocaml-module">List</span>.rev para_lines))
+      | Some <span class="string">&quot;&quot;</span>, _ | None, _ -&gt;
+          Some (<span class="ocaml-module">String</span>.concat <span class="string">&quot;\n&quot;</span> (<span class="ocaml-module">List</span>.rev para_lines))
       | Some line, _ -&gt;
           <span class="ocaml-module">Stream</span>.junk lines;
           next (line :: para_lines) i <span class="governing">in</span>
-    <span class="ocaml-module">Stream</span>.from (next [])</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">Stream</span>.from (next [])</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val paragraphs : string Stream.t -&gt; string Stream.t = &lt;fun&gt;
 </span></code></pre>
 
 <p>This function uses an extra parameter to <code>next</code> (the <code>Stream.from</code>
@@ -345,7 +347,7 @@ could before with lines:</p>
 <span class="ocaml-module">Stream</span>.iter
   (<span class="keyword">fun</span> para -&gt;
      print_endline para;
-     print_endline '--')
+     print_endline <span class="string">&quot;--&quot;</span>)
   (paragraphs lines)</code></pre>
 
 <p>Functions like <code>paragraphs</code> that produce and consume streams can be
@@ -428,10 +430,13 @@ produce a sequence of HTML blocks:</p>
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.iter print_endline
     (stream_map
        (<span class="keyword">fun</span> (bg, s) -&gt;
-          <span class="ocaml-module">Printf</span>.sprintf <span class="ocaml-error-loc">'</span>&lt;div style='background: %s'&gt;%s&lt;/div&gt;' bg s)
+          <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;&lt;div style='background: %s'&gt;%s&lt;/div&gt;&quot;</span> bg s)
        (stream_combine
-          (cycle ['#eee'; '#fff'])
-          (<span class="ocaml-module">Stream</span>.of_list ['hello'; 'html'; 'world'])))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+          (cycle [<span class="string">&quot;#eee&quot;</span>; <span class="string">&quot;#fff&quot;</span>])
+          (<span class="ocaml-module">Stream</span>.of_list [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;html&quot;</span>; <span class="string">&quot;world&quot;</span>])))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">&lt;div style='background: #eee'&gt;hello&lt;/div&gt;
+&lt;div style='background: #fff'&gt;html&lt;/div&gt;
+&lt;div style='background: #eee'&gt;world&lt;/div&gt;
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Here is a simple <code>range</code> function that produces a sequence of integers:</p>
@@ -507,16 +512,20 @@ simple as:</p>
 <p>Since <code>stream_combine</code> stops as soon as either of its input streams runs
 out, it can be used to combine an infinite stream with a finite one.
 This provides a neat way to add indexes to a sequence:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">items</span> = [<span class="ocaml-error-loc">'</span>this'; 'is'; <span class="string">'a'</span>; 'test']</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">items</span> = [<span class="string">&quot;this&quot;</span>; <span class="string">&quot;is&quot;</span>; <span class="string">&quot;a&quot;</span>; <span class="string">&quot;test&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val items : string list = [&quot;this&quot;; &quot;is&quot;; &quot;a&quot;; &quot;test&quot;]
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.iter
     (<span class="keyword">fun</span> (index, value) -&gt;
-       <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>%d. %s\n%!' index value)
-    (stream_combine (count_stream 1) (<span class="ocaml-module">Stream</span>.of_list items))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+       <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d. %s\n%!&quot;</span> index value)
+    (stream_combine (count_stream 1) (<span class="ocaml-module">Stream</span>.of_list items))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">1. this
+2. is
+3. a
+4. test
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h2 id="Copying-streams">Copying streams</h2><p>Streams are destructive; once you discard an item in a stream, it is no
 longer available unless you save a copy somewhere. What if you want to
-use the same stream more than once? One way is to create a &#39;tee&#39;. The
+use the same stream more than once? One way is to create a &quot;tee&quot;. The
 following function creates two output streams from one input stream,
 intelligently queueing unseen values until they have been produced by
 both streams:</p>
@@ -596,10 +605,8 @@ val hash_of_stream : ('a * 'b) Stream.t -&gt; ('a, 'b) Hashtbl.t = &lt;fun&gt;
 <p>What if you want to convert arbitary data types to streams? Well, if the
 data type defines an <code>iter</code> function, and you don&#39;t mind using threads,
 you can use a producer-consumer arrangement to invert control:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#directory <span class="ocaml-error-loc">'</span>+threads'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="ocaml-error-loc">'</span>threads.cma'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">elements</span> <span class="ocaml-variable">iter coll </span>=
-    <span class="governing">let </span><span class="ocaml-variable">channel</span> = <span class="ocaml-module"><span class="ocaml-error-loc">Event</span></span><span class="ocaml-error-loc">.new_channel</span> () <span class="governing">in</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">#directory <span class="string">&quot;+threads&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">#load <span class="string">&quot;threads.cma&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">elements</span> <span class="ocaml-variable">iter coll </span>=
+    <span class="governing">let </span><span class="ocaml-variable">channel</span> = <span class="ocaml-module">Event</span>.new_channel () <span class="governing">in</span>
     <span class="governing">let</span> <span class="ocaml-function">producer</span> <span class="ocaml-variable">() </span>=
       <span class="governing">let</span> () =
         iter (<span class="keyword">fun</span> x -&gt; <span class="ocaml-module">Event</span>.sync (<span class="ocaml-module">Event</span>.send channel (Some x))) coll <span class="governing">in</span>
@@ -607,7 +614,7 @@ you can use a producer-consumer arrangement to invert control:</p>
     <span class="governing">let</span> <span class="ocaml-function">consumer</span> <span class="ocaml-variable">i </span>=
       <span class="ocaml-module">Event</span>.sync (<span class="ocaml-module">Event</span>.receive channel) <span class="governing">in</span>
     ignore (<span class="ocaml-module">Thread</span>.create producer ());
-    <span class="ocaml-module">Stream</span>.from consumer</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module Event
+    <span class="ocaml-module">Stream</span>.from consumer</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val elements : (('a -&gt; unit) -&gt; 'b -&gt; unit) -&gt; 'b -&gt; 'a Stream.t = &lt;fun&gt;
 </span></code></pre>
 
 <p>Now it is possible to build a stream from an <code>iter</code> function and a
@@ -653,18 +660,22 @@ corresponding value:</p>
     val of_list : elt list -&gt; t
   end
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.empty</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val set : StringSet.t = &lt;abstr&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="ocaml-error-loc">'</span>here' set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="ocaml-error-loc">'</span>are' set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="ocaml-error-loc">'</span>some' set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="ocaml-error-loc">'</span>values' set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">stream</span> = <span class="ocaml-error-loc">elements</span> <span class="ocaml-module">StringSet</span>.iter set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value elements
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.iter print_endline <span class="ocaml-error-loc">stream</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value stream
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="string">&quot;here&quot;</span> set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val set : StringSet.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="string">&quot;are&quot;</span> set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val set : StringSet.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="string">&quot;some&quot;</span> set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val set : StringSet.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">set</span> = <span class="ocaml-module">StringSet</span>.add <span class="string">&quot;values&quot;</span> set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val set : StringSet.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">stream</span> = elements <span class="ocaml-module">StringSet</span>.iter set</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val stream : StringSet.elt Stream.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Stream</span>.iter print_endline stream</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">are
+here
+some
+values
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Some data types, like Hashtbl and Map, provide an <code>iter</code> function that
 iterates through key-value pairs. Here&#39;s a function for those, too:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">items</span> <span class="ocaml-variable">iter coll </span>=
-    <span class="governing">let </span><span class="ocaml-variable">channel</span> = <span class="ocaml-module"><span class="ocaml-error-loc">Event</span></span><span class="ocaml-error-loc">.new_channel</span> () <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">channel</span> = <span class="ocaml-module">Event</span>.new_channel () <span class="governing">in</span>
     <span class="governing">let</span> <span class="ocaml-function">producer</span> <span class="ocaml-variable">() </span>=
       <span class="governing">let</span> () =
         iter (<span class="keyword">fun</span> k v -&gt;
@@ -673,14 +684,15 @@ iterates through key-value pairs. Here&#39;s a function for those, too:</p>
     <span class="governing">let</span> <span class="ocaml-function">consumer</span> <span class="ocaml-variable">i </span>=
       <span class="ocaml-module">Event</span>.sync (<span class="ocaml-module">Event</span>.receive channel) <span class="governing">in</span>
     ignore (<span class="ocaml-module">Thread</span>.create producer ());
-    <span class="ocaml-module">Stream</span>.from consumer</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module Event
+    <span class="ocaml-module">Stream</span>.from consumer</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val items : (('a -&gt; 'b -&gt; unit) -&gt; 'c -&gt; unit) -&gt; 'c -&gt; ('a * 'b) Stream.t =
+  &lt;fun&gt;
 </span></code></pre>
 
 <p>If we want just the keys, or just the values, it is simple to transform
 the output of <code>items</code> using <code>stream_map</code>:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">keys</span> <span class="ocaml-variable">iter coll </span>= stream_map (<span class="keyword">fun</span> (k, v) -&gt; k) (<span class="ocaml-error-loc">items</span> iter coll)
-  <span class="governing">let</span> <span class="ocaml-function">values</span> <span class="ocaml-variable">iter coll </span>= stream_map (<span class="keyword">fun</span> (k, v) -&gt; v) (items iter coll)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value items
-Hint: Did you mean iter?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">keys</span> <span class="ocaml-variable">iter coll </span>= stream_map (<span class="keyword">fun</span> (k, v) -&gt; k) (items iter coll)
+  <span class="governing">let</span> <span class="ocaml-function">values</span> <span class="ocaml-variable">iter coll </span>= stream_map (<span class="keyword">fun</span> (k, v) -&gt; v) (items iter coll)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val keys : (('a -&gt; 'b -&gt; unit) -&gt; 'c -&gt; unit) -&gt; 'c -&gt; 'a Stream.t = &lt;fun&gt;
+val values : (('a -&gt; 'b -&gt; unit) -&gt; 'c -&gt; unit) -&gt; 'c -&gt; 'b Stream.t = &lt;fun&gt;
 </span></code></pre>
 
 <p>Keep in mind that these techniques spawn producer threads which carry a
@@ -695,8 +707,8 @@ unexpected results.</p>
 
 <p>In addition, there are a few undocumented functions: <code>iapp</code>, <code>icons</code>,
 <code>ising</code>, <code>lapp</code>, <code>lcons</code>, <code>lsing</code>, <code>sempty</code>, <code>slazy</code>, and <code>dump</code>. They
-are visible in the interface with the caveat: &#39;For system use only, not
-for the casual user&#39;. Some of these functions are used internally by
+are visible in the interface with the caveat: &quot;For system use only, not
+for the casual user&quot;. Some of these functions are used internally by
 Camlp4 <a href="stream_expressions.html" title="Stream Expressions">Stream
 Expressions</a>, which are
 based on the <code>Stream</code> module as well. In any case, they are best left

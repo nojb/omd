@@ -148,8 +148,8 @@
 <p>現代的言語がすべてそうであるように、 OCaml
 にはガベージコレクタ(GC)があるので、 C/C++
 のようにメモリの確保と開放を明示する必要はない。</p>
-<p>JWZ が <a href="http://www.jwz.org/doc/java.html" title="http://www.jwz.org/doc/java.html">&#39;Java
-sucks&#39;</a>
+<p>JWZ が <a href="http://www.jwz.org/doc/java.html" title="http://www.jwz.org/doc/java.html">&quot;Java
+sucks&quot;</a>
 で吐き捨てているのだが:</p>
 <blockquote><p>最初に、良い点: Javaには、<code>free()</code> がない。
 これだけはきちんと認めなければならない、だが他は全部あぶく銭だ。
@@ -207,7 +207,7 @@ sucks&#39;</a>
 の明示的な呼び出しをなくすことができる。例えば:</p>
 <pre class="perl"><code class="perl">foreach (@files)
 {
-  my $io = new IO::File &#39;&lt; $_&#39; or die;
+  my $io = new IO::File &quot;&lt; $_&quot; or die;
   # read from $io
 }</code></pre>
 
@@ -256,7 +256,7 @@ OCamlプログラムからガベージコレクタへ問い合わせたり呼び
   
 <span class="governing">let</span> () =
   <span class="ocaml-module">Random</span>.self_init ();
-  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480';
+  <span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span>;
   <span class="keyword">for</span> x = 0 <span class="keyword">to</span> 640 <span class="keyword">do</span>
     <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
     <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
@@ -401,7 +401,7 @@ compactions: 0</code></pre><p>この結果から、マイナーヒープの回�
   
 <span class="comment">(* On-disk file. *)</span>
 <span class="governing">let </span><span class="ocaml-variable">diskfile</span> =
-  <span class="ocaml-module">Unix</span>.openfile 'users.bin' [ <span class="ocaml-module">Unix</span>.O_RDWR; <span class="ocaml-module">Unix</span>.O_CREAT ] 0o666</code></pre>
+  <span class="ocaml-module">Unix</span>.openfile <span class="string">&quot;users.bin&quot;</span> [ <span class="ocaml-module">Unix</span>.O_RDWR; <span class="ocaml-module">Unix</span>.O_CREAT ] 0o666</code></pre>
 
 <p><a href="../../img/users.bin.gz">users.bin.gz</a>
 をダウンロードして、プログラムを走らせる前に 復元しよう。</p>
@@ -420,7 +420,7 @@ compactions: 0</code></pre><p>この結果から、マイナーヒープの回�
   
 <span class="comment">(* The finaliser function. *)</span>
 <span class="governing">let</span> <span class="ocaml-function">finaliser</span> <span class="ocaml-variable">n record </span>=
-  printf '*** objcache: finalising record %d\n%!' n;
+  printf <span class="string">&quot;*** objcache: finalising record %d\n%!&quot;</span> n;
   write_record record n diskfile;
   unlock_record n diskfile
   
@@ -428,10 +428,10 @@ compactions: 0</code></pre><p>この結果から、マイナーヒープの回�
 <span class="governing">let</span> <span class="ocaml-function">get_record</span> <span class="ocaml-variable">n </span>=
   <span class="keyword">match</span> <span class="ocaml-module">Weak</span>.get cache n <span class="keyword">with</span>
   | Some record -&gt;
-      printf '*** objcache: fetching record %d from memory cache\n%!' n;
+      printf <span class="string">&quot;*** objcache: fetching record %d from memory cache\n%!&quot;</span> n;
       record
   | None -&gt;
-      printf '*** objcache: loading record %d from disk\n%!' n;
+      printf <span class="string">&quot;*** objcache: loading record %d from disk\n%!&quot;</span> n;
       <span class="governing">let </span><span class="ocaml-variable">record</span> = new_record () <span class="governing">in</span>
       <span class="ocaml-module">Gc</span>.finalise (finaliser n) record;
       lock_record n diskfile;

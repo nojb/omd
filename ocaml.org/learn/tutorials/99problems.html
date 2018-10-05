@@ -140,8 +140,8 @@
             // Get the DOM reference
             var el = document.getElementById(id);
             // Toggle
-            el.style.display == 'block' ? el.style.display = 'none'
-            : el.style.display = 'block';
+            el.style.display == "block" ? el.style.display = "none"
+            : el.style.display = "block";
             }
             
 </script>
@@ -170,7 +170,7 @@ problems is available on
     | _ :: t -&gt; last t</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val last : 'a list -&gt; 'a option = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">last [ <span class="string">'a'</span> ; <span class="string">'b'</span> ; <span class="string">'c'</span> ; <span class="string">'d'</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char option = Some 'd'
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">last [ <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span> ; <span class="string">&quot;c&quot;</span> ; <span class="string">&quot;d&quot;</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = Some &quot;d&quot;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">last []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : 'a option = None
 </span></code></pre>
 
@@ -183,8 +183,8 @@ problems is available on
     | _::t -&gt; last_two t</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val last_two : 'a list -&gt; ('a * 'a) option = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">last_two [ <span class="string">'a'</span> ; <span class="string">'b'</span> ; <span class="string">'c'</span> ; <span class="string">'d'</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (char * char) option = Some ('c', 'd')
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">last_two [ <span class="string">'a'</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (char * char) option = None
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">last_two [ <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span> ; <span class="string">&quot;c&quot;</span> ; <span class="string">&quot;d&quot;</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (string * string) option = Some (&quot;c&quot;, &quot;d&quot;)
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">last_two [ <span class="string">&quot;a&quot;</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (string * string) option = None
 </span></code></pre>
 
 <h4 id="3-Find-the-k-39-th-element-of-a-list-easy">3. Find the <code>k</code>&#39;th element of a list. (<em>easy</em>)</h4>
@@ -195,14 +195,14 @@ problems is available on
     | h :: t -&gt; <span class="keyword">if</span> k = 1 <span class="keyword">then</span> Some h <span class="keyword">else</span> at (k-1) t</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val at : int -&gt; 'a list -&gt; 'a option = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">at 3 [ <span class="string">'a'</span> ; <span class="string">'b'</span>; <span class="string">'c'</span>; <span class="string">'d'</span>; <span class="string">'e'</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char option = Some 'c'
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">at 3 [ <span class="string">'a'</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char option = None
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">at 3 [ <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;d&quot;</span>; <span class="string">&quot;e&quot;</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = Some &quot;c&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">at 3 [ <span class="string">&quot;a&quot;</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string option = None
 </span></code></pre>
 
 <p>REMARK: OCaml has <code>List.nth</code> which numbers elements from <code>0</code> and
 raises an exception if the index is out of bounds.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.nth [ <span class="string">'a'</span> ; <span class="string">'b'</span>; <span class="string">'c'</span>; <span class="string">'d'</span>; <span class="string">'e'</span> ] 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char = 'c'
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.nth [ <span class="string">'a'</span> ] 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Failure &quot;nth&quot;.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.nth [ <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;d&quot;</span>; <span class="string">&quot;e&quot;</span> ] 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;c&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.nth [ <span class="string">&quot;a&quot;</span> ] 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Failure &quot;nth&quot;.
 </span></code></pre>
 
 <h4 id="4-Find-the-number-of-elements-of-a-list-easy">4. Find the number of elements of a list. (<em>easy</em>)</h4>
@@ -220,7 +220,7 @@ solution.</p>
     <span class="governing">in</span> aux 0 list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val length : 'a list -&gt; int = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">length [ <span class="string">'a'</span> ; <span class="string">'b'</span> ; <span class="string">'c'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">length [ <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span> ; <span class="string">&quot;c&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 3
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">length []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 0
 </span></code></pre>
 
@@ -236,7 +236,7 @@ it.</p>
     aux [] list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val rev : 'a list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">rev [<span class="string">'a'</span> ; <span class="string">'b'</span> ; <span class="string">'c'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['c'; 'b'; 'a']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">rev [<span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span> ; <span class="string">&quot;c&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;c&quot;; &quot;b&quot;; &quot;a&quot;]
 </span></code></pre>
 
 <h4 id="6-Find-out-whether-a-list-is-a-palindrome-easy">6. Find out whether a list is a palindrome. (<em>easy</em>)</h4>
@@ -249,8 +249,8 @@ it.</p>
      built-<span class="governing">in</span> <span class="ocaml-module">List</span>.rev *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val is_palindrome : 'a list -&gt; bool = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">is_palindrome [ <span class="string">'x'</span> ; <span class="string">'a'</span> ; <span class="string">'m'</span> ; <span class="string">'a'</span> ; <span class="string">'x'</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">not (is_palindrome [ <span class="string">'a'</span> ; <span class="string">'b'</span> ])</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">is_palindrome [ <span class="string">&quot;x&quot;</span> ; <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;m&quot;</span> ; <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;x&quot;</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">not (is_palindrome [ <span class="string">&quot;a&quot;</span> ; <span class="string">&quot;b&quot;</span> ])</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
 <h4 id="7-Flatten-a-nested-list-structure-medium">7. Flatten a nested list structure. (<em>medium</em>)</h4>
@@ -276,7 +276,7 @@ it.</p>
     <span class="ocaml-module">List</span>.rev (aux [] list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val flatten : 'a node list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">flatten [ One <span class="string">'a'</span> ; Many [ One <span class="string">'b'</span> ; Many [ One <span class="string">'c'</span> ; One <span class="string">'d'</span> ] ; One <span class="string">'e'</span> ] ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'b'; 'c'; 'd'; 'e']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">flatten [ One <span class="string">&quot;a&quot;</span> ; Many [ One <span class="string">&quot;b&quot;</span> ; Many [ One <span class="string">&quot;c&quot;</span> ; One <span class="string">&quot;d&quot;</span> ] ; One <span class="string">&quot;e&quot;</span> ] ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;d&quot;; &quot;e&quot;]
 </span></code></pre>
 
 <h4 id="8-Eliminate-consecutive-duplicates-of-list-elements-medium">8. Eliminate consecutive duplicates of list elements. (<em>medium</em>)</h4>
@@ -287,7 +287,7 @@ it.</p>
     | smaller -&gt; smaller</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val compress : 'a list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">compress [<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'c'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'b'; 'c'; 'a'; 'd'; 'e']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">compress [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;a&quot;; &quot;d&quot;; &quot;e&quot;]
 </span></code></pre>
 
 <h4 id="9-Pack-consecutive-duplicates-of-list-elements-into-sublists-medium">9. Pack consecutive duplicates of list elements into sublists. (<em>medium</em>)</h4>
@@ -303,9 +303,9 @@ it.</p>
     <span class="ocaml-module">List</span>.rev (aux [] [] list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val pack : 'a list -&gt; 'a list list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">pack [<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'c'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'d'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list list =
-[['a'; 'a'; 'a'; 'a']; ['b']; ['c'; 'c']; ['a'; 'a']; ['d'; 'd'];
- ['e'; 'e'; 'e'; 'e']]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">pack [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list list =
+[[&quot;a&quot;; &quot;a&quot;; &quot;a&quot;; &quot;a&quot;]; [&quot;b&quot;]; [&quot;c&quot;; &quot;c&quot;]; [&quot;a&quot;; &quot;a&quot;]; [&quot;d&quot;; &quot;d&quot;];
+ [&quot;e&quot;; &quot;e&quot;; &quot;e&quot;; &quot;e&quot;]]
 </span></code></pre>
 
 <h4 id="10-Run-length-encoding-of-a-list-easy">10. Run-length encoding of a list. (<em>easy</em>)</h4>
@@ -328,8 +328,8 @@ function declared above:</p>
 </span></code></pre></div>
 
 <p>Here is an example:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">encode [<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'c'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (int * char) list =
-[(4, 'a'); (1, 'b'); (2, 'c'); (2, 'a'); (1, 'd'); (4, 'e')]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">encode [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (int * string) list =
+[(4, &quot;a&quot;); (1, &quot;b&quot;); (2, &quot;c&quot;); (2, &quot;a&quot;); (1, &quot;d&quot;); (4, &quot;e&quot;)]
 </span></code></pre>
 
 <h4 id="11-Modified-run-length-encoding-easy">11. Modified run-length encoding. (<em>easy</em>)</h4>
@@ -358,9 +358,9 @@ both single elements and sub-lists.</p>
       <span class="ocaml-module">List</span>.rev (aux 0 [] l)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val encode : 'a list -&gt; 'a rle list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">encode [<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'c'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char rle list =
-[Many (4, 'a'); One 'b'; Many (2, 'c'); Many (2, 'a'); One 'd';
- Many (4, 'e')]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">encode [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string rle list =
+[Many (4, &quot;a&quot;); One &quot;b&quot;; Many (2, &quot;c&quot;); Many (2, &quot;a&quot;); One &quot;d&quot;;
+ Many (4, &quot;e&quot;)]
 </span></code></pre>
 
 <h4 id="12-Decode-a-run-length-encoded-list-medium">12. Decode a run-length encoded list. (<em>medium</em>)</h4>
@@ -378,16 +378,16 @@ problem, construct its uncompressed version.</p>
     aux [] (<span class="ocaml-module">List</span>.rev list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val decode : 'a rle list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">decode [Many (4,<span class="string">'a'</span>); One <span class="string">'b'</span>; Many (2,<span class="string">'c'</span>); Many (2,<span class="string">'a'</span>); One <span class="string">'d'</span>; Many (4,<span class="string">'e'</span>)]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list =
-['a'; 'a'; 'a'; 'a'; 'b'; 'c'; 'c'; 'a'; 'a'; 'd'; 'e'; 'e'; 'e'; 'e']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">decode [Many (4,<span class="string">&quot;a&quot;</span>); One <span class="string">&quot;b&quot;</span>; Many (2,<span class="string">&quot;c&quot;</span>); Many (2,<span class="string">&quot;a&quot;</span>); One <span class="string">&quot;d&quot;</span>; Many (4,<span class="string">&quot;e&quot;</span>)]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list =
+[&quot;a&quot;; &quot;a&quot;; &quot;a&quot;; &quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;c&quot;; &quot;a&quot;; &quot;a&quot;; &quot;d&quot;; &quot;e&quot;; &quot;e&quot;; &quot;e&quot;; &quot;e&quot;]
 </span></code></pre>
 
 <h4 id="13-Run-length-encoding-of-a-list-direct-solution-medium">13. Run-length encoding of a list (direct solution). (<em>medium</em>)</h4>
 
 <p>Implement the so-called run-length encoding data compression method
 directly. I.e. don&#39;t explicitly create the sublists containing the
-duplicates, as in problem &#39;<a href="#Packconsecutiveduplicatesoflistelementsintosublistsmedium">Pack consecutive duplicates of list elements into sublists</a>&#39;, but only count them. As in problem 
-&#39;<a href="#Modifiedrunlengthencodingeasy">Modified run-length encoding</a>&#39;, simplify the result list by replacing the singleton lists (1 X) by X.</p>
+duplicates, as in problem &quot;<a href="#Packconsecutiveduplicatesoflistelementsintosublistsmedium">Pack consecutive duplicates of list elements into sublists</a>&quot;, but only count them. As in problem 
+&quot;<a href="#Modifiedrunlengthencodingeasy">Modified run-length encoding</a>&quot;, simplify the result list by replacing the singleton lists (1 X) by X.</p>
 <p><button class="solution" onclick="toggleContent('ocamlorg13')">Solution</button></p>
 <div id="ocamlorg13" class="solution"><pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">encode</span> <span class="ocaml-variable">list </span>=
     <span class="governing">let</span> <span class="ocaml-function">rle</span> <span class="ocaml-variable">count x </span>= <span class="keyword">if</span> count = 0 <span class="keyword">then</span> One x <span class="keyword">else</span> Many (count + 1, x) <span class="governing">in</span>
@@ -399,9 +399,9 @@ duplicates, as in problem &#39;<a href="#Packconsecutiveduplicatesoflistelements
     <span class="ocaml-module">List</span>.rev (aux 0 [] list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val encode : 'a list -&gt; 'a rle list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">encode [<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'c'</span>;<span class="string">'a'</span>;<span class="string">'a'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>;<span class="string">'e'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char rle list =
-[Many (4, 'a'); One 'b'; Many (2, 'c'); Many (2, 'a'); One 'd';
- Many (4, 'e')]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">encode [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;a&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;e&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string rle list =
+[Many (4, &quot;a&quot;); One &quot;b&quot;; Many (2, &quot;c&quot;); Many (2, &quot;a&quot;); One &quot;d&quot;;
+ Many (4, &quot;e&quot;)]
 </span></code></pre>
 
 <h4 id="14-Duplicate-the-elements-of-a-list-easy">14. Duplicate the elements of a list. (<em>easy</em>)</h4>
@@ -414,7 +414,7 @@ duplicates, as in problem &#39;<a href="#Packconsecutiveduplicatesoflistelements
 it becomes so?</p>
 </div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">duplicate [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'a'; 'b'; 'b'; 'c'; 'c'; 'c'; 'c'; 'd'; 'd']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">duplicate [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;a&quot;; &quot;b&quot;; &quot;b&quot;; &quot;c&quot;; &quot;c&quot;; &quot;c&quot;; &quot;c&quot;; &quot;d&quot;; &quot;d&quot;]
 </span></code></pre>
 
 <h4 id="15-Replicate-the-elements-of-a-list-a-given-number-of-times-medium">15. Replicate the elements of a list a given number of times. (<em>medium</em>)</h4>
@@ -433,7 +433,7 @@ it becomes so?</p>
 <a href="http://en.wikipedia.org/wiki/Tail_call">tail recursive</a>.</p>
 </div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">replicate [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'a'; 'a'; 'b'; 'b'; 'b'; 'c'; 'c'; 'c']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">replicate [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;a&quot;; &quot;a&quot;; &quot;b&quot;; &quot;b&quot;; &quot;b&quot;; &quot;c&quot;; &quot;c&quot;; &quot;c&quot;]
 </span></code></pre>
 
 <h4 id="16-Drop-every-N-39-th-element-from-a-list-medium">16. Drop every N&#39;th element from a list. (<em>medium</em>)</h4>
@@ -446,7 +446,7 @@ it becomes so?</p>
     aux 1 list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val drop : 'a list -&gt; int -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">drop [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'f'</span>;<span class="string">'g'</span>;<span class="string">'h'</span>;<span class="string">'i'</span>;<span class="string">'j'</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'b'; 'd'; 'e'; 'g'; 'h'; 'j']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">drop [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;f&quot;</span>;<span class="string">&quot;g&quot;</span>;<span class="string">&quot;h&quot;</span>;<span class="string">&quot;i&quot;</span>;<span class="string">&quot;j&quot;</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;b&quot;; &quot;d&quot;; &quot;e&quot;; &quot;g&quot;; &quot;h&quot;; &quot;j&quot;]
 </span></code></pre>
 
 <h4 id="17-Split-a-list-into-two-parts-the-length-of-the-first-part-is-given-easy">17. Split a list into two parts; the length of the first part is given. (<em>easy</em>)</h4>
@@ -462,9 +462,9 @@ first part is the list and the second part is empty.</p>
     aux n [] list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val split : 'a list -&gt; int -&gt; 'a list * 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">split [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'f'</span>;<span class="string">'g'</span>;<span class="string">'h'</span>;<span class="string">'i'</span>;<span class="string">'j'</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list * char list =
-(['a'; 'b'; 'c'], ['d'; 'e'; 'f'; 'g'; 'h'; 'i'; 'j'])
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">split [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>] 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list * char list = (['a'; 'b'; 'c'; 'd'], [])
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">split [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;f&quot;</span>;<span class="string">&quot;g&quot;</span>;<span class="string">&quot;h&quot;</span>;<span class="string">&quot;i&quot;</span>;<span class="string">&quot;j&quot;</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list * string list =
+([&quot;a&quot;; &quot;b&quot;; &quot;c&quot;], [&quot;d&quot;; &quot;e&quot;; &quot;f&quot;; &quot;g&quot;; &quot;h&quot;; &quot;i&quot;; &quot;j&quot;])
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">split [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>] 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list * string list = ([&quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;d&quot;], [])
 </span></code></pre>
 
 <h4 id="18-Extract-a-slice-from-a-list-medium">18. Extract a slice from a list. (<em>medium</em>)</h4>
@@ -504,7 +504,7 @@ abstract their common skeleton in a single function.  Here is a solution.</p>
 val slice : 'a list -&gt; int -&gt; int -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">slice [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'f'</span>;<span class="string">'g'</span>;<span class="string">'h'</span>;<span class="string">'i'</span>;<span class="string">'j'</span>] 2 6</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['c'; 'd'; 'e'; 'f'; 'g']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">slice [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;f&quot;</span>;<span class="string">&quot;g&quot;</span>;<span class="string">&quot;h&quot;</span>;<span class="string">&quot;i&quot;</span>;<span class="string">&quot;j&quot;</span>] 2 6</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;c&quot;; &quot;d&quot;; &quot;e&quot;; &quot;f&quot;; &quot;g&quot;]
 </span></code></pre>
 
 <h4 id="19-Rotate-a-list-N-places-to-the-left-medium">19. Rotate a list N places to the left. (<em>medium</em>)</h4>
@@ -526,8 +526,8 @@ val slice : 'a list -&gt; int -&gt; int -&gt; 'a list = &lt;fun&gt;
 val rotate : 'a list -&gt; int -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">rotate [<span class="string">'a'</span>; <span class="string">'b'</span>; <span class="string">'c'</span>; <span class="string">'d'</span>; <span class="string">'e'</span>; <span class="string">'f'</span>; <span class="string">'g'</span>; <span class="string">'h'</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['d'; 'e'; 'f'; 'g'; 'h'; 'a'; 'b'; 'c']
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">rotate [<span class="string">'a'</span>; <span class="string">'b'</span>; <span class="string">'c'</span>; <span class="string">'d'</span>; <span class="string">'e'</span>; <span class="string">'f'</span>; <span class="string">'g'</span>; <span class="string">'h'</span>] (-2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['g'; 'h'; 'a'; 'b'; 'c'; 'd'; 'e'; 'f']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">rotate [<span class="string">&quot;a&quot;</span>; <span class="string">&quot;b&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;d&quot;</span>; <span class="string">&quot;e&quot;</span>; <span class="string">&quot;f&quot;</span>; <span class="string">&quot;g&quot;</span>; <span class="string">&quot;h&quot;</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;d&quot;; &quot;e&quot;; &quot;f&quot;; &quot;g&quot;; &quot;h&quot;; &quot;a&quot;; &quot;b&quot;; &quot;c&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">rotate [<span class="string">&quot;a&quot;</span>; <span class="string">&quot;b&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;d&quot;</span>; <span class="string">&quot;e&quot;</span>; <span class="string">&quot;f&quot;</span>; <span class="string">&quot;g&quot;</span>; <span class="string">&quot;h&quot;</span>] (-2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;g&quot;; &quot;h&quot;; &quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;d&quot;; &quot;e&quot;; &quot;f&quot;]
 </span></code></pre>
 
 <h4 id="20-Remove-the-K-39-th-element-from-a-list-easy">20. Remove the K&#39;th element from a list. (<em>easy</em>)</h4>
@@ -539,7 +539,7 @@ val rotate : 'a list -&gt; int -&gt; 'a list = &lt;fun&gt;
     | h :: t -&gt; <span class="keyword">if</span> n = 0 <span class="keyword">then</span> t <span class="keyword">else</span> h :: remove_at (n-1) t</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val remove_at : int -&gt; 'a list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">remove_at 1 [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'c'; 'd']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">remove_at 1 [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;c&quot;; &quot;d&quot;]
 </span></code></pre>
 
 <h4 id="21-Insert-an-element-at-a-given-position-into-a-list-easy">21. Insert an element at a given position into a list. (<em>easy</em>)</h4>
@@ -553,9 +553,9 @@ behavior is unspecified if the position is negative.)</p>
     | h :: t <span class="keyword">as</span> l -&gt; <span class="keyword">if</span> n = 0 <span class="keyword">then</span> x :: l <span class="keyword">else</span> h :: insert_at x (n-1) t</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val insert_at : 'a -&gt; int -&gt; 'a list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">insert_at <span class="ocaml-error-loc">'</span>alfa' 1 [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">insert_at <span class="ocaml-error-loc">'</span>alfa' 3 [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">insert_at <span class="ocaml-error-loc">'</span>alfa' 4 [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">insert_at <span class="string">&quot;alfa&quot;</span> 1 [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;alfa&quot;; &quot;b&quot;; &quot;c&quot;; &quot;d&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">insert_at <span class="string">&quot;alfa&quot;</span> 3 [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;alfa&quot;; &quot;d&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">insert_at <span class="string">&quot;alfa&quot;</span> 4 [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;b&quot;; &quot;c&quot;; &quot;d&quot;; &quot;alfa&quot;]
 </span></code></pre>
 
 <h4 id="22-Create-a-list-containing-all-integers-within-a-given-range-easy">22. Create a list containing all integers within a given range. (<em>easy</em>)</h4>
@@ -605,7 +605,7 @@ reproducibility.</p>
     aux (min n len) [] list len</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val rand_select : 'a list -&gt; int -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">rand_select [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>;<span class="string">'e'</span>;<span class="string">'f'</span>;<span class="string">'g'</span>;<span class="string">'h'</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['g'; 'd'; 'a']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">rand_select [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>;<span class="string">&quot;f&quot;</span>;<span class="string">&quot;g&quot;</span>;<span class="string">&quot;h&quot;</span>] 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;g&quot;; &quot;d&quot;; &quot;a&quot;]
 </span></code></pre>
 
 <h4 id="24-Lotto-Draw-N-different-random-numbers-from-the-set-1-M-easy">24. Lotto: Draw N different random numbers from the set 1..M. (<em>easy</em>)</h4>
@@ -638,7 +638,7 @@ reproducibility.</p>
     aux [] list (<span class="ocaml-module">List</span>.length list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val permutation : 'a list -&gt; 'a list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">permutation [<span class="string">'a'</span>; <span class="string">'b'</span>; <span class="string">'c'</span>; <span class="string">'d'</span>; <span class="string">'e'</span>; <span class="string">'f'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list = ['a'; 'e'; 'f'; 'b'; 'd'; 'c']
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">permutation [<span class="string">&quot;a&quot;</span>; <span class="string">&quot;b&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;d&quot;</span>; <span class="string">&quot;e&quot;</span>; <span class="string">&quot;f&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;a&quot;; &quot;e&quot;; &quot;f&quot;; &quot;b&quot;; &quot;d&quot;; &quot;c&quot;]
 </span></code></pre>
 
 <h4 id="26-Generate-the-combinations-of-K-distinct-objects-chosen-from-the-N-elements-of-a-list-medium">26. Generate the combinations of K distinct objects chosen from the N elements of a list. (<em>medium</em>)</h4>
@@ -659,8 +659,8 @@ possibilities in a list.</p>
             with_h @ without_h</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val extract : int -&gt; 'a list -&gt; 'a list list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">extract 2 [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list list =
-[['a'; 'b']; ['a'; 'c']; ['a'; 'd']; ['b'; 'c']; ['b'; 'd']; ['c'; 'd']]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">extract 2 [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list list =
+[[&quot;a&quot;; &quot;b&quot;]; [&quot;a&quot;; &quot;c&quot;]; [&quot;a&quot;; &quot;d&quot;]; [&quot;b&quot;; &quot;c&quot;]; [&quot;b&quot;; &quot;d&quot;]; [&quot;c&quot;; &quot;d&quot;]]
 </span></code></pre>
 
 <h4 id="27-Group-the-elements-of-a-set-into-disjoint-subsets-medium">27. Group the elements of a set into disjoint subsets. (<em>medium</em>)</h4>
@@ -711,11 +711,11 @@ group sizes and the function will return a list of groups.</p>
     <span class="ocaml-module">List</span>.map (<span class="ocaml-module">List</span>.map snd) complete</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val group : 'a list -&gt; int list -&gt; 'a list list list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">group [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>;<span class="string">'d'</span>] [2;1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list list list =
-[[['a'; 'b']; ['c']]; [['a'; 'c']; ['b']]; [['b'; 'c']; ['a']];
- [['a'; 'b']; ['d']]; [['a'; 'c']; ['d']]; [['b'; 'c']; ['d']];
- [['a'; 'd']; ['b']]; [['b'; 'd']; ['a']]; [['a'; 'd']; ['c']];
- [['b'; 'd']; ['c']]; [['c'; 'd']; ['a']]; [['c'; 'd']; ['b']]]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">group [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>;<span class="string">&quot;d&quot;</span>] [2;1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list list list =
+[[[&quot;a&quot;; &quot;b&quot;]; [&quot;c&quot;]]; [[&quot;a&quot;; &quot;c&quot;]; [&quot;b&quot;]]; [[&quot;b&quot;; &quot;c&quot;]; [&quot;a&quot;]];
+ [[&quot;a&quot;; &quot;b&quot;]; [&quot;d&quot;]]; [[&quot;a&quot;; &quot;c&quot;]; [&quot;d&quot;]]; [[&quot;b&quot;; &quot;c&quot;]; [&quot;d&quot;]];
+ [[&quot;a&quot;; &quot;d&quot;]; [&quot;b&quot;]]; [[&quot;b&quot;; &quot;d&quot;]; [&quot;a&quot;]]; [[&quot;a&quot;; &quot;d&quot;]; [&quot;c&quot;]];
+ [[&quot;b&quot;; &quot;d&quot;]; [&quot;c&quot;]]; [[&quot;c&quot;; &quot;d&quot;]; [&quot;a&quot;]]; [[&quot;c&quot;; &quot;d&quot;]; [&quot;b&quot;]]]
 </span></code></pre>
 
 <h4 id="28-Sorting-a-list-of-lists-according-to-length-of-sublists-medium">28. Sorting a list of lists according to length of sublists. (<em>medium</em>)</h4>
@@ -752,7 +752,7 @@ val length_sort : 'a list list -&gt; 'a list list = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Sorting according <span class="keyword">to</span> length frequency : prepend frequency, sort,
      remove frequency. Frequencies are extracted by sorting lengths
      <span class="governing">and</span> applying RLE <span class="keyword">to</span> count occurences <span class="keyword">of</span> each length (see problem
-     'Run-length encoding <span class="keyword">of</span> a list.') *)</span>
+     <span class="string">&quot;Run-length encoding <span class="keyword">of</span> a list.&quot;</span>) *)</span>
   <span class="governing">let</span> <span class="ocaml-function">rle</span> <span class="ocaml-variable">list </span>=
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">aux</span> <span class="ocaml-variable">count acc </span>= <span class="keyword">function</span>
       | [] -&gt; [] <span class="comment">(* Can only be reached <span class="keyword">if</span> original list is empty *)</span>
@@ -772,14 +772,14 @@ val length_sort : 'a list list -&gt; 'a list list = &lt;fun&gt;
 val frequency_sort : 'a list list -&gt; 'a list list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">length_sort [ [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>]; [<span class="string">'d'</span>;<span class="string">'e'</span>]; [<span class="string">'f'</span>;<span class="string">'g'</span>;<span class="string">'h'</span>]; [<span class="string">'d'</span>;<span class="string">'e'</span>];
-                [<span class="string">'i'</span>;<span class="string">'j'</span>;<span class="string">'k'</span>;<span class="string">'l'</span>]; [<span class="string">'m'</span>;<span class="string">'n'</span>]; [<span class="string">'o'</span>] ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list list =
-[['o']; ['d'; 'e']; ['d'; 'e']; ['m'; 'n']; ['a'; 'b'; 'c']; ['f'; 'g'; 'h'];
- ['i'; 'j'; 'k'; 'l']]
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">frequency_sort [ [<span class="string">'a'</span>;<span class="string">'b'</span>;<span class="string">'c'</span>]; [<span class="string">'d'</span>;<span class="string">'e'</span>]; [<span class="string">'f'</span>;<span class="string">'g'</span>;<span class="string">'h'</span>]; [<span class="string">'d'</span>;<span class="string">'e'</span>];
-                   [<span class="string">'i'</span>;<span class="string">'j'</span>;<span class="string">'k'</span>;<span class="string">'l'</span>]; [<span class="string">'m'</span>;<span class="string">'n'</span>]; [<span class="string">'o'</span>] ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char list list =
-[['i'; 'j'; 'k'; 'l']; ['o']; ['a'; 'b'; 'c']; ['f'; 'g'; 'h']; ['d'; 'e'];
- ['d'; 'e']; ['m'; 'n']]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">length_sort [ [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>]; [<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>]; [<span class="string">&quot;f&quot;</span>;<span class="string">&quot;g&quot;</span>;<span class="string">&quot;h&quot;</span>]; [<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>];
+                [<span class="string">&quot;i&quot;</span>;<span class="string">&quot;j&quot;</span>;<span class="string">&quot;k&quot;</span>;<span class="string">&quot;l&quot;</span>]; [<span class="string">&quot;m&quot;</span>;<span class="string">&quot;n&quot;</span>]; [<span class="string">&quot;o&quot;</span>] ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list list =
+[[&quot;o&quot;]; [&quot;d&quot;; &quot;e&quot;]; [&quot;d&quot;; &quot;e&quot;]; [&quot;m&quot;; &quot;n&quot;]; [&quot;a&quot;; &quot;b&quot;; &quot;c&quot;]; [&quot;f&quot;; &quot;g&quot;; &quot;h&quot;];
+ [&quot;i&quot;; &quot;j&quot;; &quot;k&quot;; &quot;l&quot;]]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">frequency_sort [ [<span class="string">&quot;a&quot;</span>;<span class="string">&quot;b&quot;</span>;<span class="string">&quot;c&quot;</span>]; [<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>]; [<span class="string">&quot;f&quot;</span>;<span class="string">&quot;g&quot;</span>;<span class="string">&quot;h&quot;</span>]; [<span class="string">&quot;d&quot;</span>;<span class="string">&quot;e&quot;</span>];
+                   [<span class="string">&quot;i&quot;</span>;<span class="string">&quot;j&quot;</span>;<span class="string">&quot;k&quot;</span>;<span class="string">&quot;l&quot;</span>]; [<span class="string">&quot;m&quot;</span>;<span class="string">&quot;n&quot;</span>]; [<span class="string">&quot;o&quot;</span>] ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list list =
+[[&quot;i&quot;; &quot;j&quot;; &quot;k&quot;; &quot;l&quot;]; [&quot;o&quot;]; [&quot;a&quot;; &quot;b&quot;; &quot;c&quot;]; [&quot;f&quot;; &quot;g&quot;; &quot;h&quot;]; [&quot;d&quot;; &quot;e&quot;];
+ [&quot;d&quot;; &quot;e&quot;]; [&quot;m&quot;; &quot;n&quot;]]
 </span></code></pre>
 
 
@@ -892,7 +892,7 @@ ways that we shall discuss later).</p>
 
 <h4 id="37-Calculate-Euler-39-s-totient-function-m-improved-medium">37. Calculate Euler&#39;s totient function φ(m) (improved). (<em>medium</em>)</h4>
 
-<p>See problem &#39;<a href="#CalculateEuler39stotientfunctionmmedium">Calculate Euler&#39;s totient function φ(m)</a>&#39; for
+<p>See problem &quot;<a href="#CalculateEuler39stotientfunctionmmedium">Calculate Euler&#39;s totient function φ(m)</a>&quot; for
 the definition of Euler&#39;s totient function. If the list of the prime
 factors of a number m is known in the form of the previous problem then
 the function phi(m) can be efficiently calculated as follows: Let
@@ -919,8 +919,8 @@ p2<sup>m2 - 1</sup> × (p3 - 1) × p3<sup>m3 - 1</sup> × ⋯</p>
 <h4 id="38-Compare-the-two-methods-of-calculating-Euler-39-s-totient-function-easy">38. Compare the two methods of calculating Euler&#39;s totient function. (<em>easy</em>)</h4>
 
 <p>Use the solutions of problems 
-&#39;<a href="#CalculateEuler39stotientfunctionmmedium">Calculate Euler&#39;s totient function φ(m)</a>&#39; and 
-&#39;<a href="#CalculateEuler39stotientfunctionmimprovedmedium">Calculate Euler&#39;s totient function φ(m) (improved)</a>&#39; 
+&quot;<a href="#CalculateEuler39stotientfunctionmmedium">Calculate Euler&#39;s totient function φ(m)</a>&quot; and 
+&quot;<a href="#CalculateEuler39stotientfunctionmimprovedmedium">Calculate Euler&#39;s totient function φ(m) (improved)</a>&quot; 
 to compare the algorithms. Take the number of logical inferences as a measure for efficiency. Try to calculate φ(10090) as an example.</p>
 <p><button class="solution" onclick="toggleContent('ocamlorg36')">Solution</button></p>
 <div id="ocamlorg36" class="solution"><pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Naive [timeit] function.  It requires the [Unix] module <span class="keyword">to</span> be loaded. *)</span>
@@ -931,8 +931,8 @@ to compare the algorithms. Take the number of logical inferences as a measure fo
     t1 -. t0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val timeit : ('a -&gt; 'b) -&gt; 'a -&gt; float = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">timeit phi 10090</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 0.00291299819946289062
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">timeit phi_improved 10090</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 5.1975250244140625e-05
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">timeit phi 10090</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 0.00225496292114257812
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">timeit phi_improved 10090</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 3.60012054443359375e-05
 </span></code></pre>
 
 <h4 id="39-A-list-of-prime-numbers-easy">39. A list of prime numbers. (<em>easy</em>)</h4>
@@ -1008,7 +1008,7 @@ val goldbach_limit : int -&gt; int -&gt; int -&gt; (int * (int * int)) list = &l
 
 <h2 id="Logic-and-Codes">Logic and Codes</h2>
 
-<p>Let us define a small &#39;language&#39; for boolean expressions containing
+<p>Let us define a small &quot;language&quot; for boolean expressions containing
 variables:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">bool_expr</span> =
     | Var <span class="keyword">of</span> string
@@ -1023,8 +1023,7 @@ variables:</p>
 
 <p>A logical expression in two variables can then be written in prefix
 notation.  For example, <code>(a ∨ b) ∧ (a ∧ b)</code> is written:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">And(Or(Var <span class="string"><span class="ocaml-error-loc">'a'</span></span><span class="ocaml-error-loc"></span>, Var <span class="string">'b'</span>), And(Var <span class="string">'a'</span>, Var <span class="string">'b'</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">And(Or(Var <span class="string">&quot;a&quot;</span>, Var <span class="string">&quot;b&quot;</span>), And(Var <span class="string">&quot;a&quot;</span>, Var <span class="string">&quot;b&quot;</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool_expr = And (Or (Var &quot;a&quot;, Var &quot;b&quot;), And (Var &quot;a&quot;, Var &quot;b&quot;))
 </span></code></pre>
 
 <h4 id="46-amp-47-Truth-tables-for-logical-expressions-2-variables-medium">46 &amp; 47. Truth tables for logical expressions (2 variables). (<em>medium</em>)</h4>
@@ -1037,7 +1036,7 @@ value must be a list of triples containing
 <div id="ocamlorg40" class="solution"><pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">eval2</span> <span class="ocaml-variable">a val_a b val_b </span>= <span class="keyword">function</span>
     | Var x -&gt; <span class="keyword">if</span> x = a <span class="keyword">then</span> val_a
                <span class="keyword">else</span> <span class="keyword">if</span> x = b <span class="keyword">then</span> val_b
-               <span class="keyword">else</span> <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>The expression contains an invalid variable'
+               <span class="keyword">else</span> <span class="keyword">failwith</span> <span class="string">&quot;The expression contains an invalid variable&quot;</span>
     | Not e -&gt; not(eval2 a val_a b val_b e)
     | And(e1, e2) -&gt; eval2 a val_a b val_b e1 &amp;&amp; eval2 a val_a b val_b e2
     | Or(e1, e2) -&gt; eval2 a val_a b val_b e1 || eval2 a val_a b val_b e2
@@ -1045,10 +1044,14 @@ value must be a list of triples containing
     [(true,  true,  eval2 a true  b true  expr);
      (true,  false, eval2 a true  b false expr);
      (false, true,  eval2 a false b true  expr);
-     (false, false, eval2 a false b false expr) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+     (false, false, eval2 a false b false expr) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val eval2 : string -&gt; bool -&gt; string -&gt; bool -&gt; bool_expr -&gt; bool = &lt;fun&gt;
+val table2 : string -&gt; string -&gt; bool_expr -&gt; (bool * bool * bool) list =
+  &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">table2</span> <span class="string">'a'</span> <span class="string">'b'</span> (And(Var <span class="string">'a'</span>, Or(Var <span class="string">'a'</span>, Var <span class="string">'b'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value table2
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">table2 <span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span> (And(Var <span class="string">&quot;a&quot;</span>, Or(Var <span class="string">&quot;a&quot;</span>, Var <span class="string">&quot;b&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (bool * bool * bool) list =
+[(true, true, true); (true, false, true); (false, true, false);
+ (false, false, false)]
 </span></code></pre>
 
 <h4 id="48-Truth-tables-for-logical-expressions-medium">48. Truth tables for logical expressions. (<em>medium</em>)</h4>
@@ -1086,11 +1089,19 @@ val table : string list -&gt; bool_expr -&gt; ((string * bool) list * bool) list
   &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">table [<span class="string"><span class="ocaml-error-loc">'a'</span></span><span class="ocaml-error-loc"></span>; <span class="string">'b'</span>] (And(Var <span class="string">'a'</span>, Or(Var <span class="string">'a'</span>, Var <span class="string">'b'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">a</span> = Var <span class="string"><span class="ocaml-error-loc">'a'</span></span><span class="ocaml-error-loc"></span> <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">b</span> = Var <span class="string">'b'</span> <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">c</span> = Var <span class="string">'c'</span> <span class="governing">in</span>
-  table [<span class="string">'a'</span>; <span class="string">'b'</span>; <span class="string">'c'</span>] (Or(And(a, Or(b,c)), Or(And(a,b), And(a,c))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">table [<span class="string">&quot;a&quot;</span>; <span class="string">&quot;b&quot;</span>] (And(Var <span class="string">&quot;a&quot;</span>, Or(Var <span class="string">&quot;a&quot;</span>, Var <span class="string">&quot;b&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ((string * bool) list * bool) list =
+[([(&quot;a&quot;, true); (&quot;b&quot;, true)], true); ([(&quot;a&quot;, true); (&quot;b&quot;, false)], true);
+ ([(&quot;a&quot;, false); (&quot;b&quot;, true)], false); ([(&quot;a&quot;, false); (&quot;b&quot;, false)], false)]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">a</span> = Var <span class="string">&quot;a&quot;</span> <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">b</span> = Var <span class="string">&quot;b&quot;</span> <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">c</span> = Var <span class="string">&quot;c&quot;</span> <span class="governing">in</span>
+  table [<span class="string">&quot;a&quot;</span>; <span class="string">&quot;b&quot;</span>; <span class="string">&quot;c&quot;</span>] (Or(And(a, Or(b,c)), Or(And(a,b), And(a,c))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ((string * bool) list * bool) list =
+[([(&quot;a&quot;, true); (&quot;b&quot;, true); (&quot;c&quot;, true)], true);
+ ([(&quot;a&quot;, true); (&quot;b&quot;, true); (&quot;c&quot;, false)], true);
+ ([(&quot;a&quot;, true); (&quot;b&quot;, false); (&quot;c&quot;, true)], true);
+ ([(&quot;a&quot;, true); (&quot;b&quot;, false); (&quot;c&quot;, false)], false);
+ ([(&quot;a&quot;, false); (&quot;b&quot;, true); (&quot;c&quot;, true)], false);
+ ([(&quot;a&quot;, false); (&quot;b&quot;, true); (&quot;c&quot;, false)], false);
+ ([(&quot;a&quot;, false); (&quot;b&quot;, false); (&quot;c&quot;, true)], false);
+ ([(&quot;a&quot;, false); (&quot;b&quot;, false); (&quot;c&quot;, false)], false)]
 </span></code></pre>
 
 <h4 id="49-Gray-code-medium">49. Gray code. (<em>medium</em>)</h4>
@@ -1106,12 +1117,12 @@ specification: <code>gray n</code> returns the <code>n</code>-bit Gray code.</p>
       <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">gray_next_level</span> <span class="ocaml-variable">k l </span>=
         <span class="keyword">if</span> k&lt;n <span class="keyword">then</span>
           <span class="comment">(* This is the core part <span class="keyword">of</span> the Gray code construction.
-           * first_half is reversed <span class="governing">and</span> has a <span class="string">'0'</span> attached <span class="keyword">to</span> every element.
+           * first_half is reversed <span class="governing">and</span> has a <span class="string">&quot;0&quot;</span> attached <span class="keyword">to</span> every element.
            * Second part is reversed (it must be reversed <span class="keyword">for</span> correct gray code).
-           * Every element has <span class="string">'1'</span> attached <span class="keyword">to</span> the front.*)</span>
+           * Every element has <span class="string">&quot;1&quot;</span> attached <span class="keyword">to</span> the front.*)</span>
           let (first_half,second_half) =
             <span class="ocaml-module">List</span>.fold_left (<span class="keyword">fun</span> (acc1,acc2) x -&gt;
-                ((<span class="string"><span class="ocaml-error-loc">'0'</span></span><span class="ocaml-error-loc"></span>^x)::acc1, (<span class="string">'1'</span>^x)::acc2 )) ([],[]) l
+                ((<span class="string">&quot;0&quot;</span>^x)::acc1, (<span class="string">&quot;1&quot;</span>^x)::acc2 )) ([],[]) l
           <span class="governing">in</span>
           <span class="comment">(* <span class="ocaml-module">List</span>.rev_append turns first_half around <span class="governing">and</span> attaches it <span class="keyword">to</span> second_half.
            * The result is the modified first_half <span class="governing">in</span> correct order attached <span class="keyword">to</span>
@@ -1119,13 +1130,12 @@ specification: <code>gray n</code> returns the <code>n</code>-bit Gray code.</p>
           gray_next_level (k+1) (<span class="ocaml-module">List</span>.rev_append first_half second_half)
         <span class="keyword">else</span> l
       <span class="governing">in</span>
-      gray_next_level 1 [<span class="string">'0'</span>; <span class="string">'1'</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+      gray_next_level 1 [<span class="string">&quot;0&quot;</span>; <span class="string">&quot;1&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val gray : int -&gt; string list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">gray</span> 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value gray
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">gray</span> 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value gray
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">gray</span> 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value gray
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">gray 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;0&quot;; &quot;1&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">gray 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;00&quot;; &quot;01&quot;; &quot;11&quot;; &quot;10&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">gray 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;000&quot;; &quot;001&quot;; &quot;011&quot;; &quot;010&quot;; &quot;110&quot;; &quot;111&quot;; &quot;101&quot;; &quot;100&quot;]
 </span></code></pre>
 
 <h4 id="50-Huffman-code-hard">50. Huffman code (<em>hard</em>)</h4>
@@ -1134,19 +1144,19 @@ specification: <code>gray n</code> returns the <code>n</code>-bit Gray code.</p>
 for a detailed description of Huffman codes (you can start with the
 <a href="http://en.wikipedia.org/wiki/Huffman_coding">Wikipedia page</a>)!</p>
 <p>We consider a set of symbols with their frequencies.
-For example, if the alphabet is <code>&#39;a&#39;</code>,..., <code>&#39;f&#39;</code>
+For example, if the alphabet is <code>&quot;a&quot;</code>,..., <code>&quot;f&quot;</code>
 (represented as the positions 0,...5) and
 respective frequencies are 45, 13, 12, 16, 9, 5:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">fs</span> = [ (<span class="string">'a'</span>, 45); (<span class="string">'b'</span>, 13); (<span class="string">'c'</span>, 12); (<span class="string">'d'</span>, 16);
-             (<span class="string">'e'</span>, 9); (<span class="string">'f'</span>, 5) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fs : (char * int) list =
-  [('a', 45); ('b', 13); ('c', 12); ('d', 16); ('e', 9); ('f', 5)]
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">fs</span> = [ (<span class="string">&quot;a&quot;</span>, 45); (<span class="string">&quot;b&quot;</span>, 13); (<span class="string">&quot;c&quot;</span>, 12); (<span class="string">&quot;d&quot;</span>, 16);
+             (<span class="string">&quot;e&quot;</span>, 9); (<span class="string">&quot;f&quot;</span>, 5) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val fs : (string * int) list =
+  [(&quot;a&quot;, 45); (&quot;b&quot;, 13); (&quot;c&quot;, 12); (&quot;d&quot;, 16); (&quot;e&quot;, 9); (&quot;f&quot;, 5)]
 </span></code></pre>
 
 <p>Our objective is to construct the
 Huffman code <code>c</code> word for all symbols <code>s</code>. In our example, the result could
 be</p>
-<pre><code>hs = [(&#39;a&#39;, &#39;0&#39;); (&#39;b&#39;, &#39;101&#39;); (&#39;c&#39;, &#39;100&#39;); (&#39;d&#39;, &#39;111&#39;);
-(&#39;e&#39;, &#39;1101&#39;); (&#39;f&#39;, &#39;1100&#39;)]</code></pre><p>(or <code>hs = [ (&#39;a&#39;, &#39;1&#39;);...]</code>). The task shall be performed by the function
+<pre><code>hs = [(&quot;a&quot;, &quot;0&quot;); (&quot;b&quot;, &quot;101&quot;); (&quot;c&quot;, &quot;100&quot;); (&quot;d&quot;, &quot;111&quot;);
+(&quot;e&quot;, &quot;1101&quot;); (&quot;f&quot;, &quot;1100&quot;)]</code></pre><p>(or <code>hs = [ (&quot;a&quot;, &quot;1&quot;);...]</code>). The task shall be performed by the function
 <code>huffman</code> defined as follows: <code>huffman(fs)</code> returns the Huffman code
 table for the frequency table <code>fs</code></p>
 <p><button class="solution" onclick="toggleContent('ocamlorg43')">Solution</button></p>
@@ -1187,19 +1197,32 @@ table for the frequency table <code>fs</code></p>
   <span class="comment">(* Build the prefix-free binary code from the tree *)</span>
   <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">prefixes_of_tree</span> <span class="ocaml-variable">prefix </span>= <span class="keyword">function</span>
     | Leaf s -&gt; [(s, prefix)]
-    | Node(t0, t1) -&gt; prefixes_of_tree (prefix ^ <span class="string">'0'</span>) t0
-                     @ prefixes_of_tree (prefix ^ <span class="string">'1'</span>) t1
+    | Node(t0, t1) -&gt; prefixes_of_tree (prefix ^ <span class="string">&quot;0&quot;</span>) t0
+                     @ prefixes_of_tree (prefix ^ <span class="string">&quot;1&quot;</span>) t1
   
   <span class="governing">let</span> <span class="ocaml-function">huffman</span> <span class="ocaml-variable">fs </span>=
     <span class="keyword">if</span> <span class="ocaml-module">List</span>.fold_left (<span class="keyword">fun</span> s (_,p) -&gt; s + p) 0 fs &lt;&gt; 100 <span class="keyword">then</span>
-      <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>huffman: sum <span class="keyword">of</span> weights must be 100';
+      <span class="keyword">failwith</span> <span class="string">&quot;huffman: sum <span class="keyword">of</span> weights must be 100&quot;</span>;
     <span class="governing">let </span><span class="ocaml-variable">q</span> = <span class="ocaml-module">Pq</span>.make() <span class="governing">in</span>
     <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> (s,f) -&gt; <span class="ocaml-module">Pq</span>.add q f (Leaf s)) fs;
-    prefixes_of_tree '' (huffman_tree q)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    prefixes_of_tree <span class="string">&quot;&quot;</span> (huffman_tree q)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module Pq :
+  sig
+    type 'a t = { data : 'a list array; mutable first : int; }
+    val make : unit -&gt; 'a t
+    val add : 'a t -&gt; int -&gt; 'a -&gt; unit
+    val get_min : 'a t -&gt; (int * 'a) option
+  end
+type tree = Leaf of string | Node of tree * tree
+val huffman_tree : tree Pq.t -&gt; tree = &lt;fun&gt;
+val prefixes_of_tree : string -&gt; tree -&gt; (string * string) list = &lt;fun&gt;
+val huffman : (string * int) list -&gt; (string * string) list = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">huffman</span> fs</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value huffman
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">huffman</span> [<span class="string">'a'</span>, 10;  <span class="string">'b'</span>, 15;  <span class="string">'c'</span>, 30;  <span class="string">'d'</span>, 16;  <span class="string">'e'</span>, 29]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value huffman
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">huffman fs</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (string * string) list =
+[(&quot;a&quot;, &quot;0&quot;); (&quot;c&quot;, &quot;100&quot;); (&quot;b&quot;, &quot;101&quot;); (&quot;f&quot;, &quot;1100&quot;); (&quot;e&quot;, &quot;1101&quot;);
+ (&quot;d&quot;, &quot;111&quot;)]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">huffman [<span class="string">&quot;a&quot;</span>, 10;  <span class="string">&quot;b&quot;</span>, 15;  <span class="string">&quot;c&quot;</span>, 30;  <span class="string">&quot;d&quot;</span>, 16;  <span class="string">&quot;e&quot;</span>, 29]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : (string * string) list =
+[(&quot;d&quot;, &quot;00&quot;); (&quot;a&quot;, &quot;010&quot;); (&quot;b&quot;, &quot;011&quot;); (&quot;e&quot;, &quot;10&quot;); (&quot;c&quot;, &quot;11&quot;)]
 </span></code></pre>
 
 <p><img src="../../img/binary-tree.gif" style="float: right; margin-left: 15px; margin-bottom: 15px;" title="Binary Tree"/></p>
@@ -1661,7 +1684,7 @@ efficient ways to do that.</p>
 1,2,3,...,H-1 contain the maximum number of nodes (i.e 2<sup>i-1</sup>
 at the level i, note that we start counting the levels from 1 at the
 root). In level H, which may contain less than the maximum possible
-number of nodes, all the nodes are &#39;left-adjusted&#39;. This means that in a
+number of nodes, all the nodes are &quot;left-adjusted&quot;. This means that in a
 levelorder tree traversal all internal nodes come first, the leaves come
 second, and empty successors (the nil&#39;s which are not really nodes!)
 come last.</p>
@@ -1687,7 +1710,7 @@ iff <code>t</code> is a complete binary tree with <code>n</code> nodes.</p>
     | (p, []) -&gt; <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> x -&gt; Node (x, Empty, Empty)) p
     | (x::t, [y]) -&gt; Node (x, y, Empty)::myflatten t []
     | (ph::pt, x::y::t) -&gt; (Node (ph, x, y))::(myflatten pt t)
-    | _ -&gt; invalid_arg <span class="ocaml-error-loc">'</span>myflatten'
+    | _ -&gt; invalid_arg <span class="string">&quot;myflatten&quot;</span>
   
   <span class="governing">let</span> <span class="ocaml-function">complete_binary_tree</span> = <span class="keyword">function</span>
     | [] -&gt; Empty
@@ -1696,10 +1719,14 @@ iff <code>t</code> is a complete binary tree with <code>n</code> nodes.</p>
          | [] -&gt; []
          | lst -&gt; <span class="governing">let </span>p, c = split_n lst [] (1 lsl l) <span class="governing">in</span>
                   myflatten p (aux (l+1) c) <span class="governing">in</span>
-       <span class="ocaml-module">List</span>.hd (aux 0 lst)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       <span class="ocaml-module">List</span>.hd (aux 0 lst)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val split_n : 'a list -&gt; 'a list -&gt; int -&gt; 'a list * 'a list = &lt;fun&gt;
+val myflatten : 'a list -&gt; 'a binary_tree list -&gt; 'a binary_tree list = &lt;fun&gt;
+val complete_binary_tree : 'a list -&gt; 'a binary_tree = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">complete_binary_tree</span> [1;2;3;4;5;6]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value complete_binary_tree
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">complete_binary_tree [1;2;3;4;5;6]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int binary_tree =
+Node (1, Node (2, Node (4, Empty, Empty), Node (5, Empty, Empty)),
+ Node (3, Node (6, Empty, Empty), Empty))
 </span></code></pre>
 
 <h4 id="64-Layout-a-binary-tree-1-medium">64. Layout a binary tree (1). (<em>medium</em>)</h4>
@@ -1901,7 +1928,7 @@ Node (('a', 3, 1),
 
 <p><img src="../../img/binary-tree.gif" style="float: right; margin-left: 15px; margin-bottom: 15px;" title="Binary Tree"/></p>
 <p>Somebody represents binary trees as strings of the following type (see
-example): <code>&#39;a(b(d,e),c(,f(g,)))&#39;</code>.</p>
+example): <code>&quot;a(b(d,e),c(,f(g,)))&quot;</code>.</p>
 <ul><li><p>Write an OCaml function <code>string_of_tree</code> which generates this
  string representation,
  if the tree is given as usual (as <code>Empty</code> or <code>Node(x,l,r)</code> term).
@@ -1920,13 +1947,13 @@ and there are no spaces in the string.</p>
 <p><button class="solution" onclick="toggleContent('ocamlorg60')">Solution</button></p>
 <div id="ocamlorg60" class="solution"><p>A simple solution is:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">string_of_tree</span> = <span class="keyword">function</span>
-    | Empty -&gt; <span class="ocaml-error-loc">'</span>'
+    | Empty -&gt; <span class="string">&quot;&quot;</span>
     | Node(data, l, r) -&gt;
        <span class="governing">let </span><span class="ocaml-variable">data</span> = <span class="ocaml-module">String</span>.make 1 data <span class="governing">in</span>
        <span class="keyword">match</span> l, r <span class="keyword">with</span>
        | Empty, Empty -&gt; data
-       | _, _ -&gt; data ^ <span class="string">'('</span> ^ (string_of_tree l)
-                 ^ <span class="string">','</span> ^ (string_of_tree r) ^ <span class="string">')'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       | _, _ -&gt; data ^ <span class="string">&quot;(&quot;</span> ^ (string_of_tree l)
+                 ^ <span class="string">&quot;,&quot;</span> ^ (string_of_tree r) ^ <span class="string">&quot;)&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val string_of_tree : char binary_tree -&gt; string = &lt;fun&gt;
 </span></code></pre>
 
 <p>One can also use a buffer to allocate a lot less memory:</p>
@@ -1958,9 +1985,9 @@ and do not deal with error reporting.</p>
       <span class="keyword">else</span>
         <span class="governing">let </span><span class="ocaml-variable">v</span> = s.[ofs] <span class="governing">in</span>
         <span class="keyword">if</span> ofs + 1 &lt; <span class="ocaml-module">String</span>.length s &amp;&amp; s.[ofs + 1] = <span class="string">'('</span> <span class="keyword">then</span>
-          <span class="governing">let </span>l, ofs = make (ofs + 2) s <span class="governing">in</span> <span class="comment">(* skip 'v(' *)</span>
-          <span class="governing">let </span>r, ofs = make (ofs + 1) s <span class="governing">in</span> <span class="comment">(* skip <span class="string">','</span> *)</span>
-          Node(v, l, r), ofs + 1 <span class="comment">(* skip <span class="string">')'</span> *)</span>
+          <span class="governing">let </span>l, ofs = make (ofs + 2) s <span class="governing">in</span> <span class="comment">(* skip <span class="string">&quot;v(&quot;</span> *)</span>
+          <span class="governing">let </span>r, ofs = make (ofs + 1) s <span class="governing">in</span> <span class="comment">(* skip <span class="string">&quot;,&quot;</span> *)</span>
+          Node(v, l, r), ofs + 1 <span class="comment">(* skip <span class="string">&quot;)&quot;</span> *)</span>
         <span class="keyword">else</span> Node(v, Empty, Empty), ofs + 1 <span class="governing">in</span>
     <span class="keyword">fun</span> s -&gt; fst(make 0 s)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val tree_of_string : string -&gt; char binary_tree = &lt;fun&gt;
 </span></code></pre></div>
@@ -1972,8 +1999,8 @@ and do not deal with error reporting.</p>
   Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
    Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">string_of_tree example_layout_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;a(b(d,e),c(,f(g,)))&quot;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">tree_of_string <span class="ocaml-error-loc">'</span>a(b(d,e),c(,f(g,)))' = example_layout_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">tree_of_string <span class="ocaml-error-loc">'</span>'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">tree_of_string <span class="string">&quot;a(b(d,e),c(,f(g,)))&quot;</span> = example_layout_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">tree_of_string <span class="string">&quot;&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char binary_tree = Empty
 </span></code></pre>
 
 <h4 id="68-Preorder-and-inorder-sequences-of-binary-trees-medium">68. Preorder and inorder sequences of binary trees. (<em>medium</em>)</h4>
@@ -2003,7 +2030,7 @@ lower-case letters, as in the example of the previous problem.</p>
 </li></ol>
 
 <p>What happens if the same character appears in more than one node. Try
-for instance <code>pre_in_tree &#39;aba&#39; &#39;baa&#39;</code>.</p>
+for instance <code>pre_in_tree &quot;aba&quot; &quot;baa&quot;</code>.</p>
 <p><button class="solution" onclick="toggleContent('ocamlorg61')">Solution</button></p>
 <div id="ocamlorg61" class="solution"><p>We use lists to represent the result. Note that <code>preorder</code> and <code>inorder</code> can be made more efficient by avoiding list concatenations.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">preorder</span> = <span class="keyword">function</span>
@@ -2029,15 +2056,21 @@ for instance <code>pre_in_tree &#39;aba&#39; &#39;baa&#39;</code>.</p>
     | (h1::t1), (h2::t2) -&gt;
        let (lp, rp), (li, ri) = split_pre_in p i h1 [] [] <span class="governing">in</span>
        Node (h1, pre_in_tree lp li, pre_in_tree rp ri)
-    | _ -&gt; invalid_arg <span class="ocaml-error-loc">'</span>pre_in_tree'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | _ -&gt; invalid_arg <span class="string">&quot;pre_in_tree&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val preorder : 'a binary_tree -&gt; 'a list = &lt;fun&gt;
+val inorder : 'a binary_tree -&gt; 'a list = &lt;fun&gt;
+val split_pre_in :
+  'a list -&gt;
+  'a list -&gt;
+  'a -&gt; 'a list -&gt; 'a list -&gt; ('a list * 'a list) * ('a list * 'a list) =
+  &lt;fun&gt;
+val pre_in_tree : 'a list -&gt; 'a list -&gt; 'a binary_tree = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">preorder</span> (Node (1, Node (2, Empty, Empty), Empty))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value preorder
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">preorder</span> (Node (1, Empty, Node (2, Empty, Empty)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value preorder
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">p</span> = <span class="ocaml-error-loc">preorder</span> example_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value preorder
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">i</span> = <span class="ocaml-error-loc">inorder</span> example_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value inorder
-Hint: Did you mean ignore?
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">pre_in_tree</span> p i = example_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value pre_in_tree
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">preorder (Node (1, Node (2, Empty, Empty), Empty))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">preorder (Node (1, Empty, Node (2, Empty, Empty)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [1; 2]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">p</span> = preorder example_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val p : char list = ['a'; 'b'; 'd'; 'e'; 'c'; 'f'; 'g']
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">i</span> = inorder example_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val i : char list = ['d'; 'b'; 'e'; 'a'; 'c'; 'g'; 'f']
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">pre_in_tree p i = example_tree</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
 <p>Solution using
@@ -2119,7 +2152,10 @@ val string_of_tree : char mult_tree -&gt; string = &lt;fun&gt;
   <span class="governing">let</span> <span class="ocaml-function">tree_of_string</span> <span class="ocaml-variable">s </span>=
     <span class="keyword">match</span> tree_of_substring [] s 0 (<span class="ocaml-module">String</span>.length s) <span class="keyword">with</span>
     | [t], _ -&gt; t
-    | _ -&gt; <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>tree_of_string'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | _ -&gt; <span class="keyword">failwith</span> <span class="string">&quot;tree_of_string&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val tree_of_substring :
+  char mult_tree list -&gt; string -&gt; int -&gt; int -&gt; char mult_tree list * int =
+  &lt;fun&gt;
+val tree_of_string : string -&gt; char mult_tree = &lt;fun&gt;
 </span></code></pre></div>
 
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">t</span> = T(<span class="string">'a'</span>, [T(<span class="string">'f'</span>,[T(<span class="string">'g'</span>,[])]); T(<span class="string">'c'</span>,[]);
@@ -2127,7 +2163,9 @@ val string_of_tree : char mult_tree -&gt; string = &lt;fun&gt;
   T ('a',
    [T ('f', [T ('g', [])]); T ('c', []); T ('b', [T ('d', []); T ('e', [])])])
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">string_of_tree t</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;afg^^c^bd^e^^^&quot;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">tree_of_string <span class="ocaml-error-loc">'</span>afg^^c^bd^e^^^'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">tree_of_string <span class="string">&quot;afg^^c^bd^e^^^&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char mult_tree =
+T ('a',
+ [T ('f', [T ('g', [])]); T ('c', []); T ('b', [T ('d', []); T ('e', [])])])
 </span></code></pre>
 
 <h4 id="71-Determine-the-internal-path-length-of-a-tree-easy">71. Determine the internal path length of a tree. (<em>easy</em>)</h4>
@@ -2170,9 +2208,9 @@ val bottom_up : 'a mult_tree -&gt; 'a list = &lt;fun&gt;
 picture shows how multiway tree structures are represented in Lisp.</p>
 <p><img src="../../img/lisp-like-tree.png" style="float: right; margin-left: 15px; margin-bottom: 15px;" title="Lisp representation of multiway
 trees"/></p>
-<p>Note that in the &#39;lispy&#39; notation a node with successors (children) in
+<p>Note that in the &quot;lispy&quot; notation a node with successors (children) in
 the tree is always the first element in a list, followed by its
-children. The &#39;lispy&#39; representation of a multiway tree is a sequence of
+children. The &quot;lispy&quot; representation of a multiway tree is a sequence of
 atoms and parentheses &#39;(&#39; and &#39;)&#39;. This is very close to the way trees
 are represented in OCaml, except that no constructor <code>T</code> is used. Write
 a function <code>lispy :       char mult_tree -&gt; string</code> that returns the
@@ -2240,12 +2278,12 @@ may want to define a similar type using sets instead of lists.</p>
 <pre class="ocaml"><code class="ocaml"><span class="comment">(* example pending *)</span></code></pre></li><li><p>The representations we introduced so far well suited for automated
  processing, but their syntax is not very user-friendly. Typing the
  terms by hand is cumbersome and error-prone. We can define a more
- compact and &#39;human-friendly&#39; notation as follows: A graph (with char
+ compact and &quot;human-friendly&quot; notation as follows: A graph (with char
  labelled nodes) is represented by a string of atoms and terms of the
  type X-Y. The atoms stand for isolated nodes, the X-Y terms describe
  edges. If an X appears as an endpoint of an edge, it is
  automatically defined as a node. Our example could be written as:</p>
-<pre class="ocamltop"><code class="ocamltop">&#39;b-c f-c g-h d f-b k-f h-g&#39;</code></pre>
+<pre class="ocamltop"><code class="ocamltop">&quot;b-c f-c g-h d f-b k-f h-g&quot;</code></pre>
 
 <p>We call this the <strong>human-friendly form</strong>. As the example shows, the
 list does not have to be sorted and may even contain the same edge
@@ -2638,18 +2676,18 @@ function <code>full_words</code> to print (non-negative) integer numbers in full
 words.</p>
 <p><button class="solution" onclick="toggleContent('ocamlorg71')">Solution</button></p>
 <div id="ocamlorg71" class="solution"><pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">full_words</span> =
-    <span class="governing">let </span><span class="ocaml-variable">digit</span> = [|<span class="ocaml-error-loc">'</span>zero'; 'one'; 'two'; 'three'; 'four'; 'five'; 'six';
-                  'seven'; 'eight'; 'nine' |] <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">digit</span> = [|<span class="string">&quot;zero&quot;</span>; <span class="string">&quot;one&quot;</span>; <span class="string">&quot;two&quot;</span>; <span class="string">&quot;three&quot;</span>; <span class="string">&quot;four&quot;</span>; <span class="string">&quot;five&quot;</span>; <span class="string">&quot;six&quot;</span>;
+                  <span class="string">&quot;seven&quot;</span>; <span class="string">&quot;eight&quot;</span>; <span class="string">&quot;nine&quot;</span> |] <span class="governing">in</span>
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">words</span> <span class="ocaml-variable">w n </span>=
       <span class="keyword">if</span> n = 0 <span class="keyword">then</span> (<span class="keyword">match</span> w <span class="keyword">with</span> [] -&gt; [digit.(0)] | _ -&gt; w)
       <span class="keyword">else</span> words (digit.(n mod 10) :: w) (n / 10) <span class="governing">in</span>
     <span class="keyword">fun</span> n -&gt;
-    <span class="ocaml-module">String</span>.concat <span class="string">'-'</span> (words [] n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">String</span>.concat <span class="string">&quot;-&quot;</span> (words [] n)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val full_words : int -&gt; string = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">full_words</span> 175</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value full_words
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">full_words</span> 23485</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value full_words
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">full_words</span> 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value full_words
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">full_words 175</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;one-seven-five&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">full_words 23485</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;two-three-four-eight-five&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">full_words 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;zero&quot;
 </span></code></pre>
 
 <h4 id="96-Syntax-checker-medium">96. Syntax checker. (<em>medium</em>)</h4><p><img src="../../img/syntax-graph.gif" style="float: right; margin-left: 15px; margin-bottom: 15px;" title="Syntax graph"/></p>
@@ -2673,10 +2711,10 @@ string is a legal identifier.</p>
       n &gt; 0 &amp;&amp; is_letter s.[n - 1] &amp;&amp; is_valid s (n - 2) true)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val identifier : string -&gt; bool = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="ocaml-error-loc">'</span>this-is-a-long-identifier'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="ocaml-error-loc">'</span>this-ends-<span class="governing">in</span>-'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="ocaml-error-loc">'</span>two--hyphens'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="ocaml-error-loc">'</span>-dash-first'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="string">&quot;this-is-a-long-identifier&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="string">&quot;this-ends-<span class="governing">in</span>-&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="string">&quot;two--hyphens&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">identifier <span class="string">&quot;-dash-first&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
 </span></code></pre>
 
 <h4 id="97-Sudoku-medium">97. Sudoku. (<em>medium</em>)</h4>
@@ -2703,7 +2741,7 @@ string is a legal identifier.</p>
     2  4  . | .  .  1 | 5  .  .      2  4  6 | 3  9  1 | 5  7  8</code></pre>
 
 <p>Every spot in the puzzle belongs to a (horizontal) row and a (vertical)
-column, as well as to one single 3x3 square (which we call &#39;square&#39; for
+column, as well as to one single 3x3 square (which we call &quot;square&quot; for
 short). At the beginning, some of the spots carry a single-digit number
 between 1 and 9. The problem is to fill the missing spots with digits in
 such a way that every number between 1 and 9 appears exactly once in
@@ -2728,7 +2766,7 @@ different choice.</p>
   
     <span class="governing">let</span> <span class="ocaml-function">get_as_string</span> <span class="ocaml-variable">(b: t) pos </span>=
       <span class="governing">let </span><span class="ocaml-variable">i</span> = get b pos <span class="governing">in</span>
-      <span class="keyword">if</span> is_valid i <span class="keyword">then</span> string_of_int i <span class="keyword">else</span> <span class="string">'.'</span>
+      <span class="keyword">if</span> is_valid i <span class="keyword">then</span> string_of_int i <span class="keyword">else</span> <span class="string">&quot;.&quot;</span>
   
     <span class="governing">let</span> <span class="ocaml-function">with_val</span> <span class="ocaml-variable">(b: t) (x, y) v </span>=
       <span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="ocaml-module">Array</span>.copy b <span class="governing">in</span>
@@ -2744,13 +2782,13 @@ different choice.</p>
     <span class="governing">let</span> <span class="ocaml-function">print</span> <span class="ocaml-variable">b </span>=
       <span class="keyword">for</span> y = 0 <span class="keyword">to</span> 8 <span class="keyword">do</span>
         <span class="keyword">for</span> x = 0 <span class="keyword">to</span> 8 <span class="keyword">do</span>
-          printf (<span class="keyword">if</span> x = 0 <span class="keyword">then</span> <span class="ocaml-error-loc">'</span>%s' <span class="keyword">else</span> <span class="keyword">if</span> x mod 3 = 0 <span class="keyword">then</span> ' | %s'
-                  <span class="keyword">else</span> '  %s')  (get_as_string b (x, y))
+          printf (<span class="keyword">if</span> x = 0 <span class="keyword">then</span> <span class="string">&quot;%s&quot;</span> <span class="keyword">else</span> <span class="keyword">if</span> x mod 3 = 0 <span class="keyword">then</span> <span class="string">&quot; | %s&quot;</span>
+                  <span class="keyword">else</span> <span class="string">&quot;  %s&quot;</span>)  (get_as_string b (x, y))
         <span class="keyword">done</span>;
         <span class="keyword">if</span> y &lt; 8 <span class="keyword">then</span>
-          <span class="keyword">if</span> y mod 3 = 2 <span class="keyword">then</span> printf '\n--------+---------+--------\n'
-          <span class="keyword">else</span> printf '\n        |         |        \n'
-        <span class="keyword">else</span> printf '\n'
+          <span class="keyword">if</span> y mod 3 = 2 <span class="keyword">then</span> printf <span class="string">&quot;\n--------+---------+--------\n&quot;</span>
+          <span class="keyword">else</span> printf <span class="string">&quot;\n        |         |        \n&quot;</span>
+        <span class="keyword">else</span> printf <span class="string">&quot;\n&quot;</span>
       <span class="keyword">done</span>
   
     <span class="governing">let</span> <span class="ocaml-function">available</span> <span class="ocaml-variable">b (x, y) </span>=
@@ -2788,12 +2826,26 @@ different choice.</p>
   
   <span class="governing">let</span> <span class="ocaml-function">sudoku</span> <span class="ocaml-variable">b </span>= <span class="keyword">match</span> <span class="ocaml-module">Board</span>.fill b (0,0) <span class="keyword">with</span>
     | Some b -&gt; b
-    | None -&gt; <span class="keyword">failwith</span> 'sudoku: no solution'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+    | None -&gt; <span class="keyword">failwith</span> <span class="string">&quot;sudoku: no solution&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>module Board :
+  sig
+    type t = int array
+    val is_valid : int -&gt; bool
+    val get : t -&gt; int * int -&gt; int
+    val get_as_string : t -&gt; int * int -&gt; string
+    val with_val : t -&gt; int * int -&gt; int -&gt; int array
+    val of_list : int list list -&gt; t
+    val print : t -&gt; unit
+    val available : t -&gt; int * int -&gt; int list
+    val next : int * int -&gt; int * int
+    val fill : t -&gt; int * int -&gt; t option
+    val try_values : t -&gt; int * int -&gt; int list -&gt; t option
+  end
+val sudoku : Board.t -&gt; Board.t = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* The board representation is not imposed.  Here <span class="string">'0'</span> stands <span class="keyword">for</span> <span class="string">'.'</span> *)</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* The board representation is not imposed.  Here <span class="string">&quot;0&quot;</span> stands <span class="keyword">for</span> <span class="string">&quot;.&quot;</span> *)</span>
   <span class="governing">let </span><span class="ocaml-variable">initial_board</span> =
-    <span class="ocaml-module"><span class="ocaml-error-loc">Board</span></span><span class="ocaml-error-loc">.of_list</span> [[0; 0; 4;  8; 0; 0;  0; 1; 7];
+    <span class="ocaml-module">Board</span>.of_list [[0; 0; 4;  8; 0; 0;  0; 1; 7];
                    [6; 7; 0;  9; 0; 0;  0; 0; 0];
                    [5; 0; 8;  0; 3; 0;  0; 0; 4];
                    [3; 0; 0;  7; 4; 0;  1; 0; 0];
@@ -2801,17 +2853,38 @@ different choice.</p>
                    [0; 0; 1;  0; 6; 9;  0; 0; 5];
                    [1; 0; 0;  0; 8; 0;  3; 0; 6];
                    [0; 0; 0;  0; 0; 6;  0; 9; 1];
-                   [2; 4; 0;  0; 0; 1;  5; 0; 0]]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module Board
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module"><span class="ocaml-error-loc">Board</span></span><span class="ocaml-error-loc">.print</span> (sudoku initial_board)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module Board
+                   [2; 4; 0;  0; 0; 1;  5; 0; 0]]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val initial_board : Board.t =
+  [|0; 0; 4; 8; 0; 0; 0; 1; 7; 6; 7; 0; 9; 0; 0; 0; 0; 0; 5; 0; 8; 0; 3; 0;
+    0; 0; 4; 3; 0; 0; 7; 4; 0; 1; 0; 0; 0; 6; 9; 0; 0; 0; 7; 8; 0; 0; 0; 1;
+    0; 6; 9; 0; 0; 5; 1; 0; 0; 0; 8; 0; 3; 0; 6; 0; 0; 0; 0; 0; 6; 0; 9; 1;
+    2; 4; 0; 0; 0; 1; 5; 0; 0|]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Board</span>.print (sudoku initial_board)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">9  3  4 | 8  2  5 | 6  1  7
+        |         |        
+6  7  2 | 9  1  4 | 8  5  3
+        |         |        
+5  1  8 | 6  3  7 | 9  2  4
+--------+---------+--------
+3  2  5 | 7  4  8 | 1  6  9
+        |         |        
+4  6  9 | 1  5  3 | 7  8  2
+        |         |        
+7  8  1 | 2  6  9 | 4  3  5
+--------+---------+--------
+1  9  7 | 5  8  2 | 3  4  6
+        |         |        
+8  5  3 | 4  7  6 | 2  9  1
+        |         |        
+2  4  6 | 3  9  1 | 5  7  8
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h4 id="98-Nonograms-hard">98. Nonograms. (<em>hard</em>)</h4>
 
 <p>Around 1994, a certain kind of puzzles was very popular in England. The
-&#39;Sunday Telegraph&#39; newspaper wrote: &#39;Nonograms are puzzles from Japan
+&quot;Sunday Telegraph&quot; newspaper wrote: &quot;Nonograms are puzzles from Japan
 and are currently published each week only in The Sunday Telegraph.
 Simply use your logic and skill to complete the grid and reveal a
-picture or diagram.&#39; As an OCaml programmer, you are in a better
+picture or diagram.&quot; As an OCaml programmer, you are in a better
 situation: you can have your computer do the work!</p>
 <p>The puzzle goes like this: Essentially, each row and column of a
 rectangular bitmap is annotated with the respective lengths of its
@@ -2833,7 +2906,7 @@ must complete the bitmap given only these lengths.</p>
 
 <p>For the example above, the problem can be stated as the two lists
 <code>[[3];[2;1];[3;2];[2;2];[6];[1;5];[6];[1];[2]]</code> and
-<code>[[1;2];[3;1];[1;5];[7;1];[5];[3];[4];[3]]</code> which give the &#39;solid&#39;
+<code>[[1;2];[3;1];[1;5];[7;1];[5];[3];[4];[3]]</code> which give the &quot;solid&quot;
 lengths of the rows and columns, top-to-bottom and left-to-right,
 respectively. Published puzzles are larger than this example, e.g.
 25×20, and apparently always have unique solutions.</p>
@@ -2887,7 +2960,7 @@ and reject the solution if it does not satisfy the row patterns.</p>
     <span class="governing">let</span> <span class="ocaml-function">print_row</span> <span class="ocaml-variable">r </span>=
       <span class="ocaml-module">Array</span>.iter (<span class="keyword">fun</span> e -&gt; print_char <span class="string">'|'</span>;
                          print_char(char_of_element e)) r;
-      print_string <span class="ocaml-error-loc">'</span>|\n' <span class="governing">in</span>
+      print_string <span class="string">&quot;|\n&quot;</span> <span class="governing">in</span>
     <span class="ocaml-module">Array</span>.iter print_row table
   
   <span class="governing">let</span> <span class="ocaml-function">solve</span> <span class="ocaml-variable">patts_row patts_col </span>=
@@ -2921,7 +2994,14 @@ and reject the solution if it does not satisfy the row patterns.</p>
              gen col (row + 1) patts_col;
            )
         | [] -&gt; <span class="keyword">assert</span> false
-    <span class="governing">in</span> gen 0 0 patts_col</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="governing">in</span> gen 0 0 patts_col</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type element = Empty | X
+val is_set_range : element array -&gt; int -&gt; int -&gt; bool = &lt;fun&gt;
+val is_set_sub : element array -&gt; int -&gt; int -&gt; bool = &lt;fun&gt;
+val check_row : element array -&gt; int -&gt; int list -&gt; bool = &lt;fun&gt;
+val check_rows : element array array -&gt; int -&gt; int list list -&gt; bool = &lt;fun&gt;
+val char_of_element : element -&gt; char = &lt;fun&gt;
+val print_tbl : element array array -&gt; unit = &lt;fun&gt;
+val solve : int list list -&gt; int list list -&gt; unit = &lt;fun&gt;
 </span></code></pre><p>You may want to look at
 <a href="http://link.springer.com/article/10.1007%2Fs10489-009-0200-0">more efficient algorithms</a>
 and implement them so you can solve the following within resonable time:</p>
@@ -2933,8 +3013,17 @@ and implement them so you can solve the following within resonable time:</p>
        [1;1;7;2]; [1;6;3]; [1;1;3;2]; [1;4;3]; [1;3;1];
        [1;2;2]; [2;1;1;1;1]; [2;2]; [2;2]; [7] ]</code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">solve</span> [[3];[2;1];[3;2];[2;2];[6];[1;5];[6];[1];[2]]
-        [[1;2];[3;1];[1;5];[7;1];[5];[3];[4];[3]]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value solve
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">solve [[3];[2;1];[3;2];[2;2];[6];[1;5];[6];[1];[2]]
+        [[1;2];[3;1];[1;5];[7;1];[5];[3];[4];[3]]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">|_|X|X|X|_|_|_|_|
+|X|X|_|X|_|_|_|_|
+|_|X|X|X|_|_|X|X|
+|_|_|X|X|_|_|X|X|
+|_|_|X|X|X|X|X|X|
+|X|_|X|X|X|X|X|_|
+|X|X|X|X|X|X|_|_|
+|_|_|_|_|X|_|_|_|
+|_|_|_|X|X|_|_|_|
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h4 id="99-Crossword-puzzle-hard">99. Crossword puzzle. (<em>hard</em>)</h4><p><img src="../../img/crossword.gif" style="float: right; margin-left: 15px; margin-bottom: 15px;" title="Crossword"/></p>

@@ -134,8 +134,8 @@ be explicitly stated.</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span>
 <span class="governing">open</span> <span class="ocaml-module">Command</span>
 
-<span class="governing">let </span><span class="ocaml-variable">pdflatex</span> = <span class="keyword">ref</span> (A'pdflatex')
-<span class="governing">let </span><span class="ocaml-variable">ocamlweb</span> = <span class="keyword">ref</span> (A'ocamlweb')
+<span class="governing">let </span><span class="ocaml-variable">pdflatex</span> = <span class="keyword">ref</span> (A<span class="string">&quot;pdflatex&quot;</span>)
+<span class="governing">let </span><span class="ocaml-variable">ocamlweb</span> = <span class="keyword">ref</span> (A<span class="string">&quot;ocamlweb&quot;</span>)
 
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
@@ -144,7 +144,7 @@ be explicitly stated.</p>
        be updated by a command line option. *)</span>
     | Before_options -&gt;
        <span class="comment">(* This will put all warnings <span class="keyword">to</span> \texttt{ocaml\{c,opt\}} by default. *)</span>
-       <span class="ocaml-module">Options</span>.ocaml_cflags := ['-w<span class="string">';'</span>A']
+       <span class="ocaml-module">Options</span>.ocaml_cflags := [<span class="string">&quot;-w&quot;</span>;<span class="string">&quot;A&quot;</span>]
   
     <span class="comment">(* Here one can change the final value <span class="keyword">of</span> options. *)</span>
     | After_options -&gt;
@@ -159,12 +159,12 @@ be explicitly stated.</p>
         <span class="comment">(* Here you can dynamically tag some files or directories. *)</span>
         <span class="comment">(* This is <span class="keyword">done</span> here by checking the [SOME_COND] variable which is
            impossible <span class="governing">in</span> the \tags file. *)</span>
-        <span class="keyword">if</span> getenv 'SOME_COND' ~default:'false' = 'true' <span class="keyword">then</span>
+        <span class="keyword">if</span> getenv <span class="string">&quot;SOME_COND&quot;</span> ~default:<span class="string">&quot;false&quot;</span> = <span class="string">&quot;true&quot;</span> <span class="keyword">then</span>
   
           <span class="comment">(* By setting foo_dir <span class="keyword">as</span> not_hygienic one say that the foo directory
              can contains non hygienic files (such <span class="keyword">as</span> \texttt{.cmi},
              \texttt{.cmo}\ldots). *)</span>
-          tag_file 'foo_dir' ['not_hygienic']
+          tag_file <span class="string">&quot;foo_dir&quot;</span> [<span class="string">&quot;not_hygienic&quot;</span>]
   
     <span class="comment">(* One can also <span class="keyword">do</span> things after the hygiene step. *)</span>
     | After_hygiene -&gt; ()
@@ -180,9 +180,9 @@ be explicitly stated.</p>
             [~prod:string] specifies the product <span class="keyword">of</span> the rule.
             Note that [~prods:string list] also exists.
             [~dep] <span class="governing">and</span> [~deps] are <span class="keyword">for</span> dependencies *)</span>
-        rule 'LaTeX <span class="keyword">to</span> PDF conversion rule'
-          ~prod:'%.pdf'
-          ~dep:'%.tex'
+        rule <span class="string">&quot;LaTeX <span class="keyword">to</span> PDF conversion rule&quot;</span>
+          ~prod:<span class="string">&quot;%.pdf&quot;</span>
+          ~dep:<span class="string">&quot;%.tex&quot;</span>
           <span class="governing">begin</span> <span class="keyword">fun</span> env _build -&gt;
   
             <span class="comment">(* The action is a function that receive two arguments:
@@ -190,12 +190,12 @@ be explicitly stated.</p>
             occurrences according <span class="keyword">to</span> the targets <span class="keyword">to</span> which the rule
             applies.  [_build] can be called <span class="keyword">to</span> build <span class="keyword">new</span> things
             (dynamic dependencies). *)</span>
-            <span class="governing">let </span><span class="ocaml-variable">tex</span> = env '%.tex' <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">_pdf</span> = env '%.pdf' <span class="governing">in</span>
+            <span class="governing">let </span><span class="ocaml-variable">tex</span> = env <span class="string">&quot;%.tex&quot;</span> <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">_pdf</span> = env <span class="string">&quot;%.pdf&quot;</span> <span class="governing">in</span>
   
             <span class="comment">(* Here we say: ``We compile the file tex form LaTeX <span class="keyword">to</span>
                <span class="ocaml-module">PDF''</span>.  Note that <span class="governing">in</span> fact that is a set <span class="keyword">of</span> tags, thus
                the order does not matter. But you got the idea. *)</span>
-            <span class="governing">let </span><span class="ocaml-variable">tags</span> = tags_of_pathname tex++'compile'++'LaTeX'++'pdf' <span class="governing">in</span>
+            <span class="governing">let </span><span class="ocaml-variable">tags</span> = tags_of_pathname tex++<span class="string">&quot;compile&quot;</span>++<span class="string">&quot;LaTeX&quot;</span>++<span class="string">&quot;pdf&quot;</span> <span class="governing">in</span>
   
             <span class="comment">(* Here we produce the command <span class="keyword">to</span> run.
                [S]  is <span class="keyword">for</span> giving a sequence <span class="keyword">of</span> command pieces.
@@ -207,19 +207,19 @@ be explicitly stated.</p>
   
                The other constructors are given <span class="governing">in</span> the documentation <span class="keyword">of</span> the
                [Command] module <span class="governing">in</span> [<span class="ocaml-module">Signatures</span>.COMMAND]. *)</span>
-            <span class="governing">let </span><span class="ocaml-variable">cmd</span> = Cmd(S[!pdflatex; T tags; P tex; Sh'&lt; /dev/null']) <span class="governing">in</span>
+            <span class="governing">let </span><span class="ocaml-variable">cmd</span> = Cmd(S[!pdflatex; T tags; P tex; Sh<span class="string">&quot;&lt; /dev/null&quot;</span>]) <span class="governing">in</span>
             <span class="comment">(* Hoping that LaTeX will converge <span class="governing">in</span> two iterations *)</span>
             Seq[cmd; cmd]
           <span class="governing">end</span>;
   
         <span class="comment">(* Here we make an extension <span class="keyword">of</span> any rule that produces a command
            containing these tags. *)</span>
-        flag ['compile'; 'LaTeX'; 'pdf'; 'safe'] (A'-halt-on-error');
+        flag [<span class="string">&quot;compile&quot;</span>; <span class="string">&quot;LaTeX&quot;</span>; <span class="string">&quot;pdf&quot;</span>; <span class="string">&quot;safe&quot;</span>] (A<span class="string">&quot;-halt-on-error&quot;</span>);
   
         <span class="comment">(* Here we give an exception: the file ``manual.tex'' is tagged
            ``safe''.  With this tag we add the -halt-on-error flag during
            the LaTeX compilation. *)</span>
-        tag_file 'manual.tex' ['safe'];
+        tag_file <span class="string">&quot;manual.tex&quot;</span> [<span class="string">&quot;safe&quot;</span>];
   
         <span class="comment">(* The generic LaTeX rule could look at the file searching <span class="keyword">for</span>
            some \verb'\input{}' command, but LaTeX is so complex that it
@@ -229,16 +229,16 @@ be explicitly stated.</p>
         <span class="comment">(* The [dep] function takes tags <span class="governing">and</span> pathnames. This will build
            pathnames <span class="keyword">if</span> a command contains these tags. Note that every
            file [some_file_name] is tagged [file:some_file_name]. *)</span>
-        dep ['compile'; 'LaTeX'; 'pdf'; 'file:manual.tex']
-            ['ocamlweb.sty'; 'myocamlbuild.tex'];
+        dep [<span class="string">&quot;compile&quot;</span>; <span class="string">&quot;LaTeX&quot;</span>; <span class="string">&quot;pdf&quot;</span>; <span class="string">&quot;file:manual.tex&quot;</span>]
+            [<span class="string">&quot;ocamlweb.sty&quot;</span>; <span class="string">&quot;myocamlbuild.tex&quot;</span>];
   
-        rule 'OCaml <span class="keyword">to</span> LaTeX conversion rule (using ocamlweb)'
-          ~prod:'%.tex'
-          ~dep:'%.ml'
+        rule <span class="string">&quot;OCaml <span class="keyword">to</span> LaTeX conversion rule (using ocamlweb)&quot;</span>
+          ~prod:<span class="string">&quot;%.tex&quot;</span>
+          ~dep:<span class="string">&quot;%.ml&quot;</span>
           <span class="governing">begin</span> <span class="keyword">fun</span> env _build -&gt;
-            <span class="governing">let </span><span class="ocaml-variable">tex</span> = env '%.tex' <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">ml</span> = env '%.ml' <span class="governing">in</span>
-            <span class="governing">let </span><span class="ocaml-variable">tags</span> = tags_of_pathname ml++'ocamlweb'++'LaTeX' <span class="governing">in</span>
-            Cmd(S[!ocamlweb; T tags; P ml; A'-o'; Px tex])
+            <span class="governing">let </span><span class="ocaml-variable">tex</span> = env <span class="string">&quot;%.tex&quot;</span> <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">ml</span> = env <span class="string">&quot;%.ml&quot;</span> <span class="governing">in</span>
+            <span class="governing">let </span><span class="ocaml-variable">tags</span> = tags_of_pathname ml++<span class="string">&quot;ocamlweb&quot;</span>++<span class="string">&quot;LaTeX&quot;</span> <span class="governing">in</span>
+            Cmd(S[!ocamlweb; T tags; P ml; A<span class="string">&quot;-o&quot;</span>; Px tex])
           <span class="governing">end</span>;
   <span class="governing">end</span></code></pre>
 

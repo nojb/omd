@@ -123,9 +123,9 @@
       <div id="main-contents" class="content">
         
 
-<h1 id="Ocamlbuild-39-Hello-world-39-or-how-to-output-to-the-log-file">Ocamlbuild &#39;Hello, world!&#39; or how to output to the log file</h1><h2 id="Hello-world">Hello, world!</h2><p>Put the following in the file myocamlbuild.ml in the root of your
+<h1 id="Ocamlbuild-quot-Hello-world-quot-or-how-to-output-to-the-log-file">Ocamlbuild &quot;Hello, world!&quot; or how to output to the log file</h1><h2 id="Hello-world">Hello, world!</h2><p>Put the following in the file myocamlbuild.ml in the root of your
 project tree:</p>
-<p><code> (* Ocamlbuild plugin *)</code><br/><code> open Ocamlbuild_pack</code><br/><code> open Ocamlbuild_plugin</code><br/><code> let _ =</code><br/><code>   dispatch &amp; function</code><br/><code>   | After_options -&gt; Log.dprintf 0 &#39;Hello, world!&#39;</code><br/><code>   | _ -&gt; ()</code></p>
+<p><code> (* Ocamlbuild plugin *)</code><br/><code> open Ocamlbuild_pack</code><br/><code> open Ocamlbuild_plugin</code><br/><code> let _ =</code><br/><code>   dispatch &amp; function</code><br/><code>   | After_options -&gt; Log.dprintf 0 &quot;Hello, world!&quot;</code><br/><code>   | _ -&gt; ()</code></p>
 <p>Invoke ocamlbuild. In _build/_log, you can see:</p>
 <p><code> ### Starting build.</code><br/><code> Hello, world!</code><br/><code> # Compilation successful.</code></p>
 <p>The integer argument to Log.dprinf is the minimum level at which the

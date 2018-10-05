@@ -124,10 +124,10 @@
         
 
 <h1 id="Automatic-Version-Generation">Automatic Version Generation</h1><p>The following plugin produces a file <code>version.ml</code> looking like this:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">version</span> = '1.4.2+dev'
-<span class="governing">let </span><span class="ocaml-variable">compile_time</span> = '03/01/2010 12:55:22 UTC'</code></pre>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">version</span> = <span class="string">&quot;1.4.2+dev&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">compile_time</span> = <span class="string">&quot;03/01/2010 12:55:22 UTC&quot;</span></code></pre>
 
-<p>The &#39;compile_time&#39; variable is the date when the project was compiled.
+<p>The &quot;compile_time&quot; variable is the date when the project was compiled.
 More precisely, it is the last time Ocamlbuild was run to build the
 project.</p>
 <p>The trick is: if the command which produces <code>version.ml</code> changes,
@@ -139,26 +139,26 @@ all operating systems.</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span>
 <span class="governing">open</span> <span class="ocaml-module">Unix</span>
 
-<span class="governing">let </span><span class="ocaml-variable">version</span> = '1.4.2+dev'
+<span class="governing">let </span><span class="ocaml-variable">version</span> = <span class="string">&quot;1.4.2+dev&quot;</span>
 
 <span class="governing">let </span><span class="ocaml-variable">time</span> =
   <span class="governing">let </span><span class="ocaml-variable">tm</span> = <span class="ocaml-module">Unix</span>.gmtime (<span class="ocaml-module">Unix</span>.time ()) <span class="governing">in</span>
-  <span class="ocaml-module">Printf</span>.sprintf '%02d/%02d/%04d %02d:%02d:%02d UTC'
+  <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;%02d/%02d/%04d %02d:%02d:%02d UTC&quot;</span>
     (tm.tm_mon + 1) tm.tm_mday (tm.tm_year + 1900)
     tm.tm_hour tm.tm_min tm.tm_sec
 
 <span class="governing">let</span> <span class="ocaml-function">make_version</span> <span class="ocaml-variable">_ _ </span>=
   <span class="governing">let </span><span class="ocaml-variable">cmd</span> =
-    <span class="ocaml-module">Printf</span>.sprintf '<span class="governing">let </span><span class="ocaml-variable">version</span> = %S\n\
-                    <span class="governing">let </span><span class="ocaml-variable">compile_time</span> = %S\n'
+    <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;<span class="governing">let </span><span class="ocaml-variable">version</span> = %S\n\
+                    <span class="governing">let </span><span class="ocaml-variable">compile_time</span> = %S\n&quot;</span>
                    version time
   <span class="governing">in</span>
-  Cmd (S [ A 'echo'; Quote (Sh cmd); Sh '&gt;'; P 'version.ml' ])
+  Cmd (S [ A <span class="string">&quot;echo&quot;</span>; Quote (Sh cmd); Sh <span class="string">&quot;&gt;&quot;</span>; P <span class="string">&quot;version.ml&quot;</span> ])
 
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
   | After_rules -&gt;
-      rule 'version.ml' ~prod: 'version.ml' make_version
+      rule <span class="string">&quot;version.ml&quot;</span> ~prod: <span class="string">&quot;version.ml&quot;</span> make_version
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
 

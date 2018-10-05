@@ -132,23 +132,23 @@
 <span class="governing">open</span> <span class="ocaml-module">Camlp4</span>
 
 <span class="governing">module</span> <span class="ocaml-module">Id</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span> <span class="comment">(* Information <span class="keyword">for</span> dynamic loading *)</span>
-  <span class="governing">let </span><span class="ocaml-variable">name</span> = 'My_extension'
-  <span class="governing">let </span><span class="ocaml-variable">version</span> = '$Id$'
+  <span class="governing">let </span><span class="ocaml-variable">name</span> = <span class="string">&quot;My_extension&quot;</span>
+  <span class="governing">let </span><span class="ocaml-variable">version</span> = <span class="string">&quot;$Id$&quot;</span>
 <span class="governing">end</span>
 
 <span class="comment">(* An extension is just a functor: Syntax -&gt; Syntax *)</span>
 <span class="governing">module</span> <span class="ocaml-module">Make</span> <span class="ocaml-variable">(Syntax : <span class="ocaml-module">Sig</span>.Syntax) </span>= <span class="governing">struct</span>
   <span class="governing">include</span> Syntax
-  <span class="governing">let </span><span class="ocaml-variable">foo</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk 'foo'
-  <span class="governing">let </span><span class="ocaml-variable">bar</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk 'bar'
+  <span class="governing">let </span><span class="ocaml-variable">foo</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk <span class="string">&quot;foo&quot;</span>
+  <span class="governing">let </span><span class="ocaml-variable">bar</span> = <span class="ocaml-module">Gram</span>.<span class="ocaml-module">Entry</span>.mk <span class="string">&quot;bar&quot;</span>
   <span class="governing">open</span> <span class="ocaml-module">Camlp4</span>.<span class="ocaml-module">Sig</span>
   <span class="governing">let</span> () =
     EXTEND Gram
       GLOBAL: foo bar;
-      foo: [ [ 'foo'; i = LIDENT; b = bar -&gt; Foo(i, b) ] ];
-      bar: [ [ <span class="string">'?'</span> -&gt; A | <span class="string">'.'</span> -&gt; B ] ];
-    END<span class="ocaml-prompt">;;</span><br/>  <span class="ocaml-module">Gram</span>.parse_string foo (<span class="ocaml-module">Loc</span>.mk '&lt;string&gt;') 'foo x?' = Foo(<span class="string">'x'</span>, A)
-  DELETE_RULE Gram foo: 'foo'; LIDENT; bar END
+      foo: [ [ <span class="string">&quot;foo&quot;</span>; i = LIDENT; b = bar -&gt; Foo(i, b) ] ];
+      bar: [ [ <span class="string">&quot;?&quot;</span> -&gt; A | <span class="string">&quot;.&quot;</span> -&gt; B ] ];
+    END<span class="ocaml-prompt">;;</span><br/>  <span class="ocaml-module">Gram</span>.parse_string foo (<span class="ocaml-module">Loc</span>.mk <span class="string">&quot;&lt;string&gt;&quot;</span>) <span class="string">&quot;foo x?&quot;</span> = Foo(<span class="string">&quot;x&quot;</span>, A)
+  DELETE_RULE Gram foo: <span class="string">&quot;foo&quot;</span>; LIDENT; bar END
 <span class="governing">end</span>
 
 <span class="comment">(* Register it <span class="keyword">to</span> make it usable via the camlp4 binary. *)</span>

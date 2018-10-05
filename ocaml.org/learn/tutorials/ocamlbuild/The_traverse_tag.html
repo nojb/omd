@@ -128,10 +128,10 @@ directory is traversable. To do so it applies tagging rules and look for
 the <strong>traverse</strong> tag.</p>
 <p>If you have a directory that you want ocamlbuild doesn&#39;t traverse it,
 just remove the traverse tag from it.</p>
-<pre><code>&#39;big_directory_without_sources_for_ocamlbuild&#39;: -traverse</code></pre>
+<pre><code>&quot;big_directory_without_sources_for_ocamlbuild&quot;: -traverse</code></pre>
 
 <p>As always with tags, you can also provide a more complex pattern:</p>
-<pre><code>&lt;{foo,bar}/*&gt; and not &#39;foo/src&#39;: -traverse</code></pre>
+<pre><code>&lt;{foo,bar}/*&gt; and not &quot;foo/src&quot;: -traverse</code></pre>
 
 <p>Of course you can also change default behavior:</p>
 <pre><code>true: -traverse</code></pre>

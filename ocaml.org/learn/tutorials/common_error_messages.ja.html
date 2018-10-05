@@ -165,7 +165,7 @@ OCamlコンパイラが出すエラーや警告メッセージからいくつか
          int
 </span></code></pre>
 
-<p>&#39;This expression has type X but is here used with type Y&#39; (この式は X
+<p>&quot;This expression has type X but is here used with type Y&quot; (この式は X
 型になっているが Y 型であるべきでは？)はこういう意味だ。
 式の中身が単独の <code>(2.5)</code> なのでその型は X (<code>float</code>) と推論される。
 しかし、 文脈つまり <code>(1 + ...)</code> のような周囲の状況は Y (<code>int</code>)
@@ -185,10 +185,10 @@ OCaml
 
 <p>コンパイラにとって、2番目の <code>my_type</code>
 の定義は最初の定義とは全く独立している。
-つまり同じ名前の二つの型を定義したことになる。 &#39;<code>a</code>&#39;
-は早々に定義されているので最初の型に属しており、 &#39;<code>b</code>&#39;
+つまり同じ名前の二つの型を定義したことになる。 &quot;<code>a</code>&quot;
+は早々に定義されているので最初の型に属しており、 &quot;<code>b</code>&quot;
 は2番目の型に属している。 この例では、 <code>my_type</code> の最後の定義より後で
-&#39;<code>a</code>&#39; を再定義すると問題は解決する。 この種の問題は、
+&quot;<code>a</code>&quot; を再定義すると問題は解決する。 この種の問題は、
 同じモジュール内の同じ型に同じ名前を使うようながっかりなことをしない限り、
 実際のプログラムでは起きないだろう。</p>
 <h3 id="Warning-This-optional-argument-cannot-be-erased">Warning: This optional argument cannot be erased</h3>
@@ -265,9 +265,9 @@ variable y may match different arguments. (See manual section 8.5)
 のパターンマッチングのなんたるかについて誤解していた。
 以下を覚えておこう:</p>
 <ul><li><p>場合分けのツリーは左から右に直線的に進む。正規表現のマッチのようなバックトラック(引き返し)はしない。</p>
-</li><li><p>ガード(&#39;<code>when</code>&#39;
+</li><li><p>ガード(&quot;<code>when</code>&quot;
  節)はパターンの一部ではない。これは高々一度だけ評価される単なる条件であり、次のマッチケースへ飛ぶ最後の手段として使われる。</p>
-</li><li><p>小文字の識別子 (上の例の &#39;<code>y</code>&#39; のような束縛)
+</li><li><p>小文字の識別子 (上の例の &quot;<code>y</code>&quot; のような束縛)
  はまさに名前であり、常にマッチする。</p>
 </li></ul>
 
@@ -323,9 +323,10 @@ clean していないような)
 を避けるよう警告する。
 このようなメッセージは古いプログラムをコンパイルするときにも
 出てくることがあるから、
-&#39;<code>-w x</code>&#39;オプションを付けることで表示を消すことが出来る。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\e</span>\n' <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\e)
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\\</span>e\n' <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\\)
+&quot;<code>-w x</code>&quot;オプションを付けることで表示を消すことが出来る。</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;<span class="ocaml-error-loc">\e</span>\n&quot;</span> <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 14: illegal backslash escape in string.
+</span>- : string = &quot;\\e\n&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;\\e\n&quot;</span> <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;\\e\n&quot;
 </span></code></pre>
 
       </div>

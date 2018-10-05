@@ -183,25 +183,25 @@ Argumente nimmt und dann einen neuen String zurückgibt, der das Original
 <code>s</code> <code>n</code>-fach ausgibt.</p>
 <p>In den meisten von C abgeleiteten Sprachen, würde ein Aufruf dieser
 Funktion so aussehen:</p>
-<pre class="C"><code class="C">repeated (&#39;hallo&#39;, 3)  /* dies ist C-Code */</code></pre>
+<pre class="C"><code class="C">repeated (&quot;hallo&quot;, 3)  /* dies ist C-Code */</code></pre>
 
-<p>Das bedeutete &#39;rufe die Funktion <code>repeated</code> mit zwei Argumenten auf,
+<p>Das bedeutete &quot;rufe die Funktion <code>repeated</code> mit zwei Argumenten auf,
 wobei das erste Argument der String &#39;hallo&#39; ist und das zweite Argument
-die Zahl 3&#39;.</p>
+die Zahl 3&quot;.</p>
 <p>OCaml, wie auch andere funktionale Sprachen, schreibt Funktionsaufrufe
 anders und setzt auch die Klammern anders. Darin liegt eine häufige
 Fehlerquelle. Hier der gleiche Funktionsaufruf in OCaml:</p>
-<pre><code class="ocaml">repeated 'hallo' 3  <span class="comment">(* dies ist OCaml-Code *)</span></code></pre>
+<pre><code class="ocaml">repeated <span class="string">&quot;hallo&quot;</span> 3  <span class="comment">(* dies ist OCaml-Code *)</span></code></pre>
 
 <p>Beachten Sie: <strong>keine</strong> Klammern, und <strong>kein</strong> Komma zwischen den
 Argumenten.</p>
-<p>Um nun die Verwirrung perfekt zu machen: <code>repeated (&#39;hallo&#39;, 3)</code>
-<strong>hat</strong> eine Bedeutung in OCaml. Es bedeutet &#39;rufe die Funktion
+<p>Um nun die Verwirrung perfekt zu machen: <code>repeated (&quot;hallo&quot;, 3)</code>
+<strong>hat</strong> eine Bedeutung in OCaml. Es bedeutet &quot;rufe die Funktion
 <code>repeated</code> mit EINEM Argument auf, wobei das Argument ein Paar von
-Elementen ist&#39;. Natürlich wäre das ein Fehler, weil die Funktion
+Elementen ist&quot;. Natürlich wäre das ein Fehler, weil die Funktion
 <code>repeated</code> zwei Argumente erwartet und nicht eins. In jedem Fall ist das
 erste Argument ein String, kein Paar. Aber wir wollen uns jetzt mal noch
-keine Gedanken über Paare (&#39;Tupel&#39;) machen. Stattdessen merken Sie sich
+keine Gedanken über Paare (&quot;Tupel&quot;) machen. Stattdessen merken Sie sich
 einfach, daß es falsch ist, in einem Funktionsaufruf Klammern und Kommata
 mit den Argumenten zu verwenden.</p>
 <p>Nehmen wir eine andere Funktion - <code>get_string_from_user</code> - die eine
@@ -209,18 +209,18 @@ Zeichenkette per Eingabe entgegennimmt und diese dann wieder ausgibt.
 Wir wollen diese Zeichenkette an <code>repeated</code> übergeben. So sehen die
 Implementierungen in C and OCaml aus:</p>
 <pre class="C"><code class="C">/* C code: */
-repeated (get_string_from_user (&#39;Bitte geben Sie eine Zeichenkette ein.&#39;), 3)</code></pre>
+repeated (get_string_from_user (&quot;Bitte geben Sie eine Zeichenkette ein.&quot;), 3)</code></pre>
 <pre><code class="ocaml"><span class="comment">(* OCaml-Code: *)</span>
-repeated (get_string_from_user 'Bitte geben Sie eine Zeichenkette ein.') 3</code></pre>
+repeated (get_string_from_user <span class="string">&quot;Bitte geben Sie eine Zeichenkette ein.&quot;</span>) 3</code></pre>
 
 <p>Achen Sie auf die Klammernsetzung und das Fehlen jeglicher Kommas. Die
-Faustregel ist: &#39;Wenn um den gesamten Funktionsaufruf eine Klammer
-steht, verwende keine Klammern um die Argumente des Funktionsaufrufs.&#39;
+Faustregel ist: &quot;Wenn um den gesamten Funktionsaufruf eine Klammer
+steht, verwende keine Klammern um die Argumente des Funktionsaufrufs.&quot;
 Hier noch ein paar weitere Beispiele:</p>
-<pre><code class="ocaml">f 5 (g 'Hallo') 3    <span class="comment">(* f hat drei Argumente, g hat ein Argument *)</span>
+<pre><code class="ocaml">f 5 (g <span class="string">&quot;Hallo&quot;</span>) 3    <span class="comment">(* f hat drei Argumente, g hat ein Argument *)</span>
 f (g 3 4)            <span class="comment">(* f hat ein Argument, g hat zwei Argumente *)</span>
 
-repeated ('Hallo', 3);;     <span class="comment">(* OCaml erkennt den Fehler *)</span>
+repeated (<span class="string">&quot;Hallo&quot;</span>, 3);;     <span class="comment">(* OCaml erkennt den Fehler *)</span>
 Dieser Ausdruck hat den Typ string * int, aber wird hier mit dem Typ string verwendet.</code></pre>
 
 <h2 id="Definieren-von-Funktionen">Definieren von Funktionen</h2>
@@ -234,7 +234,7 @@ berechnet.</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
   (a +. b) /. 2.0</code></pre>
 
-<p>Tippen Sie das in der OCaml &#39;toplevel&#39; ein (unter Unix, tippen Sie in
+<p>Tippen Sie das in der OCaml &quot;toplevel&quot; ein (unter Unix, tippen Sie in
 der Shell das Kommando <code>ocaml</code> ein) und Sie bekommen folgendes
 angezeigt:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">average</span> <span class="ocaml-variable">a b </span>=
@@ -278,9 +278,9 @@ OCaml an. Hoffentlich fragen Sie sich jetzt:</p>
  Fließkommazahl wollen, müssen Sie <code>2.0</code> schreiben, weil <code>2</code> eine
  Ganzzahl wäre.</p>
 </li><li><p>Da OCaml kein Überladen von Operatoren zuläßt, verwendet es
- verschiedene Operatoren für die Bedeutungen &#39;addiere zwei
- Ganzzahlen&#39; (der Operator <code>+</code>) gegenüber &#39;addiere zwei
- Fließkommazahlen&#39; (der Operator <code>+.</code> - bitte beachten Sie den Punkt
+ verschiedene Operatoren für die Bedeutungen &quot;addiere zwei
+ Ganzzahlen&quot; (der Operator <code>+</code>) gegenüber &quot;addiere zwei
+ Fließkommazahlen&quot; (der Operator <code>+.</code> - bitte beachten Sie den Punkt
  am Ende!). Das funktioniert ähnlich mit anderen Operatoren.</p>
 </li><li><p>OCaml liefert den Wert des letzten Ausdrucks in einer Funktion
  zurück. Sie müssen also nicht wie in C <code>return</code> schreiben.</p>
@@ -295,7 +295,7 @@ OCaml an. Hoffentlich fragen Sie sich jetzt:</p>
 int            31 bit vorzeichenbehaftete Ganzzahl (ca. +/- 1 Milliarde) auf 32bit-Prozessoren,
                oder 63bit vorzeichenbehaftete Ganzzahl auf 64-bit Prozessoren
 float          IEEE Fließkommazahl doppelter Genauigkeit, äquivalent zu Cs double
-bool           Wahrheitswert, geschrieben als &#39;true&#39; oder &#39;false&#39;
+bool           Wahrheitswert, geschrieben als &quot;true&quot; oder &quot;false&quot;
 char           Ein 8bit-Zeichen
 string         Eine Zeichenkette
 unit           Geschrieben als ()</code></pre><p>OCaml benutzt ein Bit pro <code>int</code> intern, um die Speichernutzung
@@ -339,9 +339,9 @@ Fließkommazahl angeben, gibt Ocaml eine Fehlermeldung aus</p>
          int
 </span></code></pre>
 
-<p>(Im &#39;aus dem Französischen übersetzt&#39;-Englisch der OCaml-Fehlermeldungen
-bedeutet das &#39;du hast eine Fließkommazahl angegeben, aber ich habe eine
-Ganzzahl erwartet&#39;).</p>
+<p>(Im &quot;aus dem Französischen übersetzt&quot;-Englisch der OCaml-Fehlermeldungen
+bedeutet das &quot;du hast eine Fließkommazahl angegeben, aber ich habe eine
+Ganzzahl erwartet&quot;).</p>
 
       </div>
     </div>

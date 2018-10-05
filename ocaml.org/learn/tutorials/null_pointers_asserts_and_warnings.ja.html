@@ -149,13 +149,13 @@
 に、名前と年齢を質問することになった。ただひとつの問題は、なんらかの理由で、年齢を教えてくれない読者がいるということで - かたくなに、
 この欄をうめるのはいやだというのだ。あわれなデータベース管理者はどうしたらいい?</p>
 <p>前提として、年齢は<code>int</code>で表せるとする。この問題を解くのに、2つのやりかたが考えられる。もっとも一般的なのは(そして、もっとも<em>間違っている</em>)、
-なんらかの&#39;特別な&#39;値を、年齢の情報が得られなかったというのに割り当てる、ということだ。あー、そう、データが得られなかったら
+なんらかの&quot;特別な&quot;値を、年齢の情報が得られなかったというのに割り当てる、ということだ。あー、そう、データが得られなかったら
 age = -1
 、とかね。それ以外なら、データが得られたことにする(有効な値かは別として)。この手のやりかただと、後で困ったことになる。例えば、あなたのウェブサ
 イトのお客さんの年齢の、平均を求めることになったとする。ここでうっかり特別な値のことを忘れてしまったら、お客さんの平均年齢は、
 7.5才だってことになり、Webデザイナーに、長い単語は全て外して、そこかしこに原色を使えって言いつけることになる。</p>
-<p>一方、正しいやりかたは、年齢の欄におさめるものが、型&#39;int か
-null&#39;をもつようにすることだ。これは、年齢をおさめるためのSQLテーブルだ:</p>
+<p>一方、正しいやりかたは、年齢の欄におさめるものが、型&quot;int か
+null&quot;をもつようにすることだ。これは、年齢をおさめるためのSQLテーブルだ:</p>
 <pre class="SQL"><code class="SQL">create table users
 (
   userid serial,
@@ -169,7 +169,7 @@ null&#39;をもつようにすることだ。これは、年齢をおさめる�
 <p>OCamlは、nullの問題に、美しい解をもっている。簡単な多相ヴァリアント型を定義すれば(<code>Pervasives</code>で)よい:</p>
 <pre><code class="ocaml"><span class="governing">type</span> <span class="type">'a option</span> = None | Some <span class="keyword">of</span> 'a</code></pre>
 
-<p>&#39;nullポインタ&#39;は、<code>None</code>と書かれる。上の例の、年齢の型(nullもとれる<code>int</code>)は、<code>int option</code>である。[`int list`や`int binary_tree`でやるとどうだろう]</p>
+<p>&quot;nullポインタ&quot;は、<code>None</code>と書かれる。上の例の、年齢の型(nullもとれる<code>int</code>)は、<code>int option</code>である。[`int list`や`int binary_tree`でやるとどうだろう]</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Some 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int option = Some 3
 </span></code></pre>
 
@@ -188,28 +188,28 @@ null&#39;をもつようにすることだ。これは、年齢をおさめる�
 OCamlのデバッグコマンド群はそれほどには豊富ではない -
 Javaよりまし、Cと同じくらいで、Perlには及ばない。(例外について、あとでより詳しくふれる)</p>
 <p>まずはじめに、<code>assert</code>は式を引数にとり、例外をthrowする。この例外をcatchしないでいると(この例外をcatchするのはあまり賢明ではない、特に初心者には)、プログラムは停止し、エラーが起きたところのソースファイルと行数を出力する。例:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="ocaml-error-loc">'</span>Win32')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="string">&quot;Win32&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Assert_failure (&quot;&quot;, 1, 0).
 </span></code></pre>
 
 <p>(これをWin32で実行したら、当然、エラーはでない)</p>
 <p>どうもうまくいかないというとき、<code>assert false</code>を呼べば、そこでプログラムを停止できる。しかし、多分使いやすいのはこっちの・・・</p>
-<p><code>failwith &#39;error message&#39;</code>は<code>Failure</code>例外をthrowする。例外をcatchしないでいると、やはりプログラムは停止して、与えられたエラーメッセージをだす。<code>failwith</code>はしばしば、パターンマッチングでも使われる。現実的な例ではこうなる。</p>
+<p><code>failwith &quot;error message&quot;</code>は<code>Failure</code>例外をthrowする。例外をcatchしないでいると、やはりプログラムは停止して、与えられたエラーメッセージをだす。<code>failwith</code>はしばしば、パターンマッチングでも使われる。現実的な例ではこうなる。</p>
 <pre><code class="ocaml"><span class="keyword">match</span> <span class="ocaml-module">Sys</span>.os_type <span class="keyword">with</span>
-| 'Unix' | 'Cygwin' -&gt;   <span class="comment">(* code omitted *)</span>
-| 'Win32' -&gt;             <span class="comment">(* code omitted *)</span>
-| 'MacOS' -&gt;             <span class="comment">(* code omitted *)</span>
-| _ -&gt; <span class="keyword">failwith</span> 'this system is not supported'</code></pre>
+| <span class="string">&quot;Unix&quot;</span> | <span class="string">&quot;Cygwin&quot;</span> -&gt;   <span class="comment">(* code omitted *)</span>
+| <span class="string">&quot;Win32&quot;</span> -&gt;             <span class="comment">(* code omitted *)</span>
+| <span class="string">&quot;MacOS&quot;</span> -&gt;             <span class="comment">(* code omitted *)</span>
+| _ -&gt; <span class="keyword">failwith</span> <span class="string">&quot;this system is not supported&quot;</span></code></pre>
 
-<p>変なパターンマッチングがふたつ、この例にでてきている。いわゆる&#39;範囲指定パターン&#39;は、<code>&#39;Unix&#39;</code>にも<code>&#39;Cygwin&#39;</code>にもマッチさせるのに使う。<code>_</code>パターンは特に、&#39;その他なんでも&#39;にマッチさせるのに使う。</p>
+<p>変なパターンマッチングがふたつ、この例にでてきている。いわゆる&quot;範囲指定パターン&quot;は、<code>&quot;Unix&quot;</code>にも<code>&quot;Cygwin&quot;</code>にもマッチさせるのに使う。<code>_</code>パターンは特に、&quot;その他なんでも&quot;にマッチさせるのに使う。</p>
 <p>プログラムをデバッグしたいけど、私のように、デバッガはgdbじゃなきゃやだ、という人もいるだろう。それなら、警告をprintするものを関数の中にはさめばよい。そのためにはいくつかの方法がある。例えばこうだ。(注
 そのコードが赤く目立つようにした。)</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span>
   
 <span class="governing">let</span> () =
-  open_graph ' 640x480';
+  open_graph <span class="string">&quot; 640x480&quot;</span>;
   <span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
     <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
-    prerr_endline ('radius is ' ^ string_of_int radius);
+    prerr_endline (<span class="string">&quot;radius is &quot;</span> ^ string_of_int radius);
     set_color (<span class="keyword">if</span> i mod 2 = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
     fill_circle 320 240 radius
   <span class="keyword">done</span>;
@@ -220,10 +220,10 @@ Javaよりまし、Cと同じくらいで、Perlには及ばない。(例外に�
 <span class="governing">open</span> <span class="ocaml-module">Printf</span>
 
 <span class="governing">let</span> () =
-  open_graph ' 640x480';
+  open_graph <span class="string">&quot; 640x480&quot;</span>;
   <span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
     <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
-    eprintf 'radius is %d\n' radius;
+    eprintf <span class="string">&quot;radius is %d\n&quot;</span> radius;
     set_color (<span class="keyword">if</span> i mod 2 = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
     fill_circle 320 240 radius
   <span class="keyword">done</span>;

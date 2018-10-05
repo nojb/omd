@@ -194,7 +194,7 @@ garbage collectors. With reference counting, you can avoid many explicit
 calls to <code>close</code>/<code>closedir</code> in code. For example:</p>
 <pre class="perl"><code class="perl">foreach (@files)
 {
-  my $io = new IO::File &#39;&lt; $_&#39; or die;
+  my $io = new IO::File &quot;&lt; $_&quot; or die;
   # read from $io
 }</code></pre><p>This Perl code iterates over a list of <code>@files</code>, opening and reading
 each one. There is no need to close the <code>$io</code> file handle at the end of
@@ -244,7 +244,7 @@ before quitting:</p>
   
 <span class="governing">let</span> () =
   <span class="ocaml-module">Random</span>.self_init ();
-  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480';
+  <span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span>;
   <span class="keyword">for</span> x = 0 <span class="keyword">to</span> 640 <span class="keyword">do</span>
     <span class="governing">let </span><span class="ocaml-variable">r</span> = 4.0 *. (float_of_int x) /. 640.0 <span class="governing">in</span>
     <span class="keyword">for</span> i = 0 <span class="keyword">to</span> 39 <span class="keyword">do</span>
@@ -290,11 +290,11 @@ causes the GC to print a message at the start of every major collection.</p>
 <h2 id="Finalisation-and-the-Weak-module">Finalisation and the Weak module</h2><p>We can write a function called a <strong>finaliser</strong> which is called when an
 object is about to be freed by the GC.</p>
 <p>The <code>Weak</code> module lets us create so-called weak pointers. A **weak
-pointer** is best defined by comparing it to a &#39;normal pointer&#39;. When we
+pointer** is best defined by comparing it to a &quot;normal pointer&quot;. When we
 have an ordinary OCaml object, we reference that object through a name
 (eg. <code>let name = ... in</code>) or through another object. The garbage
 collector sees that we have a reference to that object and won&#39;t collect
-it. That&#39;s what you might call a &#39;normal pointer&#39;. If, however, you hold
+it. That&#39;s what you might call a &quot;normal pointer&quot;. If, however, you hold
 a weak pointer or weak reference to an object, then you hint to the
 garbage collector that it may collect the object at any time. (Not
 necessarily that it <em>will</em> collect the object). Some time later, when
@@ -307,7 +307,7 @@ number of large user records in a file on disk. This is far too much
 data to be loaded into memory all at once, and anyway other programs
 might access the data on the disk, so we need to lock individual records
 when we hold copies of them in memory.</p>
-<p>The <em>public</em> interface to our &#39;in-memory object database cache&#39; is going
+<p>The <em>public</em> interface to our &quot;in-memory object database cache&quot; is going
 to be just two functions:</p>
 <pre><code class="ocaml"><span class="governing">type</span> <span class="type">record</span> = { <span class="keyword">mutable</span> name : string; <span class="keyword">mutable</span> address : string }
 <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">get_record</span> : int -&gt; record
@@ -384,7 +384,7 @@ of records in advance:</p>
   
 <span class="comment">(* On-disk file. *)</span>
 <span class="governing">let </span><span class="ocaml-variable">diskfile</span> =
-  <span class="ocaml-module">Unix</span>.openfile 'users.bin' [ <span class="ocaml-module">Unix</span>.O_RDWR; <span class="ocaml-module">Unix</span>.O_CREAT ] 0o666</code></pre>
+  <span class="ocaml-module">Unix</span>.openfile <span class="string">&quot;users.bin&quot;</span> [ <span class="ocaml-module">Unix</span>.O_RDWR; <span class="ocaml-module">Unix</span>.O_CREAT ] 0o666</code></pre>
 
 <p>Download <a href="../../img/users.bin.gz">users.bin.gz</a> and decompress it before
 running the program.</p>
@@ -403,7 +403,7 @@ pointer).</p>
   
 <span class="comment">(* The finaliser function. *)</span>
 <span class="governing">let</span> <span class="ocaml-function">finaliser</span> <span class="ocaml-variable">n record </span>=
-  printf '*** objcache: finalising record %d\n%!' n;
+  printf <span class="string">&quot;*** objcache: finalising record %d\n%!&quot;</span> n;
   write_record record n diskfile;
   unlock_record n diskfile
   
@@ -411,10 +411,10 @@ pointer).</p>
 <span class="governing">let</span> <span class="ocaml-function">get_record</span> <span class="ocaml-variable">n </span>=
   <span class="keyword">match</span> <span class="ocaml-module">Weak</span>.get cache n <span class="keyword">with</span>
   | Some record -&gt;
-      printf '*** objcache: fetching record %d from memory cache\n%!' n;
+      printf <span class="string">&quot;*** objcache: fetching record %d from memory cache\n%!&quot;</span> n;
       record
   | None -&gt;
-      printf '*** objcache: loading record %d from disk\n%!' n;
+      printf <span class="string">&quot;*** objcache: loading record %d from disk\n%!&quot;</span> n;
       <span class="governing">let </span><span class="ocaml-variable">record</span> = new_record () <span class="governing">in</span>
       <span class="ocaml-module">Gc</span>.finalise (finaliser n) record;
       lock_record n diskfile;
@@ -453,7 +453,7 @@ increasing order of difficulty:</p>
  hashtables.]</p>
 </li><li><p>Add support for <strong>variable-length records</strong>.</p>
 </li><li><p>Make the underlying file representation a <strong>DBM-style hash</strong>.</p>
-</li><li><p>Provide a general-purpose cache fronting a &#39;users&#39; table in your
+</li><li><p>Provide a general-purpose cache fronting a &quot;users&quot; table in your
  choice of <strong>relational database</strong> (with locking).</p>
 </li></ol>
 

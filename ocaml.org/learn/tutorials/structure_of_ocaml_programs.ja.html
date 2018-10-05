@@ -108,8 +108,8 @@
       <nav id="nav-secondary">
         <ul class="nav nav-list">
           <li class="nav-header"><a href="#">Contents</a></li>
-          <ul><li><a href="#39-39">ローカルな&#39;変数&#39; (<em>本当は</em>ローカルな式)</a>
-</li><li><a href="#39-39_1">グローバルな&#39;変数&#39; (<em>本当は</em>グローバルな式)</a>
+          <ul><li><a href="#quot-quot">ローカルな&quot;変数&quot; (<em>本当は</em>ローカルな式)</a>
+</li><li><a href="#quot-quot_1">グローバルな&quot;変数&quot; (<em>本当は</em>グローバルな式)</a>
 </li><li><a href="#Let">Let 束縛</a>
 </li><li><a href="#">参照:　本当の変数</a>
 </li><li><a href="#">入れ子関数</a>
@@ -117,7 +117,7 @@
 </li><li><a href="#Pervasives">Pervasives モジュール</a>
 </li><li><a href="#">モジュールをリネームする</a>
 </li><li><a href="#"><code>;;</code>と<code>;</code>、使ったり、削ったり。</a>
-</li><li><a href="#OCaml-C-C-39-39">OCamlの、何が式か、の定義は、Cよりもすこし広い。Cには、&#39;文&#39;という概念がある</a>
+</li><li><a href="#OCaml-C-C-quot-quot">OCamlの、何が式か、の定義は、Cよりもすこし広い。Cには、&quot;文&quot;という概念がある</a>
 </li><li><a href="#">まとめよう: 実物のコード</a>
 </li></ul>
 
@@ -157,7 +157,7 @@
 <p>さて、ここからは、俯瞰的に、実際のOCamlプログラムを見ていくことにしよう。ここで述べるのは、ローカル＆グローバルな定義、<code>;;</code>と<code>;</code>の
 使い分け、モジュール、入れ子関数、そして参照についてである。進むにつれ、今まで見たことがなくて意味のわからないOCamlの概念が、たくさん出てく
 るだろう。今はつぶさにわからなくてもよい。そのかわり、大まかな形でプログラムを見ることと、説明の主眼点をつかむことに、集中してほしい。</p>
-<h2 id="39-39">ローカルな&#39;変数&#39; (<em>本当は</em>ローカルな式)</h2>
+<h2 id="quot-quot">ローカルな&quot;変数&quot; (<em>本当は</em>ローカルな式)</h2>
 
 <p>では、<code>average</code>関数にローカルな変数を加えたものを、Cで見てみよう。(先にあげた、最初の定義と比べてみよ)</p>
 <pre class="C"><code class="C">double average (double a, double b)
@@ -181,10 +181,10 @@
     x +. x ** 2.</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : float -&gt; float -&gt; float = &lt;fun&gt;
 </span></code></pre>
 
-<p>２つめのほうがたぶん速い(しかし、ほとんどのコンパイラは、この処置を&#39;共通部分式の削除&#39;でしてくれるはずだ)、それに、明らかに読みやすい。２つめの例の<code>x</code>は<code>a +. b</code>の略にすぎない。</p>
-<h2 id="39-39_1">グローバルな&#39;変数&#39; (<em>本当は</em>グローバルな式)</h2>
+<p>２つめのほうがたぶん速い(しかし、ほとんどのコンパイラは、この処置を&quot;共通部分式の削除&quot;でしてくれるはずだ)、それに、明らかに読みやすい。２つめの例の<code>x</code>は<code>a +. b</code>の略にすぎない。</p>
+<h2 id="quot-quot_1">グローバルな&quot;変数&quot; (<em>本当は</em>グローバルな式)</h2>
 
-<p>グローバルな名前の定義は、トップレベルで行われる。さきほどのローカルな&#39;変数&#39;と同じく、
+<p>グローバルな名前の定義は、トップレベルで行われる。さきほどのローカルな&quot;変数&quot;と同じく、
 これらは本当の変数ではまるでなく、略名にすぎない。
 この例は、実際にあったものだ(省略をしたが)。</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">html</span> =
@@ -198,11 +198,11 @@
   <span class="ocaml-prompt">;;</span><br/>
 <span class="governing">let</span> <span class="ocaml-function">main</span> <span class="ocaml-variable">() </span>=
   <span class="comment">(* code omitted *)</span>
-  factory#add_item 'Cut' ~key:_X ~callback: html#cut
+  factory#add_item <span class="string">&quot;Cut&quot;</span> ~key:_X ~callback: html#cut
   ;;</code></pre>
 
 <p>この実際にあったコードで、<code>html</code>は、HTML作成ウィジェット(lablgtkライブラリのオブジェクト)であり、プログラムの冒頭で、一度だけ作られている。それが最初の<code>let html =</code>文である。それから、後の関数で2、3度参照されている。</p>
-<p>気をつけてほしいのは、上のコードの<code>html</code>はあくまで名前で、Cでいうようなグローバルな変数と、対応していないことだ。あるいは、他の手続き型言語のそれともちがう。領域を確保しておらず、&#39;<code>html</code>ポインタ&#39;を&#39;格納&#39;していないのだ。<code>html</code>への代入はできないので、例えば、再代入で他のウィジェットへのポインタになったりもしない。次の節で、参照について説明する。それが本当の変数である。</p>
+<p>気をつけてほしいのは、上のコードの<code>html</code>はあくまで名前で、Cでいうようなグローバルな変数と、対応していないことだ。あるいは、他の手続き型言語のそれともちがう。領域を確保しておらず、&quot;<code>html</code>ポインタ&quot;を&quot;格納&quot;していないのだ。<code>html</code>への代入はできないので、例えば、再代入で他のウィジェットへのポインタになったりもしない。次の節で、参照について説明する。それが本当の変数である。</p>
 <h2 id="Let">Let 束縛</h2>
 
 <p><code>let ...</code>を使う、というとき、それがトップレベル(グローバル)か、関数内か、にかかわらず、<strong>let束縛</strong>をする、と呼ぶことがある。</p>
@@ -309,14 +309,14 @@ C++ ではネストした関数はサポートしていない。)
 ちなみに、最初の例で呼んでいるのは、<code>open_graph</code>で、２つめの例では、<code>Graphics.open_graph</code>だ。</p>
 <pre><code class="ocaml"><span class="comment">(* To compile this example: ocamlc graphics.cma grtest1.ml -o grtest1 *)</span>
 <span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
-open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
   <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
   set_color (<span class="keyword">if</span> i mod 2 = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
   fill_circle 320 240 radius
 <span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ()<span class="ocaml-prompt">;;</span><br/>
 <span class="comment">(* To compile this example: ocamlc graphics.cma grtest2.ml -o grtest2 *)</span>
 
-<span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/>
+<span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/>
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
   <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
   <span class="keyword">else</span>
@@ -339,22 +339,22 @@ then-else、そして再帰だ。これらについては後で触れる。と�
 がわかるはずだ。</p>
 <h2 id="Pervasives">Pervasives モジュール</h2>
 
-<p>モジュールで、ひとつだけ、&#39;<code>open</code>&#39;する必要がないものがある。それは、<code>Pervasives</code>モジュールである。(目を通すとよい。
+<p>モジュールで、ひとつだけ、&quot;<code>open</code>&quot;する必要がないものがある。それは、<code>Pervasives</code>モジュールである。(目を通すとよい。
 <code>/usr/lib/ocaml/pervasives.mli</code>)<code>Pervasives</code>モジュールのすべてのシンボルは、自動で、OCamlプログラムにインポートされる。</p>
 <h2 id="">モジュールをリネームする</h2>
 
 <p>こんなときはどうしたらよいだろう?<code>Graphics</code>モジュールに使いたいシンボルがあるが、まるごとインポートするのは嫌で、かといって<code>Graphics</code>をいちいちタイプするのも面倒だ、というとき。リネームという手がある。</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Gr</span> = <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
-<span class="ocaml-module">Gr</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gr</span>.fill_circle 320 240 240<span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
+<span class="ocaml-module">Gr</span>.open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gr</span>.fill_circle 320 240 240<span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
 
 <p>実はこれが本当に便利なのは、インポートを、入れ子になったモジュールに対してやりたいときだ。(モジュールは、入れ子入れ子となっていることがままある。)そんなとき、入れ子になったモジュール名のフルパスを、いちいちタイプせずにすむ。</p>
 <h2 id=""><code>;;</code>と<code>;</code>、使ったり、削ったり。</h2>
 
 <p><strong>This section is not up to date with the English one</strong></p>
-<p>ここで触れるのは、非常に大切なことである。<code>;;</code>を使うべきとき、<code>;</code>を使うべきとき、どちらも使うべきでないとき、それはいつか?これは、&#39;コツをつかむ&#39;までは、わかりにくい。著者も、OCamlを勉強中に、ずいぶんてこずった。</p>
+<p>ここで触れるのは、非常に大切なことである。<code>;;</code>を使うべきとき、<code>;</code>を使うべきとき、どちらも使うべきでないとき、それはいつか?これは、&quot;コツをつかむ&quot;までは、わかりにくい。著者も、OCamlを勉強中に、ずいぶんてこずった。</p>
 <p>ルール1。<code>;;</code>を使うべきときとは、コードのトップレベルにある文を区切るときだ。関数定義の中のときや、他の文のときは、いらない。</p>
 <p>先ほどのgraphicsの例の、2つめのやつを見てみよう。</p>
-<pre><code class="ocaml"><span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/>
+<pre><code class="ocaml"><span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/>
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
   <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
   <span class="keyword">else</span>
@@ -367,13 +367,13 @@ then-else、そして再帰だ。これらについては後で触れる。と�
 </li><li><p><code>open</code>キーワードの前</p>
 </li><li><p><code>type</code>キーワードの前</p>
 </li><li><p>ファイルの最後の最後</p>
-</li><li><p>少々の(非常にまれな)場合で、OCamlが&#39;推測して&#39;、次に新しい文のはじまりがくることや、今の文が続くのではないということが、わかるとき。</p>
+</li><li><p>少々の(非常にまれな)場合で、OCamlが&quot;推測して&quot;、次に新しい文のはじまりがくることや、今の文が続くのではないということが、わかるとき。</p>
 </li></ul>
 
 <p>これは、ちゃんと動くコードでありながら、<code>;;</code>を極限まで削ってみたものだ。</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Random</span>                   <span class="comment">(* ;; *)</span>
 <span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
-self_init ()<span class="ocaml-prompt">;;</span><br/>open_graph ' 640x480'         <span class="comment">(* ;; *)</span>
+self_init ()<span class="ocaml-prompt">;;</span><br/>open_graph <span class="string">&quot; 640x480&quot;</span>         <span class="comment">(* ;; *)</span>
 
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
   <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
@@ -393,7 +393,7 @@ read_line ()                  <span class="comment">(* ;; *)</span></code></pre>
 
 <p>ルール3と4は、一重の<code>;</code>についてだ。こいつは、<code>;;</code>とは完全に別物だ。セミコロンひとつの<code>;</code>は、
 シークエンスポイントということになっている。言ってみれば、これは、C、C++、Java、Perlのセミコロンひとつと全く同じことである。意味
-は、&#39;まずは、このポイントの前にあることをやる。前のが終わってから、後にあることをやる。&#39;である。
+は、&quot;まずは、このポイントの前にあることをやる。前のが終わってから、後にあることをやる。&quot;である。
 ご存じなかったろう。</p>
 <p>ルール3。<code>let ... in</code>は文と思って、その後ろに一重の;を置かない。</p>
 <p>ルール4。他のすべての文で、コードのブロック内にあるものには、一重の<code>;</code>をつける。ただし一番最後のはのぞく。</p>
@@ -408,7 +408,7 @@ read_line ()                  <span class="comment">(* ;; *)</span></code></pre>
 <p>上のコードでただひとつ、<code>;</code>を置いてもよいと思われるのは、<code>Graphics. plot x y</code>の後ろである。しかし、これはブロックの最後の文になっているから、ルール4で、そこには置かない。</p>
 <p><code>;</code>は演算子で、<code>+</code>みたいなものだ。厳密には<code>+</code>と同じではないけど、概念としては同じだ。<code>+</code>は型<code>int -&gt; int -&gt; int</code>をもち、2つのintをとり、1つのint(和)を返す。<code>;</code>は型<code>unit -&gt; &#39;b -&gt; &#39;b</code>をもち、2つの値をとり、単純に2番目のを返す。むしろ、Cの<code>,</code>(コンマ)演算子みたいだ。
 <code>a ; b ; c; d</code>と、簡単に書ける。<code>a + b + c + d</code>と書くようなものだ。</p>
-<p>ここで、あまり語られることのない、ひとつの&#39;悟り&#39;がある -
+<p>ここで、あまり語られることのない、ひとつの&quot;悟り&quot;がある -
 OCamlでは、ほとんどすべてが式だ。
 <code>if/then/else</code>は式だ。<code>a ; b</code>は式だ。<code>match foo with ...</code>は式だ。以下のコードは、完全に正しい(そして、すべて同じことをやっている):</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= <span class="keyword">if</span> b <span class="keyword">then</span> x+y <span class="keyword">else</span> x+0
@@ -418,10 +418,10 @@ OCamlでは、ほとんどすべてが式だ。
   <span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">x b y </span>= x + (<span class="governing">let </span><span class="ocaml-variable">_</span> = y + 3 <span class="governing">in</span> (); <span class="keyword">if</span> b <span class="keyword">then</span> y <span class="keyword">else</span> 0)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; bool -&gt; int -&gt; int = &lt;fun&gt;
 </span></code></pre>
 
-<p>特に最後のには注をしておく。<code>;</code>が、ふたつの文を&#39;つなぐ&#39;演算子として使われている。OCamlのすべての関数は、こう表現できる:</p>
+<p>特に最後のには注をしておく。<code>;</code>が、ふたつの文を&quot;つなぐ&quot;演算子として使われている。OCamlのすべての関数は、こう表現できる:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">name</span> <span class="ocaml-variable">[parameters] </span>= expression</code></pre>
 
-<h2 id="OCaml-C-C-39-39">OCamlの、何が式か、の定義は、Cよりもすこし広い。Cには、&#39;文&#39;という概念がある</h2><p>しかし、Cの文はすべて、OCamlでは、実は式にすぎない(<code>;</code>演算子で結合されている)</p>
+<h2 id="OCaml-C-C-quot-quot">OCamlの、何が式か、の定義は、Cよりもすこし広い。Cには、&quot;文&quot;という概念がある</h2><p>しかし、Cの文はすべて、OCamlでは、実は式にすぎない(<code>;</code>演算子で結合されている)</p>
 <p>ひとつ、<code>;</code>が<code>+</code>と違うところは、<code>+</code>は関数のように参照できることだ。例えば、<code>sum_list</code>関数を定義して、intのリストの和を求められる。:</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">sum_list</span> = <span class="ocaml-module">List</span>.fold_left ( + ) 0</code></pre>
 
@@ -454,20 +454,20 @@ OCamlでは、ほとんどすべてが式だ。
 
 <p>2つめの例:グローバルな名前を、トップレベルに、長々と並べただけだ。注意として、作者は<code>;;</code>をすべて削っている。これはルール2による。</p>
 <pre><code class="ocaml"><span class="comment">(* Second snippet *)</span>
-<span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:500 ~height:300 ~title:'editor' ()
+<span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:500 ~height:300 ~title:<span class="string">&quot;editor&quot;</span> ()
 <span class="governing">let </span><span class="ocaml-variable">vbox</span> = <span class="ocaml-module">GPack</span>.vbox ~packing:window#add ()
 
 <span class="governing">let </span><span class="ocaml-variable">menubar</span> = <span class="ocaml-module">GMenu</span>.menu_bar ~packing:vbox#pack ()
 <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory menubar
 <span class="governing">let </span><span class="ocaml-variable">accel_group</span> = factory#accel_group
-<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu 'File'
-<span class="governing">let </span><span class="ocaml-variable">edit_menu</span> = factory#add_submenu 'Edit'
+<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu <span class="string">&quot;File&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">edit_menu</span> = factory#add_submenu <span class="string">&quot;Edit&quot;</span>
 
 <span class="governing">let </span><span class="ocaml-variable">hbox</span> = <span class="ocaml-module">GPack</span>.hbox ~packing:vbox#add ()
 <span class="governing">let </span><span class="ocaml-variable">editor</span> = <span class="keyword">new</span> editor ~packing:hbox#add ()
 <span class="governing">let </span><span class="ocaml-variable">scrollbar</span> = <span class="ocaml-module">GRange</span>.scrollbar `VERTICAL ~packing:hbox#pack ()</code></pre>
 
-<p>3つめの例:　作者はインポートをして、<code>GdkKeysyms</code>モジュールのシンボルを、まるごと取り込んでいる。さて、見慣れないlet束縛をしている。<code>let _ = expression</code>とは、&#39;式の値を計算する(すべての副作用を伴う)、しかし結果は捨てる&#39;ことを意味する。この場合は、&#39;式の値を計算する&#39;とは、<code>Main.main ()</code>を実行するということで、これはGtkのメインループである。その副作用として、ウィンドウが画面にポンとでてきて、アプリケーション全体が実行される。
+<p>3つめの例:　作者はインポートをして、<code>GdkKeysyms</code>モジュールのシンボルを、まるごと取り込んでいる。さて、見慣れないlet束縛をしている。<code>let _ = expression</code>とは、&quot;式の値を計算する(すべての副作用を伴う)、しかし結果は捨てる&quot;ことを意味する。この場合は、&quot;式の値を計算する&quot;とは、<code>Main.main ()</code>を実行するということで、これはGtkのメインループである。その副作用として、ウィンドウが画面にポンとでてきて、アプリケーション全体が実行される。
 <code>Main.main()</code>の結果は不明であり -
 たぶん返り値は<code>unit</code>だろうが、確かめていない -
 アプリケーションが最後に終了するまで、帰ってこない。</p>
@@ -478,19 +478,19 @@ OCamlでは、ほとんどすべてが式だ。
 <span class="governing">let</span> () =
   window#connect#destroy ~callback:<span class="ocaml-module">Main</span>.quit;
   <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory file_menu ~accel_group <span class="governing">in</span>
-  factory#add_item '<span class="ocaml-module">Open</span>...' ~key:_O ~callback:editor#open_file;
-  factory#add_item 'Save' ~key:_S ~callback:editor#save_file;
-  factory#add_item 'Save <span class="keyword">as</span>...' ~callback:editor#save_dialog;
+  factory#add_item <span class="string">&quot;<span class="ocaml-module">Open</span>...&quot;</span> ~key:_O ~callback:editor#open_file;
+  factory#add_item <span class="string">&quot;Save&quot;</span> ~key:_S ~callback:editor#save_file;
+  factory#add_item <span class="string">&quot;Save <span class="keyword">as</span>...&quot;</span> ~callback:editor#save_dialog;
   factory#add_separator ();
-  factory#add_item 'Quit' ~key:_Q ~callback:window#destroy;
+  factory#add_item <span class="string">&quot;Quit&quot;</span> ~key:_Q ~callback:window#destroy;
   <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory edit_menu ~accel_group <span class="governing">in</span>
-  factory#add_item 'Copy' ~key:_C ~callback:editor#text#copy_clipboard;
-  factory#add_item 'Cut' ~key:_X ~callback:editor#text#cut_clipboard;
-  factory#add_item 'Paste' ~key:_V ~callback:editor#text#paste_clipboard;
+  factory#add_item <span class="string">&quot;Copy&quot;</span> ~key:_C ~callback:editor#text#copy_clipboard;
+  factory#add_item <span class="string">&quot;Cut&quot;</span> ~key:_X ~callback:editor#text#cut_clipboard;
+  factory#add_item <span class="string">&quot;Paste&quot;</span> ~key:_V ~callback:editor#text#paste_clipboard;
   factory#add_separator ();
-  factory#add_check_item 'Word wrap' ~active:false
+  factory#add_check_item <span class="string">&quot;Word wrap&quot;</span> ~active:false
     ~callback:editor#text#set_word_wrap;
-  factory#add_check_item 'Read only' ~active:false
+  factory#add_check_item <span class="string">&quot;Read only&quot;</span> ~active:false
     ~callback:(<span class="keyword">fun</span> b -&gt; editor#text#set_editable (not b));
   window#add_accel_group accel_group;
   editor#text#event#connect#button_press

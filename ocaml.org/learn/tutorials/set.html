@@ -177,19 +177,19 @@
 
 <p>Alternatively if we know an element to start with we can create a set
 like</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="ocaml-module">SS</span>.singleton <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="ocaml-module">SS</span>.singleton <span class="string">&quot;hello&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : SS.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>To add some elements to the the set we can do.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> =
-    <span class="ocaml-module">List</span>.fold_right <span class="ocaml-module">SS</span>.add [<span class="ocaml-error-loc">'</span>hello'; 'world'; 'community'; 'manager';
-                            'stuff'; 'blue'; 'green'] s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">List</span>.fold_right <span class="ocaml-module">SS</span>.add [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>; <span class="string">&quot;community&quot;</span>; <span class="string">&quot;manager&quot;</span>;
+                            <span class="string">&quot;stuff&quot;</span>; <span class="string">&quot;blue&quot;</span>; <span class="string">&quot;green&quot;</span>] s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : SS.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>Now if we are playing around with sets we will probably want to see what
 is in the set that we have created. To do this we can write a function
 that will print the set out.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Prints a <span class="keyword">new</span> line '\n' after each string is printed *)</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Prints a <span class="keyword">new</span> line <span class="string">&quot;\n&quot;</span> after each string is printed *)</span>
   <span class="governing">let</span> <span class="ocaml-function">print_set</span> <span class="ocaml-variable">s </span>= 
      <span class="ocaml-module">SS</span>.iter print_endline s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_set : SS.t -&gt; unit = &lt;fun&gt;
 </span></code></pre>
@@ -210,14 +210,16 @@ longer than 5 characters.</p>
 
 <p>If we want to check and see if an element is in the set it might look
 like this.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">SS</span>.mem <span class="ocaml-error-loc">'</span>hello' s2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">SS</span>.mem <span class="string">&quot;hello&quot;</span> s2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
 <p>The Set module also provides the set theoretic operations union,
 intersection and difference. For example, the difference of the original
 set and the set with short strings (≤ 5 characters) is the set of long
 strings:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_set (<span class="ocaml-module">SS</span>.diff s s2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_set (<span class="ocaml-module">SS</span>.diff s s2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">community
+manager
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Note that the Set module provides a purely functional data structure:

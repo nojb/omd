@@ -258,12 +258,12 @@ pointer assignment (or writing to the pointer&#39;s designated memory
 location) are easily defined. We define dereferencing as a prefix
 operator named <code>!^</code>, and assigment as the infix <code>^:=</code>.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">( !^ )</span> = <span class="keyword">function</span>
-    | Null -&gt; invalid_arg <span class="ocaml-error-loc">'</span>Attempt <span class="keyword">to</span> dereference the null pointer'
-    | Pointer r -&gt; !r</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | Null -&gt; invalid_arg <span class="string">&quot;Attempt <span class="keyword">to</span> dereference the null pointer&quot;</span>
+    | Pointer r -&gt; !r</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val ( !^ ) : 'a pointer -&gt; 'a = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">( ^:= )</span> <span class="ocaml-variable">p v </span>=
     <span class="keyword">match</span> p <span class="keyword">with</span>
-    | Null -&gt; invalid_arg <span class="ocaml-error-loc">'</span>Attempt <span class="keyword">to</span> assign the null pointer'
-    | Pointer r -&gt; r := v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | Null -&gt; invalid_arg <span class="string">&quot;Attempt <span class="keyword">to</span> assign the null pointer&quot;</span>
+    | Pointer r -&gt; r := v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val ( ^:= ) : 'a pointer -&gt; 'a -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>Now we define the allocation of a new pointer initialized to point to a
@@ -273,9 +273,8 @@ given value:</p>
 
 <p>For instance, let&#39;s define and then assign a pointer to an integer:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">p</span> = new_pointer 0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val p : int pointer = Pointer {contents = 0}
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">p <span class="ocaml-error-loc">^:=</span> 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value ^:=
-Hint: Did you mean :=?
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">!^</span>p</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value !^
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">p ^:= 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">!^p</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 1
 </span></code></pre>
 
 <h2 id="Integer-Lists">Integer Lists</h2><p>Now we can define lists using explicit pointers as in usual imperative
@@ -294,8 +293,8 @@ associated destructors.</p>
     c.hd &lt;- x;
     c.tl &lt;- l;
     (new_pointer c : ilist)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val cons : int -&gt; ilist -&gt; ilist = &lt;fun&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">hd</span> <span class="ocaml-variable">(l : ilist) </span>= <span class="ocaml-error-loc">!^</span>l.hd</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value !^
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">tl</span> <span class="ocaml-variable">(l : ilist) </span>= <span class="ocaml-error-loc">!^</span>l.tl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value !^
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">hd</span> <span class="ocaml-variable">(l : ilist) </span>= !^l.hd</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val hd : ilist -&gt; int = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">tl</span> <span class="ocaml-variable">(l : ilist) </span>= !^l.tl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val tl : ilist -&gt; ilist = &lt;fun&gt;
 </span></code></pre>
 
 <p>We can now write all kind of classical algorithms, based on pointers
@@ -307,21 +306,26 @@ first:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Physical append *)</span>
   <span class="governing">let</span> <span class="ocaml-function">append</span> <span class="ocaml-variable">(l1 : ilist) (l2 : ilist) </span>=
     <span class="governing">let </span><span class="ocaml-variable">temp</span> = <span class="keyword">ref</span> l1 <span class="governing">in</span>
-    <span class="keyword">while</span> <span class="ocaml-error-loc">tl</span> !temp &lt;&gt; Null <span class="keyword">do</span>
+    <span class="keyword">while</span> tl !temp &lt;&gt; Null <span class="keyword">do</span>
       temp := tl !temp
     <span class="keyword">done</span>;
-    !^ !temp.tl &lt;- l2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value tl
+    !^ !temp.tl &lt;- l2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val append : ilist -&gt; ilist -&gt; unit = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* An example: *)</span>
   <span class="governing">let </span><span class="ocaml-variable">l1</span> = cons 1 (cons 2 Null)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l1 : ilist =
   Pointer
    {contents = {hd = 1; tl = Pointer {contents = {hd = 2; tl = Null}}}}
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l2</span> = cons 3 Null</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l2 : ilist = Pointer {contents = {hd = 3; tl = Null}}
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">append</span> l1 l2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value append
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">append l1 l2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>The lists <code>l1</code> and <code>l2</code> are effectively catenated:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">l1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ilist =
-Pointer {contents = {hd = 1; tl = Pointer {contents = {hd = 2; tl = Null}}}}
+Pointer
+ {contents =
+   {hd = 1;
+    tl =
+     Pointer
+      {contents = {hd = 2; tl = Pointer {contents = {hd = 3; tl = Null}}}}}}
 </span></code></pre>
 
 <p>Just a nasty side effect of physical list concatenation: <code>l1</code> now
@@ -331,12 +335,17 @@ argument. In other words, the value of a list data now depends on its
 history, that is on the sequence of function calls that use the value.
 This strange behaviour leads to a lot of difficulties when explicitly
 manipulating pointers. Try for instance, the seemingly harmless:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">append</span> l1 l1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value append
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">append l1 l1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Then evaluate <code>l1</code>:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">l1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ilist =
-Pointer {contents = {hd = 1; tl = Pointer {contents = {hd = 2; tl = Null}}}}
+Pointer
+ {contents =
+   {hd = 1;
+    tl =
+     Pointer
+      {contents = {hd = 2; tl = Pointer {contents = {hd = 3; tl = &lt;cycle&gt;}}}}}}
 </span></code></pre>
 
 <h2 id="Polymorphic-lists">Polymorphic lists</h2><p>To go beyond Pascal type system, we define polymorphic lists using
@@ -351,14 +360,14 @@ and 'a cell = { mutable hd : 'a pointer; mutable tl : 'a lists; }
     c.hd &lt;- new_pointer x;
     c.tl &lt;- l;
     (new_pointer c : 'a lists)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val cons : 'a -&gt; 'a lists -&gt; 'a lists = &lt;fun&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">hd</span> <span class="ocaml-variable">(l : 'a lists) </span>= <span class="ocaml-error-loc">!^</span>l.hd</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value !^
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">tl</span> <span class="ocaml-variable">(l : 'a lists) </span>= <span class="ocaml-error-loc">!^</span>l.tl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value !^
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">hd</span> <span class="ocaml-variable">(l : 'a lists) </span>= !^l.hd</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val hd : 'a lists -&gt; 'a pointer = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">tl</span> <span class="ocaml-variable">(l : 'a lists) </span>= !^l.tl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val tl : 'a lists -&gt; 'a lists = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">append</span> <span class="ocaml-variable">(l1 : 'a lists) (l2 : 'a lists) </span>=
     <span class="governing">let </span><span class="ocaml-variable">temp</span> = <span class="keyword">ref</span> l1 <span class="governing">in</span>
-    <span class="keyword">while</span> <span class="ocaml-error-loc">tl</span> !temp &lt;&gt; Null <span class="keyword">do</span>
+    <span class="keyword">while</span> tl !temp &lt;&gt; Null <span class="keyword">do</span>
       temp := tl !temp
     <span class="keyword">done</span>;
-    !^ !temp.tl &lt;- l2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value tl
+    !^ !temp.tl &lt;- l2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val append : 'a lists -&gt; 'a lists -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
       </div>

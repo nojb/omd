@@ -145,10 +145,10 @@
  
 <span class="governing">let </span><span class="ocaml-variable">ocaml_local_dir</span> =
   <span class="keyword">try</span>
-    <span class="ocaml-module">Sys</span>.getenv 'OCAMLDIR'
+    <span class="ocaml-module">Sys</span>.getenv <span class="string">&quot;OCAMLDIR&quot;</span>
   <span class="keyword">with</span> Not_found -&gt;
-    <span class="keyword">failwith</span> 'OCAMLDIR environment variable must be set; usually that's \
-              the directory where, <span class="keyword">for</span> instance, camlinternalMod reside.'
+    <span class="keyword">failwith</span> <span class="string">&quot;OCAMLDIR environment variable must be set; usually that's \
+              the directory where, <span class="keyword">for</span> instance, camlinternalMod reside.&quot;</span>
  
 <span class="governing">let</span> <span class="ocaml-function">local</span> <span class="ocaml-variable">dir </span>= <span class="ocaml-module">Filename</span>.concat ocaml_local_dir dir
  
@@ -169,14 +169,14 @@
 }
  
 <span class="governing">let </span><span class="ocaml-variable">system_lib_dir</span> =
-  <span class="keyword">if</span> bits64 <span class="keyword">then</span> '/usr/lib64' <span class="keyword">else</span> '/usr/lib'
+  <span class="keyword">if</span> bits64 <span class="keyword">then</span> <span class="string">&quot;/usr/lib64&quot;</span> <span class="keyword">else</span> <span class="string">&quot;/usr/lib&quot;</span>
  
 <span class="governing">let </span><span class="ocaml-variable">zlib_description</span> = {
-    ld_name = 'zlib';
-    ld_have_lib = Some '-DHAVE_ZLIB';
-    ld_lib = '-lz';
-    ld_dir = '-L' ^ system_lib_dir;
-    ld_include = '-L/usr/<span class="governing">include</span>';
+    ld_name = <span class="string">&quot;zlib&quot;</span>;
+    ld_have_lib = Some <span class="string">&quot;-DHAVE_ZLIB&quot;</span>;
+    ld_lib = <span class="string">&quot;-lz&quot;</span>;
+    ld_dir = <span class="string">&quot;-L&quot;</span> ^ system_lib_dir;
+    ld_include = <span class="string">&quot;-L/usr/<span class="governing">include</span>&quot;</span>;
     ld_c_headers = [];
     ld_static = true
   }
@@ -184,33 +184,33 @@
 <span class="governing">let</span> <span class="ocaml-function">clibdep</span> <span class="ocaml-variable">ld </span>=
   <span class="comment">(* When one makes a C library that use the zlib <span class="keyword">with</span> ocamlmklib,
      <span class="keyword">then</span> issue these flags. *)</span>
-  flag ['ocamlmklib'; <span class="string">'c'</span>; 'use_'^ld.ld_name]
+  flag [<span class="string">&quot;ocamlmklib&quot;</span>; <span class="string">&quot;c&quot;</span>; <span class="string">&quot;use_&quot;</span>^ld.ld_name]
        (S[A ld.ld_dir; A ld.ld_lib]);
  
   <span class="comment">(* When one compiles C code using the zlib *)</span>
-  flag [<span class="string">'c'</span>; 'compile'; 'include_'^ld.ld_name]
-       (S[A'-ccopt'; A ld.ld_include;
+  flag [<span class="string">&quot;c&quot;</span>; <span class="string">&quot;compile&quot;</span>; <span class="string">&quot;include_&quot;</span>^ld.ld_name]
+       (S[A<span class="string">&quot;-ccopt&quot;</span>; A ld.ld_include;
           <span class="governing">begin</span> <span class="keyword">match</span> ld.ld_have_lib <span class="keyword">with</span>
           | None -&gt; N
-          | Some x -&gt; S[A'-ccopt'; A x]
+          | Some x -&gt; S[A<span class="string">&quot;-ccopt&quot;</span>; A x]
           <span class="governing">end</span>]);
  
-  flag ['link'; 'ocaml'; 'library'; 'use_'^ld.ld_name]
-       (S[A'-ccopt'; A ld.ld_dir; A'-cclib'; A ld.ld_lib]);
+  flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;library&quot;</span>; <span class="string">&quot;use_&quot;</span>^ld.ld_name]
+       (S[A<span class="string">&quot;-ccopt&quot;</span>; A ld.ld_dir; A<span class="string">&quot;-cclib&quot;</span>; A ld.ld_lib]);
  
   <span class="comment">(* If `static' is true <span class="keyword">then</span> every ocaml link <span class="governing">in</span> bytecode will add -custom *)</span>
-  <span class="keyword">if</span> ld.ld_static <span class="keyword">then</span> flag ['link'; 'ocaml'; 'byte'] (A'-custom')
+  <span class="keyword">if</span> ld.ld_static <span class="keyword">then</span> flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;byte&quot;</span>] (A<span class="string">&quot;-custom&quot;</span>)
  
 <span class="governing">let </span><span class="ocaml-variable">cryptokit_lib_description</span> = {
-    od_path = '';
-    od_name = 'cryptokit';
-    od_headers = ['arcfour.h'; 'd3des.h'; 'rijndael-alg-fst.h';
-                  'ripemd160.h'; 'sha1.h'; 'sha256.h']
+    od_path = <span class="string">&quot;&quot;</span>;
+    od_name = <span class="string">&quot;cryptokit&quot;</span>;
+    od_headers = [<span class="string">&quot;arcfour.h&quot;</span>; <span class="string">&quot;d3des.h&quot;</span>; <span class="string">&quot;rijndael-alg-fst.h&quot;</span>;
+                  <span class="string">&quot;ripemd160.h&quot;</span>; <span class="string">&quot;sha1.h&quot;</span>; <span class="string">&quot;sha256.h&quot;</span>]
   }
  
 <span class="governing">let </span><span class="ocaml-variable">float32_lib_description</span> = {
-    od_path = 'float32/';
-    od_name = 'float32';
+    od_path = <span class="string">&quot;float32/&quot;</span>;
+    od_name = <span class="string">&quot;float32&quot;</span>;
     od_headers = []
  }
 
@@ -221,24 +221,24 @@
      This will declare use_X <span class="governing">and</span> include_X *)</span>
   ocaml_lib u;
  
-  flag ['link'; 'library'; 'ocaml'; 'byte'; 'use_'^u]
-       (S[A'-dllpath';A(old.od_path);A'-dllib';A('-l'^u);
-          A'-cclib';A('-L'^old.od_path);A'-cclib';A('-l'^u)]);
+  flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;library&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;byte&quot;</span>; <span class="string">&quot;use_&quot;</span>^u]
+       (S[A<span class="string">&quot;-dllpath&quot;</span>;A(old.od_path);A<span class="string">&quot;-dllib&quot;</span>;A(<span class="string">&quot;-l&quot;</span>^u);
+          A<span class="string">&quot;-cclib&quot;</span>;A(<span class="string">&quot;-L&quot;</span>^old.od_path);A<span class="string">&quot;-cclib&quot;</span>;A(<span class="string">&quot;-l&quot;</span>^u)]);
  
-  flag ['link'; 'ocaml'; 'byte'; 'use_'^u]
-       (S[A'-dllpath';A(old.od_path);A'-dllib';A('-l'^u);
-          A'-cclib';A('-L'^old.od_path);A'-cclib';A('-l'^u)]);
+  flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;byte&quot;</span>; <span class="string">&quot;use_&quot;</span>^u]
+       (S[A<span class="string">&quot;-dllpath&quot;</span>;A(old.od_path);A<span class="string">&quot;-dllib&quot;</span>;A(<span class="string">&quot;-l&quot;</span>^u);
+          A<span class="string">&quot;-cclib&quot;</span>;A(<span class="string">&quot;-L&quot;</span>^old.od_path);A<span class="string">&quot;-cclib&quot;</span>;A(<span class="string">&quot;-l&quot;</span>^u)]);
  
-  flag ['link'; 'library'; 'ocaml'; 'native'; 'use_lib'^u]
-       (S[A'-cclib';A('-L'^old.od_path);A'-cclib'; A('-l'^u)]);
+  flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;library&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;native&quot;</span>; <span class="string">&quot;use_lib&quot;</span>^u]
+       (S[A<span class="string">&quot;-cclib&quot;</span>;A(<span class="string">&quot;-L&quot;</span>^old.od_path);A<span class="string">&quot;-cclib&quot;</span>; A(<span class="string">&quot;-l&quot;</span>^u)]);
  
   <span class="comment">(* When ocaml link something that use the libX
      <span class="keyword">then</span> one need that file <span class="keyword">to</span> be up <span class="keyword">to</span> date. *)</span>
-  dep ['link'; 'ocaml'; 'use_lib'^u] [old.od_path^'lib'^u^'.a'];
+  dep [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;use_lib&quot;</span>^u] [old.od_path^<span class="string">&quot;lib&quot;</span>^u^<span class="string">&quot;.a&quot;</span>];
  
   <span class="comment">(* As an approximation all our C files use the headers.
      Note: This will import headers <span class="governing">in</span> the build directory. *)</span>
-  dep  ['compile'; <span class="string">'c'</span>] old.od_headers;
+  dep  [<span class="string">&quot;compile&quot;</span>; <span class="string">&quot;c&quot;</span>] old.od_headers;
 
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
@@ -246,31 +246,31 @@
      <span class="governing">begin</span>
        <span class="ocaml-module">Options</span>.hygiene := true;
        <span class="ocaml-module">Options</span>.sanitize := true;
-       <span class="ocaml-module">Options</span>.ocamlopt := <span class="ocaml-module">A'ocamlopt</span>.opt';
-       <span class="ocaml-module">Options</span>.ocamlc := <span class="ocaml-module">A'ocamlc</span>.opt';
-       <span class="ocaml-module">Options</span>.ocamldep := <span class="ocaml-module">A'ocamldep</span>.opt';
-       <span class="ocaml-module">Options</span>.ocamlyacc := A 'menhir';
+       <span class="ocaml-module">Options</span>.ocamlopt := A<span class="string">&quot;ocamlopt.opt&quot;</span>;
+       <span class="ocaml-module">Options</span>.ocamlc := A<span class="string">&quot;ocamlc.opt&quot;</span>;
+       <span class="ocaml-module">Options</span>.ocamldep := A<span class="string">&quot;ocamldep.opt&quot;</span>;
+       <span class="ocaml-module">Options</span>.ocamlyacc := A <span class="string">&quot;menhir&quot;</span>;
        <span class="ocaml-module">Options</span>.include_dirs :=
-         ['graph'; 'util'; 'float32'; 'mysubdir1'; 'mysubdir2']
+         [<span class="string">&quot;graph&quot;</span>; <span class="string">&quot;util&quot;</span>; <span class="string">&quot;float32&quot;</span>; <span class="string">&quot;mysubdir1&quot;</span>; <span class="string">&quot;mysubdir2&quot;</span>]
          @ !<span class="ocaml-module">Options</span>.include_dirs
      <span class="governing">end</span>
   | After_rules -&gt;
      <span class="governing">begin</span>
        <span class="ocaml-module">List</span>.iter
          <span class="governing">begin</span> <span class="keyword">fun</span> dir -&gt;
-           flag ['ocaml'; 'link']    (S[A'-I'; A dir]);
-           flag ['ocaml'; 'compile'] (S[A'-I'; A dir]);
-           flag ['ocaml'; 'doc']     (S[A'-I'; A dir])
+           flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;link&quot;</span>]    (S[A<span class="string">&quot;-I&quot;</span>; A dir]);
+           flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;compile&quot;</span>] (S[A<span class="string">&quot;-I&quot;</span>; A dir]);
+           flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;doc&quot;</span>]     (S[A<span class="string">&quot;-I&quot;</span>; A dir])
          <span class="governing">end</span>
-         [<span class="comment">(* '+pcre'; *)</span>
-          local 'mysubdir1';
-          local 'mysubdir2'];
+         [<span class="comment">(* <span class="string">&quot;+pcre&quot;</span>; *)</span>
+          local <span class="string">&quot;mysubdir1&quot;</span>;
+          local <span class="string">&quot;mysubdir2&quot;</span>];
  
-       <span class="ocaml-module">Log</span>.dprintf 5 'Ready';
+       <span class="ocaml-module">Log</span>.dprintf 5 <span class="string">&quot;Ready&quot;</span>;
          
        ocamllib float32_lib_description;
-       flag ['ocaml'; 'link'; 'byte'; 'use_float32']
-            (S[A'-dllpath';A'float32';A'-dllib'; A'-lfloat32']);*)
+       flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;link&quot;</span>; <span class="string">&quot;byte&quot;</span>; <span class="string">&quot;use_float32&quot;</span>]
+            (S[A<span class="string">&quot;-dllpath&quot;</span>;A<span class="string">&quot;float32&quot;</span>;A<span class="string">&quot;-dllib&quot;</span>; A<span class="string">&quot;-lfloat32&quot;</span>]);*)
      <span class="governing">end</span>
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>

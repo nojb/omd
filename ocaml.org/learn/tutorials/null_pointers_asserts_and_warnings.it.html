@@ -152,7 +152,7 @@ rifiutano cocciutamente di riempire quel campo. Che cosa deve fare un
 povero database administrator?</p>
 <p>Assumete che l&#39;età sia rappresentata con un <code>int</code>, vi sono due possibili
 modi di risolvere questo problema. Il più comune (e il più <em>sbagliato</em>)
-è quello di assumere una qualche sorta di valore &#39;speciale&#39; per l&#39;età
+è quello di assumere una qualche sorta di valore &quot;speciale&quot; per l&#39;età
 che significa che l&#39;informazione sull&#39;età non è stata acquisita. Così
 se, diciamo, age = -1 il dato non è stato acquisito, altrimenti il dato
 è stato acquisito (anche se non è valido!). Questo tipo di metodo
@@ -162,7 +162,7 @@ vostro valore speciale, concludete che l&#39;età media dei visitatori è di 7
 anni e mezzo, ed assumete dei web designer perché rimuovano tutte le
 parole lunghe ed usino i colori primari dappertutto.</p>
 <p>L&#39;altro metodo, corretto, è quello di conservare l&#39;età in un campo che
-abbia tipo &#39;int or null&#39;. Ecco una tabella SQL per conservare le età:</p>
+abbia tipo &quot;int or null&quot;. Ecco una tabella SQL per conservare le età:</p>
 <pre><code>create table users
 (
   userid serial,
@@ -188,7 +188,7 @@ utilizza un semplice tipo variante polimorfico definito (in
 <code>Pervasives</code>) come:</p>
 <pre><code class="ocaml"><span class="governing">type</span> <span class="type">'a option</span> = None | Some <span class="keyword">of</span> 'a</code></pre>
 
-<p>Un &#39;puntatore nullo&#39; è scritto <code>None</code>. Il tipo dell&#39;età nel nostro
+<p>Un &quot;puntatore nullo&quot; è scritto <code>None</code>. Il tipo dell&#39;età nel nostro
 esempio sopra (un <code>int</code> che può essere nullo è <code>int option</code> [ricordate:
 all&#39;indietro, come `int list` e `int binary_tree`].</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Some 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int option = Some 3
@@ -217,35 +217,35 @@ Assumendo che voi non intercettiate tale eccezione (non è probabilmente
 saggio intercettare questa eccezione, in particolare per i
 principianti), ciò risulta nel blocco del programma e nella stampa del
 file sorgente e de numero di riga dove è avvenuto l&#39;errore. Un&#39;esempio:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="ocaml-error-loc">'</span>Win32')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="string">&quot;Win32&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Assert_failure (&quot;&quot;, 1, 0).
 </span></code></pre>
 
 <p>(L&#39;esecuzione su Win32, naturalmente, non solleverà errori).</p>
 <p>Potreste anche semplicemente chiamare <code>assert false</code> per fermare il
 vostro programma quando proprio le cose non vanno bene, ma probabilmente
 fate meglio ad usare ...</p>
-<p><code>failwith &#39;messaggio di errore&#39;</code> solleva un&#39;eccezione <code>Failure</code>, la
+<p><code>failwith &quot;messaggio di errore&quot;</code> solleva un&#39;eccezione <code>Failure</code>, la
 quale, ancora assumendosi che non tentiate di intercettarla, fermerà il
 programma con il messaggio di errore dato. <code>failwith</code> è spesso
 utilizzato durante il pattern matching, come in questo esempio reale:</p>
 <pre><code class="ocaml"><span class="keyword">match</span> <span class="ocaml-module">Sys</span>.os_type <span class="keyword">with</span>
-| 'Unix' | 'Cygwin' -&gt;   <span class="comment">(* codice omesso *)</span>
-| 'Win32' -&gt;             <span class="comment">(* codice omesso *)</span>
-| 'MacOS' -&gt;             <span class="comment">(* codice omesso *)</span>
-| _ -&gt; <span class="keyword">failwith</span> 'this system is not supported'</code></pre>
+| <span class="string">&quot;Unix&quot;</span> | <span class="string">&quot;Cygwin&quot;</span> -&gt;   <span class="comment">(* codice omesso *)</span>
+| <span class="string">&quot;Win32&quot;</span> -&gt;             <span class="comment">(* codice omesso *)</span>
+| <span class="string">&quot;MacOS&quot;</span> -&gt;             <span class="comment">(* codice omesso *)</span>
+| _ -&gt; <span class="keyword">failwith</span> <span class="string">&quot;this system is not supported&quot;</span></code></pre>
 
 <p>Si notino in questo esempio anche un paio di caratteristiche extra di
-pattern matching. È utilizzato un cosiddetto &#39;range pattern&#39; per il
-match sia con <code>&#39;Unix&#39;</code> sia con <code>&#39;Cygwin&#39;</code>, e il pattern speciale <code>_</code> che
-fa match con &#39;tutto il resto&#39;.</p>
+pattern matching. È utilizzato un cosiddetto &quot;range pattern&quot; per il
+match sia con <code>&quot;Unix&quot;</code> sia con <code>&quot;Cygwin&quot;</code>, e il pattern speciale <code>_</code> che
+fa match con &quot;tutto il resto&quot;.</p>
 <p>Se volete fare il debug del vostro programma, ma, come me, avete
 un&#39;avversione per debugger che non sono gdb, vorrete probabilmente
 stampare in qualche modo un&#39;avvertimento (warning) attraverso la vostra
 funzione. Ecco un esempio (si noti il codice evidenziato in rosso):</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>  
-open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
   <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
-  prerr_endline ('radius is ' ^ (string_of_int radius));
+  prerr_endline (<span class="string">&quot;radius is &quot;</span> ^ (string_of_int radius));
   set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
   fill_circle 320 240 radius
 <span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
@@ -253,9 +253,9 @@ open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keywo
 <p>Se preferite <code>printf</code> nello stile di C, provate invece ad utilizzare il
 modulo di OCaml <code>Printf</code>:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/><span class="governing">open</span> <span class="ocaml-module">Printf</span><span class="ocaml-prompt">;;</span><br/>  
-open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
   <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
-  eprintf 'radius is %d\n' radius;
+  eprintf <span class="string">&quot;radius is %d\n&quot;</span> radius;
   set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
   fill_circle 320 240 radius
 <span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>

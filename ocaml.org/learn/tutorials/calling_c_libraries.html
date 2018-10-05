@@ -148,12 +148,12 @@ directly translate into calls to the C <code>libgtk-1.2.so</code> library.</p>
 <p>I also wanted to rationalise the module naming scheme for Gtk. So there
 is exactly one top-level module called (surprise!) <code>Gtk</code> and all classes
 are inside this module. A test program looks like this:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">win</span> = <span class="keyword">new</span> <span class="ocaml-module">Gtk</span>.window ~title:'My window' ()<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">lbl</span> = <span class="keyword">new</span> <span class="ocaml-module">Gtk</span>.label ~text:'Hello' ()<span class="ocaml-prompt">;;</span><br/>win#add lbl<span class="ocaml-prompt">;;</span><br/>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">win</span> = <span class="keyword">new</span> <span class="ocaml-module">Gtk</span>.window ~title:<span class="string">&quot;My window&quot;</span> ()<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">lbl</span> = <span class="keyword">new</span> <span class="ocaml-module">Gtk</span>.label ~text:<span class="string">&quot;Hello&quot;</span> ()<span class="ocaml-prompt">;;</span><br/>win#add lbl<span class="ocaml-prompt">;;</span><br/>
 <span class="governing">let</span> () =
   <span class="ocaml-module">Gtk</span>.main ()</code></pre>
 
 <p>I defined a single abstract type to cover all <code>GtkObject</code>s (and
-&#39;subclasses&#39; of this C structure). In the <code>Gtk</code> module you&#39;ll find this
+&quot;subclasses&quot; of this C structure). In the <code>Gtk</code> module you&#39;ll find this
 type definition:</p>
 <pre><code class="ocaml"><span class="governing">type</span> <span class="type">obj</span></code></pre>
 
@@ -162,7 +162,7 @@ it is impossible to create any instances. In OCaml, at least. Certain C
 functions are going to create instances of this type. For instance, the
 function which creates new labels (ie. <code>GtkLabel</code> structures) is defined
 this way:</p>
-<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_label_new</span>&nbsp;: string -&gt; obj = 'gtk_label_new_c'</code></pre>
+<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_label_new</span>&nbsp;: string -&gt; obj = <span class="string">&quot;gtk_label_new_c&quot;</span></code></pre>
 
 <p>This strange function definition defines an <dfn>external
 function</dfn>, one coming from C. The C function is called
@@ -195,7 +195,7 @@ like this (note that <code>object</code> is a reserved word in OCaml).</p>
 <span class="governing">end</span></code></pre>
 
 <p><code>type obj</code> defines our abstract object type, and <code>class gtk_object</code>
-takes one of these &#39;things&#39; as a parameter to its constructor. Recall
+takes one of these &quot;things&quot; as a parameter to its constructor. Recall
 from above that this parameter is actually the C <code>GtkObject</code> structure
 (in fact it&#39;s a specially wrapped pointer to this structure).</p>
 <p>You can&#39;t create <code>gtk_object</code> instances directly because it&#39;s a virtual
@@ -215,8 +215,8 @@ below:</p>
 <code>gtk_object</code> as shown above, but in principle this is how it works.</p>
 <p>Following the Gtk class hierarchy the only class derived directly from
 <code>gtk_object</code> is our <code>widget</code> class, defined like this:</p>
-<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_widget_show</span>&nbsp;: obj -&gt; unit = 'gtk_widget_show_c'
-<span class="governing">external</span> <span class="ocaml-function">gtk_widget_show_all</span>&nbsp;: obj -&gt; unit = 'gtk_widget_show_all_c'
+<pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_widget_show</span>&nbsp;: obj -&gt; unit = <span class="string">&quot;gtk_widget_show_c&quot;</span>
+<span class="governing">external</span> <span class="ocaml-function">gtk_widget_show_all</span>&nbsp;: obj -&gt; unit = <span class="string">&quot;gtk_widget_show_all_c&quot;</span>
 
 <span class="governing">class virtual</span> <span class="ocaml-function">widget</span> <span class="ocaml-variable">?show obj </span>=
   <span class="governing">object</span> (self)
@@ -240,7 +240,7 @@ runs when an object is being created - the equivalent of a constructor
 in other languages. In this case we check the boolean optional <code>show</code>
 argument and unless the user specified it explicitly as <code>false</code> we
 automatically call the <code>#show</code> method. (All Gtk widgets need to be
-&#39;shown&#39; after being created unless you want a widget to be created but
+&quot;shown&quot; after being created unless you want a widget to be created but
 hidden).</p>
 <p>The actual definition of the methods happens with the help of a couple
 of external functions. These are basically direct calls to the C library
@@ -263,9 +263,9 @@ alignment around a widget such as a label. Here is its definition:</p>
   | Some x -&gt; f x
 
 <span class="governing">external</span> <span class="ocaml-function">gtk_misc_set_alignment</span>&nbsp;:
-  obj -&gt; float * float -&gt; unit = 'gtk_misc_set_alignment_c'
+  obj -&gt; float * float -&gt; unit = <span class="string">&quot;gtk_misc_set_alignment_c&quot;</span>
 <span class="governing">external</span> <span class="ocaml-function">gtk_misc_set_padding</span>&nbsp;:
-  obj -&gt; int * int -&gt; unit = 'gtk_misc_set_padding_c'
+  obj -&gt; int * int -&gt; unit = <span class="string">&quot;gtk_misc_set_padding_c&quot;</span>
 
 <span class="governing">class virtual</span> <span class="ocaml-function">misc</span> <span class="ocaml-variable">?alignment ?padding ?show obj </span>=
   <span class="governing">object</span> (self)
@@ -302,15 +302,15 @@ this is done.</p>
 <p>Now we can finally get to the <code>label</code> class, which is derived directly
 from <code>misc</code>:</p>
 <pre><code class="ocaml"><span class="governing">external</span> <span class="ocaml-function">gtk_label_new</span>&nbsp;:
-    string -&gt; obj  = 'gtk_label_new_c'
+    string -&gt; obj  = <span class="string">&quot;gtk_label_new_c&quot;</span>
 <span class="governing">external</span> <span class="ocaml-function">gtk_label_set_text</span>&nbsp;:
-    obj -&gt; string -&gt; unit = 'gtk_label_set_text_c'
+    obj -&gt; string -&gt; unit = <span class="string">&quot;gtk_label_set_text_c&quot;</span>
 <span class="governing">external</span> <span class="ocaml-function">gtk_label_set_justify</span>&nbsp;:
-    obj -&gt; <span class="ocaml-module">Justification</span>.t -&gt; unit = 'gtk_label_set_justify_c'
+    obj -&gt; <span class="ocaml-module">Justification</span>.t -&gt; unit = <span class="string">&quot;gtk_label_set_justify_c&quot;</span>
 <span class="governing">external</span> <span class="ocaml-function">gtk_label_set_pattern</span>&nbsp;:
-    obj -&gt; string -&gt; unit = 'gtk_label_set_pattern_c'
+    obj -&gt; string -&gt; unit = <span class="string">&quot;gtk_label_set_pattern_c&quot;</span>
 <span class="governing">external</span> <span class="ocaml-function">gtk_label_set_line_wrap</span>&nbsp;:
-    obj -&gt; bool -&gt; unit = 'gtk_label_set_line_wrap_c'
+    obj -&gt; bool -&gt; unit = <span class="string">&quot;gtk_label_set_line_wrap_c&quot;</span>
 
 class label ~text
   ?justify ?pattern ?line_wrap ?alignment
@@ -347,7 +347,7 @@ instances?)</p>
 functions. Here&#39;s a simple example:</p>
 <pre class="C"><code class="C">/* external gtk_label_set_text :
      obj -&gt; string -&gt; unit
-       = &#39;gtk_label_set_text_c&#39; */
+       = &quot;gtk_label_set_text_c&quot; */
 
 CAMLprim value
 gtk_label_set_text_c (value obj, value str)
@@ -358,7 +358,7 @@ gtk_label_set_text_c (value obj, value str)
   CAMLreturn (Val_unit);
 }</code></pre><p>Comparing the OCaml prototype for the external function call (in the
 comment) with the definition of the function we can see two things:</p>
-<ul><li><p>The C function that OCaml calls is named <code>&#39;gtk_label_set_text_c&#39;</code>.</p>
+<ul><li><p>The C function that OCaml calls is named <code>&quot;gtk_label_set_text_c&quot;</code>.</p>
 </li><li><p>Two arguments are passed (<code>value obj</code> and <code>value str</code>) and a unit is
  returned.</p>
 </li></ul>
@@ -388,12 +388,12 @@ typing and type inference, has already ensured that the arguments are of
 the correct type, so to convert <code>value str</code> to a C <code>char *</code> we called
 <code>String_val (str)</code>.</p>
 <p>The other parts of the function are a bit stranger. To ensure that the
-garbage collector &#39;knows&#39; that your C function is still using <code>obj</code> and
+garbage collector &quot;knows&quot; that your C function is still using <code>obj</code> and
 <code>str</code> while the C function is running (remember that the garbage
 collector might be triggered within your C function by a number of
 events - a callback to OCaml or using one of OCaml&#39;s allocation
 functions), you need to frame the function to add code to tell the
-garbage collector about the &#39;roots&#39; that you&#39;re using. And tell the
+garbage collector about the &quot;roots&quot; that you&#39;re using. And tell the
 garbage collector when you finish using those roots too, of course. This
 is done by framing the function within <code>CAMLparamN</code> ... <code>CAMLreturn</code>.
 Hence:</p>
@@ -424,7 +424,7 @@ function, and all of these are popped back off when we leave, thus
 restoring <code>local_roots</code> to its previous state when we leave the
 function. (<em>If</em> you remembered to call <code>CAMLreturn</code> instead of <code>return</code>
 of course - otherwise <code>local_roots</code> will end up pointing at
-uninitialised data on the stack with &#39;hilarious&#39; consequences).</p>
+uninitialised data on the stack with &quot;hilarious&quot; consequences).</p>
 <p>Each <code>caml__roots_block</code> structure has space for up to five <code>value</code>s
 (you can have multiple blocks, so this isn&#39;t a limitation). When the GC
 runs we can infer that it must walk through the linked list, starting at
@@ -443,7 +443,7 @@ between <code>GtkObject</code> and our opaque, mysterious <code>obj</code> type 
 defined for OCaml (see the very first part of this chapter to remind
 yourself).</p>
 <p>The problem is how do we wrap up (and hide) the C <code>GtkObject</code> structure
-in a way that we can pass it around as an opaque &#39;thing&#39; (<code>obj</code>) through
+in a way that we can pass it around as an opaque &quot;thing&quot; (<code>obj</code>) through
 our OCaml code, and hopefully pass it back later to a C function which
 can unwrap it and retrieve the same <code>GtkObject</code> back again?</p>
 <p>In order for it to get passed to OCaml code at all, we must somehow

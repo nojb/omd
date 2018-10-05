@@ -148,7 +148,7 @@ standard library relies heavily upon them.</p>
 exception Foo <span class="keyword">of</span> string
 
 <span class="governing">let</span> <span class="ocaml-function">i_will_fail</span> <span class="ocaml-variable">() </span>=
-  <span class="keyword">raise</span> (Foo 'ohnoes!')
+  <span class="keyword">raise</span> (Foo <span class="string">&quot;ohnoes!&quot;</span>)
 
 </code></pre>
 
@@ -196,7 +196,7 @@ version <code>val foo_exn : a -&gt; b</code>.</p>
 <h3 id="Stacktraces">Stacktraces</h3>
 
 <p>To get a stacktrace when a unhandled exception makes your program crash, you
-need to compile the program in &#39;debug&#39; mode (with <code>-g</code> when calling
+need to compile the program in &quot;debug&quot; mode (with <code>-g</code> when calling
 <code>ocamlc</code>, or <code>-debug</code> when calling <code>ocamlbuild</code>).
 Then:</p>
 <pre><code>OCAMLRUNPARAM=b ./myprogram [args]</code></pre><p>And you will get a stacktrace.</p>
@@ -214,7 +214,7 @@ If stacktraces are enabled, this function will also display it.</p>
   <span class="keyword">with</span> e -&gt;
     <span class="governing">let </span><span class="ocaml-variable">msg</span> = <span class="ocaml-module">Printexc</span>.to_string e
     <span class="governing"><span class="governing">and</span> </span><span class="ocaml-variable">stack</span> = <span class="ocaml-module">Printexc</span>.get_backtrace () <span class="governing">in</span>
-    <span class="ocaml-module">Printf</span>.eprintf 'there was an error: %s%s\n' msg stack;
+    <span class="ocaml-module">Printf</span>.eprintf <span class="string">&quot;there was an error: %s%s\n&quot;</span> msg stack;
     <span class="keyword">raise</span> e</code></pre>
 
 <p>OCaml knows how to print its builtin exception, but you can also tell it
@@ -224,7 +224,7 @@ how to print your own exceptions:</p>
 <span class="governing">let</span> () =
   <span class="ocaml-module">Printexc</span>.register_printer
     (function
-      | Foo i -&gt; Some (<span class="ocaml-module">Printf</span>.sprintf 'Foo(%d)' i)
+      | Foo i -&gt; Some (<span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;Foo(%d)&quot;</span> i)
       | _ -&gt; None <span class="comment">(* <span class="keyword">for</span> other exceptions *)</span>
     )</code></pre>
 

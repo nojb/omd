@@ -142,7 +142,7 @@ computed as follows.</p>
  unfortunately the result in <code>%.{c,h}.depend</code> is different if
  included files are already in the build dir or not (very
  helpful...), see the <code>correct</code> function in <code>parse_deps</code> (this
- &#39;feature&#39; may make it a hard to support multiple directories, but I
+ &quot;feature&quot; may make it a hard to support multiple directories, but I
  didn&#39;t research that extensively). Another problem is that these
  <code>make</code> oriented <code>.depends</code> files have <code>\</code> when lines becomes too
  long thus we need to filter out these.</p>
@@ -162,13 +162,13 @@ computed as follows.</p>
 <span class="governing">let</span> <span class="ocaml-function">avr_gcc_rules</span> <span class="ocaml-variable">avr_gcc avr_objcopy </span>=
   <span class="governing">let</span> <span class="ocaml-function">parallel</span> <span class="ocaml-variable">files </span>= <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> f -&gt; [f]) files <span class="governing">in</span>
   <span class="governing">let</span> <span class="ocaml-function">err_circular</span> <span class="ocaml-variable">file path </span>= 
-    <span class="ocaml-module">Printf</span>.sprintf 'Circular build detected (%s already seen <span class="governing">in</span> [%s])'
-      file (<span class="ocaml-module">String</span>.concat '; ' path)
+    <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;Circular build detected (%s already seen <span class="governing">in</span> [%s])&quot;</span>
+      file (<span class="ocaml-module">String</span>.concat <span class="string">&quot;; &quot;</span> path)
   <span class="governing">in</span>
   <span class="governing">let</span> <span class="ocaml-function">parse_deps</span> <span class="ocaml-variable">file </span>= 
     <span class="governing">let </span><span class="ocaml-variable">dir</span> = <span class="ocaml-module">Pathname</span>.dirname file <span class="governing">in</span>
     <span class="governing">let </span><span class="ocaml-variable">deps</span> = <span class="ocaml-module">List</span>.tl (<span class="ocaml-module">List</span>.tl (string_list_of_file file)) <span class="governing">in</span>
-    <span class="governing">let </span><span class="ocaml-variable">deps</span> = <span class="ocaml-module">List</span>.filter (<span class="keyword">fun</span> d -&gt; d &lt;&gt; '\\') deps <span class="governing">in</span> <span class="comment">(* remove \ *)</span>
+    <span class="governing">let </span><span class="ocaml-variable">deps</span> = <span class="ocaml-module">List</span>.filter (<span class="keyword">fun</span> d -&gt; d &lt;&gt; <span class="string">&quot;\\&quot;</span>) deps <span class="governing">in</span> <span class="comment">(* remove \ *)</span>
     <span class="governing">let</span> <span class="ocaml-function">correct</span> <span class="ocaml-variable">d </span>= <span class="keyword">if</span> <span class="ocaml-module">Pathname</span>.dirname d = dir <span class="keyword">then</span> d <span class="keyword">else</span> dir / d <span class="governing">in</span>
     <span class="ocaml-module">List</span>.map correct deps
   <span class="governing">in</span>
@@ -176,58 +176,58 @@ computed as follows.</p>
     <span class="governing">let </span><span class="ocaml-variable">c</span> = env dep <span class="governing">in</span>
     <span class="governing">let </span><span class="ocaml-variable">tags</span> = tags_of_pathname c <span class="governing">in</span>
     Cmd (S [A avr_gcc; T tags; 
-        A '-MM'; A '-MG'; A '-MF'; Px (env prod); P c])
+        A <span class="string">&quot;-MM&quot;</span>; A <span class="string">&quot;-MG&quot;</span>; A <span class="string">&quot;-MF&quot;</span>; Px (env prod); P c])
   <span class="governing">in</span>
 
-  rule 'avr-gcc: c -&gt; c.depends' 
-    ~dep:'%.c' 
-    ~prod: '%.c.depends' (deps_action '%.c<span class="string">' '</span>%.c.depends');
+  rule <span class="string">&quot;avr-gcc: c -&gt; c.depends&quot;</span> 
+    ~dep:<span class="string">&quot;%.c&quot;</span> 
+    ~prod: <span class="string">&quot;%.c.depends&quot;</span> (deps_action <span class="string">&quot;%.c&quot;</span> <span class="string">&quot;%.c.depends&quot;</span>);
 
-  rule 'avr-gcc: h -&gt; h.depends'
-    ~dep:'%.h'
-    ~prod:'%.h.depends' (deps_action '%.h<span class="string">' '</span>%.h.depends');
+  rule <span class="string">&quot;avr-gcc: h -&gt; h.depends&quot;</span>
+    ~dep:<span class="string">&quot;%.h&quot;</span>
+    ~prod:<span class="string">&quot;%.h.depends&quot;</span> (deps_action <span class="string">&quot;%.h&quot;</span> <span class="string">&quot;%.h.depends&quot;</span>);
 
-  rule 'avr-gcc: c &amp; c.depends -&gt; o'
-    ~deps:['%.c'; '%.c.depends']
-    ~prod: '%.o'
+  rule <span class="string">&quot;avr-gcc: c &amp; c.depends -&gt; o&quot;</span>
+    ~deps:[<span class="string">&quot;%.c&quot;</span>; <span class="string">&quot;%.c.depends&quot;</span>]
+    ~prod: <span class="string">&quot;%.o&quot;</span>
     <span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt;
-      <span class="governing">let </span><span class="ocaml-variable">c</span> = env '%.c' <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">c</span> = env <span class="string">&quot;%.c&quot;</span> <span class="governing">in</span>
       <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">build_transitive_deps</span> = <span class="keyword">function</span>
     | [] -&gt; ()
     | (_, []) :: todo -&gt; build_transitive_deps todo
     | (path, f :: rest) :: todo -&gt;
         <span class="keyword">if</span> <span class="ocaml-module">List</span>.mem f path <span class="keyword">then</span> <span class="keyword">failwith</span> (err_circular f path) <span class="keyword">else</span>
-        <span class="governing">let </span><span class="ocaml-variable">deps</span> = parse_deps (f ^ '.depends') <span class="governing">in</span>
-        <span class="governing">let </span><span class="ocaml-variable">dep_files</span> = <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> d -&gt; d ^ '.depends') deps <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">deps</span> = parse_deps (f ^ <span class="string">&quot;.depends&quot;</span>) <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">dep_files</span> = <span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> d -&gt; d ^ <span class="string">&quot;.depends&quot;</span>) deps <span class="governing">in</span>
         <span class="ocaml-module">List</span>.iter <span class="ocaml-module">Outcome</span>.ignore_good (build (parallel deps));
         <span class="ocaml-module">List</span>.iter <span class="ocaml-module">Outcome</span>.ignore_good (build (parallel dep_files));
         build_transitive_deps (((f :: path), deps) :: (path, rest) :: todo)
       <span class="governing">in</span>
       build_transitive_deps [([],[c])];
       Cmd (S [A avr_gcc;
-          A '-Wall'; A '-Os'; A '-std=c99';
-          T (tags_of_pathname c ++ 'compile' ++ 'avr-gcc');
-          A '-c'; P c;
-          A '-o'; Px (env '%.o');])
+          A <span class="string">&quot;-Wall&quot;</span>; A <span class="string">&quot;-Os&quot;</span>; A <span class="string">&quot;-std=c99&quot;</span>;
+          T (tags_of_pathname c ++ <span class="string">&quot;compile&quot;</span> ++ <span class="string">&quot;avr-gcc&quot;</span>);
+          A <span class="string">&quot;-c&quot;</span>; P c;
+          A <span class="string">&quot;-o&quot;</span>; Px (env <span class="string">&quot;%.o&quot;</span>);])
     <span class="governing">end</span>;
 
-    rule 'avr-gcc: o &amp; c.depends -&gt; .elf' 
-      ~dep:'%.o'
-      ~prod: '%.elf'
+    rule <span class="string">&quot;avr-gcc: o &amp; c.depends -&gt; .elf&quot;</span> 
+      ~dep:<span class="string">&quot;%.o&quot;</span>
+      ~prod: <span class="string">&quot;%.elf&quot;</span>
       <span class="governing">begin</span> <span class="keyword">fun</span> env build -&gt; 
-        <span class="governing">let </span><span class="ocaml-variable">o</span> = env '%.o' <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">o</span> = env <span class="string">&quot;%.o&quot;</span> <span class="governing">in</span>
         <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">build_transitive_objs</span> <span class="ocaml-variable">acc </span>= <span class="keyword">function</span> 
       | [] -&gt; <span class="ocaml-module">StringSet</span>.fold (<span class="keyword">fun</span> v l -&gt; v :: l) acc []
       | [] :: todo -&gt; build_transitive_objs acc todo
       | (f :: rest) :: todo  -&gt; 
           <span class="comment">(* builds a .o <span class="keyword">for</span> each .h which has a .c *)</span>
           <span class="governing">let </span><span class="ocaml-variable">deps</span> =
-            <span class="governing">let</span> <span class="ocaml-function">is_hfile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.check_extension f <span class="string">'h'</span> <span class="governing">in</span>
-            <span class="ocaml-module">List</span>.filter is_hfile (parse_deps (f ^ '.depends')) 
+            <span class="governing">let</span> <span class="ocaml-function">is_hfile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.check_extension f <span class="string">&quot;h&quot;</span> <span class="governing">in</span>
+            <span class="ocaml-module">List</span>.filter is_hfile (parse_deps (f ^ <span class="string">&quot;.depends&quot;</span>)) 
           <span class="governing">in</span>
           <span class="governing">let </span><span class="ocaml-variable">cfiles</span> = 
             <span class="governing">let </span><span class="ocaml-variable">remove_f</span> = <span class="ocaml-module">List</span>.filter (<span class="keyword">fun</span> f' -&gt; f &lt;&gt; f') <span class="governing">in</span>
-            <span class="governing">let</span> <span class="ocaml-function">to_cfile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.update_extension <span class="string">'c'</span> f <span class="governing">in</span>
+            <span class="governing">let</span> <span class="ocaml-function">to_cfile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.update_extension <span class="string">&quot;c&quot;</span> f <span class="governing">in</span>
             <span class="governing">let</span> <span class="ocaml-function">keep_good</span> <span class="ocaml-variable">acc </span>= <span class="keyword">function</span>
           | <span class="ocaml-module">Outcome</span>.Good o -&gt; o :: acc | <span class="ocaml-module">Outcome</span>.Bad _ -&gt; acc 
             <span class="governing">in</span>
@@ -235,7 +235,7 @@ computed as follows.</p>
           (build (parallel (remove_f (<span class="ocaml-module">List</span>.map to_cfile deps)))) 
           <span class="governing">in</span>
           <span class="governing">let </span><span class="ocaml-variable">objs</span> = 
-            <span class="governing">let</span> <span class="ocaml-function">to_ofile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.update_extension <span class="string">'o'</span> f <span class="governing">in</span>
+            <span class="governing">let</span> <span class="ocaml-function">to_ofile</span> <span class="ocaml-variable">f </span>= <span class="ocaml-module">Pathname</span>.update_extension <span class="string">&quot;o&quot;</span> f <span class="governing">in</span>
             <span class="ocaml-module">List</span>.map <span class="ocaml-module">Outcome</span>.good 
           (build (parallel (<span class="ocaml-module">List</span>.map to_ofile cfiles)))
           <span class="governing">in</span>
@@ -243,34 +243,34 @@ computed as follows.</p>
           build_transitive_objs 
             (<span class="ocaml-module">List</span>.fold_left add_obj acc objs) (cfiles :: deps :: rest :: todo)
         <span class="governing">in</span>
-        <span class="governing">let </span><span class="ocaml-variable">objs</span> = build_transitive_objs (<span class="ocaml-module">StringSet</span>.empty) [[env '%.c']] <span class="governing">in</span>
+        <span class="governing">let </span><span class="ocaml-variable">objs</span> = build_transitive_objs (<span class="ocaml-module">StringSet</span>.empty) [[env <span class="string">&quot;%.c&quot;</span>]] <span class="governing">in</span>
         Cmd (S [A avr_gcc;
-            T (tags_of_pathname o ++ 'link' ++ 'avr-gcc');
-            A '-o'; Px (env '%.elf');
+            T (tags_of_pathname o ++ <span class="string">&quot;link&quot;</span> ++ <span class="string">&quot;avr-gcc&quot;</span>);
+            A <span class="string">&quot;-o&quot;</span>; Px (env <span class="string">&quot;%.elf&quot;</span>);
             <span class="ocaml-module">Command</span>.atomize_paths (o :: objs) ])
       <span class="governing">end</span>;
 
-  rule 'avr-objcopy: elf -&gt; hex'
-    ~dep:'%.elf'
-    ~prod:'%.hex'
+  rule <span class="string">&quot;avr-objcopy: elf -&gt; hex&quot;</span>
+    ~dep:<span class="string">&quot;%.elf&quot;</span>
+    ~prod:<span class="string">&quot;%.hex&quot;</span>
     <span class="governing">begin</span> <span class="keyword">fun</span> env _ -&gt;
-      <span class="governing">let </span><span class="ocaml-variable">elf</span> = env '%.elf' <span class="governing">in</span>
+      <span class="governing">let </span><span class="ocaml-variable">elf</span> = env <span class="string">&quot;%.elf&quot;</span> <span class="governing">in</span>
       Cmd (S [A avr_objcopy;
-          A '-j'; A '.text';
-          A '-j'; A '.data';
-          A '-O'; A 'ihex';
-          T (tags_of_pathname elf ++ 'compile' ++ 'avr-objcopy');
+          A <span class="string">&quot;-j&quot;</span>; A <span class="string">&quot;.text&quot;</span>;
+          A <span class="string">&quot;-j&quot;</span>; A <span class="string">&quot;.data&quot;</span>;
+          A <span class="string">&quot;-O&quot;</span>; A <span class="string">&quot;ihex&quot;</span>;
+          T (tags_of_pathname elf ++ <span class="string">&quot;compile&quot;</span> ++ <span class="string">&quot;avr-objcopy&quot;</span>);
           P elf;
-          Px (env '%.hex')])
+          Px (env <span class="string">&quot;%.hex&quot;</span>)])
     <span class="governing">end</span>
 
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
   | Before_rules -&gt;                            <span class="comment">(* override ocaml's C rules. *)</span>
-      avr_gcc_rules 'avr-gcc<span class="string">' '</span>avr-objcopy';
-      flag ['compile'; 'avr-gcc'; 'mcu_atmega168'] (A '-mmcu=atmega168');
-      flag ['link'; 'avr-gcc'; 'mcu_atmega168'] (A '-mmcu=atmega168');
-      flag ['compile'; 'avr-gcc'; 'mcu_freq_16Mhz'] (A '-DF_CPU=16000000');
+      avr_gcc_rules <span class="string">&quot;avr-gcc&quot;</span> <span class="string">&quot;avr-objcopy&quot;</span>;
+      flag [<span class="string">&quot;compile&quot;</span>; <span class="string">&quot;avr-gcc&quot;</span>; <span class="string">&quot;mcu_atmega168&quot;</span>] (A <span class="string">&quot;-mmcu=atmega168&quot;</span>);
+      flag [<span class="string">&quot;link&quot;</span>; <span class="string">&quot;avr-gcc&quot;</span>; <span class="string">&quot;mcu_atmega168&quot;</span>] (A <span class="string">&quot;-mmcu=atmega168&quot;</span>);
+      flag [<span class="string">&quot;compile&quot;</span>; <span class="string">&quot;avr-gcc&quot;</span>; <span class="string">&quot;mcu_freq_16Mhz&quot;</span>] (A <span class="string">&quot;-DF_CPU=16000000&quot;</span>);
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
 

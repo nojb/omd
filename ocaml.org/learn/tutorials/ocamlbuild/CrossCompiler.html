@@ -222,8 +222,8 @@ should carefully set the following:</p>
 
 <p>Finally, a bit of black magic is needed to complete the Makefile. The
 following lines should be added: MKLIB=\$(TARGETAR) rc \$(1) \$(2);
-\$(TARGETRANLIB) \$(1) #ml let syslib x = &#39;-l&#39;\^x;; #ml let mklib
-out files opts = Printf.sprintf &#39;targetar rc %s %s %s; targetranlib %s&#39;
+\$(TARGETRANLIB) \$(1) #ml let syslib x = &quot;-l&quot;\^x;; #ml let mklib
+out files opts = Printf.sprintf &quot;targetar rc %s %s %s; targetranlib %s&quot;
 out opts files out;; The first line indicates how a static library
 should be built.<br/>The second line defines an OCaml function that maps a library identifier
 to the command-line flag that should be passed to the compiler to link
@@ -242,7 +242,7 @@ should be as smooth as:</p>
 host machine a program that links to some library (besides the standard
 library). As an example, the following one allows to test that the
 <em>Unix</em> library has been flawlessly compiled:</p>
-<p><code>let () =</code><br/><code>  print_string &#39;Hello, the path is &#39;;</code><br/><code>  print_endline (try Unix.getenv &#39;PATH&#39; with Not_found -&gt; &#39;</code>&lt;unset&gt;<code>&#39;)</code></p>
+<p><code>let () =</code><br/><code>  print_string &quot;Hello, the path is &quot;;</code><br/><code>  print_endline (try Unix.getenv &quot;PATH&quot; with Not_found -&gt; &quot;</code>&lt;unset&gt;<code>&quot;)</code></p>
 <p>Checking that the correct assembler, linker and the like are actually
 called can be made by compiling in verbose mode: <em>BINDIR</em>/ocamlopt -o
 ./cross-compiled -verbose unix.cmxa source.ml It should show that the C

@@ -153,33 +153,33 @@ letter. First I need to enter the data into <code>my_hash</code>.</p>
 another hash table is <em>not</em> created every time you change the table. Thus,
 the code <code>let my_hash = Hashtbl.add my_hash ...</code> wouldn&#39;t make any
 sense. Instead, we would write something like this:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> <span class="ocaml-error-loc">'</span>hello';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hi';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hug';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hard';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'wimp';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'world';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'wine'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hello&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hi&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hug&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hard&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;wimp&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;world&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;wine&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
-<p>If we want to find one element in <code>my_hash</code> that has an <code>&#39;h&#39;</code> in it then we
+<p>If we want to find one element in <code>my_hash</code> that has an <code>&quot;h&quot;</code> in it then we
 would write:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;hard&quot;
 </span></code></pre>
 
 <p>Notice how it returns just one element? That element
-was the last one entered in with the value of <code>&#39;h&#39;</code>.</p>
-<p>What we probably want is all the elements that start with <code>&#39;h&#39;</code>. To do
+was the last one entered in with the value of <code>&quot;h&quot;</code>.</p>
+<p>What we probably want is all the elements that start with <code>&quot;h&quot;</code>. To do
 this we want to <em>find all</em> of them. What better name for this than
 <code>find_all</code>?</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : '_weak3 list = []
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;hard&quot;; &quot;hug&quot;; &quot;hi&quot;; &quot;hello&quot;]
 </span></code></pre>
 
-<p>returns <code>[&#39;hard&#39;; &#39;hug&#39;; &#39;hi&#39;; &#39;hello&#39;]</code>.
+<p>returns <code>[&quot;hard&quot;; &quot;hug&quot;; &quot;hi&quot;; &quot;hello&quot;]</code>.
 If you remove a key, its previous value becomes again the default one
 associated to the key.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;hug&quot;
 </span></code></pre>
 
 <p>This behavior is interesting for the above example or when, say, the
@@ -187,16 +187,16 @@ keys represent variables that can be temporarily masked by a local
 variables of the same name.</p>
 <p>In other contexts, one may prefer new values to <em>replace</em> the previous
 ones.  In this case, one uses <code>Hashtbl.replace</code>:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">'t'</span> <span class="ocaml-error-loc">'</span><span class="keyword"><span class="ocaml-error-loc"></span>try</span>';
-  <span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">'t'</span> 'test';
-  <span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">'t'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">'t'</span>;
-  <span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'t'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">&quot;t&quot;</span> <span class="string">&quot;<span class="keyword">try</span>&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">&quot;t&quot;</span> <span class="string">&quot;test&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">&quot;t&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;test&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">&quot;t&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;t&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
 </span></code></pre>
 
 <p>To find out whether there is an
 entry in <code>my_hash</code> for a letter we would do:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.mem my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.mem my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
       </div>

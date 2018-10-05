@@ -168,7 +168,7 @@
 <code>Amodule</code>, <code>Bmodule</code> という名前のモジュールと定義し、
 ファイルに格納されたものはなんでもそのモジュールで提供する。</p>
 <p>ファイル <code>amodule.ml</code> の中に以下のコードがある:</p>
-<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline 'Hello'</code></pre>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Hello&quot;</span></code></pre>
 
 <p>またファイル <code>bmodule.ml</code> の中に以下のものがある:</p>
 <pre><code class="ocaml"><span class="ocaml-module">Amodule</span>.hello ()</code></pre>
@@ -178,7 +178,7 @@
 ocamlopt -c bmodule.ml
 ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 
-<p>これで &#39;Hello&#39; と表示する素晴らしい実行可能ファイルが出来た。
+<p>これで &quot;Hello&quot; と表示する素晴らしい実行可能ファイルが出来た。
 お分かりのように、与えられたモジュールから何かをアクセスしたい場合、
 モジュール名(常に大文字で始まる)にピリオドをつけて使いたいもの、
 と用いる。
@@ -190,7 +190,7 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 ディレクティブを使う。 我々の例では、<code>bmodule.ml</code> はこう書くことになる:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span><span class="ocaml-prompt">;;</span><br/>hello ();;</code></pre>
 
-<p>補足すると、みんな醜い&#39;<code>;;</code>&#39;を避ける傾向にあるので、
+<p>補足すると、みんな醜い&quot;<code>;;</code>&quot;を避ける傾向にあるので、
 より一般的にこのように書く:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span>
 <span class="governing">let</span> () =
@@ -208,8 +208,11 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 も参照せよ)</p>
 <p>今言及した事を短い例で示す。</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
-  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">'a'</span>; <span class="ocaml-error-loc">'</span>beautiful'; 'day' ]
-  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf '%s\n' s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">&quot;a&quot;</span>; <span class="string">&quot;beautiful&quot;</span>; <span class="string">&quot;day&quot;</span> ]
+  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf <span class="string">&quot;%s\n&quot;</span> s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">a
+beautiful
+day
+</span><span class="ocaml-stderr"></span>val my_data : string list = [&quot;a&quot;; &quot;beautiful&quot;; &quot;day&quot;]
 </span></code></pre>
 
 <h2 id="">インタフェースとシグネチャ</h2>
@@ -228,8 +231,9 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 対応するモジュールインタフェースやシグネチャは <code>.mli</code> ファイルから来る。
 ここには型と値のリストなどが含まれる。 <code>amodule.ml</code>
 ファイルを書き直そう:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="ocaml-error-loc">'</span>Hello'
-  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val message : string = &quot;Hello&quot;
+val hello : unit -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>これの通りに <code>Amodule</code> には以下のインタフェースがある:</p>
@@ -304,10 +308,10 @@ ocamlopt -c amodule.ml
 これは現在のモジュールのサブモジュールを作る。 次の <code>example.ml</code>
 ファイルを考えてみよう。</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>
@@ -326,12 +330,12 @@ ocamlopt -c amodule.ml
  <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
 <span class="governing">end</span> = 
 <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
   
 <span class="comment">(* &#12371;&#12428;&#12391;&#12289;<span class="ocaml-module">Hello</span>.message &#12399;&#12393;&#12371;&#12363;&#12425;&#12418;&#12450;&#12463;&#12475;&#12473;&#12391;&#12365;&#12394;&#12356; *)</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>

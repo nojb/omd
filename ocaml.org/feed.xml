@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><icon>http://ocaml.org/img/colour-icon-170x148.png</icon><generator uri="https://github.com/Cumulus/Syndic" version="1.5.3">OCaml Syndic.Atom feed aggregator</generator><id>urn:md5:2841294131eb492cfabfaa5ed87d08d3</id><title type="text">OCaml Planet</title><updated>2018-09-26T00:00:00-00:00</updated><entry><source><updated>2018-09-26T00:00:00-00:00</updated><link title="The Coq Proof Assistant" type="text/html" href="https://coq.inria.fr" rel="related"/><link title="The Coq Proof Assistant" type="application/rss+xml" href="http://coq.inria.fr/news/feed" rel="self"/><id>https://coq.inria.fr</id><title type="text">The Coq Proof Assistant</title><author><name>Coq</name></author></source><link href="https://coq.inria.fr/news/147.html" rel="alternate"/><content xml:base="http://coq.inria.fr/news/feed" type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><icon>http://ocaml.org/img/colour-icon-170x148.png</icon><generator uri="https://github.com/Cumulus/Syndic" version="1.5.3">OCaml Syndic.Atom feed aggregator</generator><id>urn:md5:a419e27d958f39bb9c9a3c2aaa86248e</id><title type="text">OCaml Planet</title><updated>2018-10-01T14:28:20-00:00</updated><entry><source><updated>2018-10-01T14:28:20-00:00</updated><link href="http://jobs.github.com/" rel="alternate"/><link href="http://jobs.github.com/positions.atom?description=ocaml" rel="self"/><id>urn:uuid:0a9333c4-71da-11e0-9ac7-692793c00b45</id><title type="text">
+    GitHub Jobs
+      matching ocaml
+  </title><author><email>jobs@github.com</email><name>GitHub Jobs</name></author></source><link href="http://jobs.github.com/positions/0a9333c4-71da-11e0-9ac7-692793c00b45" rel="alternate"/><content xml:base="https://jobs.github.com/positions.atom?description=ocaml" type="html">&lt;p&gt;Software Developer &lt;/p&gt;
+
+&lt;p&gt;Jane Street is a proprietary quantitative trading firm, focusing primarily on trading equities and equity derivatives. We use innovative technology, a scientific approach, and a deep understanding of markets to stay successful in our highly competitive field. We operate around the clock and around the globe, employing over 500 people in offices in New York, London and Hong Kong.&lt;/p&gt;
+
+&lt;p&gt;The markets in which we trade change rapidly, but our intellectual approach changes faster still. Every day, we have new problems to solve and new theories to test. Our entrepreneurial culture is driven by our talented team of traders and programmers. At Jane Street, we don't come to work wanting to leave. We come to work excited to test new theories, have thought-provoking discussions, and maybe sneak in a game of ping-pong or two. Keeping our culture casual and our employees happy is of paramount importance to us.&lt;/p&gt;
+
+&lt;p&gt;We are looking to hire great software developers with an interest in functional programming. OCaml, a statically typed functional programming language with similarities to Haskell, Scheme, Erlang, F# and SML, is our language of choice. We've got the largest team of OCaml developers in any industrial setting, and probably the world's largest OCaml codebase. We use OCaml for running our entire business, supporting everything from research to systems administration to trading systems. If you're interested in seeing how functional programming plays out in the real world, there's no better place.&lt;/p&gt;
+
+&lt;p&gt;The atmosphere is informal and intellectual. There is a focus on education, and people learn about software and trading, both through formal classes and on the job. The work is challenging, and you get to see the practical impact of your efforts in quick and dramatic terms. Jane Street is also small enough that people have the freedom to get involved in many different areas of the business. Compensation is highly competitive, and there's a lot of room for growth.&lt;/p&gt;
+
+&lt;p&gt;You can learn more about Jane Street and our technology from our main site, janestreet.com. You can also look at a a talk given at CMU about why Jane Street uses functional programming (&lt;a href=&quot;http://ocaml.janestreet.com/?q=node/61&quot;&gt;http://ocaml.janestreet.com/?q=node/61&lt;/a&gt;), and our programming blog (&lt;a href=&quot;http://ocaml.janestreet.com&quot;&gt;http://ocaml.janestreet.com&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;We also have extensive benefits, including:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;90% book reimbursement for work-related books&lt;/li&gt;
+&lt;li&gt;90% tuition reimbursement for continuing education&lt;/li&gt;
+&lt;li&gt;Excellent, zero-premium medical and dental insurance&lt;/li&gt;
+&lt;li&gt;Free lunch delivered daily from a selection of restaurants&lt;/li&gt;
+&lt;li&gt;Catered breakfasts and fresh brewed Peet's coffee&lt;/li&gt;
+&lt;li&gt;An on-site, private gym in New York with towel service&lt;/li&gt;
+&lt;li&gt;Kitchens fully stocked with a variety of snack choices&lt;/li&gt;
+&lt;li&gt;Full company 401(k) match up to 6% of salary, vests immediately&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;More information at &lt;a href=&quot;http://janestreet.com/culture/benefits/&quot;&gt;http://janestreet.com/culture/benefits/&lt;/a&gt;&lt;/p&gt;</content><id>urn:uuid:0a9333c4-71da-11e0-9ac7-692793c00b45</id><title type="text">Full Time: Software Developer (Functional Programming) at Jane Street in New York, NY; London, UK; Hong Kong</title><updated>2018-10-01T14:28:20-00:00</updated><author><email>jobs@github.com</email><name>GitHub Jobs</name></author></entry><entry><source><updated>2018-10-01T14:28:20-00:00</updated><link href="http://jobs.github.com/" rel="alternate"/><link href="http://jobs.github.com/positions.atom?description=ocaml" rel="self"/><id>urn:uuid:0a9333c4-71da-11e0-9ac7-692793c00b45</id><title type="text">
+    GitHub Jobs
+      matching ocaml
+  </title><author><email>jobs@github.com</email><name>GitHub Jobs</name></author></source><link href="http://jobs.github.com/positions/9e8ba450-e72e-11e7-926f-6ce07b7015c8" rel="alternate"/><content xml:base="https://jobs.github.com/positions.atom?description=ocaml" type="html">&lt;p&gt;Jane Street is a proprietary quantitative trading firm, focusing primarily on trading equities and equity derivatives. We use innovative technology, a scientific approach, and a deep understanding of markets to stay successful in our highly competitive field. We operate around the clock and around the globe, employing over 500 people in offices in New York, London and Hong Kong.&lt;/p&gt;
+
+&lt;p&gt;The markets in which we trade change rapidly, but our intellectual approach changes faster still. Every day, we have new problems to solve and new theories to test. Our entrepreneurial culture is driven by our talented team of traders and programmers. At Jane Street, we don't come to work wanting to leave. We come to work excited to test new theories, have thought-provoking discussions, and maybe sneak in a game of ping-pong or two. Keeping our culture casual and our employees happy is of paramount importance to us.&lt;/p&gt;
+
+&lt;p&gt;As Jane Street grows, the quality of the development tools we use matters more and more.  We increasingly work on the OCaml compiler itself: adding useful language features, fine-tuning the type system and improving the performance of the generated code. Alongside this, we also work on the surrounding toolchain, developing new tools for profiling, debugging, documentation and build automation.&lt;/p&gt;
+
+&lt;p&gt;We're looking to hire a developer with experience working on compilers to join us. That experience might be from working on a production compiler in industry or from working on research compilers in an academic setting. No previous experience with OCaml or functional programming languages is required.&lt;/p&gt;
+
+&lt;p&gt;We’re looking for candidates for both our London and New York offices. Benefits and compensation are highly competitive.&lt;/p&gt;</content><id>urn:uuid:9e8ba450-e72e-11e7-926f-6ce07b7015c8</id><title type="text">Full Time: Compiler Engineer at Jane Street in New York &amp; London</title><updated>2018-10-01T14:28:04-00:00</updated><author><email>jobs@github.com</email><name>GitHub Jobs</name></author></entry><entry><source><updated>2018-09-26T00:00:00-00:00</updated><link title="The Coq Proof Assistant" type="text/html" href="https://coq.inria.fr" rel="related"/><link title="The Coq Proof Assistant" type="application/rss+xml" href="http://coq.inria.fr/news/feed" rel="self"/><id>https://coq.inria.fr</id><title type="text">The Coq Proof Assistant</title><author><name>Coq</name></author></source><link href="https://coq.inria.fr/news/147.html" rel="alternate"/><content xml:base="http://coq.inria.fr/news/feed" type="html">
 &lt;p&gt;The &lt;a href=&quot;https://github.com/coq/coq/releases/tag/V8.8.2&quot;&gt;8.8.2 release of Coq&lt;/a&gt; is available.&lt;/p&gt;
 &lt;p&gt;Main changes:&lt;/p&gt;
 &lt;ul&gt;
@@ -342,56 +379,7 @@ Derpeter gave me a nice introduction about how to do this with wireshark, which 
 <p>During the last days I wanted to write a unikernel that does something new, and I thought about monitoring, as there is no monitoring for MirageOS yet. I set up a <a href="https://grafana.com/">grafana</a> on my computer and sent some simple data packets to grafana from a unikernel, producing little peaks in a test graph. Reynir and I played with this a bit and restructured the program.</p>
 <p>After this, the week was over, I walked back to Jemaa el Fnaa with Jeremie, I feel I learned a ton and yet am still at the very beginning, excited what to build next. On the way back I got stuck in a weird hotel in Casablanca due to the flight being cancelled, where I bumped into a Moroccan wedding and met some awesome travelling women from Brazil and the US who also got stuck. All in all a fun adventure!</p>
 <p><img src="https://scontent-frt3-2.cdninstagram.com/vp/b7383ad87744d99eae8940b38789fc94/5B58DFFC/t51.2885-15/e35/28764104_231320117439563_2956918922680467456_n.jpg" alt=""/></p>
-</div></content><id>https://mirage.io/blog/2018-visiting-the-camels</id><title type="text">Visiting the camels - MirageOS spring hack retreat 2018</title><updated>2018-04-20T16:00:00-00:00</updated><author><uri>https://linse.me</uri><name>Stefanie Schirmer</name></author></entry><entry><summary type="text">&lt;p&gt;More than three years ago we launched our Bitcoin Piñata as a transparent security bait.  It is still up and running!&lt;/p&gt;
-</summary><source><updated>2018-04-29T11:40:10-00:00</updated><link href="https://hannes.nqsb.io/atom" rel="self"/><id>urn:uuid:981361ca-e71d-4997-a52c-baeee78e4156</id><title type="text">full stack engineer</title><author><name>Hannes Mehnert</name></author></source><published>2018-04-18T11:38:06-00:00</published><link href="https://hannes.nqsb.io/Posts/Pinata" rel="alternate"/><content xml:base="https://hannes.nqsb.io/atom" type="html">
-
-&lt;h2 id=&quot;History&quot;&gt;History&lt;/h2&gt;
-
-&lt;p&gt;On February 10th 2015 David Kaloper-Meršinjak and Hannes Mehnert
-&lt;a href='https://mirage.io/announcing-bitcoin-pinata'&gt;launched&lt;/a&gt; (read also &lt;a href='http://amirchaudhry.com/bitcoin-pinata'&gt;Amir&amp;#39;s
-description&lt;/a&gt;) our &lt;a href='https://en.wikipedia.org/wiki/Bug_bounty_program'&gt;bug bounty
-program&lt;/a&gt; in the form of our
-&lt;a href='http://ownme.ipredator.se'&gt;Bitcoin Piñata&lt;/a&gt; MirageOS unikernel.  Thanks again to
-&lt;a href='https://ipredator.se'&gt;IPredator&lt;/a&gt; for both hosting our services and lending us
-the 10 Bitcoins!  We &lt;a href='https://mirage.io/blog/bitcoin-pinata-results'&gt;analysed&lt;/a&gt; a
-bit more in depth after running it for five months.  Mindy recently wrote about
-&lt;a href='https://somerandomidiot.com/blog/2018/04/17/whacking-the-bitcoin-pinata/'&gt;whacking the Bitcoin
-Piñata&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;On March 18th 2018, after more than three years, IPredator, the lender of the Bitcoins, repurposed the 10 Bitcoins for other projects.  Initially, we thought that the Piñata would maybe run for a month or two, but IPredator, David, and I decided to keep it running.  The update of the Piñata&amp;#39;s bounty is a good opportunity to reflect on the project.&lt;/p&gt;
-&lt;p&gt;The 10 Bitcoin in the Piñata were fluctuating in price over time, at peak worth 165000€.&lt;/p&gt;
-&lt;p&gt;From the start of the Piñata project, we published the &lt;a href='https://github.com/mirleft/btc-pinata'&gt;source code&lt;/a&gt;, the virtual machine image, and the versions of the used libraries in a git repository.  Everybody could develop their exploits locally before launching them against our Piñata.  The Piñata provides TLS endpoints, which require private keys and certificates.  These are generated by the Piñata at startup, and the secret for the Bitcoin wallet is provided as a command line argument.&lt;/p&gt;
-&lt;p&gt;Initially the Piñata was deployed on a Linux/Xen machine, later it was migrated to a FreeBSD host using BHyve and VirtIO with &lt;a href='https://github.com/solo5/solo5'&gt;solo5&lt;/a&gt;, and in December 2017 it was migrated to native BHyve (&lt;a href='/Posts/Solo5'&gt;using &lt;code&gt;ukvm-bin&lt;/code&gt; and solo5&lt;/a&gt;).  We also changed the Piñata code to accomodate for updates, such as the &lt;a href='https://mirage.io/blog/announcing-mirage-30-release'&gt;MirageOS 3.0 release&lt;/a&gt;, and the discontinuation of floating point numbers for timestamps (asn1-combinators 0.2.0, x509 0.6.0, tls 0.9.0).&lt;/p&gt;
-&lt;h2 id=&quot;Motivation&quot;&gt;Motivation&lt;/h2&gt;
-
-&lt;p&gt;We built the Piñata for many purposes: to attract security professionals to evaluate our &lt;a href='https://mirage.io/blog/introducing-ocaml-tls'&gt;from-scratch developed TLS stack&lt;/a&gt;, to gather empirical data for our &lt;a href='https://usenix15.nqsb.io'&gt;Usenix Security 15 paper&lt;/a&gt;, and as an improvement to current bug bounty programs.&lt;/p&gt;
-&lt;p&gt;Most bug bounty programs require communication via forms and long wait times for
-human experts to evaluate the potential bug.  This evaluation is subjective,
-intransparent, and often requires signing of non-disclosure agreements (NDA),
-even before the evaluation starts.&lt;/p&gt;
-&lt;p&gt;Our Piñata &lt;em&gt;automates&lt;/em&gt; these parts, getting rid of wait times and NDAs.  To get
-the private wallet key that holds the bounty, you need to successfully establish
-an authenticated TLS session or find a flaw elsewhere in the stack, which allows
-to read arbitrary memory.  Everyone can track transactions of the blockchain and
-see if the wallet still contains the bounty.&lt;/p&gt;
-&lt;p&gt;Of course, the Piñata can&amp;#39;t prove that our stack is secure, and it can&amp;#39;t prove
-that the access to the wallet is actually inside.  But trust us, it is!&lt;/p&gt;
-&lt;h2 id=&quot;Observations&quot;&gt;Observations&lt;/h2&gt;
-
-&lt;p&gt;I still remember vividly the first nights in February 2015, being so nervous that I woke up every two hours and checked the blockchain.  Did the Piñata still have the Bitcoins?  I was familiar with the code of the Piñata and was afraid there might be a bug which allows to bypass authentication or leak the private key.  So far, this doesn&amp;#39;t seem to be the case.&lt;/p&gt;
-&lt;p&gt;In April 2016 we stumbled upon an &lt;a href='/Posts/BadRecordMac'&gt;information disclosure in the virtual network
-device driver for Xen in MirageOS&lt;/a&gt;.  Given enough
-bandwidth, this could have been used to access the private wallet key.  We
-upgraded the Piñata and released the &lt;a href='https://mirage.io/blog/MSA00'&gt;MirageOS Security Advisory
-00&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;We analysed the Piñata&amp;#39;s access logs to the and bucketed them into website traffic and bounty connections.  We are still wondering what happened in July 2015 and July 2017 where the graph shows spikes.  Could it be a presentation mentioning the Piñata, or a new automated tool which tests for TLS vulnerabilities, or an increase in market price for Bitcoins?&lt;/p&gt;
-&lt;p&gt;&lt;img src='/static/img/pinata_access_20180403.png' alt='Piñata access' /&gt; &lt;img src='/static/img/pinata_access_cumulative_20180403.png' alt='Piñata access cumulative' /&gt;&lt;/p&gt;
-&lt;p&gt;The cumulative graph shows that more than 500,000 accesses to the Piñata website, and more than 150,000 attempts at connecting to the Piñata bounty.&lt;/p&gt;
-&lt;p&gt;You can short-circuit the client and server Piñata endpoint and observe the private wallet key being transferred on your computer, TLS encrypted with the secret exchanged by client and server, using &lt;code&gt;socat -x TCP:ownme.ipredator.se:10000 TCP:ownme.ipredator.se:10002&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;If you attempted to exploit the Piñata, please let us know what you tried!  Via&lt;/p&gt;
-&lt;strike&gt;[twitter](https://twitter.com/h4nnes)&lt;/strike&gt;&lt;p&gt;&lt;a href='http://mastodon.social/@hannesm'&gt;hannesm@mastodon.social&lt;/a&gt; or a &lt;a href='https://github.com/hannesm/hannes.nqsb.io/issues'&gt;GitHub
-issue&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Since &lt;a href='/Posts/DNS'&gt;the start of 2018&lt;/a&gt; we are developing robust software and systems at &lt;a href='http://robur.io'&gt;robur&lt;/a&gt;.  If you like our work and want to support us with donations or development contracts, please get in touch with &lt;code&gt;team@robur.io&lt;/code&gt;.  Robur is a project of the German non-profit &lt;a href='https://techcultivation.org'&gt;Center for the cultivation of technology&lt;/a&gt;.  Donations to robur are tax-deductible in Europe.&lt;/p&gt;
-</content><category scheme="https://hannes.nqsb.io/tags/mirageos" term="mirageos"/><category scheme="https://hannes.nqsb.io/tags/security" term="security"/><category scheme="https://hannes.nqsb.io/tags/bitcoin" term="bitcoin"/><id>urn:uuid:6b3a0f19-4bee-5a7d-83dd-547f41c09dbb</id><title type="text">The Bitcoin Piñata - no candy for you</title><updated>2018-04-18T11:48:41-00:00</updated><author><name>hannes</name></author></entry><entry><source><updated>2018-09-26T00:00:00-00:00</updated><link title="The Coq Proof Assistant" type="text/html" href="https://coq.inria.fr" rel="related"/><link title="The Coq Proof Assistant" type="application/rss+xml" href="http://coq.inria.fr/news/feed" rel="self"/><id>https://coq.inria.fr</id><title type="text">The Coq Proof Assistant</title><author><name>Coq</name></author></source><link href="https://coq.inria.fr/news/145.html" rel="alternate"/><content xml:base="http://coq.inria.fr/news/feed" type="html">
+</div></content><id>https://mirage.io/blog/2018-visiting-the-camels</id><title type="text">Visiting the camels - MirageOS spring hack retreat 2018</title><updated>2018-04-20T16:00:00-00:00</updated><author><uri>https://linse.me</uri><name>Stefanie Schirmer</name></author></entry><entry><source><updated>2018-09-26T00:00:00-00:00</updated><link title="The Coq Proof Assistant" type="text/html" href="https://coq.inria.fr" rel="related"/><link title="The Coq Proof Assistant" type="application/rss+xml" href="http://coq.inria.fr/news/feed" rel="self"/><id>https://coq.inria.fr</id><title type="text">The Coq Proof Assistant</title><author><name>Coq</name></author></source><link href="https://coq.inria.fr/news/145.html" rel="alternate"/><content xml:base="http://coq.inria.fr/news/feed" type="html">
 The &lt;a href=&quot;https://github.com/coq/coq/releases/tag/V8.8.0&quot;&gt;final release of Coq 8.8.0&lt;/a&gt; is
 available. It features better performances, tactic improvements, many
 enhancements for universe users, a new Export modifier for setting options,
@@ -808,282 +796,7 @@ block explorer to ease the use of the Tezos network.&lt;/p&gt;
 <p>The first great hack for 2018 is from <a href="http://toao.com">Sadiq Jaffer</a>, who got OCaml booting on a tiny and relatively new CPU architecture -- the <a href="http://esp32.net">Espressif ESP32</a>.  After proudly demonstrating a battery powered version to the folks at <a href="https://ocamllabs.io">OCaml Labs</a>, he then proceeded to clean it up enough tha it can be built with a <a href="https://github.com/sadiqj/ocaml-esp32-docker">Dockerfile</a>, so that others can start to do a native code port and get bindings to the networking interface working.</p>
 <p><a href="http://toao.com/blog/getting-ocaml-running-on-the-esp32#getting-ocaml-running-on-the-esp32">Read all about it on Sadiq's blog</a>, and thanks for sharing this with us, Sadiq!</p>
 <p>We also noticed that another OCaml generic virtual machine for even smaller microcontrollers has <a href="https://github.com/stevenvar/omicrob">shown up on GitHub</a>.  This, combined with some functional metaprogramming, may mean that 2018 is the year of OCaml in all the tiny embedded things...</p>
-</div></content><id>https://mirage.io/blog/2018-esp32-booting</id><title type="text">MirageOS running on the ESP32 embedded chip</title><updated>2018-01-26T16:00:00-00:00</updated><author><email>anil@recoil.org</email><uri>http://anil.recoil.org</uri><name>Anil Madhavapeddy</name></author></entry><entry><summary type="text">&lt;p&gt;New year brings new possibilities and a new environment.  I&amp;#39;ve been working on the most Widely deployed key-value store, the domain name system.  Primary and secondary name services are available, including dynamic updates, notify, and tsig authentication.&lt;/p&gt;
-</summary><source><updated>2018-04-29T11:40:10-00:00</updated><link href="https://hannes.nqsb.io/atom" rel="self"/><id>urn:uuid:981361ca-e71d-4997-a52c-baeee78e4156</id><title type="text">full stack engineer</title><author><name>Hannes Mehnert</name></author></source><published>2018-01-11T14:02:01-00:00</published><link href="https://hannes.nqsb.io/Posts/DNS" rel="alternate"/><content xml:base="https://hannes.nqsb.io/atom" type="html">
-
-&lt;h2 id=&quot;2018&quot;&gt;2018&lt;/h2&gt;
-
-&lt;p&gt;At the end of 2017, I resigned from my PostDoc position at University of
-Cambridge (in the &lt;a href='https://www.cl.cam.ac.uk/~pes20/rems/'&gt;rems&lt;/a&gt; project).  Early
-December 2017 I organised the &lt;a href='https://mirage.io/blog/2017-winter-hackathon-roundup'&gt;4th MirageOS hack
-retreat&lt;/a&gt;, with which I&amp;#39;m
-very satisfied.  In March 2018 the &lt;a href='http://retreat.mirage.io'&gt;5th retreat&lt;/a&gt; will
-happen (please sign up!).&lt;/p&gt;
-&lt;p&gt;In 2018 I moved to Berlin and started to work for the (non-profit) &lt;a href='https://techcultivation.org'&gt;Center for
-the cultivation of technology&lt;/a&gt; with our
-&lt;a href='http://robur.io'&gt;robur.io&lt;/a&gt; project &amp;quot;At robur, we build performant bespoke
-minimal operating systems for high-assurance services&amp;quot;.  robur is only possible
-by generous donations in autumn 2017, enthusiastic collaborateurs, supportive
-friends, and a motivated community, thanks to all.  We will receive funding from
-the &lt;a href='https://prototypefund.de/project/robur-io/'&gt;prototypefund&lt;/a&gt; to work on a
-&lt;a href='http://robur.io/Projects/CalDAV'&gt;CalDAV server&lt;/a&gt; implementation in OCaml
-targeting MirageOS.  We&amp;#39;re still looking for donations and further funding,
-please get in touch.  Apart from CalDAV, I want to start the year by finishing
-several projects which I discovered on my hard drive.  This includes DNS, &lt;a href='/Posts/Conex'&gt;opam
-signing&lt;/a&gt;, TCP, ... .  My personal goal for 2018 is to develop a
-flexible &lt;code&gt;mirage deploy&lt;/code&gt;, because after configuring and building a unikernel, I
-want to get it smoothly up and running (spoiler: I already use
-&lt;a href='/Posts/VMM'&gt;albatross&lt;/a&gt; in production).&lt;/p&gt;
-&lt;p&gt;To kick off (3% of 2018 is already used) this year, I&amp;#39;ll talk in more detail
-about &lt;a href='https://github.com/roburio/udns'&gt;µDNS&lt;/a&gt;, an opinionated from-scratch
-re-engineered DNS library, which I&amp;#39;ve been using since Christmas 2017 in production for
-&lt;a href='https://github.com/hannesm/ns.nqsb.io'&gt;ns.nqsb.io&lt;/a&gt; and
-&lt;a href='https://git.robur.io/?p=ns.robur.io.git;a=summary'&gt;ns.robur.io&lt;/a&gt;.  The
-development started in March 2017, and continued over several evenings and long
-weekends.  My initial motivation was to implement a recursive resolver to run on
-my laptop.  I had a working prototype in use on my laptop over 4 months in the
-summer 2017, but that code was not in a good shape, so I went down the rabbit
-hole and (re)wrote a server (and learned more about GADT).  A configurable
-resolver needs a server, as local overlay, usually anyways.  Furthermore,
-dynamic updates are standardised and thus a configuration interface exists
-inside the protocol, even with hmac-signatures for authentication!
-Coincidentally, I started to solve another issue, namely automated management of let&amp;#39;s
-encrypt certificates (see &lt;a href='https://github.com/hannesm/ocaml-letsencrypt/tree/nsupdate'&gt;this
-branch&lt;/a&gt; for an
-initial hack).  On my journey, I also reported a cache poisoning vulnerability,
-which was fixed in &lt;a href='https://docs.docker.com/docker-for-windows/release-notes/#docker-community-edition-17090-ce-win32-2017-10-02-stable'&gt;Docker for
-Windows&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;But let&amp;#39;s get started with some content.  Please keep in mind that while the
-code is publicly available, it is not yet released (mainly since the test
-coverage is not high enough, and the lack of documentation).  I appreciate early
-adopters, please let me know if you find any issues or find a use case which is
-not straightforward to solve.  This won&amp;#39;t be the last article about DNS this
-year - persistent storage, resolver, let&amp;#39;s encrypt support are still missing.&lt;/p&gt;
-&lt;h2 id=&quot;What-is-DNS&quot;&gt;What is DNS?&lt;/h2&gt;
-
-&lt;p&gt;The &lt;a href='https://en.wikipedia.org/wiki/DNS'&gt;domain name system&lt;/a&gt; is a core Internet
-protocol, which translates domain names to IP addresses.  A domain name is
-easier to memorise for human beings than an IP address.  DNS is hierarchical and
-decentralised.  It was initially &amp;quot;specified&amp;quot; in Nov 1987 in &lt;a href='https://tools.ietf.org/html/rfc1034'&gt;RFC
-1034&lt;/a&gt; and &lt;a href='https://tools.ietf.org/html/rfc1035'&gt;RFC
-1035&lt;/a&gt;.  Nowadays it spans over more than 20
-technical RFCs, 10 security related, 5 best current practises and another 10
-informational.  The basic encoding and mechanisms did not change.&lt;/p&gt;
-&lt;p&gt;On the Internet, there is a set of root servers (administrated by IANA) which
-provide the information about which name servers are authoritative for which top level
-domain (such as &amp;quot;.com&amp;quot;).  They provide the information about which name servers are
-responsible for which second level domain name (such as &amp;quot;example.com&amp;quot;), and so
-on.  There are at least two name servers for each domain name in separate
-networks - in case one is unavailable the other can be reached.&lt;/p&gt;
-&lt;p&gt;The building blocks for DNS are: the resolver, a stub (&lt;code&gt;gethostbyname&lt;/code&gt; provided
-by your C library) or caching forwarding resolver (at your ISP), which send DNS
-packets to another resolver, or a recursive resolver which, once seeded with the
-root servers, finds out the IP address of a requested domain name.  The other
-part are authoritative servers, which reply to requests for their configured
-domain.&lt;/p&gt;
-&lt;p&gt;To get some terminology, a DNS client sends a query, consisting of a domain
-name and a query type, and expects a set of answers, which are called resource
-records, and contain: name, time to live, type, and data.  The resolver
-iteratively requests resource records from authoritative servers, until the requested
-domain name is resolved or fails (name does not exist, server
-failure, server offline).&lt;/p&gt;
-&lt;p&gt;DNS usually uses UDP as transport which is not reliable and limited to 512 byte
-payload on the Internet (due to various middleboxes).  DNS can also be
-transported via TCP, and even via TLS over UDP or TCP.  If a DNS packet
-transferred via UDP is larger than 512 bytes, it is cut at the 512 byte mark,
-and a bit in its header is set.  The receiver can decide whether to use the 512
-bytes of information, or to throw it away and attempt a TCP connection.&lt;/p&gt;
-&lt;h3 id=&quot;DNS-packet&quot;&gt;DNS packet&lt;/h3&gt;
-
-&lt;p&gt;The packet encoding starts with a 16bit identifier followed by a 16bit header
-(containing operation, flags, status code), and four counters, each 16bit,
-specifying the amount of resource records in the body: questions, answers,
-authority records, and additional records.  The header starts with one bit
-operation (query or response), four bits opcode, various flags (recursion,
-authoritative, truncation, ...), and the last four bit encode the response code.&lt;/p&gt;
-&lt;p&gt;A question consists of a domain name, a query type, and a query class.  A
-resource record additionally contains a 32bit time to live, a length, and the
-data.&lt;/p&gt;
-&lt;p&gt;Each domain name is a case sensitive string of up to 255 bytes, separated by &lt;code&gt;.&lt;/code&gt;
-into labels of up to 63 bytes each.  A label is either encoded by its length
-followed by the content, or by an offset to the start of a label in the current
-DNS frame (poor mans compression).  Care must be taken during decoding to avoid
-cycles in offsets.  Common operations on domain names are comparison: equality,
-ordering, and also whether some domain name is a subdomain of another domain
-name, should be efficient.  My initial representation naïvely was a list of
-strings, now it is an array of strings in reverse order.  This speeds up common
-operations by a factor of 5 (see test/bench.ml).&lt;/p&gt;
-&lt;p&gt;The only really used class is &lt;code&gt;IN&lt;/code&gt; (for Internet), as mentioned in &lt;a href='https://tools.ietf.org/html/rfc6895'&gt;RFC
-6895&lt;/a&gt;.  Various query types (&lt;code&gt;MD&lt;/code&gt;, &lt;code&gt;MF&lt;/code&gt;,
-&lt;code&gt;MB&lt;/code&gt;, &lt;code&gt;MG&lt;/code&gt;, &lt;code&gt;MR&lt;/code&gt;, &lt;code&gt;NULL&lt;/code&gt;, &lt;code&gt;AFSDB&lt;/code&gt;, ...) are barely or never used.  There is no
-need to convolute the implementation and its API with these legacy options (if
-you have a use case and see those in the wild, please tell me).&lt;/p&gt;
-&lt;p&gt;My implemented packet decoding does decompression, only allows valid internet
-domain names, and may return a partial parse - to use as many resource records
-in truncated packets as possible.  There are no exceptions raised, the parsing
-uses a monadic style error handling.  Since label decompression requires the
-parser to know absolute offsets, the original buffer and the offset is manually
-passed around at all times, instead of using smaller views on the buffer.  The
-decoder does not allow for gaps, when the outer resource data length specifies a
-byte length which is not completely consumed by the specific resource data
-subparser (an A record must always consume four bytes).  Failing to check this can
-lead to a way to exfiltrate data without getting noticed.&lt;/p&gt;
-&lt;p&gt;Each zone (a served domain name) contains a SOA &amp;quot;start of authority&amp;quot; entry,
-which includes the primary nameserver name, the hostmaster&amp;#39;s email address (both
-encoded as domain name), a serial number of the zone, a refresh, retry, expiry,
-and minimum interval (all encoded as 32bit unsigned number in seconds).  Common
-resource records include A, which payload is 32bit IPv4 address.  A nameserver
-(NS) record carries a domain name as payload.  A mail exchange (MX) whose
-payload is a 16bit priority and a domain name.  A CNAME record is an alias to
-another domain name.  These days, there are even records to specify the
-certificate authority authorisation (CAA) records containing a flag (critical),
-a tag (&amp;quot;issue&amp;quot;) and a value (&amp;quot;letsencrypt.org&amp;quot;).&lt;/p&gt;
-&lt;h2 id=&quot;Server&quot;&gt;Server&lt;/h2&gt;
-
-&lt;p&gt;The operation of a DNS server is to listen for a request and serve a reply.
-Data to be served can be canonically encoded (the RFC describes the format) in a
-zone file.  Apart from insecurity in DNS server implementations, another attack
-vector are amplification attacks where an attacker crafts a small UDP frame
-with a fake source IP address, and the server answers with a large response to
-that address which may lead to a DoS attack.  Various mitigations exist
-including rate limiting, serving large replies only via TCP, ...&lt;/p&gt;
-&lt;p&gt;Internally, the zone file data is stored in a tree (module
-&lt;a href='https://github.com/roburio/udns/blob/master/server/dns_trie.mli'&gt;Dns_trie&lt;/a&gt;
-&lt;a href='https://github.com/roburio/udns/blob/master/server/dns_trie.ml'&gt;implementation&lt;/a&gt;),
-where each node contains two maps: &lt;code&gt;sub&lt;/code&gt;, which key is a label and value is a
-subtree and &lt;code&gt;dns_map&lt;/code&gt; (module Dns_map), which key is a resource record type and
-value is the resource record.  Both use the OCaml
-&lt;a href='http://caml.inria.fr/pub/docs/manual-ocaml/libref/Map.html'&gt;Map&lt;/a&gt; (&amp;quot;also known
-as finite maps or dictionaries, given a total ordering function over the
-keys. All operations over maps are purely applicative (no side-effects). The
-implementation uses balanced binary trees, and therefore searching and insertion
-take time logarithmic in the size of the map&amp;quot;).&lt;/p&gt;
-&lt;p&gt;The server looks up the queried name, and in the returned Dns_map the queried
-type. The found resource records are sent as answer, which also includes the
-question and authority information (NS records of the zone) and additional glue
-records (IP addresses of names mentioned earlier in the same zone).&lt;/p&gt;
-&lt;h3 id=&quot;Dns-map&quot;&gt;Dns_map&lt;/h3&gt;
-
-&lt;p&gt;The data structure which contains resource record types as key, and a collection
-of matching resource records as values.  In OCaml the value type must be
-homogenous - using a normal sum type leads to an unneccessary unpacking step
-(or lacking type information):&lt;/p&gt;
-&lt;pre class='OCaml'&gt;&lt;code class='OCaml'&gt;let lookup_ns t =
-  match Map.find NS t with
-  | None -&amp;gt; Error `NotFound
-  | Some (NS nameservers) -&amp;gt; Ok nameservers
-  | Some _ -&amp;gt; Error `NotFound&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Instead, I use in my current rewrite &lt;a href='https://en.wikipedia.org/wiki/Generalized_algebraic_data_type'&gt;generalized algebraic data
-types&lt;/a&gt; (read
-&lt;a href='http://caml.inria.fr/pub/docs/manual-ocaml/extn.html#sec251'&gt;OCaml manual&lt;/a&gt; and
-&lt;a href='http://mads-hartmann.com/ocaml/2015/01/05/gadt-ocaml.html'&gt;Mads Hartmann blog post about use cases for
-GADTs&lt;/a&gt;, &lt;a href='https://andreas.github.io/2018/01/05/modeling-graphql-type-modifiers-with-gadts/'&gt;Andreas
-Garnæs about using GADTs for GraphQL type
-modifiers&lt;/a&gt;)
-to preserve a relation between key and value (and A record has a list of IPv4
-addresses and a ttl as value) - similar to
-&lt;a href='http://erratique.ch/software/hmap'&gt;hmap&lt;/a&gt;, but different: a closed key-value
-mapping (the GADT), no int for each key and mutable state.  Thanks to Justus
-Matthiesen for helping me with GADTs and this code.  Look into the
-&lt;a href='https://github.com/roburio/udns/blob/master/src/dns_map.mli'&gt;interface&lt;/a&gt; and
-&lt;a href='https://github.com/roburio/udns/blob/master/src/dns_map.ml'&gt;implementation&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class='OCaml'&gt;&lt;code class='OCaml'&gt;(* an ordering relation, I dislike using int for that *)
-module Order = struct
-  type (_,_) t =
-    | Lt : (&amp;#39;a, &amp;#39;b) t
-    | Eq : (&amp;#39;a, &amp;#39;a) t
-    | Gt : (&amp;#39;a, &amp;#39;b) t
-end
-
-module Key = struct
-  (* The key and its value type *)
-  type _ t =
-    | Soa : (int32 * Dns_packet.soa) t
-    | A : (int32 * Ipaddr.V4.t list) t
-    | Ns : (int32 * Dns_name.DomSet.t) t
-    | Cname : (int32 * Dns_name.t) t
-
-  (* we need a total order on our keys *)
-  let compare : type a b. a t -&amp;gt; b t -&amp;gt; (a, b) Order.t = fun t t&amp;#39; -&amp;gt;
-    let open Order in
-    match t, t&amp;#39; with
-    | Cname, Cname -&amp;gt; Eq | Cname, _ -&amp;gt; Lt | _, Cname -&amp;gt; Gt
-    | Ns, Ns -&amp;gt; Eq | Ns, _ -&amp;gt; Lt | _, Ns -&amp;gt; Gt
-    | Soa, Soa -&amp;gt; Eq | Soa, _ -&amp;gt; Lt | _, Soa -&amp;gt; Gt
-    | A, A -&amp;gt; Eq
-end
-
-type &amp;#39;a key = &amp;#39;a Key.t
-
-(* our OCaml Map with an encapsulated constructor as key *)
-type k = K : &amp;#39;a key -&amp;gt; k
-module M = Map.Make(struct
-    type t = k
-    (* the price I pay for not using int as three-state value *)
-    let compare (K a) (K b) = match Key.compare a b with
-      | Order.Lt -&amp;gt; -1
-      | Order.Eq -&amp;gt; 0
-      | Order.Gt -&amp;gt; 1
-  end)
-
-(* v contains a key and value pair, wrapped by a single constructor *)
-type v = V : &amp;#39;a key * &amp;#39;a -&amp;gt; v
-
-(* t is the main type of a Dns_map, used by clients *)
-type t = v M.t
-
-(* retrieve a typed value out of the store *)
-let get : type a. a Key.t -&amp;gt; t -&amp;gt; a = fun k t -&amp;gt;
-  match M.find (K k) t with
-  | V (k&amp;#39;, v) -&amp;gt;
-    (* this comparison is superfluous, just for the types *)
-    match Key.compare k k&amp;#39; with
-    | Order.Eq -&amp;gt; v
-    | _ -&amp;gt; assert false&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This helps me to programmaticaly retrieve tightly typed values from the cache,
-important when code depends on concrete values (i.e. when there are domain
-names, look these up as well and add as additional records).  Look into &lt;a href='https://github.com/roburio/udns/blob/master/server/dns_server.ml'&gt;server/dns_server.ml&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Dynamic-updates-notifications-and-authentication&quot;&gt;Dynamic updates, notifications, and authentication&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href='https://tools.ietf.org/html/rfc2136'&gt;Dynamic updates&lt;/a&gt; specify in-protocol
-record updates (supported for example by &lt;code&gt;nsupdate&lt;/code&gt; from ISC bind-tools),
-&lt;a href='https://tools.ietf.org/html/rfc1996'&gt;notifications&lt;/a&gt; are used by primary servers
-to notify secondary servers about updates, which then initiate a &lt;a href='https://tools.ietf.org/html/rfc5936'&gt;zone
-transfer&lt;/a&gt; to retrieve up to date
-data. &lt;a href='https://tools.ietf.org/html/rfc2845'&gt;Shared hmac secrets&lt;/a&gt; are used to
-ensure that the transaction (update, zone transfer) was authorised.  These are
-all protocol extensions, there is no need to use out-of-protocol solutions.&lt;/p&gt;
-&lt;p&gt;The server logic for update and zone transfer frames is slightly more complex,
-and includes a dependency upon an authenticator (implemented using the
-&lt;a href='https://github.com/mirleft/ocaml-nocrypto'&gt;nocrypto&lt;/a&gt; library, and
-&lt;a href='http://erratique.ch/software/ptime'&gt;ptime&lt;/a&gt;).&lt;/p&gt;
-&lt;h3 id=&quot;Deployment-and-Let-39-s-Encrypt&quot;&gt;Deployment and Let&amp;#39;s Encrypt&lt;/h3&gt;
-
-&lt;p&gt;To deploy servers without much persistent data, an authentication schema is
-hardcoded in the dns-server: shared secrets are also stored as DNS entries
-(DNSKEY), and &lt;code&gt;_transfer.zone&lt;/code&gt;, &lt;code&gt;_update.zone&lt;/code&gt;, and &lt;code&gt;_key-management.zone&lt;/code&gt; names
-are introduced to encode the permissions.  A &lt;code&gt;_transfer&lt;/code&gt; key also needs to
-encode the IP address of the primary (to know where to request zone transfers)
-and secondary IP (to know where to send notifications).&lt;/p&gt;
-&lt;p&gt;Please have a look at
-&lt;a href='https://git.robur.io/?p=ns.robur.io.git;a=summary'&gt;ns.robur.io&lt;/a&gt; and the &lt;a href='https://github.com/roburio/udns/blob/master/mirage/examples'&gt;examples&lt;/a&gt; for more details.  The shared secrets are provided as boot parameter of the unikernel.&lt;/p&gt;
-&lt;p&gt;I hacked maker&amp;#39;s
-&lt;a href='https://github.com/hannesm/ocaml-letsencrypt/tree/nsupdate'&gt;ocaml-letsencrypt&lt;/a&gt;
-library to use µDNS and sending update frames to the given IP address.  I
-already used this to have letsencrypt issue various certificates for my domains.&lt;/p&gt;
-&lt;p&gt;There is no persistent storage of updates yet, but this can be realised by
-implementing a secondary (which is notified on update) that writes every new
-zone to persistent storage (e.g. &lt;a href='https://github.com/mirage/mirage-block'&gt;disk&lt;/a&gt;
-or &lt;a href='https://github.com/mirage/ocaml-git'&gt;git&lt;/a&gt;).  I also plan to have an
-automated Let&amp;#39;s Encrypt certificate unikernel which listens for certificate
-signing requests and stores signed certificates in DNS.  Luckily the year only
-started and there&amp;#39;s plenty of time left.&lt;/p&gt;
-&lt;p&gt;I&amp;#39;m interested in feedback, either via &lt;strike&gt;&lt;a href='https://twitter.com/h4nnes'&gt;twitter&lt;/a&gt;&lt;/strike&gt;
-hannesm@mastodon.social or an issue on the &lt;a href='https://github.com/hannesm/hannes.nqsb.io/issues'&gt;data
-repository&lt;/a&gt;.&lt;/p&gt;
-</content><category scheme="https://hannes.nqsb.io/tags/mirageos" term="mirageos"/><category scheme="https://hannes.nqsb.io/tags/protocol" term="protocol"/><id>urn:uuid:ccc6628c-7eed-5600-b504-4de6644d013d</id><title type="text">My 2018 contains robur and starts with re-engineering DNS</title><updated>2018-04-18T11:38:06-00:00</updated><author><name>hannes</name></author></entry><entry><source><updated>2018-09-26T00:00:00-00:00</updated><link title="The Coq Proof Assistant" type="text/html" href="https://coq.inria.fr" rel="related"/><link title="The Coq Proof Assistant" type="application/rss+xml" href="http://coq.inria.fr/news/feed" rel="self"/><id>https://coq.inria.fr</id><title type="text">The Coq Proof Assistant</title><author><name>Coq</name></author></source><link href="https://coq.inria.fr/news/142.html" rel="alternate"/><content xml:base="http://coq.inria.fr/news/feed" type="html">
+</div></content><id>https://mirage.io/blog/2018-esp32-booting</id><title type="text">MirageOS running on the ESP32 embedded chip</title><updated>2018-01-26T16:00:00-00:00</updated><author><email>anil@recoil.org</email><uri>http://anil.recoil.org</uri><name>Anil Madhavapeddy</name></author></entry><entry><source><updated>2018-09-26T00:00:00-00:00</updated><link title="The Coq Proof Assistant" type="text/html" href="https://coq.inria.fr" rel="related"/><link title="The Coq Proof Assistant" type="application/rss+xml" href="http://coq.inria.fr/news/feed" rel="self"/><id>https://coq.inria.fr</id><title type="text">The Coq Proof Assistant</title><author><name>Coq</name></author></source><link href="https://coq.inria.fr/news/142.html" rel="alternate"/><content xml:base="http://coq.inria.fr/news/feed" type="html">
 &lt;p&gt;The macOS installer for Coq 8.7.1 was updated on 2018-01-08 to fix frequent crashes of CoqIDE due to the use of an outdated dependency. Direct link to the new version:
 &lt;a href=&quot;https://github.com/coq/coq/releases/download/V8.7.1/coq-8.7.1-1-installer-macos.dmg&quot;&gt;
 coq-8.7.1-1-installer-macos.dmg&lt;/a&gt;.

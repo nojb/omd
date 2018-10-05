@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8"/>
     
-    <link href="4.05.html" rel="alternate" hreflang="en"/>
+    <link href="4.07.1.html" rel="alternate" hreflang="en"/>
 
     
-    <title>OCaml 4.05 &#8211; OCaml</title>
+    <title>OCaml 4.07.1 &#8211; OCaml</title>
     <link href="../img/favicon32x32.ico?" rel="shortcut icon" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
@@ -48,7 +48,7 @@
             </ul>
 
             
-            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.05.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
+            <a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.07.1.md" title="Edit this page" class="edit-this-page pull-right"><span>Edit this page</span></a>
 	    <script language="JavaScript">
 	      // Preload the hover image
 	      Image1= new Image(33,33);
@@ -106,7 +106,7 @@
     <ol class="breadcrumb">
       <li><a href="../">Home</a><span class="divider"></span></li>
 <li><a href="../releases/">Releases</a><span class="divider"></span></li>
-<li class="active">OCaml 4.05</li>
+<li class="active">OCaml 4.07.1</li>
 
 
     </ol>
@@ -121,36 +121,38 @@
       <div id="main-contents" class="content">
         
 
-<h1 id="OCaml-4-05-0">OCaml 4.05.0</h1><p>This page describes OCaml version <strong>4.05.0</strong>, released on
-2017-07-13. Go <a href="./">here</a> for a list of all releases and
-<a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/">here</a> for all 4.05.*
+<h1 id="OCaml-4-07-1">OCaml 4.07.1</h1><p>This page describes OCaml version <strong>4.07.1</strong>, released on
+2018-10-04.  Go <a href="./">here</a> for a list of all releases and
+<a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/">here</a> for all 4.07.*
 files.</p>
-<p>This release is availabe as multiple <a href="https://opam.ocaml.org/doc/Usage.html">OPAM</a> switches:</p>
-<ul><li><p>4.05.0 — Official 4.05.0 release</p>
-</li><li><p>4.05.0+flambda — Official 4.05.0 release with flambda enabled</p>
-</li><li><p>4.05.0+fp — Official 4.05.0 release with frame pointers</p>
-</li><li><p>4.05.0+safe-string - Official 4.05.0 release with <code>-safe-string</code> enabled</p>
-</li><li><p>4.05.0+spacetime - Official 4.05.0 release with <a href="http://caml.inria.fr/pub/docs/manual-ocaml/spacetime.html"><code>-spacetime</code> profiling</a> enabled</p>
-</li><li><p>4.05.0+afl — Official 4.05.0 release with support for afl-fuzz instrumentation</p>
+<p>This release is available as multiple
+<a href="https://opam.ocaml.org/doc/Usage.html">OPAM</a> switches:</p>
+<ul><li><p>4.07.1 — Official 4.07.1 release</p>
+</li><li><p>4.07.1+32bit - Official 4.07.1 release compiled in 32-bit mode</p>
+</li><li><p>4.07.1+afl — Official 4.07.1 release with afl-fuzz instrumentation</p>
+</li><li><p>4.07.1+default-unsafe-string — Official 4.07.1 release without safe
+ strings by default</p>
+</li><li><p>4.07.1+flambda — Official 4.07.1 release with flambda activated</p>
+</li><li><p>4.07.1+flambda+no-flat-float-arrays — Official 4.07.1 release with flambda
+ activated and flat float arrays disabled</p>
+</li><li><p>4.07.1+force-safe-string — Official 4.07.1 release with -safe-string enabled</p>
+</li><li><p>4.07.1+fp — Official 4.07.1 release with frame-pointers</p>
+</li><li><p>4.07.1+fp+flambda — Official 4.07.1 release with frame-pointers and
+ flambda activated</p>
 </li></ul>
 
 <h2 id="What-39-s-new">What&#39;s new</h2>
 
-<p>OCaml 4.05 comprises mainly bug fixes, with some improvements in
-performance and usability.
-For a comprehensive list of changes and details on all new features,
-bug fixes, optimizations, etc., please consult the
-<a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/notes/Changes">changelog</a>. There
-is also a crowdsourced <a href="https://github.com/gasche/ocaml-releases-change-explanation/wiki/4.05.0-changes-explanation">annotated
-changelog for 4.05.0</a> which contains extra commentaries and examples.</p>
+<p>This is a bug-fix release, please consult the
+<a href="#Changes">changelog</a>.</p>
 <h2 id="Source-distribution"><img src="../img/source.gif" alt=""/> Source distribution</h2>
 
-<ul><li><p><a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05.0.tar.gz">Source
+<ul><li><p><a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07.1.tar.gz">Source
  tarball</a>
  (.tar.gz) for compilation under Unix (including Linux and MacOS X)
  and Microsoft Windows (including Cygwin).</p>
 </li><li><p>Also available in
- <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05.0.tar.xz">.tar.xz</a>
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07.1.tar.xz">.tar.xz</a>
  format.</p>
 </li><li><p><a href="https://opam.ocaml.org/">OPAM</a> is a source-based distribution of
  OCaml and many companion libraries and tools. Compilation and
@@ -159,20 +161,23 @@ changelog for 4.05.0</a> which contains extra commentaries and examples.</p>
  <a href="https://github.com/ocaml/ocaml">GitHub</a>.</p>
 </li></ul>
 
-<p>The <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/notes/INSTALL.adoc">INSTALL</a>
-file of the distribution provides detailed compilation and
-installation instructions -- see also the <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/notes/README.win32.adoc">Windows release
-notes</a> for instructions on how to build under Windows.</p>
+<p>The
+<a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/notes/INSTALL.adoc">INSTALL</a> file
+of the distribution provides detailed compilation and installation
+instructions -- see also the <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/notes/README.win32.adoc">Windows release
+notes</a> for
+instructions on how to build under Windows.</p>
 <h2 id="Alternative-Compilers">Alternative Compilers</h2>
 
 <p>Additionally, the following projects allow you to compile OCaml code to
 targets traditionally associated with other languages:</p>
 <ul><li><p><a href="http://ocsigen.org/js_of_ocaml/">Js_of_ocaml</a> is a stable OCaml
  to JavaScript compiler.</p>
-</li><li><p><a href="http://bucklescript.github.io/bucklescript/">Bucklescript</a> is a newer
- OCaml to JavaScript compiler. See its
- <a href="https://github.com/bucklescript/bucklescript/wiki/Differences-from-js_of_ocaml">wiki</a>
- for an explanation of how it differs from js_of_ocaml.</p>
+</li><li><p><a href="https://bucklescript.github.io/">Bucklescript</a> is a
+ newer OCaml to JavaScript compiler.  See the
+ <a href="https://bucklescript.github.io/docs/en/comparison-to-jsoo">comparison to Js_of_ocaml</a>.
+ Bucklescript may take some time to be compatible with the latest
+ release of OCaml.</p>
 </li><li><p><a href="http://www.ocamljava.org/">OCaml-java</a> is a stable OCaml to
  Java compiler.</p>
 </li></ul>
@@ -180,29 +185,73 @@ targets traditionally associated with other languages:</p>
 <h2 id="User-39-s-manual"><img src="../img/doc.gif" alt=""/> User&#39;s manual</h2>
 
 <p>The user&#39;s manual for OCaml can be:</p>
-<ul><li><p><a href="http://caml.inria.fr/pub/docs/manual-ocaml-4.05/index.html">browsed
+<ul><li><p><a href="http://caml.inria.fr/pub/docs/manual-ocaml-4.07/index.html">browsed
  online</a>,</p>
 </li><li><p>downloaded as a single
- <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05-refman.ps.gz">PostScript</a>,
- <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05-refman.pdf">PDF</a>,
- or <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05-refman.txt">plain
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07-refman.ps.gz">PostScript</a>,
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07-refman.pdf">PDF</a>,
+ or <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07-refman.txt">plain
  text</a>
  document,</p>
 </li><li><p>downloaded as a single
- <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05-refman-html.tar.gz">TAR</a>
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07-refman-html.tar.gz">TAR</a>
  or
- <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05-refman-html.zip">ZIP</a>
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07-refman-html.zip">ZIP</a>
  archive of HTML files,</p>
 </li><li><p>downloaded as a single
- <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05/ocaml-4.05-refman.info.tar.gz">tarball</a>
+ <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/ocaml-4.07-refman.info.tar.gz">tarball</a>
  of Emacs info files,</p>
 </li></ul>
 
 <h2 id="Download-directory"><img src="../img/source.gif" alt=""/> Download directory</h2>
 
-<p>All the files are also available in <a href="http://caml.inria.fr/pub/distrib/ocaml-4.05">this
+<p>All the files are also available in <a href="http://caml.inria.fr/pub/distrib/ocaml-4.07">this
 directory</a>, along with
-their MD5 checksums.</p>
+their MD5 and SHA512 checksums.</p>
+<h2 id="Changes">Changes</h2>
+
+<p>This is the
+<a href="http://caml.inria.fr/pub/distrib/ocaml-4.07/notes/Changes">changelog</a>.</p>
+<p>(Changes that can break existing programs are marked with a &quot;*&quot;)</p>
+<h3 id="Bug-fixes">Bug fixes:</h3>
+
+<ul><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7815">MPR#7815</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1896">GPR#1896</a>:
+ major GC crash with first-fit policy
+ (Stephen Dolan and Damien Doligez, report by Joris Giovannangeli)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7818">MPR#7818</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/2051">GPR#2051</a>:
+ Remove local aliases in functor argument types,
+ to prevent the aliasing of their target.
+ (Jacques Garrigue, report by mandrykin, review by Leo White)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7820">MPR#7820</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1897">GPR#1897</a>:
+ Fix Array.of_seq. This function used to apply a circular
+ permutation of one cell to the right on the sequence.
+ (Thierry Martinez, review by Nicolás Ojeda Bär)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7821">MPR#7821</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1908">GPR#1908</a>:
+ make sure that the compilation of extension
+ constructors doesn&#39;t cause the compiler to load more cmi files
+ (Jérémie Dimino)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7824">MPR#7824</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1914">GPR#1914</a>:
+ subtype_row: filter out absent fields when row is closed
+ (Leo White and Thomas Refis, report by talex, review by Jacques Garrigue)</p>
+</li><li><p><a href="https://github.com/ocaml/ocaml/pull/1915">GPR#1915</a>:
+ rec_check.ml is too permissive for certain class declarations.
+ (Alban Reynaud with Gabriel Scherer, review by Jeremy Yallop)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7833">MPR#7833</a>,
+ <a href="https://caml.inria.fr/mantis/view.php?id=7835">MPR#7835</a>,
+ <a href="https://caml.inria.fr/mantis/view.php?id=7822">MPR#7822</a>,
+ <a href="https://github.com/ocaml/ocaml/pull/1997">GPR#1997</a>:
+ Track newtype level again
+ (Leo White, reports by Jerome Simeon, Thomas Refis and Florian
+ Angeletti, review by Jacques Garrigue)</p>
+</li><li><p><a href="https://caml.inria.fr/mantis/view.php?id=7838">MPR#7838</a>:
+ -principal causes assertion failure in type checker
+ (Jacques Garrigue, report by Markus Mottl, review by Thomas Refis)</p>
+</li></ul>
 
       </div>
     </div>
@@ -254,7 +303,7 @@ their MD5 checksums.</p>
   <div class="entry">
     <h1>Website</h1>
     <ul>
-      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.05.md" target="_blank">Edit this page</a></li>
+      <li><a href="https://github.com/ocaml/ocaml.org/tree/master/site/releases/4.07.1.md" target="_blank">Edit this page</a></li>
       <li><a href="https://github.com/ocaml/ocaml.org/issues" target="_blank">Website Issues</a></li>
       <li><a href="../about.html">About This Site</a></li>
     <li><a href="https://github.com/ocaml/ocaml.org/" target="_blank">Find Us on GitHub</a></li>

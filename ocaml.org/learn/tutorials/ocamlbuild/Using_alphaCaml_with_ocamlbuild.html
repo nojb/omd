@@ -130,16 +130,16 @@ named <code>myocamlbuild.ml</code> at the root of your project):</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Ocamlbuild_plugin</span>
 <span class="governing">open</span> <span class="ocaml-module">Command</span>
  
-<span class="governing">let </span><span class="ocaml-variable">alphaCaml</span> = A'alphaCaml'
+<span class="governing">let </span><span class="ocaml-variable">alphaCaml</span> = A<span class="string">&quot;alphaCaml&quot;</span>
  
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
   | After_rules -&gt;
-     rule 'alphaCaml: mla -&gt; ml &amp; mli'
-          ~prods:['%.ml'; '%.mli']
-          ~dep:'%.mla'
+     rule <span class="string">&quot;alphaCaml: mla -&gt; ml &amp; mli&quot;</span>
+          ~prods:[<span class="string">&quot;%.ml&quot;</span>; <span class="string">&quot;%.mli&quot;</span>]
+          ~dep:<span class="string">&quot;%.mla&quot;</span>
           <span class="governing">begin</span> <span class="keyword">fun</span> env _build -&gt;
-            Cmd(S[alphaCaml; P(env '%.mla')])
+            Cmd(S[alphaCaml; P(env <span class="string">&quot;%.mla&quot;</span>)])
           <span class="governing">end</span>
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
@@ -152,7 +152,7 @@ ocamlbuild</a>), or let
 # The pointed directory contains the compiled files (.cmo, .cmi).
 $ ln -s /path/to/your/alphaCaml/directory/ alphaLib
 $ cat _tags
-&#39;alphaLib&#39;: include, precious</code></pre>
+&quot;alphaLib&quot;: include, precious</code></pre>
 
       </div>
     </div>

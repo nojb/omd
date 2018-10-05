@@ -202,8 +202,18 @@
     s#push i
   <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
-    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>Popped %d off the stack.\n' s#pop
-  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;Popped %d off the stack.\n&quot;</span> s#pop
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Popped 10 off the stack.
+Popped 9 off the stack.
+Popped 8 off the stack.
+Popped 7 off the stack.
+Popped 6 off the stack.
+Popped 5 off the stack.
+Popped 4 off the stack.
+Popped 3 off the stack.
+Popped 2 off the stack.
+Popped 1 off the stack.
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>注意这个语法。 <code>object#method</code> 的意思是在 <code>object</code> 上调用 <code>method</code>。这和
@@ -251,7 +261,8 @@ FAQ</a>).
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 3.
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 1.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="ocaml-error-loc">'</span>a string'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="string"><span class="ocaml-error-loc">&quot;a string&quot;</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type string but an expression was expected of type
+         float
 </span></code></pre>
 
 <p>我们可以定义一个多态函数来操作所有类型的堆栈。首先我们先试试下面的代码：</p>
@@ -323,7 +334,7 @@ GUI部件库上。</p>
 方法的类型。因为这个方法没有实体，因此不可能推导出方法的类型。这里这个方法返回<code>unit</code>。
 如果你的类包含任何虚方法（包括继承来的），你需要把类定义成虚的 <code>class virtual ...</code>。</p>
 <p>如同C++和Java，虚类不能被直接实例化：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword">new</span> widget <span class="ocaml-error-loc">'</span>my widget'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword"><span class="ocaml-error-loc">new</span></span><span class="ocaml-error-loc"> widget</span> <span class="string">&quot;my widget&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Cannot instantiate the virtual class widget
 </span></code></pre>
 
 <p>现在 <code>container</code> 类的实现更加有趣。它要继承 <code>widget</code> 并且还要储存一系列的子部件。
@@ -385,11 +396,23 @@ GUI部件库上。</p>
         state &lt;- Released
       <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
         super#repaint;
-        print_endline (<span class="ocaml-error-loc">'</span>Button being repainted, state is ' ^
+        print_endline (<span class="string">&quot;Button being repainted, state is &quot;</span> ^
                        (<span class="keyword">match</span> state <span class="keyword">with</span>
-                        | Pressed -&gt; 'Pressed'
-                        | Released -&gt; 'Released'))
-    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+                        | Pressed -&gt; <span class="string">&quot;Pressed&quot;</span>
+                        | Released -&gt; <span class="string">&quot;Released&quot;</span>))
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class button :
+  ?callback:(unit -&gt; unit) -&gt;
+  string -&gt;
+  object
+    val mutable state : button_state
+    val mutable widgets : widget list
+    method add : widget -&gt; unit
+    method get_name : string
+    method get_widgets : widget list
+    method press : unit
+    method release : unit
+    method repaint : unit
+  end
 </span></code></pre>
 
 <p>注意：</p>
@@ -406,11 +429,14 @@ GUI部件库上。</p>
 </li></ol>
 
 <p>在我们定义 <code>label</code> 类之前，让我们在OCaml toplevel中先试一下 <code>button</code> 类：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="ocaml-error-loc">'</span>Ouch!') 'button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="string">&quot;Ouch!&quot;</span>) <span class="string">&quot;button&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val b : button = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Button being repainted, state is Released
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Ouch!
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Button being repainted, state is Pressed
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>下面是 <code>label</code> 类的实现，相对无聊：</p>
@@ -418,14 +444,18 @@ GUI部件库上。</p>
     <span class="governing">object</span> (self)
       <span class="governing">inherit</span> widget name
       <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
-        print_endline (<span class="ocaml-error-loc">'</span>Label: ' ^ text)
-    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+        print_endline (<span class="string">&quot;Label: &quot;</span> ^ text)
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class label :
+  string -&gt;
+  string -&gt; object method get_name : string method repaint : unit end
 </span></code></pre>
 
-<p>让我们创建一个 &#39;Press me!&#39; 的标签并将其加入按钮中：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+<p>让我们创建一个 &quot;Press me!&quot; 的标签并将其加入按钮中：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="string">&quot;label&quot;</span> <span class="string">&quot;Press me!&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : label = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Label: Press me!
+Button being repainted, state is Released
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h3 id="self">关于 <code>self</code></h3><p>在所有的例子中，我们用到了定义类的通用模式：</p>
@@ -441,21 +471,31 @@ GUI部件库上。</p>
 你在未来会不会需要它。加上它只有百利而无一害。</p>
 <h3 id="">继承和强制多态</h3>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="ocaml-error-loc">'</span>button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[<span class="ocaml-error-loc">b</span>; l]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="string">&quot;button&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val b : button = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="string">&quot;label&quot;</span> <span class="string">&quot;Press me!&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : label = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[b; <span class="ocaml-error-loc">l</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type label but an expression was expected of type
+         button
+       The first object type has no method add
 </span></code></pre>
 
 <p>我创造了一个按钮<code>b</code>和一个标签<code>l</code>，然后我要创造一个链表来装入两个实例，但是我却得到
 一个错误。但是 <code>b</code> 和 <code>l</code> 确实是 <code>widget</code>，那为什么我们不能把它们装到一个容器里呢？
 是因为OCaml不能猜到我想要一个 <code>widget list</code>? 那让我们来告诉它：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = ([] : widget list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = []
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = <span class="ocaml-error-loc">b</span> :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = b :: <span class="ocaml-error-loc">wl</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type widget list
+       but an expression was expected of type button list
+       Type widget = &lt; get_name : string; repaint : unit &gt;
+       is not compatible with type
+         button =
+           &lt; add : widget -&gt; unit; get_name : string;
+             get_widgets : widget list; press : unit; release : unit;
+             repaint : unit &gt; 
+       The first object type has no method add
 </span></code></pre>
 
 <p>OCaml一般不会把子类转型到超级类，但是你可以用<code>:&gt;</code>操作符来使其“不一般”：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">b</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">l</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value l
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (b :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = [&lt;obj&gt;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (l :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = [&lt;obj&gt;; &lt;obj&gt;]
 </span></code></pre>
 
 <p> <code>(b :&gt; widget)</code> 的意思是把 <code>b</code> 转型成 <code>widget</code>。类型安全同样存在，因为转型的结果
@@ -541,9 +581,11 @@ Java没有泛型（译注：这个教程有点太老了）。这是Java的一个
 
 <p>和有共同子类的实例混在一起也是可以的，这时候需要 <code>:&gt;</code> 操作符：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="ocaml-error-loc">'</span>hello' <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (<span class="ocaml-error-loc">y</span> :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="string">&quot;hello&quot;</span> <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val y : &lt; get : int; special : string &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type &lt; get : int; special : string &gt;
+       but an expression was expected of type &lt; get : int &gt;
+       The second object type has no method special
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (y :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : t list = [&lt;obj&gt;; &lt;obj&gt;]
 </span></code></pre>
 
 <h2 id="">更多对象</h2><p>OCaml手册，第三章，包含对象和类的规范。在里面还有我没有提到的内容，比方说：</p>

@@ -190,11 +190,11 @@ called <code>name</code>.</p>
 called <code>the_list</code>. This is the underlying linked list. We initialize
 this (each time a <code>stack_of_ints</code> object is created) using a bit of code
 that you may not be familiar with. The expression <code>( [] : int list )</code>
-means &#39;an empty list, of type <code>int list</code>&#39;. Recall that the simple empty
+means &quot;an empty list, of type <code>int list</code>&quot;. Recall that the simple empty
 list <code>[]</code> has type <code>&#39;a list</code>, meaning a list of any type. However we
 want a stack of <code>int</code>, not anything else, and so in this case we want to
-tell the type inference engine that this list isn&#39;t the general &#39;list of
-anything&#39; but is in fact the narrower &#39;list of <code>int</code>&#39;. The syntax
+tell the type inference engine that this list isn&#39;t the general &quot;list of
+anything&quot; but is in fact the narrower &quot;list of <code>int</code>&quot;. The syntax
 <code>( expression : type )</code> means <code>expression</code> which is in fact of type
 <code>type</code>. This <em>isn&#39;t</em> a general type cast, because you can&#39;t use it to
 overrule the type inference engine, only to narrow a general type to
@@ -222,8 +222,18 @@ object. We use the familiar <code>new</code> operator:</p>
     s#push i
   <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">while</span> s#size &gt; 0 <span class="keyword">do</span>
-    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>Popped %d off the stack.\n' s#pop
-  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;Popped %d off the stack.\n&quot;</span> s#pop
+  <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Popped 10 off the stack.
+Popped 9 off the stack.
+Popped 8 off the stack.
+Popped 7 off the stack.
+Popped 6 off the stack.
+Popped 5 off the stack.
+Popped 4 off the stack.
+Popped 3 off the stack.
+Popped 2 off the stack.
+Popped 1 off the stack.
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Notice the syntax. <code>object#method</code> means call <code>method</code> on <code>object</code>. This
@@ -265,7 +275,7 @@ multiple stacks each storing objects of any single type). As with
 </span></code></pre>
 
 <p>The <code>class [&#39;a] stack</code> doesn&#39;t really define just one class, but a whole
-&#39;class of classes&#39;, one for every possible type (ie. an infinitely large
+&quot;class of classes&quot;, one for every possible type (ie. an infinitely large
 number of classes!) Let&#39;s try and use our <code>&#39;a stack</code> class. In this
 instance we create a stack and push a floating point number onto the
 stack. Notice the type of the stack:</p>
@@ -282,7 +292,8 @@ Let&#39;s demonstrate the type-safety of our new <code>float stack</code>:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 3.
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#pop</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 1.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="ocaml-error-loc">'</span>a string'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">s#push <span class="string"><span class="ocaml-error-loc">&quot;a string&quot;</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type string but an expression was expected of type
+         float
 </span></code></pre>
 
 <p>We can define polymorphic functions which can operate on any type of
@@ -379,7 +390,7 @@ just inherited ones) then you need to specify the whole class as virtual
 by using <code>class virtual ...</code>.</p>
 <p>As in C++ and Java, virtual classes cannot be directly instantiated
 using <code>new</code>:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword">new</span> widget <span class="ocaml-error-loc">'</span>my widget'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="keyword"><span class="ocaml-error-loc">new</span></span><span class="ocaml-error-loc"> widget</span> <span class="string">&quot;my widget&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Cannot instantiate the virtual class widget
 </span></code></pre>
 
 <p>Now my <code>container</code> class is more interesting. It must inherit from
@@ -458,11 +469,23 @@ simple in fact, but nevermind that):</p>
         state &lt;- Released
       <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
         super#repaint;
-        print_endline (<span class="ocaml-error-loc">'</span>Button being repainted, state is ' ^
+        print_endline (<span class="string">&quot;Button being repainted, state is &quot;</span> ^
                        (<span class="keyword">match</span> state <span class="keyword">with</span>
-                        | Pressed -&gt; 'Pressed'
-                        | Released -&gt; 'Released'))
-    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+                        | Pressed -&gt; <span class="string">&quot;Pressed&quot;</span>
+                        | Released -&gt; <span class="string">&quot;Released&quot;</span>))
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class button :
+  ?callback:(unit -&gt; unit) -&gt;
+  string -&gt;
+  object
+    val mutable state : button_state
+    val mutable widgets : widget list
+    method add : widget -&gt; unit
+    method get_name : string
+    method get_widgets : widget list
+    method press : unit
+    method release : unit
+    method repaint : unit
+  end
 </span></code></pre>
 
 <p>Notes:</p>
@@ -489,11 +512,14 @@ simple in fact, but nevermind that):</p>
 
 <p>Before defining our <code>label</code> class, let&#39;s play with the <code>button</code> class in
 the OCaml toplevel:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="ocaml-error-loc">'</span>Ouch!') 'button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button ~callback:(<span class="keyword">fun</span> () -&gt; print_endline <span class="string">&quot;Ouch!&quot;</span>) <span class="string">&quot;button&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val b : button = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Button being repainted, state is Released
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#press</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Ouch!
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Button being repainted, state is Pressed
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#release</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Here&#39;s our comparatively trivial <code>label</code> class:</p>
@@ -501,14 +527,18 @@ the OCaml toplevel:</p>
     <span class="governing">object</span> (self)
       <span class="governing">inherit</span> widget name
       <span class="governing">method</span> <span class="ocaml-function">repaint</span><span class="type"></span> =
-        print_endline (<span class="ocaml-error-loc">'</span>Label: ' ^ text)
-    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+        print_endline (<span class="string">&quot;Label: &quot;</span> ^ text)
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>class label :
+  string -&gt;
+  string -&gt; object method get_name : string method repaint : unit end
 </span></code></pre>
 
-<p>Let&#39;s create a label which says &#39;Press me!&#39; and add it to the button:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+<p>Let&#39;s create a label which says &quot;Press me!&quot; and add it to the button:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="string">&quot;label&quot;</span> <span class="string">&quot;Press me!&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : label = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#add l</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">b#repaint</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">Label: Press me!
+Button being repainted, state is Released
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <h3 id="A-note-about-self">A note about <code>self</code></h3><p>In all the examples above we defined classes using the general pattern:</p>
@@ -528,9 +558,11 @@ the class and require the reference to <code>self</code>. There is no penalty fo
 having it.</p>
 <h3 id="Inheritance-and-coercions">Inheritance and coercions</h3>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="ocaml-error-loc">'</span>button'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="ocaml-error-loc">'</span>label<span class="string">' '</span>Press me!'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[<span class="ocaml-error-loc">b</span>; l]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="keyword">new</span> button <span class="string">&quot;button&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val b : button = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = <span class="keyword">new</span> label <span class="string">&quot;label&quot;</span> <span class="string">&quot;Press me!&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : label = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">[b; <span class="ocaml-error-loc">l</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type label but an expression was expected of type
+         button
+       The first object type has no method add
 </span></code></pre>
 
 <p>I created a button <code>b</code> and a label <code>l</code> and I tried to create a list
@@ -538,18 +570,26 @@ containing both, but I got an error. Yet <code>b</code> and <code>l</code> are b
 so why can&#39;t I put them into the same list? Perhaps OCaml can&#39;t guess
 that I want a <code>widget list</code>? Let&#39;s try telling it:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = ([] : widget list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = []
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = <span class="ocaml-error-loc">b</span> :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = b :: <span class="ocaml-error-loc">wl</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type widget list
+       but an expression was expected of type button list
+       Type widget = &lt; get_name : string; repaint : unit &gt;
+       is not compatible with type
+         button =
+           &lt; add : widget -&gt; unit; get_name : string;
+             get_widgets : widget list; press : unit; release : unit;
+             repaint : unit &gt; 
+       The first object type has no method add
 </span></code></pre>
 
 <p>It turns out that OCaml doesn&#39;t coerce subclasses to the type of the
 superclass by default, but you can tell it to by using the <code>:&gt;</code>
 (coercion) operator:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">b</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (<span class="ocaml-error-loc">l</span> :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value l
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (b :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = [&lt;obj&gt;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">wl</span> = (l :&gt; widget) :: wl</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val wl : widget list = [&lt;obj&gt;; &lt;obj&gt;]
 </span></code></pre>
 
-<p>The expression <code>(b :&gt; widget)</code> means &#39;coerce the button <code>b</code> to have type
-<code>widget</code>&#39;. Type-safety is preserved because it is possible to tell
+<p>The expression <code>(b :&gt; widget)</code> means &quot;coerce the button <code>b</code> to have type
+<code>widget</code>&quot;. Type-safety is preserved because it is possible to tell
 completely at compile time whether the coercion will succeed.</p>
 <p>Actually, coercions are somewhat more subtle than described above, and
 so I urge you to read the manual to find out the full details.</p>
@@ -569,7 +609,7 @@ errors, and this is why this sort of coercion is not permitted.</p>
 <p>Polymorphism and functional programming should remove most of the need
 to coerce from superclasses to subclasses. Java&#39;s container classes
 store <code>Object</code>s because Java (at time of writing) lacks generics
-(&#39;templates&#39; in C++ or polymorphism in OCaml). This is a fault in the
+(&quot;templates&quot; in C++ or polymorphism in OCaml). This is a fault in the
 Java language - a pretty fundamental fault in fact - which will
 hopefully be fixed in Java 1.5. In OCaml it&#39;s so simple to define
 polymorphic types like <code>&#39;a list</code> or <code>&#39;a stack</code> that Java-like
@@ -671,9 +711,11 @@ type:</p>
 <p>Mixing objects that share a common subtype can be done, but requires
 explicit type coercion using the <code>:&gt;</code> operator:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">x</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 123 <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val x : &lt; get : int &gt; = &lt;obj&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="ocaml-error-loc">'</span>hello' <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (<span class="ocaml-error-loc">y</span> :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value y
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">y</span> = <span class="governing">object</span> <span class="governing">method</span> <span class="ocaml-function">get</span><span class="type"></span> = 80 <span class="governing">method</span> <span class="ocaml-function">special</span><span class="type"></span> = <span class="string">&quot;hello&quot;</span> <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val y : &lt; get : int; special : string &gt; = &lt;obj&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; <span class="ocaml-error-loc">y</span> ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type &lt; get : int; special : string &gt;
+       but an expression was expected of type &lt; get : int &gt;
+       The second object type has no method special
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">l</span> = [ x; (y :&gt; t) ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val l : t list = [&lt;obj&gt;; &lt;obj&gt;]
 </span></code></pre>
 
 <h2 id="More-objects">More objects</h2><p>The OCaml manual, chapter 3, contains the canonical reference for

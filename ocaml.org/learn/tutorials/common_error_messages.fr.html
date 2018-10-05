@@ -335,8 +335,9 @@ backslashes (<code>\\</code>) dans les chaînes de caractères qui devraient êt
 doublés. Ceci apparaît lorsque un motif <code>\\x</code> est trouvé par le
 compilateur ou <code>\\x</code> n&#39;est pas un caractère reconnu, le programmeur doit
 alors écrire <code>\\\\x</code> afin de faire apparaître <code>\\x</code> à l&#39;écran.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\e</span>\n' <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\e)
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">'\\</span>e\n' <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal backslash escape in string or character (\\)
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;<span class="ocaml-error-loc">\e</span>\n&quot;</span> <span class="comment">(* bad practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 14: illegal backslash escape in string.
+</span>- : string = &quot;\\e\n&quot;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="string">&quot;\\e\n&quot;</span> <span class="comment">(* good practice *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;\\e\n&quot;
 </span></code></pre>
 
 <p>Ce genre de message apparait lors de la recompilation de vieux

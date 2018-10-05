@@ -160,7 +160,7 @@
 <h2 id="">基本用法</h2><p>在OCaml中， 每一段代码都被包成一个模块。一个模块可以选择性地作为另外一个模块的子模块，很像文件系统中的目录-但是我们不经常这样做。</p>
 <p>当你写一个程序使用两个文件<code>amodule.ml</code>和<code>bmodule.ml</code>，它们中的每一个都自动定义一个模块，名字叫<code>Amodule</code>和<code>Bmodule</code>，模块的内容就是你写到文件中的东西。</p>
 <p>这里是文件<code>amodule.ml</code>里面的代码：</p>
-<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline 'Hello'</code></pre>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Hello&quot;</span></code></pre>
 
 <p>还有<code>bmodule.ml</code>里面的：</p>
 <pre><code class="ocaml"><span class="ocaml-module">Amodule</span>.hello ()</code></pre>
@@ -183,13 +183,16 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 <p>不管怎样，用不用<code>open</code>是个人选择的问题。一些模块使用了很多很普遍的名字。<code>List</code>模块就是这样的例子。通常我们不用<code>open List</code>。像<code>Printf</code>的其他模块，提供通常不受冲突的名字，比如<code>printf</code>。为了避免到处写<code>Printf.printf</code>，在文件开头放一句<code>open Printf</code>是有道理的。</p>
 <p>以下是一个简短的例子（在toplevel中）。</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
-  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">'a'</span>; <span class="ocaml-error-loc">'</span>beautiful'; 'day' ]
-  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf '%s\n' s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">&quot;a&quot;</span>; <span class="string">&quot;beautiful&quot;</span>; <span class="string">&quot;day&quot;</span> ]
+  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf <span class="string">&quot;%s\n&quot;</span> s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">a
+beautiful
+day
+</span><span class="ocaml-stderr"></span>val my_data : string list = [&quot;a&quot;; &quot;beautiful&quot;; &quot;day&quot;]
 </span></code></pre>
 
 <h2 id="Interfaces-Signatures">接口(Interfaces)和签名(Signatures)</h2><p>一个模块可以给其他程序提供很多功能（函数，类型，子模块，……）。如果没有什么特别指定，在模块中定义的一切可以从外部访问。这么做在小程序中是一般可以的，但是在很多情况下，一个模块更应该只提供一系列有限（但是有用的）接口，而隐藏一些辅助的函数和类型。</p>
 <p>为此，我们得定义模块接口，掩盖模块的实现细节。就像模块从 .ml 文件得到，相应的模块接口或者叫签名从 .mli 文件得到。它包含了一个带有类型的值的列表，及其他。以下重新实现<code>amodule.ml</code>。</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</code></pre>
 
 <p>事实上，<code>Amodule</code>有下面的接口：</p>
@@ -236,10 +239,10 @@ ocamlopt -c amodule.ml
 <p><code>example.ml</code>文件自身就可以代表<code>Example</code>模块。其模块签名是所有定义的符号，又或者可以用一个<code>example.mli</code>文件来约束它。</p>
 <p>一个给定的模块也可以在一个文件中显式地定义，成为当前模块的一个子模块。让我们来看看<code>example.ml</code>文件：</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>
@@ -256,12 +259,12 @@ ocamlopt -c amodule.ml
  <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
 <span class="governing">end</span> = 
 <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
   
 <span class="comment">(* &#22312;&#36825;&#37324; <span class="ocaml-module">Hello</span>.message &#19981;&#20877;&#33021;&#34987;&#35775;&#38382;&#12290; *)</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>

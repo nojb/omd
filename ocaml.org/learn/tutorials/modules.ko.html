@@ -166,7 +166,7 @@
 각 파일의 이름에 따라 <code>Amodule</code>, <code>Bmodule</code>라는 이름의 모듈이 자동으로
 정의되며 각 모듈들은 해당 파일 내에 입력한 내용을 제공하게 된다.</p>
 <p><code>amodule.ml</code> 파일의 내용은 다음과 같다:</p>
-<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline 'Hello'</code></pre>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Hello&quot;</span></code></pre>
 
 <p><code>bmodule.ml</code>은 아래와 같다:</p>
 <pre><code class="ocaml"><span class="ocaml-module">Amodule</span>.hello ()</code></pre>
@@ -176,7 +176,7 @@
 ocamlopt -c bmodule.ml
 ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 
-<p>자 이제 우리는 &#39;Hello&#39;를 인쇄하는 훌륭한 실행 파일이 생겼다. 위 코드에서
+<p>자 이제 우리는 &quot;Hello&quot;를 인쇄하는 훌륭한 실행 파일이 생겼다. 위 코드에서
 보이는 것 처럼 어떤 모듈에서 무엇인가에 접근하기 위해서는 (항상 대문자로
 시작하는) 모듈의 이름 + 점(.) + 값, 타입 생성자 또는 해당 모듈이
 제공하는 무엇인가의 이름을 사용한다.</p>
@@ -187,7 +187,7 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 <code>bmodule.ml</code> 가 아래와 같이 쓰여질 수 있을 것이다:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span><span class="ocaml-prompt">;;</span><br/>hello ();;</code></pre>
 
-<p>별개의 이야기 이지만, 사람들은 보기 싫은 &#39;;;&#39;를 피하려는 경향이 있기
+<p>별개의 이야기 이지만, 사람들은 보기 싫은 &quot;;;&quot;를 피하려는 경향이 있기
 때문에 아래와 같이 쓰는 것이 더욱 일반적이다:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Amodule</span>
 <span class="governing">let</span> () =
@@ -201,8 +201,11 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 위해 <code>open Printf</code>을 파일 맨 앞에 쓰는 것이 훨씬 상식적이다.</p>
 <p>우리가 언급한 내용을 보여주는 간단한 예제가 있다:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
-  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">'a'</span>; <span class="ocaml-error-loc">'</span>beautiful'; 'day' ]
-  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf '%s\n' s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  <span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">&quot;a&quot;</span>; <span class="string">&quot;beautiful&quot;</span>; <span class="string">&quot;day&quot;</span> ]
+  <span class="governing">let</span> () = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf <span class="string">&quot;%s\n&quot;</span> s) my_data</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">a
+beautiful
+day
+</span><span class="ocaml-stderr"></span>val my_data : string list = [&quot;a&quot;; &quot;beautiful&quot;; &quot;day&quot;]
 </span></code></pre>
 
 <h2 id="Interfaces-and-signatures">인터페이스와 시그너쳐 (Interfaces and signatures)</h2>
@@ -218,8 +221,9 @@ ocamlopt -o hello amodule.cmx bmodule.cmx</code></pre>
 정의되는 것과 마찬가지로, 해당 모듈 인터페이스 또는 시그너쳐는 .mli
 파일에 들어간다. 이 파일은 타입이 명시된 값(value) 등과 같은 것들을 담고
 있다. <code>amodule.ml</code> 파일을 다시 작성해 보자:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="ocaml-error-loc">'</span>Hello'
-  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
+  <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val message : string = &quot;Hello&quot;
+val hello : unit -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>위에 따라 <code>Amodule</code>은 아래의 인터페이스를 가진다:</p>
@@ -289,10 +293,10 @@ ocamlopt -c amodule.ml
 <p>어떤 모듈은 파일 내에서 명시적으로 정의할 수 있다는 것도 이야기 하였다.
 이것이 현재 모듈의 서브 모듈이 된다. 아래 <code>example.ml</code> 파일을 보자:</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>
@@ -310,12 +314,12 @@ ocamlopt -c amodule.ml
  <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
 <span class="governing">end</span> = 
 <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
   
 <span class="comment">(* &#51060; &#51648;&#51216;&#50640;&#49436;, <span class="ocaml-module">Hello</span>.message&#45716; &#45908; &#51060;&#49345; &#51217;&#44540;&#51060; &#48520;&#44032;&#45733;&#54616;&#45796;. *)</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>

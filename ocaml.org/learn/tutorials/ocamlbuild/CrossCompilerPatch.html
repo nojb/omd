@@ -196,8 +196,8 @@ diff -Nru ocaml-3.11.0-original/asmcomp/asmlink.ml ocaml-3.11.0-patched/asmcomp/
  
  
  let call_linker_shared file_list output_name =
--  if not (Ccomp.call_linker Ccomp.Dll output_name file_list &#39;&#39;)
-+  if not (Ccomp.call_linker true Ccomp.Dll output_name file_list &#39;&#39;)
+-  if not (Ccomp.call_linker Ccomp.Dll output_name file_list &quot;&quot;)
++  if not (Ccomp.call_linker true Ccomp.Dll output_name file_list &quot;&quot;)
    then raise(Error Linking_error)
  
  let link_shared ppf objfiles output_name =
@@ -217,8 +217,8 @@ diff -Nru ocaml-3.11.0-original/asmcomp/asmpackager.ml ocaml-3.11.0-patched/asmc
        (fun m -&gt; chop_extension_if_any m.pm_file ^ Config.ext_obj)
        (List.filter (fun m -&gt; m.pm_kind &lt;&gt; PM_intf) members) in
    let ok =
--    Ccomp.call_linker Ccomp.Partial targetobj (objtemp :: objfiles) &#39;&#39;
-+    Ccomp.call_linker true Ccomp.Partial targetobj (objtemp :: objfiles) &#39;&#39;
+-    Ccomp.call_linker Ccomp.Partial targetobj (objtemp :: objfiles) &quot;&quot;
++    Ccomp.call_linker true Ccomp.Partial targetobj (objtemp :: objfiles) &quot;&quot;
    in
    remove_file objtemp;
    if not ok then raise(Error Linking_error)
@@ -278,7 +278,7 @@ diff -Nru ocaml-3.11.0-original/bytecomp/bytelink.ml ocaml-3.11.0-patched/byteco
  let build_custom_runtime prim_name exec_name =
 -  Ccomp.call_linker Ccomp.Exe exec_name 
 +  Ccomp.call_linker false Ccomp.Exe exec_name 
-     ([prim_name] @ List.rev !Clflags.ccobjs @ [&#39;-lcamlrun&#39;])
+     ([prim_name] @ List.rev !Clflags.ccobjs @ [&quot;-lcamlrun&quot;])
      Config.bytecomp_c_libraries
  
 @@ -498,7 +498,7 @@
@@ -287,7 +287,7 @@ diff -Nru ocaml-3.11.0-original/bytecomp/bytelink.ml ocaml-3.11.0-patched/byteco
            if not (
 -            Ccomp.call_linker Ccomp.MainDll output_name
 +            Ccomp.call_linker false Ccomp.MainDll output_name
-               ([obj_file] @ List.rev !Clflags.ccobjs @ [&#39;-lcamlrun&#39;])
+               ([obj_file] @ List.rev !Clflags.ccobjs @ [&quot;-lcamlrun&quot;])
                Config.bytecomp_c_libraries
             ) then raise (Error Custom_runtime);
 diff -Nru ocaml-3.11.0-original/byterun/Makefile ocaml-3.11.0-patched/byterun/Makefile
@@ -341,9 +341,9 @@ diff -Nru ocaml-3.11.0-original/config/Makefile-templ ocaml-3.11.0-patched/confi
  # Extension for shared libraries: so if supported, a if not supported
  #SO=so
 @@ -283,3 +294,15 @@
- #TK_LINK=&#39;-ltk8.0 -ltcl8.0&#39;
+ #TK_LINK=&quot;-ltk8.0 -ltcl8.0&quot;
  # For Tcl/Tk 8.0 on FreeBSD:
- #TK_LINK=&#39;-L/usr/local/lib -ltk8.0 -ltcl8.0&#39;
+ #TK_LINK=&quot;-L/usr/local/lib -ltk8.0 -ltcl8.0&quot;
 +
 +### Compilers for producing executables (&#39;local&#39; and &#39;target&#39; ones)
 +#MKEXE=
@@ -360,7 +360,7 @@ diff -Nru ocaml-3.11.0-original/otherlibs/Makefile.shared ocaml-3.11.0-patched/o
 --- ocaml-3.11.0-original/otherlibs/Makefile.shared 2008-07-15 17:31:32.000000000 +0200
 +++ ocaml-3.11.0-patched/otherlibs/Makefile.shared  2009-04-01 09:46:31.000000000 +0200
 @@ -65,8 +65,9 @@
-    if test -n &#39;$(HEADERS)&#39;; then cp $(HEADERS) $(LIBDIR)/caml/; fi
+    if test -n &quot;$(HEADERS)&quot;; then cp $(HEADERS) $(LIBDIR)/caml/; fi
  
  installopt:
 -   cp $(CAMLOBJS_NAT) $(LIBNAME).cmxa $(LIBNAME).$(A) $(LIBDIR)/
@@ -444,10 +444,10 @@ diff -Nru ocaml-3.11.0-original/tools/Makefile.shared ocaml-3.11.0-patched/tools
 --- ocaml-3.11.0-original/tools/Makefile.shared 2007-11-22 23:14:43.000000000 +0100
 +++ ocaml-3.11.0-patched/tools/Makefile.shared  2009-03-31 15:46:03.000000000 +0200
 @@ -111,6 +111,7 @@
-             -e &#39;s|%%NATIVECCRPATH%%|$(NATIVECCRPATH)|&#39; \
-             -e &#39;s|%%MKSHAREDLIBRPATH%%|$(MKSHAREDLIBRPATH)|&#39; \
-             -e &#39;s|%%RANLIB%%|$(RANLIB)|&#39; \
-+            -e &#39;s|%%TARGETRANLIB%%|$(TARGETRANLIB)|&#39; \
+             -e &quot;s|%%NATIVECCRPATH%%|$(NATIVECCRPATH)|&quot; \
+             -e &quot;s|%%MKSHAREDLIBRPATH%%|$(MKSHAREDLIBRPATH)|&quot; \
+             -e &quot;s|%%RANLIB%%|$(RANLIB)|&quot; \
++            -e &quot;s|%%TARGETRANLIB%%|$(TARGETRANLIB)|&quot; \
            ocamlmklib.mlp &gt;&gt; ocamlmklib.ml
  
  beforedepend:: ocamlmklib.ml
@@ -466,7 +466,7 @@ diff -Nru ocaml-3.11.0-original/utils/ccomp.ml ocaml-3.11.0-patched/utils/ccomp.
 @@ -109,12 +109,15 @@
          extra
      else
-       Printf.sprintf &#39;%s -o %s %s %s %s %s %s %s&#39;
+       Printf.sprintf &quot;%s -o %s %s %s %s %s %s %s&quot;
 -        (match !Clflags.c_compiler, mode with
 -        | Some cc, _ -&gt; cc
 -        | None, Exe -&gt; Config.mkexe
@@ -484,7 +484,7 @@ diff -Nru ocaml-3.11.0-original/utils/ccomp.ml ocaml-3.11.0-patched/utils/ccomp.
 +        | None, Partial, _ -&gt; assert false
          )
          (Filename.quote output_name)
-         (if !Clflags.gprofile then Config.cc_profile else &#39;&#39;)
+         (if !Clflags.gprofile then Config.cc_profile else &quot;&quot;)
 diff -Nru ocaml-3.11.0-original/utils/ccomp.mli ocaml-3.11.0-patched/utils/ccomp.mli
 --- ocaml-3.11.0-original/utils/ccomp.mli   2008-01-11 17:13:18.000000000 +0100
 +++ ocaml-3.11.0-patched/utils/ccomp.mli    2009-03-31 15:09:32.000000000 +0200
@@ -500,7 +500,7 @@ diff -Nru ocaml-3.11.0-original/utils/config.mli ocaml-3.11.0-patched/utils/conf
 @@ -47,6 +47,14 @@
          (* The linker command line to build main programs as dlls. *)
  val ranlib: string
-         (* Command to randomize a library, or &#39;&#39; if not needed *)
+         (* Command to randomize a library, or &quot;&quot; if not needed *)
 +val target_mkdll: string
 +        (* The linker command line to build dynamic libraries (for &#39;target&#39; platform). *)
 +val target_mkexe: string
@@ -508,7 +508,7 @@ diff -Nru ocaml-3.11.0-original/utils/config.mli ocaml-3.11.0-patched/utils/conf
 +val target_mkmaindll: string
 +        (* The linker command line to build main programs as dlls (for &#39;target&#39; platform). *)
 +val target_ranlib: string
-+        (* Command to randomize a library, or &#39;&#39; if not needed (for &#39;target&#39; platform) *)
++        (* Command to randomize a library, or &quot;&quot; if not needed (for &#39;target&#39; platform) *)
  val cc_profile : string
          (* The command line option to the C compiler to enable profiling. *)
  
@@ -516,20 +516,20 @@ diff -Nru ocaml-3.11.0-original/utils/config.mlp ocaml-3.11.0-patched/utils/conf
 --- ocaml-3.11.0-original/utils/config.mlp  2008-04-16 08:50:31.000000000 +0200
 +++ ocaml-3.11.0-patched/utils/config.mlp   2009-03-31 14:57:51.000000000 +0200
 @@ -34,10 +34,14 @@
- let native_c_libraries = &#39;%%NATIVECCLIBS%%&#39;
- let native_pack_linker = &#39;%%PACKLD%%&#39;
- let ranlib = &#39;%%RANLIBCMD%%&#39;
-+let target_ranlib = &#39;%%TARGETRANLIBCMD%%&#39;
- let cc_profile = &#39;%%CC_PROFILE%%&#39;
- let mkdll = &#39;%%MKDLL%%&#39;
- let mkexe = &#39;%%MKEXE%%&#39;
- let mkmaindll = &#39;%%MKMAINDLL%%&#39;
-+let target_mkdll = &#39;%%TARGETMKDLL%%&#39;
-+let target_mkexe = &#39;%%TARGETMKEXE%%&#39;
-+let target_mkmaindll = &#39;%%TARGETMKMAINDLL%%&#39;
+ let native_c_libraries = &quot;%%NATIVECCLIBS%%&quot;
+ let native_pack_linker = &quot;%%PACKLD%%&quot;
+ let ranlib = &quot;%%RANLIBCMD%%&quot;
++let target_ranlib = &quot;%%TARGETRANLIBCMD%%&quot;
+ let cc_profile = &quot;%%CC_PROFILE%%&quot;
+ let mkdll = &quot;%%MKDLL%%&quot;
+ let mkexe = &quot;%%MKEXE%%&quot;
+ let mkmaindll = &quot;%%MKMAINDLL%%&quot;
++let target_mkdll = &quot;%%TARGETMKDLL%%&quot;
++let target_mkexe = &quot;%%TARGETMKEXE%%&quot;
++let target_mkmaindll = &quot;%%TARGETMKMAINDLL%%&quot;
  
- let exec_magic_number = &#39;Caml1999X008&#39;
- and cmi_magic_number = &#39;Caml1999I011&#39;
+ let exec_magic_number = &quot;Caml1999X008&quot;
+ and cmi_magic_number = &quot;Caml1999I011&quot;
 
 </code></pre>
 

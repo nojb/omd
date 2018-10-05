@@ -199,11 +199,11 @@ de code suivants devraient retourner la même valeur (à savoir (a+b) +
 
 <p>Il se peut que la seconde version soit plus rapide (bien que la plupart
 des compilateurs devraient être capable de faire cette étape
-d&#39;&#39;élimination de sous-expressions communes&#39; à votre place), et en tout
+d&#39;&quot;élimination de sous-expressions communes&quot; à votre place), et en tout
 cas elle est plus lisible. Dans le second exemple, <code>x</code> est une
 abréviation pour l&#39;expression <code>a +. b</code>.</p>
 <h2 id="Variables-globales-plus-pr-cis-ment-expressions-globales">« Variables » globales (<em>plus précisément</em> expressions globales)</h2><p>Vous pouvez aussi donner des noms à des choses dans l&#39;environnement
-global, et comme pour les &#39;variables&#39; locales ci-dessus, ce ne sont pas
+global, et comme pour les &quot;variables&quot; locales ci-dessus, ce ne sont pas
 vraiment des variables, mais des abbréviations pour ces choses. Voici un
 exemple pris dans un programme réel :</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">html</span> =
@@ -217,10 +217,10 @@ exemple pris dans un programme réel :</p>
   <span class="ocaml-prompt">;;</span><br/>
 <span class="governing">let</span> <span class="ocaml-function">main</span> <span class="ocaml-variable">() </span>=
   <span class="comment">(* code omitted *)</span>
-  factory#add_item 'Cut' ~key:_X ~callback: html#cut
+  factory#add_item <span class="string">&quot;Cut&quot;</span> ~key:_X ~callback: html#cut
   ;;</code></pre>
 
-<p>Dans ce vrai morceau de code, <code>html</code> est un &#39;widget&#39; (&#39;contrôle&#39;)
+<p>Dans ce vrai morceau de code, <code>html</code> est un &quot;widget&quot; (&quot;contrôle&quot;)
 d&#39;édition de HTML (un objet provenant de la bibliothèque lablgtk), créé
 une fois pour toute au début du programme par la première instruction
 <code>let html =</code>. Il y est ensuite fait référence dans plusieurs des
@@ -228,7 +228,7 @@ fonctions suivantes.</p>
 <p>A noter que le nom <code>html</code> dans le bout de programme ci-dessus ne devrait
 pas être comparé à une vraie variable globale comme en C ou dans
 d&#39;autres langages impératifs. Aucun emplacement n&#39;est réservé pour
-&#39;stocker&#39; le &#39;pointeur sur <code>html</code>&#39;. Il n&#39;est pas non plus possible
+&quot;stocker&quot; le &quot;pointeur sur <code>html</code>&quot;. Il n&#39;est pas non plus possible
 d&#39;assigner quelque chose à <code>html</code>, par exemple pour lui faire désigner
 un autre widget. Dans la section suivante nous parlerons des références,
 qui sont de vraies variables.</p>
@@ -360,7 +360,7 @@ préfixe tous les appels de fonctions comme ceci : <code>Graphics.open_graph</co
 comme l&#39;instruction <code>use</code> en Perl.</p>
 <p>Pour utiliser les module <code>Graphics</code> dans la boucle interactive, il
 faut au préalable charger la librairie avec</p>
-<pre><code class="ocaml">#load 'graphics.cma';;</code></pre>
+<pre><code class="ocaml">#load <span class="string">&quot;graphics.cma&quot;</span>;;</code></pre>
 
 <p>Une paire d&#39;exemples devrait éclaircir ce point. (Les deux exemples
 dessinent des choses différentes — essayez-les). Remarquez que le
@@ -368,14 +368,14 @@ premier exemple appelle <code>open_graph</code> et le second <code>Graphics.open
 <pre><code class="ocaml"><span class="comment">(* To compile this example: ocamlc graphics.cma grtest1.ml -o grtest1 *)</span>
 
 <span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
-open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
   <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
   set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
   fill_circle 320 240 radius
 <span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ()<span class="ocaml-prompt">;;</span><br/>
 <span class="comment">(* To compile this example: ocamlc graphics.cma grtest2.ml -o grtest2 *)</span>
 
-<span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/>
+<span class="ocaml-module">Random</span>.self_init ()<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/>
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
         <span class="keyword">if</span> i = 1 <span class="keyword">then</span> x_init
         <span class="keyword">else</span>
@@ -393,7 +393,7 @@ open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keywo
 read_line ();;</code></pre>
 
 <p>Ces deux exemples utilisent des fonctionnalités dont nous n&#39;avons pas
-encore parlé : boucles &#39;for&#39; dans le style impératif, if-then-else, et
+encore parlé : boucles &quot;for&quot; dans le style impératif, if-then-else, et
 récursion. Nous en parlerons plus tard. Examinez-les cependant, et
 essayez de comprendre (1) comment ils fonctionnent, et (2) comment
 l&#39;inférence de type aide à éliminer des bugs.</p>
@@ -406,7 +406,7 @@ programmes OCaml.</p>
 <code>Graphics</code>, mais ne voulez pas tous les importer, et n&#39;avez pas envie de
 taper <code>Graphics.</code> à chaque fois ? Renommez le module avec cette astuce :</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Gr</span> = <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
-<span class="ocaml-module">Gr</span>.open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gr</span>.fill_circle 320 240 240<span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
+<span class="ocaml-module">Gr</span>.open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-module">Gr</span>.fill_circle 320 240 240<span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
 
 <p>Cela devient vraiment utile quand vous voulez utiliser les symboles d&#39;un
 module imbriqué (les modules peuvent être imbriqués les uns dans les
@@ -485,10 +485,10 @@ définitions de <code>f</code> de <code>g</code> :</p>
 
 <p>Un autre usage de <code>;;</code> est d&#39;introduire une expression après des
 définitions :</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">b</span> = 'This started <span class="keyword">with</span>'
-<span class="governing">let </span><span class="ocaml-variable">s</span> = 'a very nonsensical message.'<span class="ocaml-prompt">;;</span><br/>print_endline b; print_endline s
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="string">&quot;This started <span class="keyword">with</span>&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="string">&quot;a very nonsensical message.&quot;</span><span class="ocaml-prompt">;;</span><br/>print_endline b; print_endline s
 <span class="governing">open</span> <span class="ocaml-module">String</span>
-<span class="governing">let </span><span class="ocaml-variable">s</span> = concat '' ['Fortunately'; ', '; 'the'; '<span class="governing">end</span>'; 'is'; 'near'; <span class="string">'.'</span>]<span class="ocaml-prompt">;;</span><br/>print_endline s<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">s</span> = '<span class="governing">let </span><span class="governing">end</span> here' <span class="governing">in</span> print_endline s</code></pre>
+<span class="governing">let </span><span class="ocaml-variable">s</span> = concat <span class="string">&quot;&quot;</span> [<span class="string">&quot;Fortunately&quot;</span>; <span class="string">&quot;, &quot;</span>; <span class="string">&quot;the&quot;</span>; <span class="string">&quot;<span class="governing">end</span>&quot;</span>; <span class="string">&quot;is&quot;</span>; <span class="string">&quot;near&quot;</span>; <span class="string">&quot;.&quot;</span>]<span class="ocaml-prompt">;;</span><br/>print_endline s<span class="ocaml-prompt">;;</span><br/><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="string">&quot;<span class="governing">let </span><span class="governing">end</span> here&quot;</span> <span class="governing">in</span> print_endline s</code></pre>
 
 <p>En particulier, dans les exemples ci-dessus, toutes les lignes
 démarrant après un <code>;;</code> produisent des effets de bord et les effacer
@@ -555,14 +555,14 @@ global. Remarquez que l&#39;auteur a omis toutes les occurrences de <code>;;</co
 grâce à la règle n°2.</p>
 <pre><code class="ocaml"><span class="comment">(* Second snippet *)</span>
 
-<span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:500 ~height:300 ~title:'editor' ()
+<span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:500 ~height:300 ~title:<span class="string">&quot;editor&quot;</span> ()
 <span class="governing">let </span><span class="ocaml-variable">vbox</span> = <span class="ocaml-module">GPack</span>.vbox ~packing:window#add ()
 
 <span class="governing">let </span><span class="ocaml-variable">menubar</span> = <span class="ocaml-module">GMenu</span>.menu_bar ~packing:vbox#pack ()
 <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory menubar
 <span class="governing">let </span><span class="ocaml-variable">accel_group</span> = factory#accel_group
-<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu 'File'
-<span class="governing">let </span><span class="ocaml-variable">edit_menu</span> = factory#add_submenu 'Edit'
+<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu <span class="string">&quot;File&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">edit_menu</span> = factory#add_submenu <span class="string">&quot;Edit&quot;</span>
 
 <span class="governing">let </span><span class="ocaml-variable">hbox</span> = <span class="ocaml-module">GPack</span>.hbox ~packing:vbox#add ()
 <span class="governing">let </span><span class="ocaml-variable">editor</span> = <span class="keyword">new</span> editor ~packing:hbox#add ()
@@ -570,11 +570,11 @@ grâce à la règle n°2.</p>
 
 <p>Troisième fragment : L&#39;auteur importe tous les symboles du module
 <code>GdkKeysyms</code>. Puis nous avons un let-binding inhabituel.
-<code>let _ = expression</code> signifie &#39;évalue la valeur de expression (avec tous
-les effets de bords que cela comporte), puis jette le résultat&#39;. En
-l&#39;occurrence, &#39;calcule la valeur de l&#39;expression&#39; signifie exécuter
+<code>let _ = expression</code> signifie &quot;évalue la valeur de expression (avec tous
+les effets de bords que cela comporte), puis jette le résultat&quot;. En
+l&#39;occurrence, &quot;calcule la valeur de l&#39;expression&quot; signifie exécuter
 <code>Main.main ()</code> qui est la boucle principale de Gtk, qui a pour effet de
-bord d&#39;ouvrir la fenêtre de l&#39;application à l&#39;écran. Le &#39;résultat&#39; de
+bord d&#39;ouvrir la fenêtre de l&#39;application à l&#39;écran. Le &quot;résultat&quot; de
 <code>Main.main ()</code> est sans importance - probablement la valeur <code>unit</code>, mais
 je n&#39;ai pas vérifié - et elle n&#39;est retournée que quand l&#39;application
 est en train de se terminer.</p>
@@ -587,19 +587,19 @@ commandes procédurales. C&#39;est un programme impératif classique.</p>
 <span class="governing">let </span><span class="ocaml-variable">_</span> =
   window#connect#destroy ~callback:<span class="ocaml-module">Main</span>.quit;
   <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory file_menu ~accel_group <span class="governing">in</span>
-  factory#add_item '<span class="ocaml-module">Open</span>...' ~key:_O ~callback:editor#open_file;
-  factory#add_item 'Save' ~key:_S ~callback:editor#save_file;
-  factory#add_item 'Save <span class="keyword">as</span>...' ~callback:editor#save_dialog;
+  factory#add_item <span class="string">&quot;<span class="ocaml-module">Open</span>...&quot;</span> ~key:_O ~callback:editor#open_file;
+  factory#add_item <span class="string">&quot;Save&quot;</span> ~key:_S ~callback:editor#save_file;
+  factory#add_item <span class="string">&quot;Save <span class="keyword">as</span>...&quot;</span> ~callback:editor#save_dialog;
   factory#add_separator ();
-  factory#add_item 'Quit' ~key:_Q ~callback:window#destroy;
+  factory#add_item <span class="string">&quot;Quit&quot;</span> ~key:_Q ~callback:window#destroy;
   <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory edit_menu ~accel_group <span class="governing">in</span>
-  factory#add_item 'Copy' ~key:_C ~callback:editor#text#copy_clipboard;
-  factory#add_item 'Cut' ~key:_X ~callback:editor#text#cut_clipboard;
-  factory#add_item 'Paste' ~key:_V ~callback:editor#text#paste_clipboard;
+  factory#add_item <span class="string">&quot;Copy&quot;</span> ~key:_C ~callback:editor#text#copy_clipboard;
+  factory#add_item <span class="string">&quot;Cut&quot;</span> ~key:_X ~callback:editor#text#cut_clipboard;
+  factory#add_item <span class="string">&quot;Paste&quot;</span> ~key:_V ~callback:editor#text#paste_clipboard;
   factory#add_separator ();
-  factory#add_check_item 'Word wrap' ~active:false
+  factory#add_check_item <span class="string">&quot;Word wrap&quot;</span> ~active:false
     ~callback:editor#text#set_word_wrap;
-  factory#add_check_item 'Read only' ~active:false
+  factory#add_check_item <span class="string">&quot;Read only&quot;</span> ~active:false
     ~callback:(<span class="keyword">fun</span> b -&gt; editor#text#set_editable (not b));
   window#add_accel_group accel_group;
   editor#text#event#connect#button_press

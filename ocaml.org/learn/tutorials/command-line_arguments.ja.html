@@ -147,9 +147,9 @@
     
   <span class="governing">let</span> () =
     <span class="keyword">for</span> i = 0 <span class="keyword">to</span> <span class="ocaml-module">Array</span>.length <span class="ocaml-module">Sys</span>.argv - 1 <span class="keyword">do</span>
-      printf <span class="ocaml-error-loc">'</span>[%i] %s\n' i <span class="ocaml-module">Sys</span>.argv.(i)
-    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span></code></pre>
+      printf <span class="string">&quot;[%i] %s\n&quot;</span> i <span class="ocaml-module">Sys</span>.argv.(i)
+    <span class="keyword">done</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">[0] ./script/code_top
+</span><span class="ocaml-stderr"></span></span></code></pre>
 
 <p><code>args.ml</code> として上のプログラムを保存して <code>ocaml args.ml arg1 arg2 arg3</code>
 と実行すると、 以下の結果を得る:</p>

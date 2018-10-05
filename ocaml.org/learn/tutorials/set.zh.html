@@ -176,13 +176,13 @@
 </span></code></pre>
 
 <p>不过我们也可以选择创建一个只包含一个元素的集合：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="ocaml-module">SS</span>.singleton <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="ocaml-module">SS</span>.singleton <span class="string">&quot;hello&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : SS.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>我们还可以向集合中加入元素：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> =
-    <span class="ocaml-module">List</span>.fold_right <span class="ocaml-module">SS</span>.add [<span class="ocaml-error-loc">'</span>hello'; 'world'; 'community'; 'manager';
-                            'stuff'; 'blue'; 'green'] s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">List</span>.fold_right <span class="ocaml-module">SS</span>.add [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>; <span class="string">&quot;community&quot;</span>; <span class="string">&quot;manager&quot;</span>;
+                            <span class="string">&quot;stuff&quot;</span>; <span class="string">&quot;blue&quot;</span>; <span class="string">&quot;green&quot;</span>] s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : SS.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>我们可以通过一个函数来打印一个集合的内容：</p>
@@ -203,11 +203,13 @@
 </span></code></pre>
 
 <p>如果我们想看看某个元素是否在集合内，我们可以这么做：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">SS</span>.mem <span class="ocaml-error-loc">'</span>hello' s2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">SS</span>.mem <span class="string">&quot;hello&quot;</span> s2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
 <p>Set模块提供了很多集合论的一些操作，如并，交，差等。比如说我们可以作原集合与字符串长度小于5的集合的差：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_set (<span class="ocaml-module">SS</span>.diff s s2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_set (<span class="ocaml-module">SS</span>.diff s s2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">community
+manager
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>要注意的是，Set模块是纯函数式的，每个修改操作都会创建一个新的集合，而不会修改原来的集合。</p>

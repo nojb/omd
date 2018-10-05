@@ -187,7 +187,7 @@ utop # 1 + 1;;
 <p>编译名为<code>my_prog.ml</code>的OCaml源码文件为一个原生代码可执行程序，可以使用<code>ocamlbuild my_prog.native</code>命令：</p>
 <pre class="shell"><code class="shell">$ mkdir my_project
 $ cd my_project
-$ echo &#39;let () = print_endline &#39;Hello, World!&#39;&#39; &gt; my_prog.ml
+$ echo &#39;let () = print_endline &quot;Hello, World!&quot;&#39; &gt; my_prog.ml
 $ ocamlbuild my_prog.native
 Finished, 4 targets (0 cached) in 00:00:00.
 $ ./my_prog.native
@@ -214,36 +214,37 @@ Hello, World!</code></pre>
 
 <h2 id="">调用函数</h2><p>假设你已经写好了一个函数<code>repeated</code>，它的参数是一个字符串<code>s</code>和一个数<code>n</code>，返回值是把<code>s</code>重复<code>n</code>遍形成的新字符串。</p>
 <p>在大多数源于C的语言中，调用这一函数会象下面这样:</p>
-<pre class="c"><code class="c">repeated (&#39;hello&#39;, 3)  /* this is C code */</code></pre>
+<pre class="c"><code class="c">repeated (&quot;hello&quot;, 3)  /* this is C code */</code></pre>
 
 <p>这意味着“调用函数<code>repeated</code>，
 输入两个参数，第一是字符串<code>hello</code>，第二是数字<code>3</code>”。</p>
 <p>OCaml和其他函数式语言一样以另外的方式来调用函数,
 初学者的很多错误是因为忽视了这一点。下面是OCaml中的函数调用：</p>
-<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
+<pre><code class="ocaml">repeated <span class="string">&quot;hello&quot;</span> 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
 
 <p>注意：这里<strong>没有</strong>括号, 参数中间<strong>没有</strong>逗号。</p>
-<p>容易使人困惑的是<code>repeated (&#39;hello&#39;, 3)</code>
+<p>容易使人困惑的是<code>repeated (&quot;hello&quot;, 3)</code>
 在OCaml中是<strong>合法的</strong>的。它意味着“调用函数<code>repeated</code>，输入一个参数，这一个参数是一个含两个元素的对（pair）”。这当然不符合原意，因为<code>repeated</code>函数需要的参数是两个而不是一个，而且第一个参数要求是字符串而不是对。
 这里我们暂时无需知道什么是对，我们只需记住用括号括起参数和用逗号分隔参数是错误的。</p>
 <p>我们来看另一个函数<code>prompt_string</code>，它输出字符串提示，并返回一个用户输入的字符串。我们想把这个返回的字符串输入<code>repeated</code>.下面是C和OCaml的两种版本:</p>
 <pre class="C"><code class="C">/* C code: */
-repeated (prompt_string (&#39;Name please: &#39;), 3)</code></pre>
+repeated (prompt_string (&quot;Name please: &quot;), 3)</code></pre>
 
 <pre><code class="ocaml"><span class="comment">(* OCaml code: *)</span>
-repeated (prompt_string 'Name please: ') 3</code></pre>
+repeated (prompt_string <span class="string">&quot;Name please: &quot;</span>) 3</code></pre>
 
 <p>请注意括号的不同和逗号的有无。在OCaml的版本，<code>prompt_string</code>的返回值由括号括起，作为第一个参数传入。一般情况下，规则是：“括号只括起整个函数调用，不要括起函数调用的参数。”下面是更多的例子：</p>
-<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
+<pre><code class="ocaml">f 5 (g <span class="string">&quot;hello&quot;</span>) 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
 f (g 3 4)            <span class="comment">(* f has one argument, g has two arguments *)</span></code></pre>
 
 <div style="display: none">
 
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">repeated</span> <span class="ocaml-variable">(s: string) (i: int) </span>=
-    <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>implementation not given'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="keyword">failwith</span> <span class="string">&quot;implementation not given&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val repeated : string -&gt; int -&gt; 'a = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated (<span class="ocaml-error-loc">'</span>hello', 3)     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated <span class="ocaml-error-loc">(</span><span class="string"><span class="ocaml-error-loc">&quot;hello&quot;</span></span><span class="ocaml-error-loc">, 3)</span>     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type 'a * 'b
+       but an expression was expected of type string
 </span></code></pre>
 
 <h2 id="">函数定义</h2><p>大家应该都知道在我们已经学会的语言中怎么定义一个函数（或java中的静态方法），那么OCaml中怎么做呢？</p>
@@ -357,7 +358,7 @@ is float type but need int type”：））</p>
 <code>argn</code>，其返回值类型为 <code>rettype</code>，编译器会显示</p>
 <pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
 
-<p>箭头符号用在这里会显得很奇怪，但是当我们以后介绍了所谓&#39;currying（科里化，维基有详述）&#39;后，你就会明白为什么用它。现在我只是给出几个示例。</p>
+<p>箭头符号用在这里会显得很奇怪，但是当我们以后介绍了所谓&quot;currying（科里化，维基有详述）&quot;后，你就会明白为什么用它。现在我只是给出几个示例。</p>
 <p>我们定义的<code>repeated</code>函数需要一个字符串和一个整数为参数，返回一个字符串。</p>
 <pre><code class="ocaml">repeated : string -&gt; int -&gt; string</code></pre>
 
@@ -379,7 +380,7 @@ is float type but need int type”：））</p>
 上述函数的类型可以写作：</p>
 <pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
 
-<p>这里<code>&#39;a</code>表示任意类型。我们可以如<code>give_me_a_three &#39;foo&#39;</code>这样也可以象<code>give_me_a_three 2.0</code>这样来调用这个函数。它们都是OCaml合法的表达式。</p>
+<p>这里<code>&#39;a</code>表示任意类型。我们可以如<code>give_me_a_three &quot;foo&quot;</code>这样也可以象<code>give_me_a_three 2.0</code>这样来调用这个函数。它们都是OCaml合法的表达式。</p>
 <p>这里我们还看不出多态函数的用处，而其实它们很有用也很普遍，我们将稍后详述。（提示：多态性有些象C＋＋中的templates或者Java1.5中的generics）</p>
 <h2 id="">类型推导</h2><p>本教程的主题是函数语言有很多非常酷的特性，OCaml作为函数式语言具有其所有的特性，因此它是程序员的很实用的语言。但是奇怪的是，大多数特性却与函数式编程无关。事实上在还没有介绍函数式编程为什么叫函数式之前，我已经涉及了第一个酷特性，那就是类型推导。</p>
 <p>简单地说：你不需要声明函数和变量的类型，因为OCaml自己会知道。</p>

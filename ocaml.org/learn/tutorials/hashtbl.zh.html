@@ -143,41 +143,41 @@
 为始的所有单词。首先我们需要往<code>my_hash</code>中加入数据。</p>
 <p>和Map不一样的是，哈希表是直接更新数据结构，而不是每次都新建一个表。因此诸如 
 <code>let my_hash = Hashtbl.add my_hash ...</code> 这样的代码是没有意义的。我们往往都会如下使用：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> <span class="ocaml-error-loc">'</span>hello';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hi';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hug';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'h'</span> 'hard';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'wimp';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'world';
-  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">'w'</span> 'wine'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hello&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hi&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hug&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;h&quot;</span> <span class="string">&quot;hard&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;wimp&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;world&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.add my_hash <span class="string">&quot;w&quot;</span> <span class="string">&quot;wine&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
-<p>如果我们想找出<code>my_hash</code>中<code>&#39;h&#39;</code>对应的元素，那么应该：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<p>如果我们想找出<code>my_hash</code>中<code>&quot;h&quot;</code>对应的元素，那么应该：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;hard&quot;
 </span></code></pre>
 
 <p>注意到这个语句只返回加入<code>my_mash</code>的最后一个元素。</p>
-<p>那我们如何获取<code>&#39;h&#39;</code>所有对应的值呢？没有比下面这段代码更加直观的选择了：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : '_weak3 list = []
+<p>那我们如何获取<code>&quot;h&quot;</code>所有对应的值呢？没有比下面这段代码更加直观的选择了：</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;hard&quot;; &quot;hug&quot;; &quot;hi&quot;; &quot;hello&quot;]
 </span></code></pre>
 
-<p>这里返回 <code>[&#39;hard&#39;; &#39;hug&#39;; &#39;hi&#39;; &#39;hello&#39;]</code>。
+<p>这里返回 <code>[&quot;hard&quot;; &quot;hug&quot;; &quot;hi&quot;; &quot;hello&quot;]</code>。
 如果你移除一个键，那么它对应的前一个值就会变成默认关联的值。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;hug&quot;
 </span></code></pre>
 
 <p>这里的旧值被新值隐藏的行为和旧绑定被新绑定隐藏的行为很相似，相当有趣。</p>
 <p>在某种情况下，我们更倾向于<em>替代</em>前一个值。这时我们应该用<code>Hashtbl.replace</code>：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">'t'</span> <span class="ocaml-error-loc">'</span><span class="keyword"><span class="ocaml-error-loc"></span>try</span>';
-  <span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">'t'</span> 'test';
-  <span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">'t'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">'t'</span>;
-  <span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">'t'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">&quot;t&quot;</span> <span class="string">&quot;<span class="keyword">try</span>&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.replace my_hash <span class="string">&quot;t&quot;</span> <span class="string">&quot;test&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.find_all my_hash <span class="string">&quot;t&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;test&quot;]
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.remove my_hash <span class="string">&quot;t&quot;</span>;
+  <span class="ocaml-module">Hashtbl</span>.find my_hash <span class="string">&quot;t&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Not_found.
 </span></code></pre>
 
 <p>当我们想知道 <code>my_hash</code>中是否存在某个字母的时候，我们会：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.mem my_hash <span class="string">'h'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = false
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Hashtbl</span>.mem my_hash <span class="string">&quot;h&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
       </div>

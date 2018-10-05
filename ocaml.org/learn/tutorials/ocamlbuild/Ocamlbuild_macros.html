@@ -129,11 +129,11 @@ included file.</p>
 <p>Here is an example where the source file (source.ml) and the included
 file (other.ml) are in the src/ directory.</p>
 <p><em>myocamlbuild.ml</em></p>
-<p><code> open Ocamlbuild_plugin</code><br/><code> </code><br/><code> let () =</code><br/><code>   dispatch begin function</code><br/><code>   | After_rules -&gt;</code><br/><code>     let includes = [&#39;src/other.ml&#39;] in</code><br/><code>     dep [&#39;ocaml&#39;; &#39;ocamldep&#39;] includes;</code><br/><code>     dep [&#39;ocaml&#39;; &#39;compile&#39;] includes;</code><br/><code> </code><br/><code>     let pp_src = S[A&#39;-pp&#39;; A&#39;camlp4of -Isrc&#39;] in</code><br/><code>     flag [&#39;ocaml&#39;; &#39;ocamldep&#39;] &amp; pp_src;</code><br/><code>     flag [&#39;ocaml&#39;; &#39;compile&#39;] &amp; pp_src;</code><br/><code> </code><br/><code>   | _ -&gt; ()</code><br/><code>   end</code></p>
+<p><code> open Ocamlbuild_plugin</code><br/><code> </code><br/><code> let () =</code><br/><code>   dispatch begin function</code><br/><code>   | After_rules -&gt;</code><br/><code>     let includes = [&quot;src/other.ml&quot;] in</code><br/><code>     dep [&quot;ocaml&quot;; &quot;ocamldep&quot;] includes;</code><br/><code>     dep [&quot;ocaml&quot;; &quot;compile&quot;] includes;</code><br/><code> </code><br/><code>     let pp_src = S[A&quot;-pp&quot;; A&quot;camlp4of -Isrc&quot;] in</code><br/><code>     flag [&quot;ocaml&quot;; &quot;ocamldep&quot;] &amp; pp_src;</code><br/><code>     flag [&quot;ocaml&quot;; &quot;compile&quot;] &amp; pp_src;</code><br/><code> </code><br/><code>   | _ -&gt; ()</code><br/><code>   end</code></p>
 <p><em>src/source.ml</em></p>
-<p><code> INCLUDE &#39;other.ml&#39;</code></p>
+<p><code> INCLUDE &quot;other.ml&quot;</code></p>
 <p><em>src/other.ml</em></p>
-<p><code> let f x = x + 1</code><br/><code> </code><br/><code> let () = print_endline &#39;here.&#39;</code></p>
+<p><code> let f x = x + 1</code><br/><code> </code><br/><code> let () = print_endline &quot;here.&quot;</code></p>
 
       </div>
     </div>

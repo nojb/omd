@@ -174,13 +174,13 @@ listes.</p>
 généralement le type d&#39;une liste chaînée de <code>toto</code>s est <code>toto list</code>.</p>
 <p>Cela implique que tous les éléments d&#39;une liste chaînée doivent avoir le
 même type; Il existe des types polymorphiques de listes (càd <code>&#39;a list</code>),
-très utile pour écrire des fonctions manipulant des &#39;listes de n&#39;importe
-quoi&#39; de manière générique. (Mais <code>&#39;a list</code> ne signifie pas que les
+très utile pour écrire des fonctions manipulant des &quot;listes de n&#39;importe
+quoi&quot; de manière générique. (Mais <code>&#39;a list</code> ne signifie pas que les
 différents éléments d&#39;une liste peuvent avoir des types différents -
 vous ne pouvez pas utiliser ce type polymorphique pour construire,
 disons, une liste d&#39;entiers et de chaînes. Le sens de cette notation est
-que les éléments de la liste peuvent être n&#39;importe quoi, mais tous &#39;du
-même type de n&#39;importe quoi&#39;).</p>
+que les éléments de la liste peuvent être n&#39;importe quoi, mais tous &quot;du
+même type de n&#39;importe quoi&quot;).</p>
 <p>La fonction <code>length</code> définie dans le module standard de OCaml <code>List</code> en
 est un bon exemple. Peu importe si une liste contient des entiers, des
 chaînes, des objets ou des ratons-laveurs, la fonction <code>List.length</code>
@@ -196,7 +196,7 @@ beaucoup plus laborieux.</p>
 };</code></pre><p>L&#39;équivalent le plus simple en OCaml sont les <strong>n-uplets</strong> (tuples),
 comme la paire <code>(3, 4)</code> qui a pour type <code>int * int</code>. Contrairement aux
 listes, les n-uplets peuvent contenir des éléments de types différents,
-par exemple <code>(3, &#39;hello&#39;, &#39;x&#39;)</code> qui a pour type <code>int * string * char</code>.</p>
+par exemple <code>(3, &quot;hello&quot;, &#39;x&#39;)</code> qui a pour type <code>int * string * char</code>.</p>
 <p>Une manière légèrement plus complexe de traduire les struct C est
 d&#39;utiliser un <strong>enregistrement</strong> (record). Les enregistrements, comme
 les structs C, permettent de nommer leurs composants. Les composants des
@@ -222,7 +222,7 @@ interactive :</p>
 
 <p>Donc OCaml refuse de laisser certains champs d&#39;un enregistrement non
 définis.</p>
-<h2 id="Variants-unions-marqu-es-et-num-rations">Variants (unions marquées et énumérations)</h2><p>Le concept d&#39;&#39;union marquée&#39; n&#39;existe pas vraiment en C, bien qu&#39;il
+<h2 id="Variants-unions-marqu-es-et-num-rations">Variants (unions marquées et énumérations)</h2><p>Le concept d&#39;&quot;union marquée&quot; n&#39;existe pas vraiment en C, bien qu&#39;il
 existe dans le compileur gcc. Voici comment on traduit d&#39;habitude une
 union marquée en C:</p>
 <pre class="C"><code class="C">struct foo {
@@ -263,8 +263,8 @@ constructeurs définissent des valeurs.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Nothing</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : foo = Nothing
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">Int 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : foo = Int 3
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">Pair (4, 5)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : foo = Pair (4, 5)
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">String <span class="ocaml-error-loc">'</span>hello'
-  <span class="comment">(* etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">String <span class="string">&quot;hello&quot;</span>
+  <span class="comment">(* etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : foo = String &quot;hello&quot;
 </span></code></pre>
 
 <p>Toutes ces expressions ont pour type <code>foo</code>.</p>
@@ -307,7 +307,7 @@ s&#39;appelle <code>int binary_tree</code>. De la même façon, le type où chaq
 stocke une chaîne s&#39;appelle <code>string binary_tree</code>. Pour l&#39;exemple suivant
 nous allons taper des valeurs dans la boucle interactive, et laisser le
 système d&#39;inférence de types nous donner leurs types :</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf <span class="string">&quot;hello&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string binary_tree = Leaf &quot;hello&quot;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">Leaf 3.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float binary_tree = Leaf 3.
 </span></code></pre>
 
@@ -336,8 +336,8 @@ regardant la définition de <code>&#39;a list</code> ci-dessus, l&#39;origine de
 formelle devrait vous paraître plus clairement.</p>
 <h2 id="Listes-structures-et-variants-R-sum">Listes, structures et variants — Résumé</h2><p>tableau en 3 colonnes avec nom et exemples de définition et de valeur.</p>
 <pre class="text"><code class="text">list           int list                       [1; 2; 3]
-tuple          int * string                   (3, &#39;hello&#39;)
-record         type pair =                    { a = 3; b = &#39;hello&#39; }
+tuple          int * string                   (3, &quot;hello&quot;)
+record         type pair =                    { a = 3; b = &quot;hello&quot; }
                  { a: int; b: string }
 variant        type foo =
                  | Int of int                 Int 3
@@ -350,12 +350,12 @@ parameterized  type &#39;a my_list =
 variant          | Empty                      Cons (1, Cons (2, Empty))
                  | Cons of &#39;a * &#39;a my_list</code></pre>
 
-<h2 id="Filtrage-sur-les-structures-de-donn-es">Filtrage (sur les structures de données)</h2><p>Une &#39;Fonctionnalité Vraiment Cool&#39;(tm) des langages fonctionnels est
+<h2 id="Filtrage-sur-les-structures-de-donn-es">Filtrage (sur les structures de données)</h2><p>Une &quot;Fonctionnalité Vraiment Cool&quot;(tm) des langages fonctionnels est
 leur capacité à démonter les structures de données et à effectuer du
 filtrage (pattern matching) sur les données. Ce n&#39;est pas à proprement
-parler une propriété &#39;fonctionnelle&#39; - on pourrait très bien imaginer
+parler une propriété &quot;fonctionnelle&quot; - on pourrait très bien imaginer
 une nouvelle sorte de C qui offrirait ces mêmes services. Mais c&#39;est
-tout de même une &#39;Fonctionnalité Vraiment Cool&#39;.</p>
+tout de même une &quot;Fonctionnalité Vraiment Cool&quot;.</p>
 <p>Commençons par un problème réel : je veux représenter des expressions
 mathématiques simples comme <code>n * (x + y)</code> et effectuer les
 multiplications symboliquement pour obtenir <code>n * x + n * y</code>.</p>
@@ -365,7 +365,7 @@ multiplications symboliquement pour obtenir <code>n * x + n * y</code>.</p>
       | Minus <span class="keyword">of</span> expr * expr       <span class="comment">(* means a - b *)</span>
       | Times <span class="keyword">of</span> expr * expr       <span class="comment">(* means a * b *)</span>
       | Divide <span class="keyword">of</span> expr * expr      <span class="comment">(* means a / b *)</span>
-      | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+      | Value <span class="keyword">of</span> string            <span class="comment">(* <span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;n&quot;</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
     Plus of expr * expr
   | Minus of expr * expr
   | Times of expr * expr
@@ -374,12 +374,11 @@ multiplications symboliquement pour obtenir <code>n * x + n * y</code>.</p>
 </span></code></pre>
 
 <p>L&#39;expression <code>n * (x + y)</code> s&#39;écrirait:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">Times (Value <span class="string">&quot;n&quot;</span>, Plus (Value <span class="string">&quot;x&quot;</span>, Value <span class="string">&quot;y&quot;</span>))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : expr = Times (Value &quot;n&quot;, Plus (Value &quot;x&quot;, Value &quot;y&quot;))
 </span></code></pre>
 
 <p>Ecrivons une fonction qui affiche
-<code>Times (Value &#39;n&#39;, Plus (Value &#39;x&#39;, Value &#39;y&#39;))</code> comme <code>n * (x + y)</code>. En
+<code>Times (Value &quot;n&quot;, Plus (Value &quot;x&quot;, Value &quot;y&quot;))</code> comme <code>n * (x + y)</code>. En
 fait, je vais écrire deux fonctions, l&#39;une qui convertit une expression
 en une jolie chaîne, et une autre qui l&#39;affiche (comme ça si j&#39;ai envie
 d&#39;écrire la même chaîne dans un fichier, je n&#39;aurais pas à réécrire la
@@ -387,22 +386,22 @@ fonction en entier juste pour ça).</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
     <span class="keyword">match</span> e <span class="keyword">with</span>
     | Plus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; + &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
     | Minus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; - &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
     | Times (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; * &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
     | Divide (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
-    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       <span class="string">&quot;(&quot;</span> ^ to_string left ^ <span class="string">&quot; / &quot;</span> ^ to_string right ^ <span class="string">&quot;)&quot;</span>
+    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val to_string : expr -&gt; string = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_expr</span> <span class="ocaml-variable">e </span>=
-    print_endline (<span class="ocaml-error-loc">to_string</span> e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value to_string
+    print_endline (to_string e)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_expr : expr -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>(NB: L&#39;opérateur <code>^</code> sert à concaténer les chaînes.)</p>
 <p>Voilà la fonction d&#39;affichage à l&#39;oeuvre:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span> (Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
-Hint: Did you mean print_char?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_expr (Times (Value <span class="string">&quot;n&quot;</span>, Plus (Value <span class="string">&quot;x&quot;</span>, Value <span class="string">&quot;y&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">(n * (x + y))
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>La forme générale pour le filtrage est:</p>
@@ -436,8 +435,8 @@ multiplication des expressions de la forme <code>n * (x + y)</code> ou
 </span></code></pre>
 
 <p>La voilà en action:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_expr</span> (multiply_out (Times (Value <span class="string">'n'</span>, Plus (Value <span class="string">'x'</span>, Value <span class="string">'y'</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_expr
-Hint: Did you mean print_char?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_expr (multiply_out (Times (Value <span class="string">&quot;n&quot;</span>, Plus (Value <span class="string">&quot;x&quot;</span>, Value <span class="string">&quot;y&quot;</span>))))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">((n * x) + (n * y))
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Comment est-ce que marche la fonction <code>multiply_out</code> ? L&#39;essentiel se
@@ -466,9 +465,8 @@ sous-expressions, et des cas plus complexes :</p>
     | Plus (Times (e1, e2), Times (e3, e4)) when e2 = e4 -&gt;
        Times (Plus (e1, e3), e4)
     | e -&gt; e</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val factorize : expr -&gt; expr = &lt;fun&gt;
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string"><span class="ocaml-error-loc">'n'</span></span><span class="ocaml-error-loc"></span>, Value <span class="string">'x'</span>),
-                   Times (Value <span class="string">'n'</span>, Value <span class="string">'y'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">factorize (Plus (Times (Value <span class="string">&quot;n&quot;</span>, Value <span class="string">&quot;x&quot;</span>),
+                   Times (Value <span class="string">&quot;n&quot;</span>, Value <span class="string">&quot;y&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : expr = Times (Value &quot;n&quot;, Plus (Value &quot;x&quot;, Value &quot;y&quot;))
 </span></code></pre>
 
 <p>La fonction de factorisation ci-dessus introduit une paire de nouvelles
@@ -481,8 +479,8 @@ la condition après la clause <code>when</code> est satisfaite.</p>
   motif      [ when condition ]   -&gt;  r&eacute;sultat
     ...</code></pre>
 
-<p>La seconde fonctionalité est l&#39;opérateur <code>=</code> qui teste l&#39;&#39;égalité
-structurelle&#39; de deux expressions. Cela signifie qu&#39;il descend
+<p>La seconde fonctionalité est l&#39;opérateur <code>=</code> qui teste l&#39;&quot;égalité
+structurelle&quot; de deux expressions. Cela signifie qu&#39;il descend
 récursivement dans chacune de deux expressions pour vérifier qu&#39;elles
 sont identiques à tous les niveaux.</p>
 <p>OCaml est capable de vérifier au moment de la compilation que tous les
@@ -493,7 +491,7 @@ cas sont couverts par vos motifs. J&#39;ai modifié la définition du
             | Times <span class="keyword">of</span> expr * expr     <span class="comment">(* means a * b *)</span>
             | Divide <span class="keyword">of</span> expr * expr    <span class="comment">(* means a / b *)</span>
             | Product <span class="keyword">of</span> expr list     <span class="comment">(* means a * b * c * ... *)</span>
-            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'n'</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
+            | Value <span class="keyword">of</span> string          <span class="comment">(* <span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;n&quot;</span>, etc. *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type expr =
     Plus of expr * expr
   | Minus of expr * expr
   | Times of expr * expr
@@ -505,16 +503,19 @@ cas sont couverts par vos motifs. J&#39;ai modifié la définition du
 <p>J&#39;ai ensuite recompilé la fonction <code>to_string</code> sans modifications. OCaml
 a renvoyé l&#39;avertissement suivant :</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">to_string</span> <span class="ocaml-variable">e </span>=
-    <span class="keyword">match</span> e <span class="keyword">with</span>
+    <span class="keyword"><span class="ocaml-error-loc">match</span></span><span class="ocaml-error-loc"> e </span><span class="keyword"><span class="ocaml-error-loc">with</span></span><span class="ocaml-error-loc">
     | Plus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ <span class="ocaml-error-loc">'</span> + ' ^ to_string right ^ <span class="string">')'</span>
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; + &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
     | Minus (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' - ' ^ to_string right ^ <span class="string">')'</span>
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; - &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
     | Times (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' * ' ^ to_string right ^ <span class="string">')'</span>
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; * &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
     | Divide (left, right) -&gt;
-       <span class="string">'('</span> ^ to_string left ^ ' / ' ^ to_string right ^ <span class="string">')'</span>
-    | Value v -&gt; v</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+       </span><span class="string"><span class="ocaml-error-loc">&quot;(&quot;</span></span><span class="ocaml-error-loc"> ^ to_string left ^ </span><span class="string"><span class="ocaml-error-loc">&quot; / &quot;</span></span><span class="ocaml-error-loc"> ^ to_string right ^ </span><span class="string"><span class="ocaml-error-loc">&quot;)&quot;</span></span><span class="ocaml-error-loc">
+    | Value v -&gt; v</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+Product _
+</span>val to_string : expr -&gt; string = &lt;fun&gt;
 </span></code></pre>
 
       </div>

@@ -128,19 +128,19 @@
 ocamlfind.</p>
 <p>Define the following in your plugin :</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">ocamlfind_query</span> <span class="ocaml-variable">pkg </span>=
-  <span class="governing">let </span><span class="ocaml-variable">cmd</span> = <span class="ocaml-module">Printf</span>.sprintf 'ocamlfind query %s' (<span class="ocaml-module">Filename</span>.quote pkg) <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">cmd</span> = <span class="ocaml-module">Printf</span>.sprintf <span class="string">&quot;ocamlfind query %s&quot;</span> (<span class="ocaml-module">Filename</span>.quote pkg) <span class="governing">in</span>
   <span class="ocaml-module">My_unix</span>.run_and_open cmd (<span class="keyword">fun</span> ic -&gt;
-      <span class="ocaml-module">Log</span>.dprintf 5 'Getting Ocaml directory from command %s' cmd;
+      <span class="ocaml-module">Log</span>.dprintf 5 <span class="string">&quot;Getting Ocaml directory from command %s&quot;</span> cmd;
       input_line ic
     )</code></pre>
 
 <p>Then, in <code>After_rules</code>:</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">sexplib_dir</span> = ocamlfind_query 'sexplib' <span class="governing">in</span>
-  <span class="governing">let </span><span class="ocaml-variable">type_conv_dir</span> = ocamlfind_query '<span class="governing">type</span>-conv' <span class="governing">in</span>
-  ocaml_lib ~extern:true ~dir:sexplib_dir 'sexplib';
-  flag ['ocaml'; 'pp'; 'use_sexplib.syntax']
-  &amp; S[A'-I'; A type_conv_dir; A'-I'; A sexplib_dir;
-      <span class="ocaml-module">A'pa_type_conv</span>.cmo'; <span class="ocaml-module">A'pa_sexp_conv</span>.cmo']</code></pre>
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">sexplib_dir</span> = ocamlfind_query <span class="string">&quot;sexplib&quot;</span> <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">type_conv_dir</span> = ocamlfind_query <span class="string">&quot;<span class="governing">type</span>-conv&quot;</span> <span class="governing">in</span>
+  ocaml_lib ~extern:true ~dir:sexplib_dir <span class="string">&quot;sexplib&quot;</span>;
+  flag [<span class="string">&quot;ocaml&quot;</span>; <span class="string">&quot;pp&quot;</span>; <span class="string">&quot;use_sexplib.syntax&quot;</span>]
+  &amp; S[A<span class="string">&quot;-I&quot;</span>; A type_conv_dir; A<span class="string">&quot;-I&quot;</span>; A sexplib_dir;
+      A<span class="string">&quot;pa_type_conv.cmo&quot;</span>; A<span class="string">&quot;pa_sexp_conv.cmo&quot;</span>]</code></pre>
 
 <p>Ensure that each <code>.ml</code> file that will use the sexplib syntax (<code>type foo =
 ... with sexp</code>) is tagged with <code>camlp4o</code> and <code>use_sexplib.syntax</code>, as in:</p>
@@ -149,7 +149,7 @@ ocamlfind.</p>
 <p>Do not forget to add</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Sexplib</span>
 <span class="governing">open</span> <span class="ocaml-module">Sexp</span>
-TYPE_CONV_PATH 'Foo'</code></pre>
+TYPE_CONV_PATH <span class="string">&quot;Foo&quot;</span></code></pre>
 
 <p>to your modules.</p>
 

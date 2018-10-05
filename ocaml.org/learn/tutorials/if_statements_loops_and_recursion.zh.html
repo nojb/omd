@@ -175,7 +175,7 @@
 <p>而确实OCaml也允许你把max应用到不同的类型：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">max 3.5 13.0</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : float = 13.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max <span class="string">'a'</span> <span class="string">'b'</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : char = 'b'
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">max <span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;b&quot;
 </span></code></pre>
 
 <p>这是因为<code>&gt;</code>是多态的。它可以比较所有类型，包括对象（按位比较）。</p>
@@ -216,37 +216,37 @@ if语句的知识来看看它到底在干些什么：</p>
 
 <p>在 <code>Pervasives</code> 中的 <code>string_of_float</code> 函数也有一些复杂嵌套的if表达式：</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
-  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float <span class="string">&quot;%.12g&quot;</span> f <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">l</span> = string_length s <span class="governing">in</span>
   <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">i </span>=
-    <span class="keyword">if</span> i &gt;= l <span class="keyword">then</span> s ^ <span class="string">'.'</span>
+    <span class="keyword">if</span> i &gt;= l <span class="keyword">then</span> s ^ <span class="string">&quot;.&quot;</span>
     <span class="keyword">else</span> <span class="keyword">if</span> s.[i] = <span class="string">'.'</span> || s.[i] = <span class="string">'e'</span> <span class="keyword">then</span> s
     <span class="keyword">else</span> loop (i+1) <span class="governing">in</span>
   loop 0</code></pre>
 
-<p>让我们来验证一下这个函数。如果 <code>f</code> = 12.34, 那么 <code>s</code> = &#39;12.34&#39; 并且 <code>l</code> = 5. 让后我们以<code>i</code> = 0 调用 <code>loop</code>。</p>
+<p>让我们来验证一下这个函数。如果 <code>f</code> = 12.34, 那么 <code>s</code> = &quot;12.34&quot; 并且 <code>l</code> = 5. 让后我们以<code>i</code> = 0 调用 <code>loop</code>。</p>
 <p><code>i</code> 小于 <code>l</code>, 而且 <code>s.[i]</code> (<code>s</code>的第i个字母) 不是小数点或者 <code>&#39;e&#39;</code>. 所以
 <code>loop (i+1)</code> 被调用，也就是 <code>loop 1</code>。</p>
 <p>然后继续调用 <code>loop 2</code>。</p>
-<p>当 <code>i</code> = 2时， <code>s.[i]</code> 是一个小数点（原来的字符串是<code>s</code> = &#39;12.34&#39;）。
-所以马上返回<code>s</code>，这个函数<code>string_of_float</code> 返回了 &#39;12.34&#39;。</p>
+<p>当 <code>i</code> = 2时， <code>s.[i]</code> 是一个小数点（原来的字符串是<code>s</code> = &quot;12.34&quot;）。
+所以马上返回<code>s</code>，这个函数<code>string_of_float</code> 返回了 &quot;12.34&quot;。</p>
 <p>那这个<code>loop</code>干了什么？实际上它检查<code>format_float</code>返回的字符串是否包含一个小数点或者<code>&#39;e&#39;</code>。
-如果我们调用<code>string_of_float 12.0</code>， <code>format_float</code>会返回&#39;12&#39;，但是 <code>string_of_float</code> 必须返回 &#39;12.&#39; 或者 &#39;12.0&#39;
+如果我们调用<code>string_of_float 12.0</code>， <code>format_float</code>会返回&quot;12&quot;，但是 <code>string_of_float</code> 必须返回 &quot;12.&quot; 或者 &quot;12.0&quot;
 （因为OCaml中的浮点数必须包含小数点来与整数区分）。因此要做这个检查。</p>
 <p>这里递归的奇怪用法几乎是可以肯定是比较迅速的。虽然OCaml支持for循环，但是我们将看见
 for循环的限制使得它不能在这里派上用场。下面是个更直接的实现方式，但它
 的效率几乎是上面的1/2：</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">string_of_float</span> <span class="ocaml-variable">f </span>=
-  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float '%.12g' f <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">s</span> = format_float <span class="string">&quot;%.12g&quot;</span> f <span class="governing">in</span>
   <span class="keyword">if</span> <span class="ocaml-module">String</span>.contains s <span class="string">'.'</span> || <span class="ocaml-module">String</span>.contains s <span class="string">'e'</span>
   <span class="keyword">then</span> s
-  <span class="keyword">else</span> s ^ <span class="string">'.'</span></code></pre>
+  <span class="keyword">else</span> s ^ <span class="string">&quot;.&quot;</span></code></pre>
 
 <h2 id="begin-end">用 begin ... end</h2><p>下面是 lablgtk 中的一段代码:</p>
 <pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
   <span class="keyword">fun</span> _ -&gt; f obj
 <span class="keyword">else</span> <span class="governing">begin</span>
-  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  eprintf <span class="string">&quot;Glade-warning: %s expects a %s argument.\n&quot;</span> name cls;
   <span class="keyword">raise</span> Not_found
 <span class="governing">end</span></code></pre>
 
@@ -255,14 +255,14 @@ for循环的限制使得它不能在这里派上用场。下面是个更直接�
 <pre><code class="ocaml"><span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
   <span class="keyword">fun</span> _ -&gt; f obj
 <span class="keyword">else</span>
-  eprintf 'Glade-warning: %s expects a %s argument.\n' name cls;
+  eprintf <span class="string">&quot;Glade-warning: %s expects a %s argument.\n&quot;</span> name cls;
   <span class="keyword">raise</span> Not_found</code></pre>
 
 <p>如果给上面的表达式加上括号：</p>
 <pre><code class="ocaml">(<span class="keyword">if</span> <span class="ocaml-module">GtkBase</span>.<span class="ocaml-module">Object</span>.is_a obj cls <span class="keyword">then</span>
    <span class="keyword">fun</span> _ -&gt; f obj
  <span class="keyword">else</span>
-   eprintf 'Glade-warning: %s expects a %s argument.\n' name cls
+   eprintf <span class="string">&quot;Glade-warning: %s expects a %s argument.\n&quot;</span> name cls
 );
 <span class="keyword">raise</span> Not_found</code></pre>
 
@@ -270,17 +270,19 @@ for循环的限制使得它不能在这里派上用场。下面是个更直接�
  <code>then</code> 或者 <code>else</code> 中的多个语句是必需的。你也可以用括号 <code>( ... )</code> 来表示这个关系
 （我更喜欢括号，因为我觉得Pascal比较<strong>恶心</strong>）。下面有两个简单例子：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
-      print_endline <span class="ocaml-error-loc">'</span>THEN'
+      print_endline <span class="string">&quot;THEN&quot;</span>
     <span class="keyword">else</span> <span class="governing">begin</span>
-      print_endline 'ELSE';
-      <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
-    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+      print_endline <span class="string">&quot;ELSE&quot;</span>;
+      <span class="keyword">failwith</span> <span class="string">&quot;<span class="keyword">else</span> clause&quot;</span>
+    <span class="governing">end</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">ELSE
+</span><span class="ocaml-stderr"></span>Exception: Failure &quot;else clause&quot;.
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">if</span> 1 = 0 <span class="keyword">then</span>
-      print_endline <span class="ocaml-error-loc">'</span>THEN'
+      print_endline <span class="string">&quot;THEN&quot;</span>
     <span class="keyword">else</span> (
-      print_endline 'ELSE';
-      <span class="keyword">failwith</span> '<span class="keyword">else</span> clause'
-    )</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+      print_endline <span class="string">&quot;ELSE&quot;</span>;
+      <span class="keyword">failwith</span> <span class="string">&quot;<span class="keyword">else</span> clause&quot;</span>
+    )</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">ELSE
+</span><span class="ocaml-stderr"></span>Exception: Failure &quot;else clause&quot;.
 </span></code></pre>
 
 <h2 id="For-while">For 循环和 while 循环</h2><p>OCaml 支持一种比较受限制的 <code>for</code> 循环：</p>
@@ -330,7 +332,7 @@ do_next_job ();
 不支持引用：</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = false <span class="governing">in</span>
 <span class="keyword">while</span> not quit_loop <span class="keyword">do</span>
-  print_string 'Have you had enough yet? (y/n) ';
+  print_string <span class="string">&quot;Have you had enough yet? (y/n) &quot;</span>;
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
   <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
     <span class="comment">(* how <span class="keyword">do</span> I set quit_loop <span class="keyword">to</span> true ?!? *)</span>
@@ -342,7 +344,7 @@ do_next_job ();
 非，在OCaml中是“解引用”的意思。你最好把 <code>!</code> 读作“解引”：</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">quit_loop</span> = <span class="keyword">ref</span> false <span class="governing">in</span>
 <span class="keyword">while</span> not !quit_loop <span class="keyword">do</span>
-  print_string 'Have you had enough yet? (y/n) ';
+  print_string <span class="string">&quot;Have you had enough yet? (y/n) &quot;</span>;
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_line () <span class="governing">in</span>
   <span class="keyword">if</span> str.[0] = <span class="string">'y'</span> <span class="keyword">then</span>
     quit_loop := true
@@ -357,8 +359,18 @@ do_next_job ();
 
 <p>如果你想迭代链表中的每个元素各一次，用<code>List.iter</code>, 如下：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">elem </span>=
-    <span class="ocaml-module">Printf</span>.printf <span class="string">'I'</span>m looking at element %d now<span class="ocaml-error-loc">\</span>n' elem <span class="governing">in</span>
-    <span class="ocaml-module">List</span>.iter f my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Illegal character (\\)
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;I'm looking at element %d now\n&quot;</span> elem <span class="governing">in</span>
+    <span class="ocaml-module">List</span>.iter f my_list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">I'm looking at element 1 now
+I'm looking at element 2 now
+I'm looking at element 3 now
+I'm looking at element 4 now
+I'm looking at element 5 now
+I'm looking at element 6 now
+I'm looking at element 7 now
+I'm looking at element 8 now
+I'm looking at element 9 now
+I'm looking at element 10 now
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>当你想用for循环的时候，<code>List.iter</code> 应该是你的首选。</p>
@@ -436,7 +448,7 @@ do_next_job ();
 <span class="governing">let</span> () =
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
-  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+  printf <span class="string">&quot;I read %d characters from %s\n&quot;</span> (<span class="ocaml-module">String</span>.length str) filename</code></pre>
 
 <p>方法一不会工作得很好，因为 <code>read_whole_chan</code> 并不能很好地读取诸如键盘和套接口这种非一般文件，
 方法二将用到while循环：</p>
@@ -463,7 +475,7 @@ do_next_job ();
 <span class="governing">let</span> () =
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
-  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+  printf <span class="string">&quot;I read %d characters from %s\n&quot;</span> (<span class="ocaml-module">String</span>.length str) filename</code></pre>
 
 <p>方法二的关键在中间的while循环。还记得我上面提到抛异常是提早跳出循环的唯一方式？
 这就是我们在这里的解决方案。虽然我还没有提到异常，但我估计你应该可以理解 <code>input_line</code> 
@@ -497,7 +509,7 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
 <span class="governing">let</span> () =
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = <span class="ocaml-module">Sys</span>.argv.(1) <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">str</span> = read_whole_file filename <span class="governing">in</span>
-  printf 'I read %d characters from %s\n' (<span class="ocaml-module">String</span>.length str) filename</code></pre>
+  printf <span class="string">&quot;I read %d characters from %s\n&quot;</span> (<span class="ocaml-module">String</span>.length str) filename</code></pre>
 
 <p>这里同样有一个死循环，但是是用递归来实现的。<code>loop</code> 在末尾调用了它本身，这个死循环会在
  <code>input_line</code> 抛出 <code>End_of_file</code> 异常的时候跳出。</p>
@@ -510,7 +522,7 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
 
 <p><code>opendir</code> 和 <code>readdir</code> 函数将被用来打开和读取目录。我将定义一个有用的函数
 <code>readdir_no_ex</code> ，它会隐藏 <code>readdir</code> 抛出的烦人的 <code>End_of_file</code> 异常：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Unix</span>  <span class="comment">(*  You may need <span class="keyword">to</span> #load '<span class="ocaml-module">Unix</span>.cma' *)</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">open</span> <span class="ocaml-module">Unix</span>  <span class="comment">(*  You may need <span class="keyword">to</span> #load <span class="string">&quot;<span class="ocaml-module">Unix</span>.cma&quot;</span> *)</span>
     
   <span class="governing">let</span> <span class="ocaml-function">readdir_no_ex</span> <span class="ocaml-variable">dirh </span>=
     <span class="keyword">try</span>
@@ -525,13 +537,13 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
 <p>下面我回定义一个递归函数来将 <code>filesystem</code> 类型转变成字符串用来打印：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">string_of_filesystem</span> <span class="ocaml-variable">fs </span>=
     <span class="keyword">match</span> fs <span class="keyword">with</span>
-    | File filename -&gt; filename ^ '\n'
+    | File filename -&gt; filename ^ <span class="string">&quot;\n&quot;</span>
     | Directory fs_list -&gt;
-        <span class="ocaml-module">List</span>.fold_left (^) <span class="ocaml-error-loc">'</span>' (<span class="ocaml-module">List</span>.map string_of_filesystem fs_list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+        <span class="ocaml-module">List</span>.fold_left (^) <span class="string">&quot;&quot;</span> (<span class="ocaml-module">List</span>.map string_of_filesystem fs_list)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val string_of_filesystem : filesystem -&gt; string = &lt;fun&gt;
 </span></code></pre>
 
 <p>这里我们用到了 <code>fold_left</code> 和 <code>map</code>。 <code>map</code> 这里将链表中的每个 <code>filesystem</code> 递归地转
-变成 <code>string</code>。而 <code>fold_left (^) &#39;&#39;</code> 会把一个链表串接成一个长字符串。注意到这里用到了
+变成 <code>string</code>。而 <code>fold_left (^) &quot;&quot;</code> 会把一个链表串接成一个长字符串。注意到这里用到了
 模式匹配。（库定义了一个函数 <code>String.concat</code> 实现和 <code>fold_left (^) </code>等同的小鬼，
 但是更加迅速）。</p>
 <p>现在我们将定义一个函数来递归地读取目录结构，然后返回一个递归的 <code>filesystem</code> 数据结构哦。我将
@@ -553,20 +565,20 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
   <span class="comment">(* ..... *)</span></code></pre>
 
 <p>首先我们要从目录句柄里读取下一个文件名。 <code>filename</code> 是一个 <code>string option</code>，也就是说它可以是
- <code>None</code> 或者 <code>Some &#39;foo&#39;</code>， <code>foo</code> 是目录下的下一个文件名。我们还要忽略 <code>&#39;.&#39;</code> 和 <code>&#39;..&#39;</code> 文件
+ <code>None</code> 或者 <code>Some &quot;foo&quot;</code>， <code>foo</code> 是目录下的下一个文件名。我们还要忽略 <code>&quot;.&quot;</code> 和 <code>&quot;..&quot;</code> 文件
 （分别是当前目录和父目录）。通过模式匹配可以很轻松地实现这一点：</p>
 <pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
   <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
   <span class="keyword">match</span> filename <span class="keyword">with</span>
   | None -&gt; []
-  | Some <span class="string">'.'</span> -&gt; loop ()
-  | Some '..' -&gt; loop ()
+  | Some <span class="string">&quot;.&quot;</span> -&gt; loop ()
+  | Some <span class="string">&quot;..&quot;</span> -&gt; loop ()
   | Some filename -&gt;
      <span class="comment">(* ..... *)</span></code></pre>
 
 <p><code>None</code>的时候很简单，如果<code>loop</code>到了目录尾，<code>loop</code>要返回一个文件名的链表，但是没有文件名阿，
 所以应该返回一个空链表(<code>[]</code>)。</p>
-<p>对于 <code>&#39;.&#39;</code> 和 <code>&#39;..&#39;</code> 我们只要简单地忽略它，再调用一遍 <code>loop</code> 即可。</p>
+<p>对于 <code>&quot;.&quot;</code> 和 <code>&quot;..&quot;</code> 我们只要简单地忽略它，再调用一遍 <code>loop</code> 即可。</p>
 <p>那我们该怎样处理 <code>loop</code> 正常返回文件名的情况呢（ <code>Some filename</code> 的情况）？令<code>pathname</code>
 是文件路径，首先我们得先判断这个文件是否目录，如果是的话，我们将
 <code>this</code>的值设成 <code>read_directory</code> 递归调用的返回值，类型是<code>Directory something</code>。
@@ -579,17 +591,17 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
       <span class="governing">let </span><span class="ocaml-variable">filename</span> = readdir_no_ex dirh <span class="governing">in</span>
       <span class="keyword">match</span> filename <span class="keyword">with</span>
       | None -&gt; []
-      | Some <span class="string">'.'</span> -&gt; loop ()
-      | Some <span class="ocaml-error-loc">'</span>..' -&gt; loop ()
+      | Some <span class="string">&quot;.&quot;</span> -&gt; loop ()
+      | Some <span class="string">&quot;..&quot;</span> -&gt; loop ()
       | Some filename -&gt;
-          <span class="governing">let </span><span class="ocaml-variable">pathname</span> = path ^ <span class="string">'/'</span> ^ filename <span class="governing">in</span>
+          <span class="governing">let </span><span class="ocaml-variable">pathname</span> = path ^ <span class="string">&quot;/&quot;</span> ^ filename <span class="governing">in</span>
           <span class="governing">let </span><span class="ocaml-variable">stat</span> = lstat pathname <span class="governing">in</span>
           <span class="governing">let </span><span class="ocaml-variable">this</span> = <span class="keyword">if</span> stat.st_kind = S_DIR <span class="keyword">then</span>
                        read_directory pathname
                      <span class="keyword">else</span>
                        File pathname <span class="governing">in</span>
           this :: loop () <span class="governing">in</span>
-    Directory (loop ())</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    Directory (loop ())</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val read_directory : string -&gt; filesystem = &lt;fun&gt;
 </span></code></pre>
 
 <p>这个递归有点复杂，虽然这个例子是生造的，但这个复杂的递归模式在现实生活中是很典型的。
@@ -644,13 +656,14 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
     <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">entries </span>=
       <span class="keyword">try</span>
         <span class="keyword">match</span> readdir dirh <span class="keyword">with</span>
-        | <span class="string">'.'</span> | <span class="ocaml-error-loc">'</span>..' -&gt; loop entries
+        | <span class="string">&quot;.&quot;</span> | <span class="string">&quot;..&quot;</span> -&gt; loop entries
         | filename -&gt;
-           loop (read_filesystem (path ^ <span class="string">'/'</span> ^ filename) :: entries)
+           loop (read_filesystem (path ^ <span class="string">&quot;/&quot;</span> ^ filename) :: entries)
       <span class="keyword">with</span> End_of_file -&gt; entries <span class="governing">in</span>
     <span class="governing">let </span><span class="ocaml-variable">list</span> = loop [] <span class="governing">in</span>
     closedir dirh;
-    list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: pattern expected.
+    list</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val read_filesystem : string -&gt; filesystem = &lt;fun&gt;
+val read_directory : string -&gt; filesystem list = &lt;fun&gt;
 </span></code></pre>
 
 <p>注意 <code>End_of_file -&gt; entries</code> 表示当我们遇到异常的时候，直接返回结果。</p>
@@ -663,11 +676,11 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
 在合理的地方使用命令式的方法。</p>
 <p>下面是 Fabrice Le Fessant 提供的解决方法：</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">list</span> = <span class="keyword">ref</span> [] <span class="governing">in</span>
-<span class="governing">let </span><span class="ocaml-variable">dir</span> = opendir '.......' <span class="governing">in</span>
+<span class="governing">let </span><span class="ocaml-variable">dir</span> = opendir <span class="string">&quot;.......&quot;</span> <span class="governing">in</span>
 <span class="keyword">try</span>
   <span class="keyword">while</span> true <span class="keyword">do</span>
     <span class="keyword">match</span> readdir dir <span class="keyword">with</span>
-    | <span class="string">'.'</span> | '..' -&gt; ()
+    | <span class="string">&quot;.&quot;</span> | <span class="string">&quot;..&quot;</span> -&gt; ()
     | filename -&gt; list := filename :: !list
   <span class="keyword">done</span>;
   <span class="keyword">assert</span> false
@@ -698,18 +711,18 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">list_max</span> <span class="ocaml-variable">xs </span>=
       <span class="keyword">match</span> xs <span class="keyword">with</span>
       | [] -&gt;   <span class="comment">(* empty list: fail *)</span>
-         <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>list_max called on empty list'
+         <span class="keyword">failwith</span> <span class="string">&quot;list_max called on empty list&quot;</span>
       | [x] -&gt; <span class="comment">(* single element list: return the element *)</span>
          x
       | x :: remainder -&gt; <span class="comment">(* multiple element list: recursive case *)</span>
-         max x (list_max remainder)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+         max x (list_max remainder)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val list_max : 'a list -&gt; 'a = &lt;fun&gt;
 </span></code></pre>
 
 <p>我已经在相应的位置加上了注释。那它是否可行呢？</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [1; 2; 3; 4; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">list_max</span> [5; 4; 3; 2; 1; 100]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value list_max
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max [1; 2; 3; 4; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 4
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max []</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Failure &quot;list_max called on empty list&quot;.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max [5; 4; 3; 2; 1]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 5
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">list_max [5; 4; 3; 2; 1; 100]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 100
 </span></code></pre>
 
 <p>注意这个解决方案是 （1） 不同于命令式的for循环 （2）更接近问题的描述本身。函数式程序员
@@ -807,24 +820,26 @@ OCaml中的while和for循环是表达式，它们的返回值总是 <code>unit</
 
 <p>下面是一个定义在<code>name</code>类的函数，它打印<code>name</code>域并且增加 <code>access_count</code> 域：</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_name</span> <span class="ocaml-variable">name </span>=
-    print_endline (<span class="ocaml-error-loc">'</span>The name is ' ^ name.name);
-    name.access_count &lt;- name.access_count + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+    print_endline (<span class="string">&quot;The name is &quot;</span> ^ name.name);
+    name.access_count &lt;- name.access_count + 1</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_name : name -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>注意到一个奇怪的而非函数式的地方：它修改了 <code>access_count</code> 域。如果你认真读了第五章，
 你会发现这个函数不是纯的。OCaml是一个函数式语言，但并不强制所有的函数都是纯的。</p>
 <p>不管如何，让我们来调用一番：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = { name = <span class="ocaml-error-loc">'</span>Richard Jones'; access_count = 0 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_name</span> n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_name
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_name</span> n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_name
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value n
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">n</span> = { name = <span class="string">&quot;Richard Jones&quot;</span>; access_count = 0 }</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val n : name = {name = &quot;Richard Jones&quot;; access_count = 0}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : name = {name = &quot;Richard Jones&quot;; access_count = 0}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">print_name n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">The name is Richard Jones
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : name = {name = &quot;Richard Jones&quot;; access_count = 1}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">print_name n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">The name is Richard Jones
+</span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">n</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : name = {name = &quot;Richard Jones&quot;; access_count = 2}
 </span></code></pre>
 
 <p>只有显式地标志 <code>mutable</code> 的域可以被<code>&lt;-</code> 操作符赋值。如果你对不可变的域赋值，OCaml
 则会报错：</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">n.name &lt;- <span class="ocaml-error-loc">'</span>John Smith'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">n.name &lt;- </span><span class="string"><span class="ocaml-error-loc">&quot;John Smith&quot;</span></span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: The record field name is not mutable
 </span></code></pre>
 
 <p>引用是用records和一个可变域 <code>contents</code> 来实现的。下面是 <code>Pervasives</code> 中的定义：</p>
@@ -892,7 +907,14 @@ Use Array.make instead.
       mmult size size m1 m2 m3
     <span class="keyword">done</span>;
     mmult size size m1 m2 m3;
-    <span class="ocaml-module">Printf</span>.printf <span class="ocaml-error-loc">'</span>%d %d %d %d\n' m3.(0).(0) m3.(2).(3) m3.(3).(2) m3.(4).(4)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">Printf</span>.printf <span class="string">&quot;%d %d %d %d\n&quot;</span> m3.(0).(0) m3.(2).(3) m3.(3).(2) m3.(4).(4)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">270165 1061760 1453695 1856025
+</span><span class="ocaml-stderr"></span>val size : int = 30
+val mkmatrix : int -&gt; int -&gt; int array array = &lt;fun&gt;
+val inner_loop : int -&gt; int -&gt; int array -&gt; int array array -&gt; int -&gt; int =
+  &lt;fun&gt;
+val mmult :
+  int -&gt; int -&gt; int array array -&gt; int array array -&gt; int array array -&gt; unit =
+  &lt;fun&gt;
 </span></code></pre>
 
       </div>

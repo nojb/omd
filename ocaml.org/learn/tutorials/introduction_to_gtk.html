@@ -145,10 +145,20 @@
 <a href="basics.html">interactive toplevel</a>, you
 must first issue (assuming you have installed <code>lablgtk</code> using
 <a href="../../docs/install.html">opam</a>):</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Topdirs</span>.dir_directory (<span class="ocaml-module">Sys</span>.getenv <span class="ocaml-error-loc">'</span>OCAML_TOPLEVEL_PATH')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#use <span class="ocaml-error-loc">'</span>topfind'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#require <span class="ocaml-error-loc">'</span>lablgtk2'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span></code></pre>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">Topdirs</span>.dir_directory (<span class="ocaml-module">Sys</span>.getenv <span class="string">&quot;OCAML_TOPLEVEL_PATH&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">#use <span class="string">&quot;topfind&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">- : unit = ()
+Findlib has been successfully loaded. Additional directives:
+  #require &quot;package&quot;;;      to load a package
+  #list;;                   to list the available packages
+  #camlp4o;;                to load camlp4 (standard syntax)
+  #camlp4r;;                to load camlp4 (revised syntax)
+  #predicates &quot;p,q,...&quot;;;   to set these predicates
+  Topfind.reset();;         to force that packages will be reloaded
+  #thread;;                 to enable threads
+
+- : unit = ()
+</span><span class="ocaml-stderr"></span></span><span class="ocaml-prompt"># </span><span class="ocaml-input">#require <span class="string">&quot;lablgtk2&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">No such package: lablgtk2
+</span><span class="ocaml-stderr"></span></span></code></pre>
 
 <h2 id="Lablgtk-and-writing-Gtk-applications">Lablgtk and writing Gtk applications</h2>
 
@@ -163,7 +173,7 @@ and polymorphic variants (<a href="labels.html" title="labels">labels</a>) or yo
 have any idea what&#39;s going on in this chapter. As it is, even the author
 of this tutorial finds ploughing through the lablgtk source code pretty
 hard work!</p>
-<h3 id="Simple-lablgtk-program">Simple lablgtk program</h3><p>Actually, not so simple. This program has a menu with a &#39;quit&#39; option,
+<h3 id="Simple-lablgtk-program">Simple lablgtk program</h3><p>Actually, not so simple. This program has a menu with a &quot;quit&quot; option,
 and a button in the main area which you can press:</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">GMain</span>
 <span class="governing">open</span> <span class="ocaml-module">GdkKeysyms</span>
@@ -172,7 +182,7 @@ and a button in the main area which you can press:</p>
 
 <span class="governing">let</span> <span class="ocaml-function">main</span> <span class="ocaml-variable">() </span>=
   <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:320 ~height:240
-                              ~title:'Simple lablgtk program' () <span class="governing">in</span>
+                              ~title:<span class="string">&quot;Simple lablgtk program&quot;</span> () <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">vbox</span> = <span class="ocaml-module">GPack</span>.vbox ~packing:window#add () <span class="governing">in</span>
   window#connect#destroy ~callback:<span class="ocaml-module">Main</span>.quit;
 
@@ -180,16 +190,16 @@ and a button in the main area which you can press:</p>
   <span class="governing">let </span><span class="ocaml-variable">menubar</span> = <span class="ocaml-module">GMenu</span>.menu_bar ~packing:vbox#pack () <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory menubar <span class="governing">in</span>
   <span class="governing">let </span><span class="ocaml-variable">accel_group</span> = factory#accel_group <span class="governing">in</span>
-  <span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu 'File' <span class="governing">in</span>
+  <span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu <span class="string">&quot;File&quot;</span> <span class="governing">in</span>
 
   <span class="comment">(* File menu *)</span>
   <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory file_menu ~accel_group <span class="governing">in</span>
-  factory#add_item 'Quit' ~key:_Q ~callback: <span class="ocaml-module">Main</span>.quit;
+  factory#add_item <span class="string">&quot;Quit&quot;</span> ~key:_Q ~callback: <span class="ocaml-module">Main</span>.quit;
 
   <span class="comment">(* Button *)</span>
-  <span class="governing">let </span><span class="ocaml-variable">button</span> = <span class="ocaml-module">GButton</span>.button ~label:'Push me!'
+  <span class="governing">let </span><span class="ocaml-variable">button</span> = <span class="ocaml-module">GButton</span>.button ~label:<span class="string">&quot;Push me!&quot;</span>
                               ~packing:vbox#add () <span class="governing">in</span>
-  button#connect#clicked ~callback: (<span class="keyword">fun</span> () -&gt; prerr_endline 'Ouch!');
+  button#connect#clicked ~callback: (<span class="keyword">fun</span> () -&gt; prerr_endline <span class="string">&quot;Ouch!&quot;</span>);
 
   <span class="comment">(* Display the windows <span class="governing">and</span> enter Gtk+ main loop *)</span>
   window#add_accel_group accel_group;
@@ -216,7 +226,7 @@ and a button in the main area which you can press:</p>
 good idea to always open this module. <code>GdkKeysyms</code> provides some key
 definitions, in this case <code>_Q</code> for the Ctrl + Q key combination.</p>
 <pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-module">GWindow</span>.window ~width:320 ~height:240
-                            ~title:'Simple lablgtk program' () <span class="governing">in</span>
+                            ~title:<span class="string">&quot;Simple lablgtk program&quot;</span> () <span class="governing">in</span>
 <span class="governing">let </span><span class="ocaml-variable">vbox</span> = <span class="ocaml-module">GPack</span>.vbox ~packing:window#add () <span class="governing">in</span>
 window#connect#destroy ~callback:<span class="ocaml-module">Main</span>.quit;</code></pre>
 
@@ -242,7 +252,7 @@ window#add vbox;</code></pre>
 bit shorter.</p>
 <p><code>window#connect#destroy ~callback:Main.quit;</code> is an example of
 connecting a <em>signal</em> to a function. In this case the <code>destroy</code> signal,
-received by the window when someone presses the &#39;X&#39; in the corner, will
+received by the window when someone presses the &quot;X&quot; in the corner, will
 cause a call to <code>Main.quit ()</code> (note extra unit arg).</p>
 <p>Creating the menubar and File -&gt; Quit button is straightforward enough.
 Notice the <code>accel_group</code> object which is used to keep track of
@@ -251,23 +261,23 @@ accelerator buttons. The <code>menubar</code> is packed first into the <code>vbo
 <span class="governing">let </span><span class="ocaml-variable">menubar</span> = <span class="ocaml-module">GMenu</span>.menu_bar ~packing:vbox#pack () <span class="governing">in</span>
 <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory menubar <span class="governing">in</span>
 <span class="governing">let </span><span class="ocaml-variable">accel_group</span> = factory#accel_group <span class="governing">in</span>
-<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu 'File' <span class="governing">in</span>
+<span class="governing">let </span><span class="ocaml-variable">file_menu</span> = factory#add_submenu <span class="string">&quot;File&quot;</span> <span class="governing">in</span>
 
 <span class="comment">(* File menu *)</span>
 <span class="governing">let </span><span class="ocaml-variable">factory</span> = <span class="keyword">new</span> <span class="ocaml-module">GMenu</span>.factory file_menu ~accel_group <span class="governing">in</span>
-factory#add_item 'Quit' ~key:_Q ~callback: <span class="ocaml-module">Main</span>.quit;</code></pre>
+factory#add_item <span class="string">&quot;Quit&quot;</span> ~key:_Q ~callback: <span class="ocaml-module">Main</span>.quit;</code></pre>
 
 <p>Next up we create the button and pack it in the <code>vbox</code>. Notice the
 <code>clicked</code> signal which is connected to an anonymous function:</p>
 <pre><code class="ocaml"><span class="comment">(* Button *)</span>
-<span class="governing">let </span><span class="ocaml-variable">button</span> = <span class="ocaml-module">GButton</span>.button ~label:'Push me!'
+<span class="governing">let </span><span class="ocaml-variable">button</span> = <span class="ocaml-module">GButton</span>.button ~label:<span class="string">&quot;Push me!&quot;</span>
                             ~packing:vbox#add () <span class="governing">in</span>
-button#connect#clicked ~callback: (<span class="keyword">fun</span> () -&gt; prerr_endline 'Ouch!');</code></pre>
+button#connect#clicked ~callback: (<span class="keyword">fun</span> () -&gt; prerr_endline <span class="string">&quot;Ouch!&quot;</span>);</code></pre>
 
 <p>This line just causes the accelerator keys (eg. Ctrl Q) to work:</p>
 <pre><code class="ocaml">window#add_accel_group accel_group;</code></pre>
 
-<p>Finally two lines which are essential. All Gtk widgets must be &#39;shown&#39;
+<p>Finally two lines which are essential. All Gtk widgets must be &quot;shown&quot;
 before they will appear, by calling the <code>#show</code> method. However lablgtk,
 by default, automatically shows all widgets <em>except</em> toplevel windows.
 Thus we need to call <code>window#show ()</code> explicitly. <code>Main.main ()</code> is the
@@ -315,7 +325,7 @@ but basically it causes a graph to be a subclass of widget.</p>
 <p>Let&#39;s have a look at the initialization code in more detail.</p>
 <pre><code class="ocaml"><span class="governing">class</span> <span class="ocaml-function">graph</span> <span class="ocaml-variable">font ?width ?height ?packing ?show array </span>=
   <span class="comment">(* <span class="ocaml-module">Constants</span>. *)</span>
-  <span class="governing">let </span><span class="ocaml-variable">page_size</span> = 10 <span class="governing">in</span>            <span class="comment">(* Number <span class="keyword">of</span> bars on 'page'. *)</span>
+  <span class="governing">let </span><span class="ocaml-variable">page_size</span> = 10 <span class="governing">in</span>            <span class="comment">(* Number <span class="keyword">of</span> bars on <span class="string">&quot;page&quot;</span>. *)</span>
   <span class="governing">let </span><span class="ocaml-variable">max_y</span> = 10 <span class="governing">in</span>                <span class="comment">(* Maximum on Y scale. *)</span>
 
   <span class="comment">(* Number <span class="keyword">of</span> data points. *)</span>
@@ -367,7 +377,7 @@ methods of the object first:</p>
   <span class="governing">initializer</span> <span class="comment">(* code concealed, see above *)</span>
 
   <span class="comment">(* The title <span class="keyword">of</span> the graph. *)</span>
-  <span class="governing">val</span> <span class="keyword">mutable</span> title = 'no title'
+  <span class="governing">val</span> <span class="keyword">mutable</span> title = <span class="string">&quot;no title&quot;</span>
   <span class="governing">method</span> <span class="ocaml-function">set_title</span> <span class="ocaml-variable">t </span>= title &lt;- t
   <span class="governing">method</span> <span class="ocaml-function">title</span><span class="type"></span> = title
 
@@ -404,7 +414,7 @@ draws the graph in the drawing area:</p>
     (40 + x * bar_width, height-40 - y * (height-80) / max_y)  <span class="governing">in</span>
 
   <span class="comment">(* Draw the axes scales. *)</span>
-  draw_text drawable font `Right (40, height-40) <span class="string">'0'</span>;
+  draw_text drawable font `Right (40, height-40) <span class="string">&quot;0&quot;</span>;
   draw_text drawable font `Right (40, 40) (string_of_int max_y);
   <span class="keyword">for</span> i = 0 <span class="keyword">to</span> page_size-1 <span class="keyword">do</span>
     <span class="governing">let </span><span class="ocaml-variable">x</span> = 40 + i * bar_width + bar_width/2 <span class="governing">in</span>
@@ -417,7 +427,7 @@ draws the graph in the drawing area:</p>
   <span class="keyword">for</span> i = 0 <span class="keyword">to</span> page_size-1 <span class="keyword">do</span>
     let (ll_x,ll_y) = map (i, data.(i)) <span class="governing">in</span>
     let (tr_x,tr_y) = map (i+1, 0) <span class="governing">in</span>
-    draw_rectangle drawable 'red' (ll_x, ll_y) (tr_x, tr_y)
+    draw_rectangle drawable <span class="string">&quot;red&quot;</span> (ll_x, ll_y) (tr_x, tr_y)
   <span class="keyword">done</span></code></pre>
 
 <p>Apart from the calculation of screen coordinates from graph coordinates,
@@ -450,14 +460,14 @@ the theory is indeed true for trivial programs. However for practical
 purposes you will need to understand how the library is built up from
 these layers (and why).</p>
 <h4 id="Gtk-objects">Gtk objects</h4><p>We&#39;ll start with the peculiarities of Gtk itself. This library is
-written in C and uses macros and &#39;clever&#39; hacks to (a) present an OO-ish
+written in C and uses macros and &quot;clever&quot; hacks to (a) present an OO-ish
 interface and (b) perform simple garbage collection through reference
 counting. Part of the reason why lablgtk uses quite a complex model is
 to cater for the implementation of Gtk itself.</p>
-<p>All &#39;objects&#39; in the Gtk library (I&#39;ll call them objects, but in reality
-they&#39;re C <code>struct</code>s) are &#39;derived&#39; from <code>GtkObject</code>. This means that an
+<p>All &quot;objects&quot; in the Gtk library (I&#39;ll call them objects, but in reality
+they&#39;re C <code>struct</code>s) are &quot;derived&quot; from <code>GtkObject</code>. This means that an
 object such as a button contains within its <code>struct</code> a
-<code>struct _GtkObject</code>. This &#39;base class&#39; contains, amongst other things, a
+<code>struct _GtkObject</code>. This &quot;base class&quot; contains, amongst other things, a
 reference count which is used to provide simple garbage collection.</p>
 <p>Of course, the above is all in the context of a C library for C
 programmers. OCaml has other mechanisms for OO and contains an advanced
@@ -480,7 +490,7 @@ like this:</p>
 
 <p>How do we create objects of this type? The answer is that we don&#39;t.
 Instances of type <code>&#39;a obj</code> are <code>GtkObject</code> structures (actually, more
-likely they are &#39;subclasses&#39; of <code>GtkObject</code>), and they are created by
+likely they are &quot;subclasses&quot; of <code>GtkObject</code>), and they are created by
 the C library. What precisely happens is that the C functions in the
 Gtk+ library are wrapped up by C functions which are called from OCaml.
 These functions look like this:</p>
@@ -513,9 +523,9 @@ contains an inner module called <code>GtkButton.ToggleButton</code> containing a
 function defined as:</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">ToggleButton</span> <span class="ocaml-variable"></span>= <span class="governing">struct</span>
   <span class="governing">include</span> <span class="ocaml-module">GtkButtonProps</span>.ToggleButton
-  <span class="governing">let </span>create_check pl : toggle_button obj = <span class="ocaml-module">Object</span>.make 'GtkCheckButton' pl
+  <span class="governing">let </span>create_check pl : toggle_button obj = <span class="ocaml-module">Object</span>.make <span class="string">&quot;GtkCheckButton&quot;</span> pl
   <span class="governing">external</span> <span class="ocaml-function">toggled</span>&nbsp;: [&gt;`toggle] obj -&gt; unit
-      = 'ml_gtk_toggle_button_toggled'
+      = <span class="string">&quot;ml_gtk_toggle_button_toggled&quot;</span>
 <span class="governing">end</span></code></pre>
 
 <p>You can call these functions directly to see what they return:</p>
@@ -576,7 +586,7 @@ widgets).</p>
 <p>Let&#39;s try the OO interface for toggle buttons:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Call the toggle_button function.  Note: returns <span class="governing">object</span> from
      toggle_button class*)</span>
-  <span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="ocaml-module">GButton</span>.toggle_button ~label:<span class="ocaml-error-loc">'</span>Push me!' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  <span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="ocaml-module"><span class="ocaml-error-loc">GButton</span></span><span class="ocaml-error-loc">.toggle_button</span> ~label:<span class="string">&quot;Push me!&quot;</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module GButton
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">b</span>#as_widget
     <span class="comment">(* note: returns a widget obj == [`base|`widget] obj *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value b
 </span></code></pre>
@@ -632,7 +642,7 @@ subclass of widget).</p>
 window, a container (vbox) to go inside this, and a button:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = <span class="ocaml-module"><span class="ocaml-error-loc">GWindow</span></span><span class="ocaml-error-loc">.window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module GWindow
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">c</span> = <span class="ocaml-module"><span class="ocaml-error-loc">GPack</span></span><span class="ocaml-error-loc">.vbox</span> ~packing:w#add ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module GPack
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="ocaml-module">GButton</span>.button ~label:<span class="ocaml-error-loc">'</span>Push me!' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b</span> = <span class="ocaml-module"><span class="ocaml-error-loc">GButton</span></span><span class="ocaml-error-loc">.button</span> ~label:<span class="string">&quot;Push me!&quot;</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module GButton
 </span></code></pre>
 
 <p>Before we pack the button into the container, let&#39;s create a memo to
@@ -660,7 +670,7 @@ objects:</p>
 <p>Remember that this is still dynamic casting, and so unsafe. In this case
 the memo will throw a <code>Not_found</code> exception if the widget cannot be
 mapped:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b2</span> = <span class="ocaml-module">GButton</span>.button ~label:<span class="ocaml-error-loc">'</span>Don't push me!' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">b2</span> = <span class="ocaml-module"><span class="ocaml-error-loc">GButton</span></span><span class="ocaml-error-loc">.button</span> ~label:<span class="string">&quot;Don't push me!&quot;</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound module GButton
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">c</span>#add (b2 :&gt; <span class="ocaml-module">GObj</span>.widget)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value c
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">List</span>.map (<span class="keyword">fun</span> w -&gt; <span class="ocaml-error-loc">m</span>#find w) c#children</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value m
 </span></code></pre>

@@ -165,7 +165,7 @@ arborescence de dossiers imbriqués les uns dans les autres.</p>
 modules, intitulés respectivement <code>Amodule</code> et <code>Bmodule</code>,
 possédant le même contenu que nos fichiers.</p>
 <p>Prenons par exemple le fichier amodule.ml suivant:</p>
-<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline 'Hello'</code></pre>
+<pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Hello&quot;</span></code></pre>
 
 <p>ainsi que le fichier bmodule.ml :</p>
 <pre><code class="ocaml"><span class="ocaml-module">Amodule</span>.hello ()</code></pre>
@@ -204,8 +204,8 @@ spécifiques, suffisament rares pour ne pas créer de conflits avec
 d&#39;autres modules; pour éviter d&#39;écrire <code>Printf.printf</code> on préfera
 utiliser <code>open Printf</code> en début de fichier :</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
-<span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">'a'</span>; 'beautiful'; 'day' ]
-<span class="governing">let </span><span class="ocaml-variable">_</span> = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf '%s\n' s) my_data</code></pre>
+<span class="governing">let </span><span class="ocaml-variable">my_data</span> = [ <span class="string">&quot;a&quot;</span>; <span class="string">&quot;beautiful&quot;</span>; <span class="string">&quot;day&quot;</span> ]
+<span class="governing">let </span><span class="ocaml-variable">_</span> = <span class="ocaml-module">List</span>.iter (<span class="keyword">fun</span> s -&gt; printf <span class="string">&quot;%s\n&quot;</span> s) my_data</code></pre>
 
 <h2 id="Interfaces-modulaires-et-signatures">Interfaces modulaires et signatures.</h2>
 
@@ -221,7 +221,7 @@ qu&#39;un module vient d&#39;un fichier <code>.ml</code>, l&#39;interface coresp
 (et sa signature) viennent d&#39;un fichier <code>.mli</code>. Il contient la
 liste des valeurs avec leur type (ou signature pour les fonctions).
 Réécrivons notre <code>amodule.ml</code> :</p>
-<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+<pre><code class="ocaml"><span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message</code></pre>
 
 <p>Tel quel, l&#39;interface de <code>Amodule</code> est la suivante:</p>
@@ -300,11 +300,11 @@ etre définit explicitement au sein même d&#39;un fichier, il est ainsi un
 sous module du module principal. Prenons l&#39;exemple suivant:</p>
 <pre><code class="ocaml"><span class="governing">module</span> <span class="ocaml-module">Hello</span> <span class="ocaml-variable"></span>= 
 <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
   
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>
@@ -325,12 +325,12 @@ donne:</p>
  <span class="governing"><span class="governing">val</span></span> <span class="ocaml-function">hello</span> : unit -&gt; unit
 <span class="governing">end</span> = 
 <span class="governing">struct</span>
-  <span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello'
+  <span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello&quot;</span>
   <span class="governing">let</span> <span class="ocaml-function">hello</span> <span class="ocaml-variable">() </span>= print_endline message
 <span class="governing">end</span>
   
 <span class="comment">(* At this point, <span class="ocaml-module">Hello</span>.message is not accessible anymore. *)</span>
-<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline 'Goodbye'
+<span class="governing">let</span> <span class="ocaml-function">goodbye</span> <span class="ocaml-variable">() </span>= print_endline <span class="string">&quot;Goodbye&quot;</span>
 <span class="governing">let</span> <span class="ocaml-function">hello_goodbye</span> <span class="ocaml-variable">() </span>=
   <span class="ocaml-module">Hello</span>.hello ();
   goodbye ()</code></pre>

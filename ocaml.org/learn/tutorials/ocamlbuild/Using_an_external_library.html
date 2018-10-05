@@ -133,8 +133,8 @@ declare them. To do so you have to write a plugin in a file
 <span class="governing">let</span> () =
   dispatch <span class="governing">begin</span> function
   | After_rules -&gt;
-     ocaml_lib ~extern:true ~dir:'+lablGL<span class="string">' '</span>lablgl';
-     ocaml_lib ~extern:true ~dir:'+lablGL<span class="string">' '</span>lablglut';
+     ocaml_lib ~extern:true ~dir:<span class="string">&quot;+lablGL&quot;</span> <span class="string">&quot;lablgl&quot;</span>;
+     ocaml_lib ~extern:true ~dir:<span class="string">&quot;+lablGL&quot;</span> <span class="string">&quot;lablglut&quot;</span>;
   | _ -&gt; ()
   <span class="governing">end</span></code></pre>
 

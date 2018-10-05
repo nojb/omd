@@ -176,25 +176,25 @@
 </span></code></pre>
 
 <p>または、はじめの要素が分かっているのなら、 集合は次のように作れる:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="ocaml-module">SS</span>.singleton <span class="ocaml-error-loc">'</span>hello'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> = <span class="ocaml-module">SS</span>.singleton <span class="string">&quot;hello&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : SS.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>この集合に要素を何個か追加するにはこうすればよい:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">s</span> =
-    <span class="ocaml-module">List</span>.fold_right <span class="ocaml-module">SS</span>.add [<span class="ocaml-error-loc">'</span>hello'; 'world'; 'community'; 'manager';
-                            'stuff'; 'blue'; 'green'] s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="ocaml-module">List</span>.fold_right <span class="ocaml-module">SS</span>.add [<span class="string">&quot;hello&quot;</span>; <span class="string">&quot;world&quot;</span>; <span class="string">&quot;community&quot;</span>; <span class="string">&quot;manager&quot;</span>;
+                            <span class="string">&quot;stuff&quot;</span>; <span class="string">&quot;blue&quot;</span>; <span class="string">&quot;green&quot;</span>] s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val s : SS.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>ここで、集合をいじっていると、
 作った集合のなかに何があるかを見たいと思うことだろう。 そのために、
 集合を表示する関数を次のように書ける。</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Prints a <span class="keyword">new</span> line '\n' after each string is printed *)</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="comment">(* Prints a <span class="keyword">new</span> line <span class="string">&quot;\n&quot;</span> after each string is printed *)</span>
   <span class="governing">let</span> <span class="ocaml-function">print_set</span> <span class="ocaml-variable">s </span>= 
      <span class="ocaml-module">SS</span>.iter print_endline s</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_set : SS.t -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>集合の中のある特定の要素を削除したいときには削除関数がある
-(訳注:<code>SS.remove &#39;hello&#39; s;;</code>)。
+(訳注:<code>SS.remove &quot;hello&quot; s;;</code>)。
 しかし、同時に何個かの要素を削除したいときには、
 「フィルタ」を通すようなものを考える。
 5文字より長い単語をすべてフィルタリングしよう。</p>
@@ -209,14 +209,16 @@
 </span></code></pre>
 
 <p>集合内にある要素が存在するかどうかを調べたいときは このようになるだろう:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">SS</span>.mem <span class="ocaml-error-loc">'</span>hello' s2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">SS</span>.mem <span class="string">&quot;hello&quot;</span> s2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : bool = true
 </span></code></pre>
 
 <p><code>Set</code> モジュールはまた、
 集合理論の操作、和集合、積集合、差集合を提供する。
 例えば、元の集合と短い文字列集合(5文字以下)の集合の差集合は、
 長い文字列集合である:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_set (<span class="ocaml-module">SS</span>.diff s s2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_set (<span class="ocaml-module">SS</span>.diff s s2)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">community
+manager
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p><code>Set</code> モジュールは純粋に関数的データ構造を提供することに注意:

@@ -150,7 +150,7 @@
 <h2 id="What-is-functional-programming">What is functional programming?</h2><p>We&#39;ve got quite far into the tutorial, yet we haven&#39;t really considered
 <strong>functional programming</strong>. All of the features given so far - rich data
 types, pattern matching, type inference, nested functions - you could
-imagine could exist in a kind of &#39;super C&#39; language. These are Cool
+imagine could exist in a kind of &quot;super C&quot; language. These are Cool
 Features certainly, and make your code concise, easy to read, and have
 fewer bugs, but they actually have very little to do with functional
 programming. In fact my argument is going to be that the reason that
@@ -187,7 +187,7 @@ long-winded closure. If you know Perl then you probably already know and
 use Perl&#39;s closures and Perl&#39;s <code>map</code> function, which is exactly what
 we&#39;re talking about. The fact is that Perl is actually quite a good
 functional language.</p>
-<p><strong>Closures</strong> are functions which carry around some of the &#39;environment&#39;
+<p><strong>Closures</strong> are functions which carry around some of the &quot;environment&quot;
 in which they were defined. In particular, a closure can reference
 variables which were available at the point of its definition. Let&#39;s
 generalise the function above so that now we can take any list of
@@ -211,8 +211,8 @@ function and hence available within this function.</p>
 <p>This might sound straightforward, but let&#39;s look a bit closer at that
 call to map: <code>List.map f list</code>.</p>
 <p><code>map</code> is defined in the <code>List</code> module, far away from the current code.
-In other words, we&#39;re passing <code>f</code> into a module defined &#39;a long time
-ago, in a galaxy far far away&#39;. For all we know that code might pass <code>f</code>
+In other words, we&#39;re passing <code>f</code> into a module defined &quot;a long time
+ago, in a galaxy far far away&quot;. For all we know that code might pass <code>f</code>
 to other modules, or save a reference to <code>f</code> somewhere and call it
 later. Whether it does this or not, the closure will ensure that <code>f</code>
 always has access back to its parental environment, and to <code>n</code>.</p>
@@ -275,7 +275,7 @@ what it does:</p>
 
 <p>In engineering this is sufficient <a href="humor_proof.html">proof by example</a>
 for us to state that <code>plus 2</code> is the function which adds 2 to things.</p>
-<p>Going back to the original definition, let&#39;s &#39;fill in&#39; the first
+<p>Going back to the original definition, let&#39;s &quot;fill in&quot; the first
 argument (<code>a</code>) setting it to 2 to get:</p>
 <pre><code class="ocaml"><span class="governing">let </span>plus 2 b =       <span class="comment">(* This is not real OCaml code! *)</span>
   2 + b</code></pre>
@@ -358,7 +358,7 @@ won&#39;t return the same pointer to you. <code>malloc</code>, of course, relies
 huge amount of hidden internal state (objects allocated on the heap, the
 allocation method in use, grabbing pages from the operating system,
 etc.).</p>
-<p>ML-derived languages like OCaml are &#39;mostly pure&#39;. They allow
+<p>ML-derived languages like OCaml are &quot;mostly pure&quot;. They allow
 side-effects through things like references and arrays, but by and large
 most of the code you&#39;ll write will be pure functional because they
 encourage this thinking. Haskell, another functional language, is pure
@@ -424,7 +424,7 @@ expression into the function:</p>
 </span></code></pre>
 
 <h2 id="Boxed-vs-unboxed-types">Boxed vs. unboxed types</h2><p>One term which you&#39;ll hear a lot when discussing functional languages is
-&#39;boxed&#39;. I was very confused when I first heard this term, but in fact
+&quot;boxed&quot;. I was very confused when I first heard this term, but in fact
 the distinction between boxed and unboxed types is quite simple if
 you&#39;ve used C, C++ or Java before (in Perl, everything is boxed).</p>
 <p>The way to think of a boxed object is to think of an object which has
@@ -436,7 +436,7 @@ example C program:</p>
 void
 printit (int *ptr)
 {
-  printf (&#39;the number is %d\n&#39;, *ptr);
+  printf (&quot;the number is %d\n&quot;, *ptr);
 }
 
 void

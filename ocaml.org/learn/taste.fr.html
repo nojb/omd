@@ -180,7 +180,7 @@ est représenté par une <em>variable de types</em> <code>&#39;a</code>. La fonc
 donc être appliquée aussi bien à une liste d&#39;entiers qu&#39;à une liste de
 chaînes de caractères.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">sort [2; 1; 0]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int list = [0; 1; 2]
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">sort [<span class="ocaml-error-loc">'</span>yes'; 'ok'; 'sure'; 'ya'; 'yep']</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">sort [<span class="string">&quot;yes&quot;</span>; <span class="string">&quot;ok&quot;</span>; <span class="string">&quot;sure&quot;</span>; <span class="string">&quot;ya&quot;</span>; <span class="string">&quot;yep&quot;</span>]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string list = [&quot;ok&quot;; &quot;sure&quot;; &quot;ya&quot;; &quot;yep&quot;; &quot;yes&quot;]
 </span></code></pre>
 
 <h2 id="Programmation-imp-rative">Programmation impérative</h2><p>Représentons les polynômes des tableaux de coefficients entiers. Alors,
@@ -277,15 +277,16 @@ identificateur associe une valeur, représenté par une liste de paires.</p>
        eval_op op v1 v2
   <span class="governing"><span class="governing">and</span></span> <span class="ocaml-function">eval_op</span> <span class="ocaml-variable">op v1 v2 </span>=
     <span class="keyword">match</span> op <span class="keyword">with</span>
-    | <span class="string">'+'</span> -&gt; v1 + v2
-    | <span class="string">'-'</span> -&gt; v1 - v2
-    | <span class="string">'*'</span> -&gt; v1 * v2
-    | <span class="string">'/'</span> -&gt; v1 / v2
-    | _ -&gt; <span class="keyword">failwith</span> (<span class="ocaml-error-loc">'</span>Unknown operator: ' ^ op)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+    | <span class="string">&quot;+&quot;</span> -&gt; v1 + v2
+    | <span class="string">&quot;-&quot;</span> -&gt; v1 - v2
+    | <span class="string">&quot;*&quot;</span> -&gt; v1 * v2
+    | <span class="string">&quot;/&quot;</span> -&gt; v1 / v2
+    | _ -&gt; <span class="keyword">failwith</span> (<span class="string">&quot;Unknown operator: &quot;</span> ^ op)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val eval : (string * int) list -&gt; expression -&gt; int = &lt;fun&gt;
+val eval_op : string -&gt; int -&gt; int -&gt; int = &lt;fun&gt;
 </span></code></pre>
 
 <p>Évaluons par exemple la phrase <code>let x =   1 in x + x</code> :</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">eval</span> [] (Let (<span class="string">'x'</span>, Num 1, Binop (<span class="string">'+'</span>, Var <span class="string">'x'</span>, Var <span class="string">'x'</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value eval
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">eval [] (Let (<span class="string">&quot;x&quot;</span>, Num 1, Binop (<span class="string">&quot;+&quot;</span>, Var <span class="string">&quot;x&quot;</span>, Var <span class="string">&quot;x&quot;</span>)))</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 2
 </span></code></pre>
 
 <p>L&#39;emploi du filtrage facilite la définition des fonctions opérant sur

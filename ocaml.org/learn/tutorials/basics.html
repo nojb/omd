@@ -195,7 +195,7 @@ utop # 1 + 1;;
 <p>To compile an OCaml program named <code>my_prog.ml</code> to a native executable, use <code>ocamlbuild my_prog.native</code>:</p>
 <pre class="shell"><code class="shell">$ mkdir my_project
 $ cd my_project
-$ echo &#39;let () = print_endline &#39;Hello, World!&#39;&#39; &gt; my_prog.ml
+$ echo &#39;let () = print_endline &quot;Hello, World!&quot;&#39; &gt; my_prog.ml
 $ ocamlbuild my_prog.native
 Finished, 4 targets (0 cached) in 00:00:00.
 $ ./my_prog.native
@@ -226,47 +226,48 @@ out regions of code very easily:</p>
 takes a string <code>s</code> and a number <code>n</code>, and returns a new string which
 contains original <code>s</code> repeated <code>n</code> times.</p>
 <p>In most C-derived languages a call to this function will look like this:</p>
-<pre class="C"><code class="C">repeated (&#39;hello&#39;, 3)  /* this is C code */</code></pre><p>This means &#39;call the function <code>repeated</code> with two arguments, first
-argument the string hello and second argument the number 3&#39;.</p>
+<pre class="C"><code class="C">repeated (&quot;hello&quot;, 3)  /* this is C code */</code></pre><p>This means &quot;call the function <code>repeated</code> with two arguments, first
+argument the string hello and second argument the number 3&quot;.</p>
 <p>OCaml, in common with other functional languages, writes and brackets
 function calls differently, and this is the cause of many mistakes. Here
 is the same function call in OCaml:</p>
-<pre><code class="ocaml">repeated 'hello' 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
+<pre><code class="ocaml">repeated <span class="string">&quot;hello&quot;</span> 3  <span class="comment">(* this is OCaml code *)</span></code></pre>
 
 <p>Note — <strong>no</strong> brackets, and <strong>no</strong> comma between the arguments.</p>
-<p>The syntax <code>repeated (&#39;hello&#39;, 3)</code> <strong>is</strong> meaningful in OCaml. It means
-&#39;call the function <code>repeated</code> with ONE argument, that argument being a
-&#39;pair&#39; structure of two elements&#39;. Of course that would be a mistake,
+<p>The syntax <code>repeated (&quot;hello&quot;, 3)</code> <strong>is</strong> meaningful in OCaml. It means
+&quot;call the function <code>repeated</code> with ONE argument, that argument being a
+&#39;pair&#39; structure of two elements&quot;. Of course that would be a mistake,
 because the <code>repeated</code> function is expecting two arguments, not one, and
 the first argument should be a string, not a pair. But let&#39;s not worry
-about pairs (&#39;tuples&#39;) just yet. Instead, just remember that it&#39;s a
+about pairs (&quot;tuples&quot;) just yet. Instead, just remember that it&#39;s a
 mistake to put the brackets and commas in around function call
 arguments.</p>
 <p>Let&#39;s have another function — <code>prompt_string</code> — which takes a string to
 prompt and returns the string entered by the user. We want to pass this
 string into <code>repeated</code>. Here are the C and OCaml versions:</p>
 <pre class="C"><code class="C">/* C code: */
-repeated (prompt_string (&#39;Name please: &#39;), 3)</code></pre>
+repeated (prompt_string (&quot;Name please: &quot;), 3)</code></pre>
 
 <pre><code class="ocaml"><span class="comment">(* OCaml code: *)</span>
-repeated (prompt_string 'Name please: ') 3</code></pre>
+repeated (prompt_string <span class="string">&quot;Name please: &quot;</span>) 3</code></pre>
 
 <p>Take a careful look at the bracketing and the missing comma. In the
 OCaml version, the brackets enclose the first argument of repeated
 because that argument is the result of another function call. In general
-the rule is: &#39;bracket around the whole function call — don&#39;t put
-brackets around the arguments to a function call&#39;. Here are some more
+the rule is: &quot;bracket around the whole function call — don&#39;t put
+brackets around the arguments to a function call&quot;. Here are some more
 examples:</p>
-<pre><code class="ocaml">f 5 (g 'hello') 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
+<pre><code class="ocaml">f 5 (g <span class="string">&quot;hello&quot;</span>) 3    <span class="comment">(* f has three arguments, g has one argument *)</span>
 f (g 3 4)            <span class="comment">(* f has one argument, g has two arguments *)</span></code></pre>
 
 <div style="display: none">
 
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">repeated</span> <span class="ocaml-variable">(s: string) (i: int) </span>=
-    <span class="keyword">failwith</span> <span class="ocaml-error-loc">'</span>implementation not given'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    <span class="keyword">failwith</span> <span class="string">&quot;implementation not given&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val repeated : string -&gt; int -&gt; 'a = &lt;fun&gt;
 </span></code></pre></div>
 
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated (<span class="ocaml-error-loc">'</span>hello', 3)     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">repeated <span class="ocaml-error-loc">(</span><span class="string"><span class="ocaml-error-loc">&quot;hello&quot;</span></span><span class="ocaml-error-loc">, 3)</span>     <span class="comment">(* OCaml will spot the mistake *)</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type 'a * 'b
+       but an expression was expected of type string
 </span></code></pre>
 
 <h2 id="Defining-a-function">Defining a function</h2><p>We all know how to define a function (or static method, for Java-heads)
@@ -375,8 +376,8 @@ here we&#39;re giving it an int and a float, so it reports this error:</p>
          int
 </span></code></pre>
 
-<p>(In the &#39;translated from the French&#39; language of OCaml error messages
-this means &#39;you put a float here, but I was expecting an int&#39;).</p>
+<p>(In the &quot;translated from the French&quot; language of OCaml error messages
+this means &quot;you put a float here, but I was expecting an int&quot;).</p>
 <p>To add two floats together you need to use a different operator, <code>+.</code>
 (note the trailing period).</p>
 <p>OCaml doesn&#39;t promote ints to floats automatically so this is also an
@@ -435,7 +436,7 @@ to re-define a value in terms of the previous definition. For example:</p>
     a + b</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val positive_sum : int -&gt; int -&gt; int = &lt;fun&gt;
 </span></code></pre>
 
-<p>This redefinition hides the previous &#39;bindings&#39; of <code>a</code> and <code>b</code> from the
+<p>This redefinition hides the previous &quot;bindings&quot; of <code>a</code> and <code>b</code> from the
 function definition. In some situations coders prefer this pattern to
 using a new variable name (<code>let a_pos = max a 0</code>) as it makes the old
 binding inaccessible, so that only the latest values of a and b are
@@ -451,7 +452,7 @@ syntax for this. For a function <code>f</code> which takes arguments <code>arg1<
 <pre><code class="ocaml">f : arg1 -&gt; arg2 -&gt; ... -&gt; argn -&gt; rettype</code></pre>
 
 <p>The arrow syntax looks strange now, but when we come to so-called
-&#39;currying&#39; later you&#39;ll see why it was chosen. For now I&#39;ll just give
+&quot;currying&quot; later you&#39;ll see why it was chosen. For now I&#39;ll just give
 you some examples.</p>
 <p>Our function <code>repeated</code> which takes a string and an integer and returns
 a string has type:</p>
@@ -475,12 +476,12 @@ argument, but just ignores it and always returns 3:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">give_me_a_three</span> <span class="ocaml-variable">x </span>= 3</code></pre>
 
 <p>What is the type of this function? In OCaml we use a special placeholder
-to mean &#39;any type you fancy&#39;. It&#39;s a single quote character followed by
+to mean &quot;any type you fancy&quot;. It&#39;s a single quote character followed by
 a letter. The type of the above function would normally be written:</p>
 <pre><code class="ocaml">give_me_a_three : 'a -&gt; int</code></pre>
 
 <p>where <code>&#39;a</code> really does mean any type. You can, for example, call this
-function as <code>give_me_a_three &#39;foo&#39;</code> or <code>give_me_a_three 2.0</code> and both
+function as <code>give_me_a_three &quot;foo&quot;</code> or <code>give_me_a_three 2.0</code> and both
 are quite valid expressions in OCaml.</p>
 <p>It won&#39;t be clear yet why polymorphic functions are useful, but they are
 very useful and very common, and so we&#39;ll discuss them later on. (Hint:
@@ -489,10 +490,10 @@ polymorphism is kind of like templates in C++ or generics in Java 1.5).</p>
 really cool features, and OCaml is a language which has all of these
 really cool features stuffed into it at once, thus making it a very
 practical language for real programmers to use. But the odd thing is
-that most of these cool features have nothing to do with &#39;functional
-programming&#39; at all. In fact, I&#39;ve come to the first really cool
+that most of these cool features have nothing to do with &quot;functional
+programming&quot; at all. In fact, I&#39;ve come to the first really cool
 feature, and I still haven&#39;t talked about why functional programming is
-called &#39;functional&#39;. Anyway, here&#39;s the first really cool feature: type
+called &quot;functional&quot;. Anyway, here&#39;s the first really cool feature: type
 inference.</p>
 <p>Simply put: you don&#39;t need to declare the types of your functions and
 variables, because OCaml will just figure them out for you!</p>

@@ -217,13 +217,13 @@ Std.output_file</a>
 
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Printf</span>
   
-<span class="governing">let </span><span class="ocaml-variable">file</span> = 'example.dat'
-<span class="governing">let </span><span class="ocaml-variable">message</span> = 'Hello!'
+<span class="governing">let </span><span class="ocaml-variable">file</span> = <span class="string">&quot;example.dat&quot;</span>
+<span class="governing">let </span><span class="ocaml-variable">message</span> = <span class="string">&quot;Hello!&quot;</span>
   
 <span class="governing">let</span> () =
   <span class="comment">(* message &#12434;&#12501;&#12449;&#12452;&#12523;&#12395;&#26360;&#12367; *)</span>
   <span class="governing">let </span><span class="ocaml-variable">oc</span> = open_out file <span class="governing">in</span>    <span class="comment">(* &#12501;&#12449;&#12452;&#12523;&#12398;&#26032;&#35215;&#20316;&#25104;&#12363;&#20999;&#25448;&#12390;&#12290;&#12481;&#12515;&#12493;&#12523;&#12364;&#36820;&#12427; *)</span>
-  fprintf oc '%s\n' message;   <span class="comment">(* &#20309;&#12363;&#26360;&#12367; *)</span>
+  fprintf oc <span class="string">&quot;%s\n&quot;</span> message;   <span class="comment">(* &#20309;&#12363;&#26360;&#12367; *)</span>
   close_out oc;                <span class="comment">(* &#12481;&#12515;&#12493;&#12523;&#12434;&#12501;&#12521;&#12483;&#12471;&#12517;&#12375;&#12390;&#38281;&#12376;&#12427; *)</span>
   
   <span class="comment">(* &#12501;&#12449;&#12452;&#12523;&#12363;&#12425;&#35501;&#12435;&#12391;&#26368;&#21021;&#12398;&#34892;&#12434;&#34920;&#31034; *)</span>

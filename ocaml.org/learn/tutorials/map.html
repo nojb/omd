@@ -128,7 +128,7 @@
 
 <h1 id="Map">Map</h1>
 
-<h2 id="Module-Map">Module Map</h2><p>Map creates a &#39;mapping&#39;. For instance, lets say I have some data that is
+<h2 id="Module-Map">Module Map</h2><p>Map creates a &quot;mapping&quot;. For instance, lets say I have some data that is
 users and their associated passwords. I could with the Map module create
 a mapping from user names to their passwords. The mapping module not
 only does this but it does it fairly efficiently. It also does this in a
@@ -185,44 +185,47 @@ map to begin with:</p>
 </span></code></pre>
 
 <p>Hummm. An empty map is kind of boring, so lets add some data.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>fred<span class="string">' '</span>sugarplums' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;fred&quot;</span> <span class="string">&quot;sugarplums&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>We have now created a new map—again called <code>m</code>, thus masking the previous
 one—by adding
-&#39;fred&#39; and his password &#39;sugarplums&#39; to our previous empty map.
+&quot;fred&quot; and his password &quot;sugarplums&quot; to our previous empty map.
 There is a fairly important point to make here. Once we have added the
-string &#39;sugarplums&#39; we have fixed the types of mappings that we can do.
+string &quot;sugarplums&quot; we have fixed the types of mappings that we can do.
 This means our mapping in our module <code>MyUsers</code> is from strings <em>to strings</em>.
 If we want a mapping from strings to integers or a mapping from integers
 to whatever we will have to create a different mapping.</p>
 <p>Lets add in some additional data just for kicks.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>tom<span class="string">' '</span>ilovelucy' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>mark<span class="string">' '</span>ocamlrules' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="ocaml-error-loc">'</span>pete<span class="string">' '</span>linux' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;tom&quot;</span> <span class="string">&quot;ilovelucy&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;mark&quot;</span> <span class="string">&quot;ocamlrules&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">m</span> = <span class="ocaml-module">MyUsers</span>.add <span class="string">&quot;pete&quot;</span> <span class="string">&quot;linux&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val m : string MyUsers.t = &lt;abstr&gt;
 </span></code></pre>
 
 <p>Now that we have some data inside of our map, wouldn&#39;t it be nice
 to be able to view that data at some point? Lets begin by creating a
 simple print function.</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_users</span> <span class="ocaml-variable">key password </span>=
-    print_string(key ^ <span class="string"><span class="ocaml-error-loc">' '</span></span><span class="ocaml-error-loc"></span> ^ password ^ '\n')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type char but an expression was expected of type
-         string
+    print_string(key ^ <span class="string">&quot; &quot;</span> ^ password ^ <span class="string">&quot;\n&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_users : string -&gt; string -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>We have here a function that will take two strings, a key and a pasword,
 and print them out nicely, including a new line character at the end.
 All we need to do is to have this function applied to our mapping. Here
 is what that would look like.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.iter <span class="ocaml-error-loc">print_users</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_users
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.iter print_users m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">fred sugarplums
+mark ocamlrules
+pete linux
+tom ilovelucy
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>The reason we put our data into a mapping however is probably so we can
 quickly find the data. Lets actually show how to do a find.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.find <span class="ocaml-error-loc">'</span>fred' m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-module">MyUsers</span>.find <span class="string">&quot;fred&quot;</span> m</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : string = &quot;sugarplums&quot;
 </span></code></pre>
 
-<p>This should quickly and efficienty return Fred&#39;s password: &#39;sugarplums&#39;.</p>
+<p>This should quickly and efficienty return Fred&#39;s password: &quot;sugarplums&quot;.</p>
 
       </div>
     </div>

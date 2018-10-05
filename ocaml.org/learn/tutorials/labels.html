@@ -108,7 +108,7 @@
 </li><li><a href="#Labelled-and-optional-arguments-to-functions">Labelled and optional arguments to functions</a>
 <ul><li><a href="#Labelled-arguments">Labelled arguments</a>
 </li><li><a href="#Optional-arguments">Optional arguments</a>
-</li><li><a href="#39-Warning-This-optional-argument-cannot-be-erased-39">&#39;Warning: This optional argument cannot be erased&#39;</a>
+</li><li><a href="#quot-Warning-This-optional-argument-cannot-be-erased-quot">&quot;Warning: This optional argument cannot be erased&quot;</a>
 </li><li><a href="#More-shorthand">More <code>~</code>shorthand</a>
 </li><li><a href="#Using-foo-in-a-function-call">Using <code>?foo</code> in a function call</a>
 </li><li><a href="#When-and-when-not-to-use-and">When and when not to use <code>~</code> and <code>?</code></a>
@@ -181,7 +181,7 @@ complete we need that function too:</p>
 the <code>even</code> function, we already need the definition of <code>odd</code>, and to
 compile <code>odd</code> we need the definition of <code>even</code>. So swapping the two
 definitions around won&#39;t help either.</p>
-<p>There are no &#39;forward prototypes&#39; (as seen in languages descended
+<p>There are no &quot;forward prototypes&quot; (as seen in languages descended
 from C) in OCaml but there is a special syntax
 for defining a set of two or more mutually recursive functions, like
 <code>odd</code> and <code>even</code>:</p>
@@ -205,30 +205,30 @@ It&#39;s
 possible to use this as a neat trick to save typing: aliasing function
 names, and function arguments.</p>
 <p>Although we haven&#39;t looked at object-oriented programming (that&#39;s the
-subject for the <a href="objects.html">&#39;Objects&#39; section</a>),
+subject for the <a href="objects.html">&quot;Objects&quot; section</a>),
 here&#39;s an example from OCamlNet of an
 aliased function call. All you need to know is that
-<code>cgi # output # output_string &#39;string&#39;</code> is a method call, similar to
-<code>cgi.output().output_string (&#39;string&#39;)</code> in Java.</p>
+<code>cgi # output # output_string &quot;string&quot;</code> is a method call, similar to
+<code>cgi.output().output_string (&quot;string&quot;)</code> in Java.</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">begin_page</span> <span class="ocaml-variable">cgi title </span>=
   <span class="governing">let </span><span class="ocaml-variable">out</span> = cgi # output # output_string <span class="governing">in</span>
-  out '&lt;html&gt;\n';
-  out '&lt;head&gt;\n';
-  out ('&lt;title&gt;' ^ text title ^ '&lt;/title&gt;\n');
-  out ('&lt;style <span class="governing">type</span>=\'text/css\'&gt;\n');
-  out 'body { background: white; color: black; }\n';
-  out '&lt;/style&gt;\n';
-  out '&lt;/head&gt;\n';
-  out '&lt;body&gt;\n';
-  out ('&lt;h1&gt;' ^ text title ^ '&lt;/h1&gt;\n')</code></pre>
+  out <span class="string">&quot;&lt;html&gt;\n&quot;</span>;
+  out <span class="string">&quot;&lt;head&gt;\n&quot;</span>;
+  out (<span class="string">&quot;&lt;title&gt;&quot;</span> ^ text title ^ <span class="string">&quot;&lt;/title&gt;\n&quot;</span>);
+  out (<span class="string">&quot;&lt;style <span class="governing">type</span>=\&quot;text/css\&quot;&gt;\n&quot;</span>);
+  out <span class="string">&quot;body { background: white; color: black; }\n&quot;</span>;
+  out <span class="string">&quot;&lt;/style&gt;\n&quot;</span>;
+  out <span class="string">&quot;&lt;/head&gt;\n&quot;</span>;
+  out <span class="string">&quot;&lt;body&gt;\n&quot;</span>;
+  out (<span class="string">&quot;&lt;h1&gt;&quot;</span> ^ text title ^ <span class="string">&quot;&lt;/h1&gt;\n&quot;</span>)</code></pre>
 
 <p>The <code>let out = ... </code> is a partial function application for that method
 call (partial, because the string parameter hasn&#39;t been applied). <code>out</code>
 is therefore a function, which takes a string parameter.</p>
-<pre><code class="ocaml">out '&lt;html&gt;\n';</code></pre>
+<pre><code class="ocaml">out <span class="string">&quot;&lt;html&gt;\n&quot;</span>;</code></pre>
 
 <p>is equivalent to:</p>
-<pre><code class="ocaml">cgi # output # output_string '&lt;html&gt;\n';</code></pre>
+<pre><code class="ocaml">cgi # output # output_string <span class="string">&quot;&lt;html&gt;\n&quot;</span>;</code></pre>
 
 <p>We saved ourselves a lot of typing there.</p>
 <p>We can also add arguments. This alternative definition of <code>print_string</code>
@@ -262,7 +262,7 @@ arguments with default values.</p>
   # ... etc.
 }
   
-ask_ok (prompt =&gt; &#39;Are you sure?&#39;, retries =&gt; 2);</code></pre>
+ask_ok (prompt =&gt; &quot;Are you sure?&quot;, retries =&gt; 2);</code></pre>
 
 <p>OCaml also has a way to label arguments and have optional arguments with
 default values.</p>
@@ -322,7 +322,8 @@ OCaml <a href="basics.html">interactive toplevel</a> if you want):</p>
 <p>What does this function do? Running the function in the OCaml toplevel
 gives us some clues:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline None</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : unit = ()
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline (Some <span class="ocaml-error-loc">'</span>hello')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">may ~f:print_endline (Some <span class="string">&quot;hello&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">hello
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>If the unlabelled argument is a “null pointer” then <code>may</code> does nothing.
@@ -350,7 +351,7 @@ lablgtk:</p>
                   <span class="keyword">mutable</span> height: int }
     
   <span class="governing">let</span> <span class="ocaml-function">create_window</span> <span class="ocaml-variable">() </span>=
-    { title = <span class="ocaml-error-loc">'</span>none'; width = 640; height = 480; }
+    { title = <span class="string">&quot;none&quot;</span>; width = 640; height = 480; }
     
   <span class="governing">let</span> <span class="ocaml-function">set_title</span> <span class="ocaml-variable">window title </span>=
     window.title &lt;- title
@@ -366,7 +367,17 @@ lablgtk:</p>
     may ~f:(set_title window) title;
     may ~f:(set_width window) width;
     may ~f:(set_height window) height;
-    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type window = {
+  mutable title : string;
+  mutable width : int;
+  mutable height : int;
+}
+val create_window : unit -&gt; window = &lt;fun&gt;
+val set_title : window -&gt; string -&gt; unit = &lt;fun&gt;
+val set_width : window -&gt; int -&gt; unit = &lt;fun&gt;
+val set_height : window -&gt; int -&gt; unit = &lt;fun&gt;
+val open_window :
+  ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; unit -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>This example is significantly complex and quite subtle, but the pattern
@@ -374,24 +385,24 @@ used is very common in the lablgtk source code. Let&#39;s concentrate on the
 simple <code>create_window</code> function first. This function takes a <code>unit</code> and
 returns a <code>window</code>, initialized with default settings for title, width
 and height:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">create_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">create_window ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;none&quot;; width = 640; height = 480}
 </span></code></pre>
 
 <p>The <code>set_title</code>, <code>set_width</code> and <code>set_height</code> functions are impure
 functions which modify the <code>window</code> structure, in the obvious way. For
 example:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">w</span> = create_window () <span class="governing">in</span>
-  set_title w <span class="ocaml-error-loc">'</span>My Application';
-  w</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+  set_title w <span class="string">&quot;My Application&quot;</span>;
+  w</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;My Application&quot;; width = 640; height = 480}
 </span></code></pre>
 
-<p>So far this is just the imperative &#39;mutable records&#39; which we talked
+<p>So far this is just the imperative &quot;mutable records&quot; which we talked
 about in the previous chapter. Now the complex part is the <code>open_window</code>
 function. This function takes <em>4</em> arguments, three of them optional,
 followed by a required, unlabelled <code>unit</code>. Let&#39;s first see this function
 in action:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>Clock' ~width:128 ~height:128 ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="string">&quot;My Application&quot;</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;My Application&quot;; width = 640; height = 480}
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="string">&quot;Clock&quot;</span> ~width:128 ~height:128 ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;Clock&quot;; width = 128; height = 128}
 </span></code></pre>
 
 <p>It does what you expect, but how?! The secret is in the <code>may</code> function
@@ -408,30 +419,32 @@ So:</p>
 <p>If the optional title argument is not specified by the caller, then
 <code>title</code> = <code>None</code>, so <code>may</code> does nothing. But if we call the function
 with, for example,</p>
-<pre><code class="ocaml">open_window ~title:'My Application' ()</code></pre>
+<pre><code class="ocaml">open_window ~title:<span class="string">&quot;My Application&quot;</span> ()</code></pre>
 
-<p>then <code>title</code> = <code>Some &#39;My Application&#39;</code>, and <code>may</code> therefore calls
-<code>set_title window &#39;My Application&#39;</code>.</p>
+<p>then <code>title</code> = <code>Some &quot;My Application&quot;</code>, and <code>may</code> therefore calls
+<code>set_title window &quot;My Application&quot;</code>.</p>
 <p>You should make sure you fully understand this example before proceeding
 to the next section.</p>
-<h3 id="39-Warning-This-optional-argument-cannot-be-erased-39">&#39;Warning: This optional argument cannot be erased&#39;</h3><p>We&#39;ve just touched upon labels and optional arguments, but even this
+<h3 id="quot-Warning-This-optional-argument-cannot-be-erased-quot">&quot;Warning: This optional argument cannot be erased&quot;</h3><p>We&#39;ve just touched upon labels and optional arguments, but even this
 brief explanation should have raised several questions. The first may be
 why the extra <code>unit</code> argument to <code>open_window</code>? Let&#39;s try defining this
 function without the extra <code>unit</code>:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height </span>=
-    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?<span class="ocaml-error-loc">height</span> </span>=
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = create_window () <span class="governing">in</span>
     may ~f:(set_title window) title;
     may ~f:(set_width window) width;
     may ~f:(set_height window) height;
-    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr">Warning 16: this optional argument cannot be erased.
+</span>val open_window : ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; window =
+  &lt;fun&gt;
 </span></code></pre>
 
 <p>Although OCaml has compiled the function, it has generated a somewhat
-infamous warning: &#39;This optional argument cannot be erased&#39;, referring
+infamous warning: &quot;This optional argument cannot be erased&quot;, referring
 to the final <code>?height</code> argument. To try to show what&#39;s going on here,
 let&#39;s call our modified <code>open_window</code> function:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
-</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="ocaml-error-loc">'</span>My Application'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; window = &lt;fun&gt;
+</span><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ~title:<span class="string">&quot;My Application&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ?width:int -&gt; ?height:int -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>Did that work or not? No it didn&#39;t. In fact it didn&#39;t even run the
@@ -443,8 +456,8 @@ we have a function <code>plus</code> defined as:</p>
     x + y</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val plus : int -&gt; int -&gt; int = &lt;fun&gt;
 </span></code></pre>
 
-<p>We can partially apply this, for example as <code>plus 2</code> which is &#39;the
-function that adds 2 to things&#39;:</p>
+<p>We can partially apply this, for example as <code>plus 2</code> which is &quot;the
+function that adds 2 to things&quot;:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let </span><span class="ocaml-variable">f</span> = plus 2</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val f : int -&gt; int = &lt;fun&gt;
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 5</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 7
 </span><span class="ocaml-prompt"># </span><span class="ocaml-input">f 100</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : int = 102
@@ -457,7 +470,7 @@ argument before the <code>plus</code> function itself can be executed. Therefore
 along.</p>
 <p>Things are not so clear when we add optional arguments into the mix. The
 call to <code>open_window;;</code> above is a case in point. Does the user mean
-&#39;execute <code>open_window</code> now&#39;? Or does the user mean to supply some or all
+&quot;execute <code>open_window</code> now&quot;? Or does the user mean to supply some or all
 of the optional arguments later? Is <code>open_window;;</code> waiting for extra
 arguments to come along like <code>plus 2</code>?</p>
 <p>OCaml plays it safe and doesn&#39;t execute <code>open_window</code>. Instead it treats
@@ -466,25 +479,26 @@ literally evaluates to a function value.</p>
 <p>Let&#39;s go back to the original and working definition of <code>open_window</code>
 where we had the extra unlabelled <code>unit</code> argument at the end:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_window</span> <span class="ocaml-variable">?title ?width ?height () </span>=
-    <span class="governing">let </span><span class="ocaml-variable">window</span> = <span class="ocaml-error-loc">create_window</span> () <span class="governing">in</span>
+    <span class="governing">let </span><span class="ocaml-variable">window</span> = create_window () <span class="governing">in</span>
     may ~f:(set_title window) title;
     may ~f:(set_width window) width;
     may ~f:(set_height window) height;
-    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value create_window
+    window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val open_window :
+  ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; unit -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
 <p>If you want to pass optional arguments to <code>open_window</code> you must do so
 before the final <code>unit</code>, so if you type:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span> ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window ()</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : window = {title = &quot;none&quot;; width = 640; height = 480}
 </span></code></pre>
 
-<p>you must mean &#39;execute <code>open_window</code> now with all optional arguments
-unspecified&#39;. Whereas if you type:</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">open_window</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value open_window
+<p>you must mean &quot;execute <code>open_window</code> now with all optional arguments
+unspecified&quot;. Whereas if you type:</p>
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">open_window</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>- : ?title:string -&gt; ?width:int -&gt; ?height:int -&gt; unit -&gt; window = &lt;fun&gt;
 </span></code></pre>
 
-<p>you mean &#39;give me the functional value&#39; or (more usually in the
-toplevel) &#39;print out the type of <code>open_window</code>&#39;.</p>
+<p>you mean &quot;give me the functional value&quot; or (more usually in the
+toplevel) &quot;print out the type of <code>open_window</code>&quot;.</p>
 <h3 id="More-shorthand">More <code>~</code>shorthand</h3><p>Let&#39;s rewrite the <code>range</code> function yet again, this time using as much
 shorthand as possible for the labels:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">range</span> <span class="ocaml-variable">~first ~last </span>=
@@ -499,19 +513,21 @@ hence in the above the highlighted red <code>~last</code> is short for
 <h3 id="Using-foo-in-a-function-call">Using <code>?foo</code> in a function call</h3><p>There&#39;s another little wrinkle concerning optional arguments. Suppose we
 write a function around <code>open_window</code> to open up an application:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
-    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ~width ~height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    open_window ~title:<span class="string">&quot;My Application&quot;</span> ~<span class="ocaml-error-loc">width</span> ~height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: This expression has type 'a option
+       but an expression was expected of type int
 </span></code></pre>
 
 <p>Recall that <code>~width</code> is shorthand for <code>~width:width</code>. The type of
 <code>width</code> is <code>&#39;a option</code>, but <code>open_window ~width:</code> expects an <code>int</code>.</p>
 <p>OCaml provides more syntactic sugar. Writing <code>?width</code> in the function
 call is shorthand for writing <code>~width:(unwrap width)</code> where <code>unwrap</code>
-would be a function which would remove the &#39;<code>option</code> wrapper&#39; around
+would be a function which would remove the &quot;<code>option</code> wrapper&quot; around
 <code>width</code> (it&#39;s not actually possible to write an <code>unwrap</code> function like
 this, but conceptually that&#39;s the idea). So the correct way to write
 this function is:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
-    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    open_window ~title:<span class="string">&quot;My Application&quot;</span> ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val open_application : ?width:int -&gt; ?height:int -&gt; unit -&gt; unit -&gt; window =
+  &lt;fun&gt;
 </span></code></pre>
 
 <h3 id="When-and-when-not-to-use-and">When and when not to use <code>~</code> and <code>?</code></h3><p>The syntax for labels and optional arguments is confusing, and you may
@@ -521,10 +537,11 @@ right.</p>
 <p><code>?foo</code> is only used when declaring the arguments of a function, ie:</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">f</span> <span class="ocaml-variable">?arg1 ... </span>=</code></pre>
 
-<p>or when using the specialised &#39;unwrap <code>option</code> wrapper&#39; form for
+<p>or when using the specialised &quot;unwrap <code>option</code> wrapper&quot; form for
 function calls:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">open_application</span> <span class="ocaml-variable">?width ?height () </span>=
-    open_window ~title:<span class="ocaml-error-loc">'</span>My Application' ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    open_window ~title:<span class="string">&quot;My Application&quot;</span> ?width ?height</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val open_application : ?width:int -&gt; ?height:int -&gt; unit -&gt; unit -&gt; window =
+  &lt;fun&gt;
 </span></code></pre>
 
 <p>The declaration <code>?foo</code> creates a variable called <code>foo</code>, so if you need
@@ -581,7 +598,7 @@ main ()
   int fd, n;
   char buffer[256];
 
-  fd = open (&#39;/etc/motd&#39;, O_RDONLY);                     // line 12
+  fd = open (&quot;/etc/motd&quot;, O_RDONLY);                     // line 12
   while ((n = read (fd, buffer, sizeof buffer)) &gt; 0)
     write (1, buffer, n);
   close (fd);                                            // line 15
@@ -621,8 +638,8 @@ OCaml&#39;s wonderful type inference would immediately spot the error and
 you wouldn&#39;t be able to compile the code.</p>
 <p>So far, so much like C. Now I said that OCaml provides a way to work
 around the constraint that <code>Open</code> can only have one type. In other
-words, suppose I want to use <code>Open</code> to mean either &#39;the <code>Open</code> of type
-<code>lock</code>&#39; or &#39;the <code>Open</code> of type <code>door</code>&#39; and I want OCaml to work out
+words, suppose I want to use <code>Open</code> to mean either &quot;the <code>Open</code> of type
+<code>lock</code>&quot; or &quot;the <code>Open</code> of type <code>door</code>&quot; and I want OCaml to work out
 which one I mean.</p>
 <p>The syntax is slightly different, but here is how we do it:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">type</span> <span class="type">lock</span> = [ `Open | `Close ]</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>type lock = [ `Close | `Open ]
@@ -651,8 +668,8 @@ used as a type, even one which we haven&#39;t mentioned before:</p>
 <p>Let&#39;s write a function to print the state of a <code>lock</code>:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="governing">let</span> <span class="ocaml-function">print_lock</span> <span class="ocaml-variable">st </span>=
     <span class="keyword">match</span> st <span class="keyword">with</span>
-    | `Open -&gt; print_endline <span class="ocaml-error-loc">'</span>The lock is open'
-    | `Close -&gt; print_endline 'The lock is closed'</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error
+    | `Open -&gt; print_endline <span class="string">&quot;The lock is open&quot;</span>
+    | `Close -&gt; print_endline <span class="string">&quot;The lock is closed&quot;</span></span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>val print_lock : [&lt; `Close | `Open ] -&gt; unit = &lt;fun&gt;
 </span></code></pre>
 
 <p>Take a careful look at the type of that function. Type inference has
@@ -660,8 +677,8 @@ worked out that the <code>st</code> argument has type <code>[&lt; `Close | `Open
 “&lt;” (less than) sign means that this is a <strong>closed class</strong>. In
 other words, this function will only work on <code>`Close</code> or <code>`Open</code>
 and not on anything else.</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="ocaml-error-loc">print_lock</span> `Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Unbound value print_lock
-Hint: Did you mean print_float?
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_lock `Open</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">The lock is open
+</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
 
 <p>Notice that <code>print_lock</code> works just as well with a <code>door</code> as with a

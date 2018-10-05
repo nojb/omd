@@ -150,7 +150,7 @@ ils refusent avec obstination de remplir ce champ. Que doit faire
 l&#39;administrateur de la base de données ?</p>
 <p>Supposons que l&#39;âge soit représenté par un entier (<code>int</code>), il y a deux
 façons de régler le problème. La façon la plus commune (et la plus
-<em>incorrecte</em>) est d&#39;utiliser une valeur &#39;magique&#39; pour l&#39;âge pour
+<em>incorrecte</em>) est d&#39;utiliser une valeur &quot;magique&quot; pour l&#39;âge pour
 signifier que cette information c&#39;est pas disponible. Si, par exemple,
 age = -1, alors l&#39;âge n&#39;a pas été saisi, sinon il a été saisi (même
 incorrectement !). Tout se passe bien jusqu&#39;au moment de calculer, par
@@ -160,7 +160,7 @@ vos visiteurs est 7 ans et demi, supprimer tous les mots compliqués de
 votre site, et demander à votre graphiste d&#39;employer davantage les
 couleurs primaires.</p>
 <p>L&#39;autre méthode, plus correcte, est de stocker les âges dans un champ de
-type &#39;entier ou NULL&#39;. Par exemple, en SQL, la table pour stocker les
+type &quot;entier ou NULL&quot;. Par exemple, en SQL, la table pour stocker les
 âges ressemblerait à :</p>
 <pre class="SQL"><code class="SQL">create table users
 (
@@ -215,34 +215,34 @@ supposant que vous ne rattrapiez pas cette exception (ce qui est
 recommandé, tout particulièrement pour les débutants), son effet sera de
 stopper le programme, et d&#39;afficher l&#39;emplacement (nom du fichier,
 numéro de ligne et de colonne) où l&#39;erreur est survenue. Par exemple :</p>
-<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="ocaml-error-loc">'</span>Win32')</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-error">Error: Syntax error: operator expected.
+<pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input"><span class="keyword">assert</span> (<span class="ocaml-module">Sys</span>.os_type = <span class="string">&quot;Win32&quot;</span>)</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout"></span><span class="ocaml-stderr"></span>Exception: Assert_failure (&quot;&quot;, 1, 0).
 </span></code></pre>
 
 <p>(Bien entendu, cette exception ne sera pas levée sous Win32.)</p>
 <p>Vous pouvez utiliser <code>assert false</code> pour stopper votre programme dans
 les situations critiques, mais il est souvent préférable d&#39;utiliser...</p>
-<p><code>failwith &#39;message d&#39;erreur&#39;</code>, pour lever une exception <code>Failure</code>, qui
+<p><code>failwith &quot;message d&#39;erreur&quot;</code>, pour lever une exception <code>Failure</code>, qui
 elle aussi, à moins d&#39;être rattrappée, va stopper le programme et
 afficher le message d&#39;erreur fourni. <code>failwith</code> est souvent utilisé lors
 du filtrage, comme dans cet exemple réel :</p>
 <pre><code class="ocaml"><span class="keyword">match</span> <span class="ocaml-module">Sys</span>.os_type <span class="keyword">with</span>
-| 'Unix' | 'Cygwin' -&gt;   <span class="comment">(* code omit *)</span>
-| 'Win32' -&gt;             <span class="comment">(* code omit *)</span>
-| 'MacOS' -&gt;             <span class="comment">(* code omit *)</span>
-| _ -&gt; <span class="keyword">failwith</span> 'Ce syst&egrave;me n'est pas support&eacute;'</code></pre>
+| <span class="string">&quot;Unix&quot;</span> | <span class="string">&quot;Cygwin&quot;</span> -&gt;   <span class="comment">(* code omit *)</span>
+| <span class="string">&quot;Win32&quot;</span> -&gt;             <span class="comment">(* code omit *)</span>
+| <span class="string">&quot;MacOS&quot;</span> -&gt;             <span class="comment">(* code omit *)</span>
+| _ -&gt; <span class="keyword">failwith</span> <span class="string">&quot;Ce syst&egrave;me n'est pas support&eacute;&quot;</span></code></pre>
 
 <p>A noter l&#39;utilisation d&#39;un couple de fonctionnalités supplémentaires du
 système de filtrage. L&#39;union de motifs est utilisée pour reconnaître
-<code>&#39;Unix&#39;</code> ou <code>&#39;Cygwin&#39;</code>, et le motif spécial <code>_</code> pour reconnaître
-&#39;n&#39;importe quoi d&#39;autre&#39;.</p>
+<code>&quot;Unix&quot;</code> ou <code>&quot;Cygwin&quot;</code>, et le motif spécial <code>_</code> pour reconnaître
+&quot;n&#39;importe quoi d&#39;autre&quot;.</p>
 <p>Si vous voulez déboguer votre programme mais, comme moi, avez une
 aversion pour les débogueurs autres que gdb, vous voudrez sûrement faire
 afficher des avertissements par vos fonctions. Voici un exemple (notez
 le code surligné) :</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/>
-open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
   <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
-  &lt;em&gt;prerr_endline ('radius is ' ^ (string_of_int radius));&lt;/em&gt;
+  &lt;em&gt;prerr_endline (<span class="string">&quot;radius is &quot;</span> ^ (string_of_int radius));&lt;/em&gt;
   set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
   fill_circle 320 240 radius
 <span class="keyword">done</span><span class="ocaml-prompt">;;</span><br/>read_line ();;</code></pre>
@@ -250,9 +250,9 @@ open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keywo
 <p>Si vous préférez le style <code>printf</code> du langage C, essayez plutôt le
 module <code>Printf</code> d&#39;OCaml :</p>
 <pre><code class="ocaml"><span class="governing">open</span> <span class="ocaml-module">Graphics</span><span class="ocaml-prompt">;;</span><br/><span class="governing">open</span> <span class="ocaml-module">Printf</span><span class="ocaml-prompt">;;</span><br/>
-open_graph ' 640x480'<span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
+open_graph <span class="string">&quot; 640x480&quot;</span><span class="ocaml-prompt">;;</span><br/><span class="keyword">for</span> i = 12 <span class="keyword">downto</span> 1 <span class="keyword">do</span>
   <span class="governing">let </span><span class="ocaml-variable">radius</span> = i * 20 <span class="governing">in</span>
-  &lt;em&gt;eprintf 'radius is %d\n' radius;&lt;/em&gt;
+  &lt;em&gt;eprintf <span class="string">&quot;radius is %d\n&quot;</span> radius;&lt;/em&gt;
 
   set_color (<span class="keyword">if</span> (i mod 2) = 0 <span class="keyword">then</span> red <span class="keyword">else</span> yellow);
   fill_circle 320 240 radius

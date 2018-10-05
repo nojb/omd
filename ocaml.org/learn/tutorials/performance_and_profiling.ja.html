@@ -103,7 +103,7 @@
           <ul><li><a href="#">罪な引用...</a>
 </li><li><a href="#">速度</a>
 <ul><li><a href="#">アセンブリ言語の基礎</a>
-</li><li><a href="#39-hello-world-39">&#39;hello, world&#39; プログラム</a>
+</li><li><a href="#quot-hello-world-quot">&quot;hello, world&quot; プログラム</a>
 </li><li><a href="#">末尾再帰</a>
 </li><li><a href="#">脱線:型はいずこに?</a>
 </li><li><a href="#">多相型</a>
@@ -243,17 +243,17 @@ foo:</code></pre>
 
 <pre class="assembly"><code class="assembly">.long 12345
 .byte 9
-.ascii &#39;hello&#39;
+.ascii &quot;hello&quot;
 .space 4</code></pre>
 
 <p><code>.long</code> はそこにワード(4バイト)を書く。 <code>.byte</code> は1バイトを書く。
 <code>.ascii</code> はバイト列(nul文字による終端はない)を書く。 <code>.space</code>
 はゼロで指定バイト数を埋める。 普通、これらはデータセクションで用いる。</p>
-<h3 id="39-hello-world-39">&#39;hello, world&#39; プログラム</h3>
+<h3 id="quot-hello-world-quot">&quot;hello, world&quot; プログラム</h3>
 
 <p>もうアセンブラについては十分だろう。 以下のプログラムを <code>smallest.ml</code>
 というファイルに書こう。</p>
-<pre><code class="ocaml">print_string 'hello, world\n'</code></pre>
+<pre><code class="ocaml">print_string <span class="string">&quot;hello, world\n&quot;</span></code></pre>
 
 <p>で、以下のようにネイティブコードにコンパイルする:</p>
 <pre class="shell"><code class="shell">ocamlopt -S smallest.ml -o smallest</code></pre>
@@ -266,7 +266,7 @@ foo:</code></pre>
     .long   4348                     ; 文字列ヘッダ
     .globl  Smallest__1
 lest__1:
-    .ascii  &#39;hello, world\12&#39;        ; 文字列
+    .ascii  &quot;hello, world\12&quot;        ; 文字列
     .space  2                        ; 文字列の後ろ
     .byte   2                        ; のパディング</code></pre>
 
@@ -288,7 +288,7 @@ lest__entry:
     ret</code></pre>
 
 <p>C では全てが関数の中にないといけない。 C では単に
-<code>printf (&#39;hello, world\n&#39;);</code> とは書けず、 <code>main() { ... }</code>
+<code>printf (&quot;hello, world\n&quot;);</code> とは書けず、 <code>main() { ... }</code>
 の中に書かないといけないことを思い起こそう。 OCaml
 では関数の中じゃなくトップレベルに命令を書くことができる。
 しかし、これをアセンブリ言語に翻訳するとき、
@@ -299,8 +299,8 @@ OCaml ではファイル名(<code>smallest.ml</code>)の 先頭を大文字に�
 を付け加えたシンボル、 つまり <code>Smallest__entry</code> というシンボルで
 ファイル中のトップレベルコマンドを参照できるようにしている。</p>
 <p>次は OCaml が生成したコードを見てみよう。 元のコードは
-<code>print_string &#39;hello, world\n&#39;</code> だったが、OCaml はそれと等価な
-<code>Pervasives.output_string stdout &#39;hello, world\n&#39;</code> でコンパイルした。
+<code>print_string &quot;hello, world\n&quot;</code> だったが、OCaml はそれと等価な
+<code>Pervasives.output_string stdout &quot;hello, world\n&quot;</code> でコンパイルした。
 なーんでだ? <code>pervasives.ml</code> を調べるとその理由がわかる。</p>
 <pre><code class="ocaml"><span class="governing">let</span> <span class="ocaml-function">print_string</span> <span class="ocaml-variable">s </span>= output_string stdout s</code></pre>
 
@@ -380,7 +380,7 @@ OCaml は末尾再帰関数を単純ループに変換できると述べた。
 これは本当に正しいのだろうか?
 単純な末尾再帰のコンパイル結果を見てみよう。</p>
 <pre><code class="ocaml"><span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">loop</span> <span class="ocaml-variable">() </span>=
-  print_string 'I go on forever ...';
+  print_string <span class="string">&quot;I go on forever ...&quot;</span>;
   loop ()
   
 <span class="governing">let</span> () = loop ()</code></pre>
@@ -413,7 +413,7 @@ Tail__loop_56:
 
 <p>ことあるごとに言ってきた通り、OCaml は静的型だ。
 だから、コンパイル時には OCaml は <code>loop</code> の型が <code>unit -&gt; unit</code>
-であることを知っている。 <code>&#39;hello, world\n&#39;</code> が <code>string</code>
+であることを知っている。 <code>&quot;hello, world\n&quot;</code> が <code>string</code>
 型であることも知っている。 この事実を何ら <code>output_string</code>
 関数に伝えようとしていない。 <code>output_string</code> は <code>channel</code> と <code>string</code> を
 引数にとることが期待値であり、実際にそれが引き渡されている。 例えば
@@ -542,7 +542,7 @@ Max_int__max_56:
 
 <p>OCaml の整数にはいっぱい変わったところがある。 一つは、整数の実体が
 32ビットではなく 31ビットというところだ。
-この&#39;失われた&#39;ビットで何が起きているのだろう?</p>
+この&quot;失われた&quot;ビットで何が起きているのだろう?</p>
 <p><code>int.ml</code> にこう書こう:</p>
 <pre><code class="ocamltop"><span class="ocaml-prompt"># </span><span class="ocaml-input">print_int 3</span><span class="ocaml-prompt">;;</span><br/><span class="ocaml-output"><span class="ocaml-stdout">3</span><span class="ocaml-stderr"></span>- : unit = ()
 </span></code></pre>
@@ -841,7 +841,7 @@ OCaml のテストコードから、コードの要点は:</p>
   
 <span class="governing">let</span> () =
   <span class="ocaml-module">Random</span>.self_init ();
-  <span class="ocaml-module">Graphics</span>.open_graph ' 640x480'
+  <span class="ocaml-module">Graphics</span>.open_graph <span class="string">&quot; 640x480&quot;</span>
   
 <span class="governing"><span class="governing">let rec</span></span> <span class="ocaml-function">iterate</span> <span class="ocaml-variable">r x_init i </span>=
   <span class="comment">(* 12820000 *)</span> <span class="keyword">if</span> i == 1 <span class="keyword">then</span> <span class="comment">(* 25640 *)</span> x_init
@@ -888,7 +888,7 @@ camlp4 を使っている。</p>
 
 <p>コンパイラに対して <code>gprof</code> のプロファイル情報を含めるよう、
 コンパイル時に <code>ocamlopt</code> に <code>-p</code> オプションを積む。</p>
-<pre class="shell"><code class="shell">ocamlopt -p -pp &#39;camlp4o pa_extend.cmo&#39; -I +camlp4 sieve.ml -o sieve</code></pre>
+<pre class="shell"><code class="shell">ocamlopt -p -pp &quot;camlp4o pa_extend.cmo&quot; -I +camlp4 sieve.ml -o sieve</code></pre>
 
 <p>普通にプログラムを走らせると、 プロファイル情報が <code>gmon.out</code> という
 <code>gprof</code> 用のファイルに出力される。</p>
