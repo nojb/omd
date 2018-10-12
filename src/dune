@@ -1,3 +1,5 @@
+(ocamllex lexer)
+
 (library
  (name omd)
  (public_name omd)
