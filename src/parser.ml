@@ -198,22 +198,6 @@ struct
           | _ ->
               loop [] (e :: Paragraph (List.rev cp) :: accu) tl
           end
-      | (Ulp b) :: tl ->
-          let e = Ulp (List.map (fun li -> loop [] [] li) b) in
-          begin match cp with
-          | [] | [NL] | [Br] ->
-              loop cp (e :: accu) tl
-          | _ ->
-              loop [] (e :: Paragraph (List.rev cp) :: accu) tl
-          end
-      | (Olp b) :: tl ->
-          let e = Olp (List.map (fun li -> loop [] [] li) b) in
-          begin match cp with
-          | [] | [NL] | [Br] ->
-              loop cp (e :: accu) tl
-          | _ ->
-              loop [] (e :: Paragraph (List.rev cp) :: accu) tl
-          end
       | Html_comment _ as e :: tl ->
           begin match cp with
           | [] ->
@@ -255,7 +239,7 @@ struct
           | None ->
               loop (e :: cp) accu tl
           | Some ((H _|Paragraph _|
-                   Ul _|Ol _|Ulp _|Olp _|Code_block _|Hr|Html_block _|Raw_block _| Blockquote _) :: _) ->
+                   Ul _|Ol _|Code_block _|Hr|Html_block _|Raw_block _| Blockquote _) :: _) ->
               begin match cp with
               | [] | [NL] | [Br] ->
                   loop cp (e::accu) tl
@@ -299,10 +283,6 @@ struct
           Ul (List.map clean_paragraphs v) :: clean_paragraphs tl
       | Ol v :: tl ->
           Ol (List.map clean_paragraphs v) :: clean_paragraphs tl
-      | Ulp v :: tl ->
-          Ulp (List.map clean_paragraphs v) :: clean_paragraphs tl
-      | Olp v :: tl ->
-          Olp (List.map clean_paragraphs v) :: clean_paragraphs tl
       | Blockquote v :: tl ->
           Blockquote (clean_paragraphs v) :: clean_paragraphs tl
       | Url (href, v, title) :: tl ->
@@ -1358,15 +1338,9 @@ struct
       let items = List.rev items in
       match items with
       | (U, _, _item) :: _ ->
-          if p then
-            Ulp (List.map (fun (_, _, i) -> i) items)
-          else
-            Ul (List.map (fun (_, _, i) -> i) items)
+          Ul (List.map (fun (_, _, i) -> if p then [Paragraph i] else i) items)
       | (O, _, _item) :: _ ->
-          if p then
-            Olp (List.map (fun (_, _, i) -> i) items)
-          else
-            Ol (List.map (fun (_, _, i) -> i) items)
+          Ol (List.map (fun (_, _, i) -> if p then [Paragraph i] else i) items)
       | [] ->
           failwith "make_up called with []" (* assert false *)
     in

@@ -55,9 +55,6 @@ let text_of_md md =
     | (Ul l | Ol l) :: tl ->
         List.iter (fun item -> loop item; Buffer.add_char b '\n') l;
         loop tl
-    | (Ulp l | Olp l) :: tl ->
-        List.iter loop l;
-        loop tl
     | Code_block (_lang, c) :: tl ->
         Buffer.add_string b (htmlentities ~md:false c);
         loop tl
@@ -297,19 +294,19 @@ let rec html_and_headers_of_md
             Buffer.add_string b "</strong>";
             loop indent tl
         end
-    | (Ul l|Ol l|Ulp l|Olp l as e) :: tl ->
+    | (Ul l|Ol l as e) :: tl ->
         begin match override e with
         | Some s ->
             Buffer.add_string b s;
             loop indent tl
         | None ->
-            Buffer.add_string b (match e with Ol _ | Olp _ -> "<ol>" | _ -> "<ul>");
+            Buffer.add_string b (match e with Ol _ -> "<ol>" | _ -> "<ul>");
             List.iter (fun li ->
                 Buffer.add_string b "<li>";
                 loop (indent+2) li;
                 Buffer.add_string b "</li>"
               ) l;
-            Buffer.add_string b (match e with Ol _ | Olp _ -> "</ol>" | _ -> "</ul>");
+            Buffer.add_string b (match e with Ol _ -> "</ol>" | _ -> "</ul>");
             loop indent tl
         end
     | Code_block(lang, c) as e :: tl ->
@@ -608,16 +605,6 @@ let rec sexpr_of_md md =
         List.iter(fun li -> bprintf b "(Li "; loop li;bprintf b ")") l;
         bprintf b ")";
         loop tl
-    | Olp l :: tl ->
-        bprintf b "(Olp";
-        List.iter(fun li -> bprintf b "(Li "; loop li; bprintf b ")") l;
-        bprintf b ")";
-        loop tl
-    | Ulp l :: tl ->
-        bprintf b "(Ulp";
-        List.iter(fun li -> bprintf b "(Li "; loop li;bprintf b ")") l;
-        bprintf b ")";
-        loop tl
     | Code (_lang, c) :: tl ->
         bprintf b "(Code %S)" c;
         loop tl
@@ -824,35 +811,6 @@ let rec markdown_of_md md =
           ) l;
         if list_indent = 0 then Buffer.add_char b '\n';
         loop list_indent tl
-    | Olp l :: tl ->
-        let c = ref 0 in (* don't use List.iteri because it's not in 3.12 *)
-        List.iter (fun li ->
-            if Buffer.length b > 0 && Buffer.nth b (Buffer.length b - 1) <> '\n'
-            then Buffer.add_char b '\n';
-            add_spaces list_indent;
-            incr c;
-            bprintf b "%d. " !c;
-            loop ~is_in_list:true (list_indent+4) li;
-            (* Paragraphs => No need of '\n' *)
-          ) l;
-        loop list_indent tl
-    | Ulp l :: tl ->
-        List.iter (fun li ->
-            if Buffer.length b > 0 && Buffer.nth b (Buffer.length b - 1) <> '\n'
-            then Buffer.add_char b '\n';
-            add_spaces list_indent;
-            bprintf b "+ ";
-            loop ~is_in_list:true (list_indent+4) li;
-            (* Paragraphs => No need of '\n' *)
-          ) l;
-        begin match tl with
-        | H _ :: _
-        | NL :: H _ :: _ ->
-            Buffer.add_char b '\n'
-        | _ ->
-            ()
-        end;
-        loop list_indent tl
     | Code (_lang, c) :: tl -> (* FIXME *)
         let n = (* compute how many backquotes we need to use *)
           let filter (n:int) (s:int list) =
@@ -971,7 +929,7 @@ let rec markdown_of_md md =
         let needs_newlines =
           match tl with
           | NL :: Paragraph p :: _ | Paragraph p :: _ -> p <> []
-          | (H _ | Ul _ | Ol _ | Ulp _ | Olp _ | Code (_, _) | Code_block (_, _)
+          | (H _ | Ul _ | Ol _ | Code (_, _) | Code_block (_, _)
             | Text _ | Emph _ | Bold _ | Br |Hr | Url (_, _, _)
             | Ref (_, _, _, _) | Img_ref (_, _, _, _)
             | Html (_, _, _) | Blockquote _ | Img (_, _, _)) :: _ ->

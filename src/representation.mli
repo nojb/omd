@@ -16,8 +16,6 @@ type element =
   | Bold of t
   | Ul of t list
   | Ol of t list
-  | Ulp of t list
-  | Olp of t list
   | Code of name * string
   | Code_block of name * string
   | Br

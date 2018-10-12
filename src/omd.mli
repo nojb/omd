@@ -41,8 +41,6 @@ and element = Representation.element =
   | Bold of t        (** Bold *)
   | Ul of t list     (** Unumbered list *)
   | Ol of t list     (** Ordered (i.e. numbered) list *)
-  | Ulp of t list
-  | Olp of t list
   | Code of name * string
   (** [Code(lang, code)] represent [code] within the text (Markdown:
       `code`).  The language [lang] cannot be specified from Markdown,

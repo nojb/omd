@@ -59,10 +59,6 @@ let rec set_default_lang lang = function
       Ul (List.map (set_default_lang lang) t) :: set_default_lang lang tl
   | Ol t :: tl ->
       Ol (List.map (set_default_lang lang) t) :: set_default_lang lang tl
-  | Ulp t :: tl ->
-      Ulp (List.map (set_default_lang lang) t) :: set_default_lang lang tl
-  | Olp t :: tl ->
-      Olp (List.map (set_default_lang lang) t) :: set_default_lang lang tl
   | Url(href, t, title) :: tl ->
       Url(href, set_default_lang lang t, title) :: set_default_lang lang tl
   | Blockquote t :: tl ->

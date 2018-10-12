@@ -45,8 +45,6 @@ type element =
   | Bold of t
   | Ul of t list
   | Ol of t list
-  | Ulp of t list
-  | Olp of t list
   | Code of name * string
   | Code_block of name * string
   | Br
@@ -92,8 +90,6 @@ let rec loose_compare t1 t2 = match t1,t2 with
 
   | Ul e1::tl1, Ul e2::tl2
   | Ol e1::tl1, Ol e2::tl2
-  | Ulp e1::tl1, Ulp e2::tl2
-  | Olp e1::tl1, Olp e2::tl2
     ->
       (match loose_compare_lists e1 e2 with
        | 0 -> loose_compare tl1 tl2
@@ -257,7 +253,7 @@ let rec normalise_md l =
     | [] -> []
     | NL::NL::NL::tl -> loop (NL::NL::tl)
     | Text t1::Text t2::tl -> loop (Text(t1^t2)::tl)
-    | NL::(((Paragraph _|H _|Code_block _|Ol _|Ul _|Olp _|Ulp _)::_) as tl) -> loop tl
+    | NL::(((Paragraph _|H _|Code_block _|Ol _|Ul _)::_) as tl) -> loop tl
     | Paragraph[Text " "]::tl -> loop tl
     | Paragraph[]::tl -> loop tl
     | Paragraph(p)::tl -> Paragraph(loop p)::loop tl
@@ -266,8 +262,6 @@ let rec normalise_md l =
     | Bold v::tl -> Bold(loop v)::loop tl
     | Ul v::tl -> Ul(List.map loop v)::loop tl
     | Ol v::tl -> Ol(List.map loop v)::loop tl
-    | Ulp v::tl -> Ulp(List.map loop v)::loop tl
-    | Olp v::tl -> Olp(List.map loop v)::loop tl
     | Blockquote v::tl -> Blockquote(loop v)::loop tl
     | Url(href,v,title)::tl -> Url(href,(loop v),title)::loop tl
     | Text _
@@ -324,16 +318,6 @@ let rec visit f = function
       begin match f e with
       | Some(l) -> l@visit f tl
       | None -> Ol(List.map (visit f) v)::visit f tl
-      end
-  | Ulp v as e::tl ->
-      begin match f e with
-      | Some(l) -> l@visit f tl
-      | None -> Ulp(List.map (visit f) v)::visit f tl
-      end
-  | Olp v as e::tl ->
-      begin match f e with
-      | Some(l) -> l@visit f tl
-      | None -> Olp(List.map (visit f) v)::visit f tl
       end
   | Blockquote v as e::tl ->
       begin match f e with

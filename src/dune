@@ -1,8 +1,7 @@
 (library
  (name omd)
  (public_name omd)
- (modules lexer parser representation backend omd utils)
- (libraries bigarray))
+ (modules lexer parser representation backend omd utils))
 
 (executable
  (name main)
